@@ -14,15 +14,21 @@ using QueryConsole.Files.Integrators;
 using QueryConsole.Files.BpmEntityHelper;
 using QueryConsole.Files.Constants;
 using QueryConsole.Files.IntegratorTester;
+using Terrasoft.Core.Factories;
 
 namespace QueryConsole
 {
+
 	public class Program
 	{
+		public static void AddBindings() {
+			//ClassFactory.ReBind<Terrasoft.Configuration.Passport.OrderPassportHelper, Terrasoft.Configuration.Passport.OrderPassportHelper>("SomeBind");
+			//ClassFactory.Get<Terrasoft.Configuration.Passport.OrderPassportHelper>();
+		}
 		public static void Main(string[] args) {
 			try {
-				//var consoleApp = new TerrasoftConsoleClass("A.Mykulych");
-				var consoleApp = new TerrasoftConsoleClass("Default");
+				var consoleApp = new TerrasoftConsoleClass("A.Mykulych");
+				//var consoleApp = new TerrasoftConsoleClass("Default");
 				try {
 					consoleApp.Run();
 				} catch(Exception e) {
@@ -30,8 +36,10 @@ namespace QueryConsole
 					Console.WriteLine(e.Message);
 				}
 				consoleApp.ConsoleColorWrite("Connect to Database: Success");
+				AddBindings();
 				Console.WriteLine("Press any button to start integrate");
 				Console.ReadKey();
+
 				var testers = new List<BaseIntegratorTester>() {
 					new OrderServiceIntegratorTester(consoleApp.SystemUserConnection),
 					new ClientServiceIntegratorTester(consoleApp.SystemUserConnection)
@@ -118,7 +126,7 @@ namespace QueryConsole
 				//															testers[0].Skip = 6000;
 				//															testers[0].ExportServiceEntity("Contract", () =>
 				//															{
-																				testers[0].Limit = 500;
+																				testers[0].Limit = 10;
 																				testers[0].Skip = 0;
 																				testers[0].ExportServiceEntity("Order", () =>
 																				{

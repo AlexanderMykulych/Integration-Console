@@ -24,7 +24,7 @@ namespace MappingCreator
 
 		public void Test() {
 			var reader = new ConfigFileReader();
-			var text = reader.ReadFile(@"C:\VS_Project\QueryConsole\Terra-integration\QueryConsole\ConfigurationFile.xml");
+			var text = reader.ReadFile(@"..\..\QueryConsole\ConfigurationFile.xml");
 
 			var manager = new ConfigManager(text);
 		}

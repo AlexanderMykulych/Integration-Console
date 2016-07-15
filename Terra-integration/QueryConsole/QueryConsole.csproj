@@ -177,7 +177,7 @@
       <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
-      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="Quartz">
       <HintPath>..\..\..\WebApp\Armtek\Terrasoft.WebApp\bin\Quartz.dll</HintPath>
@@ -193,6 +193,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Services" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
@@ -209,7 +210,7 @@
       <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Common.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Configuration">
-      <HintPath>..\..\..\..\Dev\Armtek_D\C#\A.Mykulych\Terrasoft.Configuration.dll</HintPath>
+      <HintPath>..\..\..\..\..\Dev\Armtek_D\C#\A.Mykulych\Terrasoft.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -227,13 +228,29 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Messaging.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Terrasoft.Nui, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Nui.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Nui.ServiceModel, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Nui.ServiceModel.dll</HintPath>
+    </Reference>
     <Reference Include="Terrasoft.Reports, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Reports.dll</HintPath>
     </Reference>
+    <Reference Include="Terrasoft.Social, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Social.dll</HintPath>
+    </Reference>
     <Reference Include="Terrasoft.Svn, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Terrasoft.Svn.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Sync, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Sync.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Tools.Common, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

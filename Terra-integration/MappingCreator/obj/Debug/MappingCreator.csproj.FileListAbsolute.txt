@@ -149,3 +149,6 @@ C:\VS_Project\QueryConsole\Terra-integration\MappingCreator\bin\Debug\Ninject.xm
 C:\VS_Project\QueryConsole\Terra-integration\MappingCreator\bin\Debug\QueryConsole.exe
 C:\VS_Project\QueryConsole\Terra-integration\MappingCreator\bin\Debug\QueryConsole.pdb
 C:\VS_Project\QueryConsole\Terra-integration\MappingCreator\obj\Debug\MappingCreator.Form1.resources
+C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\MappingCreator\bin\Debug\MappingCreator.exe.config
+C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\MappingCreator\obj\Debug\MappingCreator.exe
+C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\MappingCreator\obj\Debug\MappingCreator.pdb
