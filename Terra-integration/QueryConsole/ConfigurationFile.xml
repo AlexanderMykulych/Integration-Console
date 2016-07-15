@@ -567,6 +567,8 @@
     <mappingItem JSourcePath="accountingBalance" TsSourcePath="TsActualAccountBalance"/>
     <mappingItem JSourcePath="operationalBalance" TsSourcePath="TsOperationAccountBalance"/>
     <mappingItem JSourcePath="contract" MapType="#RefToGuid" TsSourcePath="TsExternalId" TsDestinationName="Account" TsExternalIdPath="TsOrderServiceId"/>
+    <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
+    <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>
   <configItem JName="Debt" TsName="TsContractDebt">
     <mappingItem JSourcePath="initialSum" TsSourcePath="TsAmount"/>
