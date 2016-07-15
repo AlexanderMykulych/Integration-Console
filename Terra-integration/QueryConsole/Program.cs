@@ -118,32 +118,44 @@ namespace QueryConsole
 				//															testers[0].Skip = 6000;
 				//															testers[0].ExportServiceEntity("Contract", () =>
 				//															{
-																				testers[0].Limit = 500;
-																				testers[0].Skip = 0;
-																				testers[0].ExportServiceEntity("Order", () =>
-																				{
-																					testers[0].Limit = 1000;
-																					testers[0].Skip = 500;
-																					testers[0].ExportServiceEntity("Order", () =>
-																					{
-																						testers[0].Limit = 1500;
-																						testers[0].Skip = 0;
-																						testers[0].ExportServiceEntity("Shipment", () =>
-																						{
-																							testers[0].Limit = 1500;
-																							testers[0].Skip = 0;
-																							testers[0].ExportServiceEntity("Payment", () =>
-																							{
-																								testers[0].Limit = 1500;
-																								testers[0].Skip = 0;
-																								testers[0].ExportServiceEntity("Return", () =>
-																								{
+																				//testers[0].Limit = 1000;
+																				//testers[0].Skip = 500;
+																				//testers[0].ExportServiceEntity("Shipment", () =>
+																				//{
+																					
+																				//		testers[0].Limit = 1500;
+																				//		testers[0].Skip = 0;
+																				//		testers[0].ExportServiceEntity("Payment", () =>
+																				//		{
+																				//			testers[0].Limit = 1500;
+																				//			testers[0].Skip = 0;
+																				//			testers[0].ExportServiceEntity("Return", () =>
+																				//			{
+																				//				testers[0].Limit = 1500;
+																				//				testers[0].Skip = 0;
+																				//				testers[0].ExportServiceEntity("Debt", () =>
+																				//				{
+																									testers[0].Limit = 1000;
+																									testers[0].Skip = 0;
+																									testers[0].ExportServiceEntity("ContractBalance", () =>
+																									{
+																										testers[0].Limit = 1000;
+																										testers[0].Skip = 1000;
+																										testers[0].ExportServiceEntity("ContractBalance", () =>
+																										{
+																											testers[0].Limit = 1000;
+																											testers[0].Skip = 2000;
+																											testers[0].ExportServiceEntity("ContractBalance", () =>
+																											{
 
-																								});
-																							});
-																						});
-																					});
-																				});
+																											});
+																										});
+																									});
+																				//				});
+																				//			});
+																				//		});
+																					
+																				//});
 				//															});
 				//														});
 

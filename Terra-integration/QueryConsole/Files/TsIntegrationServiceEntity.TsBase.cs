@@ -880,6 +880,13 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("Contract")]
 	public class ContractBalanceHandler : EntityHandler
 	{
+		public override string HandlerName
+		{
+			get
+			{
+				return JName;
+			}
+		}
 		public ContractBalanceHandler()
 		{
 			Mapper = new MappingHelper();
@@ -888,7 +895,12 @@ namespace Terrasoft.TsConfiguration
 		}
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
 		{
-			integrationInfo.Data["id"] = integrationInfo.Data["contract.#ref.id"];
+			integrationInfo.Data["id"] = integrationInfo.Data["ContractBalance"]["contract"]["#ref"]["id"];
+		}
+		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
+		{
+			integrationInfo.Data["ContractBalance"]["id"] = integrationInfo.Data["ContractBalance"]["contract"]["#ref"]["id"];
+			return base.IsEntityAlreadyExist(integrationInfo);
 		}
 	}
 

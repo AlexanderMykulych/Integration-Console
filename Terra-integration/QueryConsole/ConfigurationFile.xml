@@ -400,7 +400,7 @@
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>
   <configItem JName="Order" TsName="Order">
-    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsLrsAccountId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccountId" TsDestinationResPath="TsExternalId"/>
+    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsLrsAccountId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="guid" TsSourcePath="Id"/>
     <mappingItem JSourcePath="changedByUser" MapType="#StringToDictionaryGuid" TsSourcePath="ModifiedById" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
     <mappingItem JSourcePath="createdByUser" MapType="#StringToDictionaryGuid" TsSourcePath="OwnerId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
@@ -434,7 +434,7 @@
     <!--<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.zipCode" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>-->
     <mappingItem JSourcePath="shipmentInfo.ShipmentInfo.addtionalDeliveryCost" TsSourcePath="TsAdditionalExpences"/>
     <!--<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.address" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>-->
-    <mappingItem JSourcePath="shipmentInfo.ShipmentInfo.additionalInfo" TsSourcePath="Comment"/>
+    <!--<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.additionalInfo" TsSourcePath="Comment"/>-->
     <!--<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.deliveryPointId" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>-->
     <mappingItem JSourcePath="orderItems" MapType="#ArrayOfCompositObject" TsSourcePath="Id" TsDestinationPath="Order" TsDestinationName="OrderProduct"  MapExecuteType = "#AfterEntitySave"/>
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
@@ -567,6 +567,8 @@
     <mappingItem JSourcePath="accountingBalance" TsSourcePath="TsActualAccountBalance"/>
     <mappingItem JSourcePath="operationalBalance" TsSourcePath="TsOperationAccountBalance"/>
     <mappingItem JSourcePath="contract" MapType="#RefToGuid" TsSourcePath="TsExternalId" TsDestinationName="Account" TsExternalIdPath="TsOrderServiceId"/>
+    <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
+    <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>
   <configItem JName="Debt" TsName="TsContractDebt">
     <mappingItem JSourcePath="initialSum" TsSourcePath="TsAmount"/>

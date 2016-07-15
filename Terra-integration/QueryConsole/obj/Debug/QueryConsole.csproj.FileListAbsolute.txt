@@ -275,3 +275,45 @@ C:\Users\admin-terra\Downloads\Terra2\IntegrrationConsole\Terra-integration\Quer
 C:\Users\admin-terra\Downloads\Terra2\IntegrrationConsole\Terra-integration\QueryConsole\bin\Debug\96E80325B9179D7C1753A54F235BCE75.netmodule
 C:\Users\admin-terra\Downloads\Terra2\IntegrrationConsole\Terra-integration\QueryConsole\obj\Debug\QueryConsole.csprojResolveAssemblyReference.cache
 C:\Users\admin-terra\Downloads\Terra2\IntegrrationConsole\Terra-integration\QueryConsole\obj\Debug\QueryConsole.csproj.QueryConsole.exe.config
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\QueryConsole.exe.config
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.exe
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.pdb
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\QueryConsole.exe
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\QueryConsole.pdb
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\EntityFramework.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Ninject.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\SharpSvn.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\SharpSvn.UI.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\ServiceStack.Text.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Microsoft.Data.Services.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Terrasoft.Core.ServiceModelContract.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Microsoft.Data.Edm.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Microsoft.Data.OData.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Microsoft.Data.Services.Client.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\System.Spatial.dll
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\EntityFramework.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Ninject.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\SharpSvn.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\SharpSvn.UI.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Terrasoft.Common.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Terrasoft.Core.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Terrasoft.Core.Packages.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Terrasoft.Core.Scheduler.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Terrasoft.Messaging.Common.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Terrasoft.Reports.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Terrasoft.UI.WebControls.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Terrasoft.Web.Common.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\ServiceStack.Text.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Microsoft.Data.Services.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Terrasoft.Core.ServiceModelContract.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Microsoft.Data.Edm.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Microsoft.Data.OData.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Microsoft.Data.Services.Client.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\System.Spatial.xml
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\SharpPlink-Win32.svnExe
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\2E850B2C7CCFCA7BBB948F1632AD65A1.netmodule
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\0AA7BC6F52AC62ABD3C147BE9DAF05A1.netmodule
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\91DE706BE8E47C82A1E8EB35734FA2BA.netmodule
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\bin\Debug\96E80325B9179D7C1753A54F235BCE75.netmodule
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.csprojResolveAssemblyReference.cache
+C:\Integration Console\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.csproj.QueryConsole.exe.config
