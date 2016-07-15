@@ -1,0 +1,88 @@
+﻿{
+  "CompanyProfile": {
+	"id": 800,
+	"version": 3,
+    "mainContactInfo": {
+      "ContactInfo": {
+        "name": "ContactInfo",
+        "emailAllowed": false,
+        "phoneAllowed": false,
+        "faxAllowed": false,
+        "smsAllowed": false,
+        "mailAllowed": false,
+        "records": [
+          {
+            "ContactRecord": {
+              "value": "Alexander@Skype",
+              "name": "Skype",
+              "type": {
+                "#ref": {
+                  "id": 7,
+                  "type": "ContactRecordType",
+                  "name": ""
+                }
+              },
+              "primary": false,
+			  "id": 5,
+			"version": 2
+            },
+			
+          }
+        ],
+        "addresses": [
+          
+        ]
+      }
+    },
+    "parentCompany": {
+      "#ref": {
+        "id": 25,
+        "type": "CompanyProfile",
+        "name": ""
+      }
+    },
+	"externalId": "123123",
+    "name": "Integration Account 1",
+    "type": "Наша компания",
+    "subtype": "Локальный",
+    "alternativeName": "Integration Account 1 AlternativeName",
+    "mainPerson": {
+      "#ref": {
+        "id": 57,
+        "type": "PersonProfile",
+        "name": ""
+      }
+    },
+    "b2b": true,
+    "b2s": false,
+    "liquidation": "true",
+    "taxRegistrationNumberName": "ИНН",
+    "taxRegistrationNumber": "2342342342342",
+    "companyRegistrationNumber": "3456166161",
+    "companyRegistrationNumberName": "КПП",
+    "scenario": "очень важный (VIP)",
+    "bankrupt": true,
+    "ownerAgentId": null,
+    "specialization": "Американские автомобили",
+    "relationships": [
+    ],
+    "notificationProfiles": [
+    ],
+    "additionalInfo": {
+      "category": "C",
+      "scoring": "7",
+      "employeesNumber": "201-500",
+      "ownership": "ИП",
+      "annualRevenue": "15-20 млн.",
+      "industry": "Банки",
+      "typology": "Центр замены масла",
+      "accountFormat": null,
+      "accountPositioning": null,
+      "retailMarkup": 0.0,
+      "wolesaleMakup": 0.0
+    },
+    "assignments": [
+      
+    ]
+  }
+}
