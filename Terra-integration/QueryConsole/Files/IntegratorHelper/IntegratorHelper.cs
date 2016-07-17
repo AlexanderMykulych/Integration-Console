@@ -31,7 +31,8 @@ namespace Terrasoft.TsConfiguration
 		/// <param name="jsonText">Данные для отправки в формате json</param>
 		/// <param name="callback">callback - для обработки ответа</param>
 		/// <param name="userConnection"></param>
-		public void PushRequest(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback, UserConnection userConnection = null, Guid? logId = null)
+		public void PushRequest(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback, UserConnection userConnection = null, Guid? logId = null,
+			 Action<string, UserConnection, Guid?> errorCallback = null, string auth = null)
 		{
 			if (string.IsNullOrEmpty(url))
 			{
@@ -39,7 +40,7 @@ namespace Terrasoft.TsConfiguration
 			}
 			var requestId = Guid.NewGuid();
 			IntegrationLogger.PushRequest(logId, requestMethod, url, jsonText, requestId);
-			ThreadPool.QueueUserWorkItem(((x) => MakeAsyncRequest(requestMethod, url, jsonText, callback, userConnection, logId, requestId)));
+			ThreadPool.QueueUserWorkItem(((x) => MakeAsyncRequest(requestMethod, url, jsonText, callback, userConnection, logId, requestId, errorCallback, auth)));
 		}
 		#endregion
 
@@ -52,14 +53,16 @@ namespace Terrasoft.TsConfiguration
 		/// <param name="jsonText"></param>
 		/// <param name="callback"></param>
 		/// <param name="userConnection"></param>
-		private static void MakeAsyncRequest(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback, UserConnection userConnection = null, Guid? logId = null, Guid? requestId = null)
+		private static void MakeAsyncRequest(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback,
+			 UserConnection userConnection = null, Guid? logId = null, Guid? requestId = null,
+			 Action<string, UserConnection, Guid?> errorCallback = null, string auth = null)
 		{
 			try
 			{
 				var _request = WebRequest.Create(new Uri(url)) as HttpWebRequest;
 				_request.Method = requestMethod.ToString();
 				_request.ContentType = "application/json";
-				_request.Headers.Add("authorization", "Basic YnBtb25saW5lOmJwbW9ubGluZQ==");
+				_request.Headers.Add("authorization", string.IsNullOrEmpty(auth) ? "Basic YnBtb25saW5lOmJwbW9ubGluZQ==" : auth);
 				_request.Headers.Add("cache-control", "no-cache");
 				switch (requestMethod)
 				{
@@ -92,12 +95,18 @@ namespace Terrasoft.TsConfiguration
 					{
 						string responceText = sr.ReadToEnd();
 						IntegrationLogger.ResponseError(logId, e, responceText, requestId, jsonText);
+						if(errorCallback != null) {
+							errorCallback(responceText, userConnection, requestId);
+						}
 					}
 				}
 			}
 			catch (Exception e)
 			{
 				IntegrationLogger.BeforeRequestError(logId, e);
+				if (errorCallback != null) {
+					errorCallback(e.Message, userConnection, requestId);
+				}
 			}
 		}
 		/// <summary>

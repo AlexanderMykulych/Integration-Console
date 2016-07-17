@@ -20,6 +20,7 @@ namespace QueryConsole.Files.Integrators
 			integratorHelper = new IntegratorHelper();
 			UrlMaker = new ServiceUrlMaker(baseUrls);
 			ServiceName = "OrderService";
+			Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==";
 		}
 	}
 }

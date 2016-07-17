@@ -1,2 +1,8 @@
 /Terra-integration/MappingCreator/obj/Debug/*.force
 Debug
+*.exe
+*.dll
+*.pdb
+/Terra-integration/MappingCreator/bin/Debug/*.exe
+/Terra-integration/MappingCreator/bin/Debug
+/Terra-integration/QueryConsole/bin/Release

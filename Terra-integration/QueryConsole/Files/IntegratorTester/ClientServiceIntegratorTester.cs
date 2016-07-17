@@ -46,18 +46,18 @@ namespace QueryConsole.Files.IntegratorTester
 		public override List<string> InitServiceEntitiesName()
 		{
 			return new List<string>() {
-                //"CompanyProfile",
-                //"PersonProfile",
-                //"ContactRecord",
+                "CompanyProfile",
+                "PersonProfile",
+                "ContactRecord",
                 "VehicleProfile",
-                //"Manager",
-                //"ManagerGroup",
-               // "ClientRequest",
-                //"Relationship",
-                //"Employee",
-                //"NotificationProfile",
-                //"VehicleRelationship",
-                //"Market"
+                "Manager",
+                "ManagerGroup",
+                "ClientRequest",
+                "Relationship",
+                "Employee",
+                "NotificationProfile",
+                "VehicleRelationship",
+                "Market"
             };
 		}
 	}
