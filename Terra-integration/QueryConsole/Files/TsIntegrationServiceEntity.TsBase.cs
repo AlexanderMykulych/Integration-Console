@@ -46,7 +46,7 @@ namespace Terrasoft.TsConfiguration
 			Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection));
 			AfterMapping(integrationInfo);
 			try {
-				Mapper.SaveEntity(integrationInfo.IntegratedEntity);
+				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName);
 				integrationInfo.Result = new CsConstant.IntegrationResult() {
 					Type = CsConstant.IntegrationResult.TResultType.Success
 				};
@@ -77,7 +77,7 @@ namespace Terrasoft.TsConfiguration
 				BeforeMapping(integrationInfo);
 				Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection));
 				AfterMapping(integrationInfo);
-				Mapper.SaveEntity(entity);
+				Mapper.SaveEntity(entity, JName);
 				AfterEntitySave(integrationInfo);
 			} else {
 				throw new Exception(string.Format("Can not create entity {0}", EntityName));
@@ -111,7 +111,7 @@ namespace Terrasoft.TsConfiguration
 			Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection));
 			AfterMapping(integrationInfo);
 			try {
-				Mapper.SaveEntity(integrationInfo.IntegratedEntity);
+				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName);
 				integrationInfo.Result = new CsConstant.IntegrationResult() {
 					Type = CsConstant.IntegrationResult.TResultType.Success
 				};
@@ -453,11 +453,9 @@ namespace Terrasoft.TsConfiguration
                     var sum = GetOrderItemSum(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
 					integrationInfo.IntegratedEntity.SetColumnValue("Amount", sum);
 					integrationInfo.IntegratedEntity.SetColumnValue("PrimaryAmount", sum);
-					integrationInfo.IntegratedEntity.Save(false);
-                    Console.WriteLine(sum);
+					integrationInfo.IntegratedEntity.UpdateInDB(false);
                 } catch(Exception e)
                 {
-                    Console.WriteLine(e.ToString());
                 }
 
                 try
@@ -467,12 +465,11 @@ namespace Terrasoft.TsConfiguration
                         if (account != Guid.Empty)
                         {
                             integrationInfo.IntegratedEntity.SetColumnValue("AccountId", account);
-                            integrationInfo.IntegratedEntity.Save(false);
+                            integrationInfo.IntegratedEntity.UpdateInDB(false);
                         }
                     }
                 } catch(Exception e)
                 {
-                    Console.WriteLine(e.ToString());
                 }
 
             }
@@ -707,7 +704,7 @@ namespace Terrasoft.TsConfiguration
 				try {
 					var totalAmount = integrationInfo.IntegratedEntity.GetTypedColumnValue<double>("TotalAmount");
 					integrationInfo.IntegratedEntity.SetColumnValue("PrimaryTotalAmount", totalAmount);
-					integrationInfo.IntegratedEntity.Save(false);
+					integrationInfo.IntegratedEntity.UpdateInDB(false);
 				} catch(Exception e) {
 					/*IntegrationLoger*/
 				}
@@ -735,10 +732,10 @@ namespace Terrasoft.TsConfiguration
 			Mapper.StartMappByConfig(integrationInfo, JName, IntegrationConfigurationManager.GetConfigItem(integrationInfo.UserConnection, "Product"));
 			try
 			{
-				Mapper.SaveEntity(integrationInfo.IntegratedEntity);
+				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName);
                 var productId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
                 entity.SetColumnValue("ProductId", productId);
-                entity.Save(false);
+                entity.UpdateInDB(false);
             }
 			catch (Exception e)
 			{
@@ -840,7 +837,7 @@ namespace Terrasoft.TsConfiguration
 		}
 
 		public void UpdateProduct(IntegrationInfo integrationInfo) {
-			var eom = integrationInfo.Data["ShipmentItem"]["eom"].Value<string>();
+			var eom = integrationInfo.Data["ShipmentItem"]["oem"].Value<string>();
 			var productId = GetProductIdByArticule(integrationInfo.UserConnection, eom);
 			if(productId != Guid.Empty) {
 				var unitName = integrationInfo.Data["ShipmentItem"]["unitName"].Value<string>();
@@ -869,8 +866,10 @@ namespace Terrasoft.TsConfiguration
 
 		public void updateProductUnitName(UserConnection userConnection, Guid productId, string unitName) {
 			var unitId = OrderHandler.GetGuidByValue("Unit", unitName, userConnection);
+			if (unitId == Guid.Empty)
+				return;
 			var update = new Update(userConnection, "Product")
-						.Set("", Column.Parameter(unitId))
+						.Set("UnitId", Column.Parameter(unitId))
 						.Where("Id").IsEqual(Column.Parameter(productId)) as Update;
 			update.Execute();
 		}
@@ -925,7 +924,7 @@ namespace Terrasoft.TsConfiguration
 				var isActive = integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsActive");
 				if(isActive) {
 					integrationInfo.IntegratedEntity.SetColumnValue("StateId", CsConstant.TsContractState.Signed);
-					integrationInfo.IntegratedEntity.Save(false);
+					integrationInfo.IntegratedEntity.UpdateInDB(false);
 				}
 			}
 		}

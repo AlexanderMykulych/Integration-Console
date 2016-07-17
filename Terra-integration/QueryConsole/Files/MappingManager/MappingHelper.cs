@@ -102,7 +102,7 @@ namespace Terrasoft.TsConfiguration
 				{
 					try
 					{
-						var subJObj = GetJTokenByPath(entityJObj, item.JSourcePath);
+						var subJObj = GetJTokenByPath(entityJObj, item.JSourcePath, item.MapIntegrationType);
 						MapColumn(item, ref subJObj, integrationInfo);
 					}
 					catch (Exception e)
@@ -145,7 +145,7 @@ namespace Terrasoft.TsConfiguration
 					}
 					else
 					{
-						var resultJ = GetJTokenByPath(integrationInfo.Data[jName], item.JSourcePath);
+						var resultJ = GetJTokenByPath(integrationInfo.Data[jName], item.JSourcePath, item.MapIntegrationType);
 						if (jObjItem == null && item.EFieldRequier)
 							throw new ArgumentNullException("Field " + item.JSourcePath + " required!");
 						if(jObjItem == null && !item.SerializeIfNull) {
@@ -172,7 +172,7 @@ namespace Terrasoft.TsConfiguration
 				{
 					if (item.SaveOnResponse)
 					{
-						var subJObj = GetJTokenByPath(entityJObj, item.JSourcePath);
+						var subJObj = GetJTokenByPath(entityJObj, item.JSourcePath, item.MapIntegrationType);
 						MapColumn(item, ref subJObj, integrationInfo);
 					}
 				}
@@ -555,7 +555,7 @@ namespace Terrasoft.TsConfiguration
 			return false;
 		}
 
-		public void SaveEntity(Entity entity)
+		public void SaveEntity(Entity entity, string jName)
 		{
 			try
 			{
@@ -584,7 +584,7 @@ namespace Terrasoft.TsConfiguration
 					result = entity.Save(false);
 				}
 				ExecuteMapMethodQueue();
-				IntegrationLogger.SuccessSave(entity.GetType().ToString());
+				IntegrationLogger.SuccessSave(jName);
 			}
 			catch (Exception e)
 			{
@@ -689,14 +689,18 @@ namespace Terrasoft.TsConfiguration
 			return strings.FirstOrDefault(x => !string.IsNullOrEmpty(x));
 		}
 
-		private JToken GetJTokenByPath(JToken jToken, string path)
+		private JToken GetJTokenByPath(JToken jToken, string path, TIntegrationType type = TIntegrationType.Import)
 		{
 			var pItems = path.Split('.');
 			foreach (var pItem in pItems)
 			{
 				if (!jToken.HasValues || jToken[pItem] == null)
 				{
-					jToken[pItem] = new JObject();
+					if (type == TIntegrationType.Import) {
+						jToken[pItem] = new JObject();
+					} else {
+						return new JObject();
+					}
 				}
 				jToken = jToken[pItem];
 			}

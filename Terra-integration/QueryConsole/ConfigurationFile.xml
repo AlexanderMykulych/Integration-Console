@@ -374,7 +374,7 @@
     <mappingItem JSourcePath="version"  SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>
   <configItem JName="Payment" TsName="TsPayment">
-    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsSalesMarketId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccountId" TsDestinationResPath="TsExternalId"/>
+    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsSalesMarketId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="guid" TsSourcePath="Id"/>
     <mappingItem JSourcePath="changedByUser" MapType="#StringToDictionaryGuid" TsSourcePath="ModifiedById" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
     <mappingItem JSourcePath="createdByUser" MapType="#StringToDictionaryGuid" TsSourcePath="CreatedById" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
@@ -478,7 +478,7 @@
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>
   <configItem JName="Return" TsName="TsReturn">
-    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsSalesMarketId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccountId" TsDestinationResPath="TsExternalId"/>
+    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsSalesMarketId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="returnNumber" TsSourcePath="TsName"/>
     <mappingItem JSourcePath="returnShipment" MapType="#RefToGuid" TsSourcePath="TsShipmentId" TsDestinationName="TsShipment"/>
     <mappingItem JSourcePath="status" MapType="#RefToGuid" TsSourcePath="TsStatusId" TsDestinationName="TsReturnStatus"/>
@@ -487,17 +487,17 @@
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>
   <configItem JName="Shipment" TsName="TsShipment">
-    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsSalesMarketId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccountId" TsDestinationResPath="TsExternalId"/>
+    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsSalesMarketId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="changedByUser" MapType="#StringToDictionaryGuid" TsSourcePath="ModifiedById" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
     <mappingItem JSourcePath="createdByUser" MapType="#StringToDictionaryGuid" TsSourcePath="TsOwnerId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
-    <mappingItem JSourcePath="foundation" MapType="#StringToDictionaryGuid" TsSourcePath="TsOrder" TsDestinationName="Order" TsDestinationPath="Id" TsDestinationResPath="Number"/>
+    <mappingItem JSourcePath="foundation" MapType="#StringToDictionaryGuid" TsSourcePath="TsOrderId" TsDestinationName="Order" TsDestinationPath="Id" TsDestinationResPath="Number"/>
     <mappingItem JSourcePath="documentNumber" TsSourcePath="TsName"/>
     <mappingItem JSourcePath="documentDate" TsSourcePath="TsShipmentDate" MacrosName="DateWithouTime"/>
-    <mappingItem JSourcePath="status" MapType="#RefToGuid" TsSourcePath="TsStatus" TsDestinationName="TsShipmentStatus"/>
+    <mappingItem JSourcePath="status" MapType="#RefToGuid" TsSourcePath="TsStatusId" TsDestinationName="TsShipmentStatus"/>
     <mappingItem JSourcePath="shipmentPerson" MapType="#StringToDictionaryGuid" TsSourcePath="TsOwnerId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
     <mappingItem JSourcePath="shipmentPersonPosition" MapType="#StringToDictionaryGuid" TsSourcePath="TsOwnerId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Job.Name"/>
     <mappingItem JSourcePath="contract" MapType="#RefToGuid" TsSourcePath="TsContractId" TsDestinationName="Contract"/>
-    <mappingItem JSourcePath="type" MapType="#RefToGuid" TsSourcePath="TsType" TsDestinationName="TsShipmentType"/>
+    <mappingItem JSourcePath="type" MapType="#RefToGuid" TsSourcePath="TsTypeId" TsDestinationName="TsShipmentType"/>
     <mappingItem JSourcePath="pointFrom" TsSourcePath="TsSenderpoint"/>
     <mappingItem JSourcePath="pointTo" TsSourcePath="TsSenderpoint"/>
     <mappingItem JSourcePath="shipmentItems" MapType="#ArrayOfCompositObject" TsSourcePath="Id" TsDestinationPath="TsShipment" TsDestinationName="TsShipmentPosition"  MapExecuteType = "#AfterEntitySave" />
@@ -537,12 +537,12 @@
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>
   <configItem JName="Contract" TsName="Contract">
-    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsLrsAccountId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccountId" TsDestinationResPath="TsExternalId"/>
+    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsLrsAccountId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="createdByUser" MapType="#StringToDictionaryGuid" TsSourcePath="OwnerId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
-    <mappingItem JSourcePath="contractType" MapType="#RefToGuid" TsSourcePath="Type" TsDestinationName="ContractType"/>
-    <mappingItem JSourcePath="firstParty" MapType="#RefToGuid" TsSourcePath="TsProductId" TsDestinationName="Account" TsExternalIdPath="TsOrderServiceId"/>
+    <mappingItem JSourcePath="contractType" MapType="#RefToGuid" TsSourcePath="TypeId" TsDestinationName="ContractType"/>
+    <!--<mappingItem JSourcePath="firstParty" MapType="#RefToGuid" TsSourcePath="TsProductId" TsDestinationName="Account" TsExternalIdPath="TsOrderServiceId"/>-->
     <mappingItem JSourcePath="secondParty" MapType="#RefToGuid" TsSourcePath="AccountId" TsDestinationName="Account" TsExternalIdPath="TsOrderServiceId"/>
-    <mappingItem JSourcePath="currency" TsSourcePath="Currency"/>
+    <mappingItem JSourcePath="currency" MapType="#StringToDictionaryGuid" TsSourcePath="CurrencyId" TsDestinationName="Currency" TsDestinationPath="Id" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="name" TsSourcePath="TsName"/>
     <mappingItem JSourcePath="contractNumber" TsSourcePath="Number"/>
     <mappingItem JSourcePath="fromDate" TsSourcePath="StartDate" MacrosName="DateWithouTime"/>
@@ -557,8 +557,8 @@
     <mappingItem JSourcePath="allowedMonthReturnPercent" TsSourcePath="TsReturnMonthPercent"/>
     <mappingItem JSourcePath="defaultReturnPeriod" TsSourcePath="TsReturnPeriod"/>
     <mappingItem JSourcePath="returnComissionPercent" TsSourcePath="TsReturnCommisionPercent"/>
-    <mappingItem JSourcePath="deliverySchedule" MapType="#StringToDictionaryGuid" TsSourcePath="TsSchedule" TsDestinationName="TsWorkingSchedule"/>
-    <mappingItem JSourcePath="paymentMethod" MapType="#StringToDictionaryGuid" TsSourcePath="TsPayType" TsDestinationName="TsContractPayType" TsDestinationPath="Id" TsDestinationResPath="TsExternalId"/>
+    <mappingItem JSourcePath="deliverySchedule" MapType="#StringToDictionaryGuid" TsSourcePath="TsScheduleId" TsDestinationName="TsWorkingSchedule"/>
+    <mappingItem JSourcePath="paymentMethod" MapType="#StringToDictionaryGuid" TsSourcePath="TsPayTypeId" TsDestinationName="TsContractPayType" TsDestinationPath="Id" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="deliveryInfo" TsSourcePath="TsAddDeliveryInfo"/>
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
@@ -599,7 +599,7 @@
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>
   <configItem JName="ManagerInfo" TsName="Contact">
-    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsSalesMarket" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccountId" TsDestinationResPath="TsExternalId"/>
+    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsSalesMarket" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="name" TsSourcePath="Name"/>
     <mappingItem JSourcePath="firstName" TsSourcePath="GivenName"/>
     <mappingItem JSourcePath="middleName" TsSourcePath="MiddleName"/>
@@ -616,7 +616,7 @@
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsOsVersion"/>
   </configItem>
   <configItem JName="CounteragentContactInfo" TsName="Contact">
-    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="Account.TsLrsAccountId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccountId" TsDestinationResPath="TsExternalId"/>
+    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="Account.TsLrsAccountId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="name" TsSourcePath="Name"/>
     <mappingItem JSourcePath="firstName" TsSourcePath="GivenName"/>
     <mappingItem JSourcePath="middleName" TsSourcePath="MiddleName"/>
@@ -630,7 +630,7 @@
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsOsVersion"/>
   </configItem>
   <configItem JName="Counteragent" TsName="">
-    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsLrsAccountId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccountId" TsDestinationResPath="TsExternalId"/>
+    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsLrsAccountId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="name" TsSourcePath="Name"/>
     <mappingItem JSourcePath="vatPayer" TsSourcePath="TsIsTaxPayer"/>
     <mappingItem JSourcePath="active" TsSourcePath="TsIsActive"/>

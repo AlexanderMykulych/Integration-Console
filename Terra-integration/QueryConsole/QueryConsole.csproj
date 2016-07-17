@@ -271,6 +271,15 @@
     <Compile Include="Files\BpmIntegrator\CsReferenceProperty.cs" />
     <Compile Include="Files\BpmIntegrator\IIntegrationEntityHandler.cs" />
     <Compile Include="Files\BpmIntegrator\IntegrationHandlerAttribute.cs" />
+    <Compile Include="Files\ConsoleManager\ConsoleInfo.cs" />
+    <Compile Include="Files\ConsoleManager\ConsoleManager.cs" />
+    <Compile Include="Files\ConsoleManager\IConsoleTable.cs" />
+    <Compile Include="Files\ConsoleManager\IntegrationConsole.cs" />
+    <Compile Include="Files\ConsoleManager\IntegrationConsoleManager.cs" />
+    <Compile Include="Files\ConsoleManager\Pair.cs" />
+    <Compile Include="Files\ConsoleManager\TableConsoleParser.cs" />
+    <Compile Include="Files\ConsoleManager\TableRowNameAttribute.cs" />
+    <Compile Include="Files\ConsoleManager\Trio.cs" />
     <Compile Include="Files\Constants\CsConstant.cs" />
     <Compile Include="Files\IntegratorHelper\IntegratorHelper.cs" />
     <Compile Include="Files\Integrators\ClientServiceIntegrator.cs" />
@@ -280,6 +289,7 @@
     <Compile Include="Files\IntegratorTester\BaseIntegratorTester.cs" />
     <Compile Include="Files\IntegratorTester\ClientServiceIntegratorTester.cs" />
     <Compile Include="Files\IntegratorTester\OrderServiceIntegratorTester.cs" />
+    <Compile Include="Files\IntegratorTester\TesterManager.cs" />
     <Compile Include="Files\Logger\IntegrationUtilities.cs" />
     <Compile Include="Files\MappingManager\IMapRule.cs" />
     <Compile Include="Files\MappingManager\JsonHelper.cs" />

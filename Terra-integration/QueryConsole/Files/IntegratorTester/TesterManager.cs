@@ -20,7 +20,8 @@ namespace QueryConsole.Files.IntegratorTester {
 		}
 
 		public void Add(string Name, int limit, int skip, int count = -1) {
-			if(count == -1) {
+			IntegrationConsole.AddEntityProgress(Name, limit*count);
+			if (count == -1) {
 				Configs.Add(new Tuple<string, int, int>(Name, limit, skip));
 			} else {
 				for(var i = 0; i < count; i++) {
@@ -37,16 +38,18 @@ namespace QueryConsole.Files.IntegratorTester {
 				var j = i;
 				if(i == Configs.Count - 1) {
 					Actions.Add(() => {
-						Console.Title = "Start Integrate: " + name;
+						IntegrationConsole.SetCurrentEntity(name);
 						var tester = GetTesterByEntityName(name);
 						tester.Limit = limit;
 						tester.Skip = skip;
-						tester.ExportServiceEntity(name);
-						Console.Title = "End Integrate: " + name;
+						tester.ExportServiceEntity(name, () =>
+						{
+							IntegrationConsole.EndIntegrated();
+						});
 					});
 				} else {
 					Actions.Add(() => {
-						Console.Title = "Start Integrate: " + name;
+						IntegrationConsole.SetCurrentEntity(name);
 						var tester = GetTesterByEntityName(name);
 						tester.Limit = limit;
 						tester.Skip = skip;
@@ -58,6 +61,7 @@ namespace QueryConsole.Files.IntegratorTester {
 
 		public void Run() {
 			GenerateActions();
+			IntegrationConsole.StartIntegrate();
 			Actions.Last()();
 		}
 

@@ -77,6 +77,7 @@ namespace QueryConsole.Files
 		{
 			info.Method = TRequstMethod.GET;
 			info.FullUrl = UrlMaker.Make(info);
+			IntegrationConsole.SetCurrentRequestUrl(info.FullUrl);
 			MakeRequest(info);
 		}
 
@@ -117,11 +118,11 @@ namespace QueryConsole.Files
 
 		public virtual void OnGetResponse(ServiceRequestInfo info)
 		{
-			Console.WriteLine("Catch Response");
 			var responseJObj = JObject.Parse(info.ResponseData);
 			switch(info.Method) {
 				case TRequstMethod.GET:
 					try {
+						IntegrationConsole.SetCurrentResponseSucces(responseJObj["total"].Value<int>(), responseJObj["skip"].Value<int>(), responseJObj["limit"].Value<int>());
 						IEnumerable<JObject> resultObjects;
 						if(string.IsNullOrEmpty(info.ServiceObjectId)) {
 							var objArray = responseJObj["data"] as JArray;

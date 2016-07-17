@@ -23,7 +23,7 @@ namespace QueryConsole.Files
 				resultUrl += "/" + objectId;
 				return resultUrl;
 			}
-			resultUrl += "?sort[createdAt]=desc";
+			//resultUrl += "?sort[createdAt]=desc";
 			if (!string.IsNullOrEmpty(limit)) {
 				resultUrl += (resultUrl.IndexOf("?") > -1 ? "&" : "?") + "limit=" + limit;
 			}

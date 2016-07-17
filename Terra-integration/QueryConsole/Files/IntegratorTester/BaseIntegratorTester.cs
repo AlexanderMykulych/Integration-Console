@@ -96,15 +96,15 @@ namespace QueryConsole.Files.IntegratorTester
 		}
 		private void ClonsoleGreen(string text)
 		{
-			var buff = Console.ForegroundColor;
-			Console.ForegroundColor = ConsoleColor.Green;
-			Console.WriteLine(text);
-			Console.ForegroundColor = buff;
+			//var buff = Console.ForegroundColor;
+			//Console.ForegroundColor = ConsoleColor.Green;
+			//Console.WriteLine(text);
+			//Console.ForegroundColor = buff;
 		}
 
 		private void Clonsole(string text)
 		{
-			Console.WriteLine(text);
+			//Console.WriteLine(text);
 		}
 	}
 }

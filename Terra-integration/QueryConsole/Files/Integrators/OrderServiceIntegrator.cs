@@ -14,8 +14,8 @@ namespace QueryConsole.Files.Integrators
 			: base(userConnection)
 		{
 			baseUrls = new Dictionary<TServiceObject, string>() {
-				{ TServiceObject.Dict, "http://api.order-service.stage3.laximo.ru/v2/dict/AUTO3N" },
-				{ TServiceObject.Entity, "http://api.order-service.stage3.laximo.ru/v2/entity/AUTO3N" }
+				{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
+				{ TServiceObject.Entity, "http://api.order-service.bus2.auto3n.ru/v2/entity/AUTO3N" }
 			};
 			integratorHelper = new IntegratorHelper();
 			UrlMaker = new ServiceUrlMaker(baseUrls);

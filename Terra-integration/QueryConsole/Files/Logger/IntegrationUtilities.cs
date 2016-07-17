@@ -1,4 +1,5 @@
-﻿using QueryConsole.Files.Constants;
+﻿using QueryConsole.Files;
+using QueryConsole.Files.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,9 +68,9 @@ namespace Terrasoft.TsConfiguration
 			if (!id.HasValue || !requestId.HasValue)
 				return;
 			var logger = _log.GetValue(id.Value);
-			logger.Instance.Info(string.Format("ResponseError - id = {0} requestId={1}", id.Value, requestId));
+			//logger.Instance.Info(string.Format("ResponseError - id = {0} requestId={1}", id.Value, requestId));
 			logger.UpdateResponseError(id.Value, requestId.Value, e.Message, e.StackTrace, text, requestJson);
-			Console.WriteLine(string.Format("ResponseError - id = {0} requestId={1} message={2}", id.Value, requestId, text));
+			//Console.WriteLine(string.Format("ResponseError - id = {0} requestId={1} message={2}", id.Value, requestId, text));
 		}
 		#endregion
 
@@ -90,23 +91,24 @@ namespace Terrasoft.TsConfiguration
 
 		public static void AfterSaveError(Exception e, string typeName)
 		{
-			var buff = Console.ForegroundColor;
-			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine("Error: " + typeName);
-			Console.ForegroundColor = buff;
+			IntegrationConsole.EntityIntegratedError(typeName);
+			//var buff = Console.ForegroundColor;
+			//Console.ForegroundColor = ConsoleColor.Red;
+			//Console.WriteLine("Error: " + typeName);
+			//Console.ForegroundColor = buff;
 		}
 
         public static Dictionary<string, int> IncDict = new Dictionary<string, int>();
 		public static void SuccessSave(string typeName) {
-            if (IncDict.ContainsKey(typeName))
+			IntegrationConsole.EntityIntegratedSuccess(typeName);
+			if (IncDict.ContainsKey(typeName))
             {
-                Console.WriteLine((++IncDict[typeName]).ToString() + ".Save: " + typeName);
+                //Console.WriteLine((++IncDict[typeName]).ToString() + ".Save: " + typeName);
             } else
             {
                 IncDict.Add(typeName, 0);
-                Console.WriteLine((++IncDict[typeName]).ToString() + ".Save: " + typeName);
+                //Console.WriteLine((++IncDict[typeName]).ToString() + ".Save: " + typeName);
             }
-			
 		}
 	}
 
@@ -168,7 +170,7 @@ namespace Terrasoft.TsConfiguration
 						.Set("Id", Column.Parameter(errorId))
 						.Set("TsErrorText", Column.Parameter(errorText))
 						.Set("TsCallStack", Column.Parameter(callStack))
-						.Set("TsRequestJson", Column.Parameter(requestJson))
+						.Set("TsRequestJson", Column.Parameter(requestJson != null ? requestJson : string.Empty))
 						.Set("TsResponseJson", Column.Parameter(json)) as Insert;
 			insert.Execute();
 			var update = new Update(info.UserConnection, "TsIntegrationRequest")
