@@ -20,6 +20,7 @@ namespace Terrasoft.CsConfiguration
 			integratorHelper = new Terrasoft.TsConfiguration.IntegratorHelper();
 			UrlMaker = new ServiceUrlMaker(baseUrls);
 			ServiceName = "ClientService";
+			Auth = "Basic YnBtb25saW5lOjEyMzQ1Ng==";
 		}
 	}
 }

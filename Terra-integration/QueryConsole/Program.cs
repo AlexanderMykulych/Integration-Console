@@ -27,8 +27,8 @@ namespace QueryConsole
 		}
 		public static void Main(string[] args) {
 			try {
-				var consoleApp = new TerrasoftConsoleClass("A.Mykulych");
-				//var consoleApp = new TerrasoftConsoleClass("Default");
+				//var consoleApp = new TerrasoftConsoleClass("A.Mykulych");
+				var consoleApp = new TerrasoftConsoleClass("Default");
 				try {
 					consoleApp.Run();
 				} catch(Exception e) {
@@ -76,7 +76,17 @@ namespace QueryConsole
 				//testers[0].Skip = 0;
 				//testers[0].ExportServiceEntity("CounteragentContactInfo", () =>
 				//{
-
+				var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
+					{"ManagerInfo", 500, 0, 1},
+					{"CounteragentContactInfo", 500, 0, 1},
+					{"Counteragent", 500, 0, 1},
+					{"Contract", 500, 0, 1},
+					{"Order", 500, 0, 1},
+					{"Shipment", 500, 0, 1},
+					{"Payment", 500, 0, 1},
+					{"Return", 500, 0, 1},
+				};
+				testerManager.Run();
 				//		testers[0].Limit = 1000;
 				//		testers[0].Skip = 2000;
 				//		testers[0].ExportServiceEntity("Counteragent", () =>
@@ -126,30 +136,30 @@ namespace QueryConsole
 				//															testers[0].Skip = 6000;
 				//															testers[0].ExportServiceEntity("Contract", () =>
 				//															{
-																				testers[0].Limit = 10;
-																				testers[0].Skip = 0;
-																				testers[0].ExportServiceEntity("Order", () =>
-																				{
-																					testers[0].Limit = 1000;
-																					testers[0].Skip = 500;
-																					testers[0].ExportServiceEntity("Order", () =>
-																					{
-																						testers[0].Limit = 1500;
-																						testers[0].Skip = 0;
-																						testers[0].ExportServiceEntity("Shipment", () =>
-																						{
-																							testers[0].Limit = 1500;
-																							testers[0].Skip = 0;
-																							testers[0].ExportServiceEntity("Payment", () =>
-																							{
-																								testers[0].Limit = 1500;
-																								testers[0].Skip = 0;
-																								testers[0].ExportServiceEntity("Return", () =>
-																								{
+																				//testers[0].Limit = 10;
+																				//testers[0].Skip = 0;
+																				//testers[0].ExportServiceEntity("Order", () =>
+																				//{
+																				//	testers[0].Limit = 1000;
+																				//	testers[0].Skip = 500;
+																				//	testers[0].ExportServiceEntity("Order", () =>
+																				//	{
+																				//		testers[0].Limit = 1500;
+																				//		testers[0].Skip = 0;
+																				//		testers[0].ExportServiceEntity("Shipment", () =>
+																				//		{
+																				//			testers[0].Limit = 1500;
+																				//			testers[0].Skip = 0;
+																				//			testers[0].ExportServiceEntity("Payment", () =>
+																				//			{
+																				//				testers[0].Limit = 1500;
+																				//				testers[0].Skip = 0;
+																				//				testers[0].ExportServiceEntity("Return", () =>
+																				//				{
 
-																											});
-																										});
-																									});
+																				//							});
+																				//						});
+																				//					});
 																				//				});
 																				//			});
 																				//		});

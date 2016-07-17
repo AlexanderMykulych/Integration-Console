@@ -67,7 +67,7 @@ namespace QueryConsole.Files
 		public ServiceUrlMaker UrlMaker;
 		public IntegrationEntityHelper entityHelper;
 		public string ServiceName;
-
+		public string Auth;
 		public BaseServiceIntegrator(UserConnection userConnection) {
 			this.userConnection = userConnection;
 			entityHelper = new IntegrationEntityHelper();
@@ -107,7 +107,12 @@ namespace QueryConsole.Files
 			{
 				info.ResponseData = x;
 				OnGetResponse(info);
-			}, userConnection, info.LogId);
+			}, userConnection, info.LogId,
+			(x, y, requestId) => {
+				if(info.AfterIntegrate != null) {
+					info.AfterIntegrate();
+				}
+			}, Auth);
 		}
 
 		public virtual void OnGetResponse(ServiceRequestInfo info)
@@ -116,19 +121,25 @@ namespace QueryConsole.Files
 			var responseJObj = JObject.Parse(info.ResponseData);
 			switch(info.Method) {
 				case TRequstMethod.GET:
-					IEnumerable<JObject> resultObjects;
-					if(string.IsNullOrEmpty(info.ServiceObjectId)) {
-						var objArray = responseJObj["data"] as JArray;
-						resultObjects = objArray.Select(x => x as JObject);
-					} else {
-						resultObjects = new List<JObject>() {
-							responseJObj.First as JObject
-						};
+					try {
+						IEnumerable<JObject> resultObjects;
+						if(string.IsNullOrEmpty(info.ServiceObjectId)) {
+							var objArray = responseJObj["data"] as JArray;
+							resultObjects = objArray.Select(x => x as JObject);
+						} else {
+							resultObjects = new List<JObject>() {
+								responseJObj.First as JObject
+							};
+						}
+						foreach(var jObj in resultObjects) {
+							IntegrateServiceEntity(jObj, info.ServiceObjectName);
+						}
+					} catch(Exception e) {
+
 					}
-					foreach(var jObj in resultObjects) {
-						IntegrateServiceEntity(jObj, info.ServiceObjectName);
+					if(info.AfterIntegrate != null) {
+						info.AfterIntegrate();
 					}
-					info.AfterIntegrate();
 				break;
 				case TRequstMethod.POST:
 				case TRequstMethod.PUT:

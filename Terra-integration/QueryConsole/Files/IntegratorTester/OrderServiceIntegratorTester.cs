@@ -37,17 +37,17 @@ namespace QueryConsole.Files.IntegratorTester
 		public override List<string> InitServiceEntitiesName()
 		{
 			return new List<string>() {
-               // "Payment",
-               //"Order",
-                //"OrderItem",
-                //"Return",
-                //"Shipment",
-               //Debt",
+                "Payment",
+               "Order",
+                "OrderItem",
+                "Return",
+                "Shipment",
+               "Debt",
                 "Contract",
-                //"ContractBalance",
-                //"ManagerInfo",
-               // "CounteragentContactInfo",
-             // "Counteragent"
+                "ContractBalance",
+                "ManagerInfo",
+                "CounteragentContactInfo",
+              "Counteragent"
 			};
 		}
 	}
