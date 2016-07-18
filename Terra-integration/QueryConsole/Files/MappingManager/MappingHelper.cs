@@ -188,241 +188,61 @@ namespace Terrasoft.TsConfiguration
 
 		public void MapColumn(MappingItem mapItem, ref JToken jToken, IntegrationInfo integrationInfo)
 		{
-			if (UserConnection == null)
-				UserConnection = integrationInfo.UserConnection;
-			var entity = integrationInfo.IntegratedEntity;
-			var integrationType = integrationInfo.IntegrationType;
-			Action executedMethod = new Action(() => { });
-			var rule = RulesFactory.GetRule(mapItem.MapType.ToString());
-			if(rule != null) {
-				RuleInfo ruleInfo = null;
-				switch(integrationInfo.IntegrationType) {
-					case TIntegrationType.ExportResponseProcess:
-					case TIntegrationType.Import:
-						ruleInfo = new RuleImportInfo() {
-							config = mapItem,
-							entity = integrationInfo.IntegratedEntity,
-							json = jToken,
-							userConnection = UserConnection,
-							integrationType = integrationInfo.IntegrationType,
-							action = integrationInfo.Action
-						};
-						executedMethod = () => rule.Import((RuleImportInfo)ruleInfo);
-						if (mapItem.MapExecuteType == TMapExecuteType.BeforeEntitySave)
-						{
-							executedMethod();
-						} else {
-							MethodQueue.Enqueue(executedMethod);
-						}
-						break;
-					case TIntegrationType.Export:
-						ruleInfo = new RuleExportInfo()
-						{
-							config = mapItem,
-							entity = integrationInfo.IntegratedEntity,
-							json = jToken,
-							userConnection = UserConnection,
-							integrationType = integrationInfo.IntegrationType,
-							action = integrationInfo.Action
-						};
-						rule.Export((RuleExportInfo)ruleInfo);
-						jToken = ruleInfo.json;
-						break;
-				}
-			}
-		}
-
-		public void ArrayOfReference(MappingItem mappingItem, IntegrationInfo integrationInfo, ref JToken jToken)
-		{
 			try
 			{
-				switch (integrationInfo.IntegrationType)
+				if (UserConnection == null)
+					UserConnection = integrationInfo.UserConnection;
+				var entity = integrationInfo.IntegratedEntity;
+				var integrationType = integrationInfo.IntegrationType;
+				Action executedMethod = new Action(() => { });
+				var rule = RulesFactory.GetRule(mapItem.MapType.ToString());
+				if (rule != null)
 				{
-					case TIntegrationType.Import:
-					case TIntegrationType.ExportResponseProcess:
-						{
-							//Guid? resultGuid = null;
-							//if(jToken != null && jToken.HasValues) {
-							//	var refColumns = jToken[RefName];
-							//	var externalId = int.Parse(refColumns["id"].ToString());
-							//	var type = refColumns["type"];
-							//	resultGuid = GetGuidByExternalId(mappingItem.TsSourceName, externalId);
-							//}
-							//integrationInfo.IntegratedEntity.SetColumnValue(mappingItem.TsSourcePath, resultGuid);
-							break;
-						}
-					case TIntegrationType.Export:
-						{
-							if (IsAllNotNullAndEmpty(integrationInfo.IntegratedEntity, mappingItem.TsDestinationName, mappingItem.TsSourcePath, mappingItem.JSourceName))
+					RuleInfo ruleInfo = null;
+					switch (integrationInfo.IntegrationType)
+					{
+						case TIntegrationType.ExportResponseProcess:
+						case TIntegrationType.Import:
+							ruleInfo = new RuleImportInfo()
 							{
-								var srcValue = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>(mappingItem.TsSourcePath);
-								var jArray = new JArray();
-								var resultList = GetColumnValues(mappingItem.TsDestinationName, mappingItem.TsDestinationPath, srcValue, mappingItem.TsDestinationResPath);
-								foreach (var resultItem in resultList)
-								{
-									var extId = int.Parse(resultItem.ToString());
-									if (extId != 0)
-									{
-										jArray.Add(JToken.FromObject(CsReference.Create(extId, mappingItem.JSourceName)));
-									}
-								}
-								jToken = jArray;
+								config = mapItem,
+								entity = integrationInfo.IntegratedEntity,
+								json = jToken,
+								userConnection = UserConnection,
+								integrationType = integrationInfo.IntegrationType,
+								action = integrationInfo.Action
+							};
+							executedMethod = () => rule.Import((RuleImportInfo)ruleInfo);
+							if (mapItem.MapExecuteType == TMapExecuteType.BeforeEntitySave)
+							{
+								executedMethod();
 							}
 							else
 							{
-								jToken = null;
+								MethodQueue.Enqueue(executedMethod);
 							}
 							break;
-						}
-				}
-			}
-			catch (Exception e)
-			{
-				throw;
-			}
-		}
-		public void Const(MappingItem mappingItem, IntegrationInfo integrationInfo, ref JToken jToken)
-		{
-			try
-			{
-				switch (integrationInfo.IntegrationType)
-				{
-					case TIntegrationType.Import:
-					case TIntegrationType.ExportResponseProcess:
-						{
-							//Guid? resultGuid = null;
-							//if(jToken != null && jToken.HasValues) {
-							//	var refColumns = jToken[RefName];
-							//	var externalId = int.Parse(refColumns["id"].ToString());
-							//	var type = refColumns["type"];
-							//	resultGuid = GetGuidByExternalId(mappingItem.TsSourceName, externalId);
-							//}
-							//integrationInfo.IntegratedEntity.SetColumnValue(mappingItem.TsSourcePath, resultGuid);
-							break;
-						}
-					case TIntegrationType.Export:
-						{
-							object resultValue = null;
-							switch (mappingItem.ConstType)
+						case TIntegrationType.Export:
+							ruleInfo = new RuleExportInfo()
 							{
-								case TConstType.String:
-									resultValue = mappingItem.ConstValue;
-									break;
-								case TConstType.Bool:
-									resultValue = Convert.ToBoolean(mappingItem.ConstValue.ToString());
-									break;
-								case TConstType.Int:
-									resultValue = int.Parse(mappingItem.ConstValue.ToString());
-									break;
-								case TConstType.Null:
-									resultValue = null;
-									break;
-								case TConstType.EmptyArray:
-									resultValue = new ArrayList();
-									break;
-							}
-							jToken = resultValue != null ? JToken.FromObject(resultValue) : null;
+								config = mapItem,
+								entity = integrationInfo.IntegratedEntity,
+								json = jToken,
+								userConnection = UserConnection,
+								integrationType = integrationInfo.IntegrationType,
+								action = integrationInfo.Action
+							};
+							rule.Export((RuleExportInfo)ruleInfo);
+							jToken = ruleInfo.json;
 							break;
-						}
+					}
 				}
-			}
-			catch (Exception e)
-			{
-				throw;
+			} catch(Exception e) {
+				IntegrationLogger.MappingError(e, mapItem);
 			}
 		}
 
-		public void RefToGuid(MappingItem mappingItem, IntegrationInfo integrationInfo, ref JToken jToken)
-		{
-			switch (integrationInfo.IntegrationType)
-			{
-				case TIntegrationType.Import:
-				case TIntegrationType.ExportResponseProcess:
-					{
-						Guid? resultGuid = null;
-						if (jToken != null && jToken.HasValues)
-						{
-							var refColumns = jToken[RefName];
-							var externalId = int.Parse(refColumns["id"].ToString());
-							var type = refColumns["type"];
-							resultGuid = GetColumnValues(mappingItem.TsDestinationName, "TsExternalId", externalId, "Id").FirstOrDefault() as Guid?;
-						}
-						integrationInfo.IntegratedEntity.SetColumnValue(mappingItem.TsSourcePath, resultGuid);
-						break;
-					}
-				case TIntegrationType.Export:
-					{
-						object resultObj = null;
-						if (IsAllNotNullAndEmpty(integrationInfo.IntegratedEntity, mappingItem.TsDestinationName, mappingItem.TsSourcePath, mappingItem.JSourceName, mappingItem.TsDestinationPath))
-						{
-							var resultValue = GetColumnValues(mappingItem.TsDestinationName, mappingItem.TsDestinationPath, integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>(mappingItem.TsSourcePath), mappingItem.TsExternalIdPath).FirstOrDefault(x => (int)x > 0);
-							if (resultValue != null)
-							{
-								var resultRef = CsReference.Create(int.Parse(resultValue.ToString()), mappingItem.JSourceName);
-								resultObj = resultRef != null ? JToken.FromObject(resultRef) : null;
-							}
-						}
-						jToken = resultObj as JToken;
-						break;
-					}
-			}
-		}
-
-		public void Simple(MappingItem mappingItem, IntegrationInfo integrationInfo, ref JToken jToken)
-		{
-			switch (integrationInfo.IntegrationType)
-			{
-				case TIntegrationType.Import:
-				case TIntegrationType.ExportResponseProcess:
-					{
-						object value = GetSimpleTypeValue(jToken);
-						integrationInfo.IntegratedEntity.SetColumnValue(mappingItem.TsSourcePath, value);
-						break;
-					}
-				case TIntegrationType.Export:
-					{
-						var value = integrationInfo.IntegratedEntity.GetColumnValue(mappingItem.TsSourcePath);
-						var simpleResult = value != null ? GetSimpleTypeValue(value) : null;
-						if (!string.IsNullOrEmpty(mappingItem.MacrosName))
-						{
-							simpleResult = TsMacrosHelper.GetMacrosResultImport(mappingItem.MacrosName, simpleResult);
-						}
-						jToken = simpleResult != null ? JToken.FromObject(simpleResult) : null;
-						break;
-					}
-			}
-		}
-
-		public void FirstDestinationField(MappingItem mappingItem, IntegrationInfo integrationInfo, ref JToken jToken)
-		{
-			switch (integrationInfo.IntegrationType)
-			{
-				case TIntegrationType.Import:
-				case TIntegrationType.ExportResponseProcess:
-					{
-						object resultId = null;
-						if (jToken != null)
-						{
-							var newValue = GetSimpleTypeValue(jToken);
-							resultId = GetColumnValues(mappingItem.TsDestinationName, mappingItem.TsDestinationResPath, newValue, mappingItem.TsDestinationPath, 1).FirstOrDefault();
-						}
-						integrationInfo.IntegratedEntity.SetColumnValue(mappingItem.TsSourcePath, resultId);
-						break;
-					}
-				case TIntegrationType.Export:
-					{
-						object resultObject = null;
-						if (IsAllNotNullAndEmpty(integrationInfo.IntegratedEntity, mappingItem.TsDestinationName, mappingItem.TsSourcePath, mappingItem.TsDestinationPath, mappingItem.TsDestinationResPath))
-						{
-							var sourceValue = integrationInfo.IntegratedEntity.GetColumnValue(mappingItem.TsSourcePath);
-							resultObject = GetColumnValues(mappingItem.TsDestinationName, mappingItem.TsDestinationPath, sourceValue, mappingItem.TsDestinationResPath).FirstOrDefault();
-						}
-						jToken = resultObject != null ? JToken.FromObject(resultObject) : null;
-						break;
-					}
-			}
-		}
-
+		
 		public void CompositObject(MappingItem mappingItem, IntegrationInfo integrationInfo, ref JToken jToken)
 		{
 			try
@@ -459,47 +279,7 @@ namespace Terrasoft.TsConfiguration
 				throw;
 			}
 		}
-
-		public void ArrayOfCompositObject(MappingItem mappingItem, IntegrationInfo integrationInfo, ref JToken jToken)
-		{
-			try
-			{
-				switch (integrationInfo.IntegrationType)
-				{
-					case TIntegrationType.Import:
-					case TIntegrationType.ExportResponseProcess:
-						{
-							if (jToken is JArray)
-							{
-								var jArray = (JArray)jToken;
-								foreach (JToken jArrayItem in jArray)
-								{
-									JToken jObj = jArrayItem;
-									CompositObject(mappingItem, integrationInfo, ref jObj);
-								}
-							}
-							break;
-						}
-					case TIntegrationType.Export:
-						{
-							if (IsAllNotNullAndEmpty(integrationInfo.IntegratedEntity, mappingItem.TsSourcePath, mappingItem.TsDestinationPath, mappingItem.TsDestinationName))
-							{
-								var srcEntity = integrationInfo.IntegratedEntity;
-								var dscValue = srcEntity.GetColumnValue(mappingItem.TsSourcePath);
-								string handlerName = GetFirstNotNull(mappingItem.HandlerName, mappingItem.TsDestinationName, mappingItem.JSourceName);
-								var resultJObjs = GetCompositeJObjects(dscValue, mappingItem.TsDestinationPath, mappingItem.TsDestinationName, handlerName, integrationInfo.UserConnection);
-								var jArray = (jToken = new JArray()) as JArray;
-								resultJObjs.ForEach(x => jArray.Add(x));
-							}
-							break;
-						}
-				}
-			}
-			catch (Exception e)
-			{
-				throw;
-			}
-		}
+		
 
 		public List<JObject> GetCompositeJObjects(object colValue, string colName, string entityName, string handlerName, UserConnection userConnection, int maxCount = -1)
 		{
@@ -566,13 +346,14 @@ namespace Terrasoft.TsConfiguration
 					switch (entity.StoringState)
 					{
 						case StoringObjectState.New:
-                            if (entity.PrimaryColumnValue == Guid.Empty)
-                            {
-                                result = entity.Save(false);
-                            } else
-                            {
-                                result = entity.InsertToDB(false, false);
-                            }
+						if (entity.PrimaryColumnValue == Guid.Empty)
+							{
+								result = entity.Save(false);
+							}
+							else
+							{
+								result = entity.InsertToDB(false, false);
+							}
 							break;
 						case StoringObjectState.Changed:
 							result = entity.UpdateInDB(false);
@@ -599,81 +380,12 @@ namespace Terrasoft.TsConfiguration
 		#endregion
 
 		#region Methods: Private
-		private List<object> GetColumnValues(string entityName, string entityPath, object entityPathValue, string resultColumnName, int limit = -1,
-			string orderColumnName = "CreatedOn", Common.OrderDirection orderType = Common.OrderDirection.Descending)
-		{
-			var esq = new EntitySchemaQuery(UserConnection.EntitySchemaManager, entityName);
-			if (limit > 0)
-			{
-				esq.RowCount = limit;
-			}
-			var resColumn = esq.AddColumn(resultColumnName);
-			if (!string.IsNullOrEmpty(orderColumnName))
-			{
-				var orderColumn = esq.AddColumn(orderColumnName);
-				orderColumn.SetForcedQueryColumnValueAlias("orderColumn");
-				orderColumn.OrderDirection = orderType;
-				orderColumn.OrderPosition = 0;
-			}
-			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, entityPath, entityPathValue));
-			return esq.GetEntityCollection(UserConnection).Select(x =>
-				x.GetColumnValue(resColumn.IsLookup ? PrepareColumn(resColumn.Name, true) : resColumn.Name)
-			).ToList();
-		}
-
 		private string PrepareColumn(string columnName, bool withId = false)
 		{
 			var endWithId = columnName.EndsWith("Id");
 			return withId ? (endWithId ? columnName : columnName + "Id") : (endWithId ? columnName.Substring(0, columnName.Length - 2) : columnName);
 		}
-
-		private object GetSimpleTypeValue(JToken jToken)
-		{
-			try
-			{
-				switch (jToken.Type)
-				{
-					case JTokenType.String:
-						return jToken.Value<string>();
-					case JTokenType.Integer:
-						return jToken.Value<int>();
-					case JTokenType.Float:
-						return jToken.Value<float>();
-					case JTokenType.Date:
-						return jToken.Value<DateTime>();
-					case JTokenType.TimeSpan:
-						return jToken.Value<TimeSpan>();
-					case JTokenType.Boolean:
-						return jToken.Value<bool>();
-					default:
-						return null;
-				}
-			}
-			catch (Exception e)
-			{
-				//IntegrationLogger.Error("Method [GetSimpleTypeValue] catch exception: Message = {0}", e.Message);
-				throw;
-			}
-		}
-
-		private object GetSimpleTypeValue(object value)
-		{
-			try
-			{
-				if (value is DateTime)
-				{
-					return ((DateTime)value).ToString("yyyy-MM-dd");
-				}
-
-				return value;
-			}
-			catch (Exception e)
-			{
-				//IntegrationLogger.Error("Method [GetSimpleTypeValue] catch exception: Message = {0}", e.Message);
-				throw;
-			}
-		}
-
+		
 		private bool IsAllNotNullAndEmpty(params object[] values)
 		{
 			foreach (var value in values)

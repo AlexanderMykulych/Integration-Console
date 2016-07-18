@@ -148,11 +148,22 @@ namespace QueryConsole.Files
 			}
 		}
 
+		private int _mappingError;
+		public int MappingError {
+			get {
+				return _mappingError;
+			}
+			set {
+				_mappingError = value;
+				Refresh();
+			}
+		}
+
 		public Dictionary<string, Func<object, object>> GetMapper()
 		{
 			return new Dictionary<string, Func<object, object>>() {
 				{ "Integration Status", x => ((ConsoleInfo)x).IntegrationStatus },
-				{ "Progress", x => ((ConsoleInfo)x).Progress },
+				{ "Progress", x => ((ConsoleInfo)x).Progress + "%" },
 				{ "Request Status", x => ((ConsoleInfo)x).RequestStatus },
 				{ "Url", x => ((ConsoleInfo)x).Url },
 				{ "Response", x => ((ConsoleInfo)x).Response },
@@ -164,7 +175,8 @@ namespace QueryConsole.Files
 					}
 				},
 				{ "Entity Progress", x => ((ConsoleInfo)x).EntityProgress.Select(z => string.Format("{0} ({1} - {2} - {3})", z.Key, z.Value.First, z.Value.Second, z.Value.Third)).Aggregate((z,y) =>  z + "\n" + y)},
-				{ "EntityError Progress", x => ((ConsoleInfo)x).EntityErrorProgress },
+				{ "Mapping Error", x => ((ConsoleInfo)x).MappingError },
+				{ "Save Error Count", x => ((ConsoleInfo)x).EntityErrorProgress },
 				{ "Total Count", x => ((ConsoleInfo)x).SummaryEntityCount }
 			};
 		}

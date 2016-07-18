@@ -110,6 +110,10 @@ namespace Terrasoft.TsConfiguration
                 //Console.WriteLine((++IncDict[typeName]).ToString() + ".Save: " + typeName);
             }
 		}
+
+		public static void MappingError(Exception e, MappingItem item) {
+			IntegrationConsole.AddMappingError();
+		}
 	}
 
 	public class TsLogger {

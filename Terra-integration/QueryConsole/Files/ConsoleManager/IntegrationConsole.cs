@@ -67,6 +67,10 @@ namespace QueryConsole.Files
 			Console.SetCursorPosition(0, 0);
 			Console.WriteLine(ConsoleInfo.ToTable());
 		}
+
+		public static void AddMappingError() {
+			ConsoleInfo.MappingError++;
+		}
 	}
 
 	public static class TableParser
