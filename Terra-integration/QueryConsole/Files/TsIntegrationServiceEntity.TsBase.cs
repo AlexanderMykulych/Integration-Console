@@ -450,16 +450,29 @@ namespace Terrasoft.TsConfiguration
 
                 try
                 {
-                    var sum = GetOrderItemSum(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
-					integrationInfo.IntegratedEntity.SetColumnValue("Amount", sum);
-					integrationInfo.IntegratedEntity.SetColumnValue("PrimaryAmount", sum);
-					integrationInfo.IntegratedEntity.UpdateInDB(false);
+                    var OrderItemSum = GetOrderItemSum(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
+					integrationInfo.IntegratedEntity.SetColumnValue("Amount", OrderItemSum);
+					integrationInfo.IntegratedEntity.SetColumnValue("PrimaryAmount", OrderItemSum);
                 } catch(Exception e)
                 {
                 }
+				try
+				{
+					var paymentSum = GetPaymentSum(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
+					integrationInfo.IntegratedEntity.SetColumnValue("PaymentAmount", paymentSum);
+				}
+				catch (Exception e)
+				{
+				}
+				try
+				{
+					integrationInfo.IntegratedEntity.UpdateInDB(false);
+				} catch(Exception e) {
 
-                try
-                {
+				}
+
+				try
+				{
                     if (integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsContractId") != Guid.Empty) {
                         var account = GetAccountByContract(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsContractId"), integrationInfo.UserConnection);
                         if (account != Guid.Empty)
@@ -471,8 +484,8 @@ namespace Terrasoft.TsConfiguration
                 } catch(Exception e)
                 {
                 }
-
-            }
+				
+			}
 		}
 
 		public string IfNullThanEmpty(string text) {
@@ -542,6 +555,7 @@ namespace Terrasoft.TsConfiguration
 						.Set("Id", Column.Parameter(addressId))
 						.Set("Primary", Column.Parameter(true))
 						.Set("Zip", Column.Parameter(zip))
+						.Set("CityId", Column.Parameter(cityId))
 						.Set("Address", Column.Parameter(address)) as Insert;
 			foreach(var column in columns) {
 				if(column.Value != Guid.Empty) {
@@ -614,7 +628,26 @@ namespace Terrasoft.TsConfiguration
             return 0;
         }
 
-        public Guid GetAccountByContract(Guid id, UserConnection userConnection)
+		public double GetPaymentSum(Guid orderId, UserConnection userConnection) {
+			var select = new Select(userConnection)
+								   .Column(Func.Sum("TsAmount")).As("amount")
+								   .From("TsPaymentInOrder").As("pio")
+								   .InnerJoin("TsPayment").As("p").On("pio", "TsPaymentId").IsEqual("p", "Id")
+								   .Where("TsOrderId").IsEqual(Column.Parameter(orderId)) as Select;
+			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
+			{
+				using (IDataReader reader = select.ExecuteReader(dbExecutor))
+				{
+					while (reader.Read())
+					{
+						return DBUtilities.GetColumnValue<double>(reader, "amount");
+					}
+				}
+			}
+			return 0;
+		}
+
+		public Guid GetAccountByContract(Guid id, UserConnection userConnection)
         {
             var select = new Select(userConnection)
                             .Column("AccountId")
@@ -980,6 +1013,12 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("")]
 	public class CounteragentContactInfoHandler : EntityHandler
 	{
+		public override void BeforeMapping(IntegrationInfo integrationInfo)
+		{
+			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
+				integrationInfo.Data["CounteragentContactInfo"]["positionFull"] = integrationInfo.Data["CounteragentContactInfo"]["position"];
+			}
+		}
 		public override string HandlerName
 		{
 			get
@@ -987,6 +1026,22 @@ namespace Terrasoft.TsConfiguration
 				return JName;
 			}
 		}
+		public override string ExternalIdPath
+		{
+			get
+			{
+				return CsConstant.ServiceColumnInBpm.IdentifierOrder;
+			}
+		}
+
+		public override string ExternalVersionPath
+		{
+			get
+			{
+				return CsConstant.ServiceColumnInBpm.VersionOrder;
+			}
+		}
+
 		public CounteragentContactInfoHandler()
 		{
 			Mapper = new MappingHelper();

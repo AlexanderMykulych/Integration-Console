@@ -94,7 +94,7 @@ namespace QueryConsole.Files.MappingManager
 			var endWithId = columnName.EndsWith("Id");
 			return withId ? (endWithId ? columnName : columnName + "Id") : (endWithId ? columnName.Substring(0, columnName.Length - 2) : columnName);
 		}
-		public static  bool IsAllNotNullAndEmpty(params object[] values)
+		public static bool IsAllNotNullAndEmpty(params object[] values)
 		{
 			foreach (var value in values)
 			{
@@ -142,30 +142,38 @@ namespace QueryConsole.Files.MappingManager
 				return new List<JObject>();
 			}
 		}
-		public static Tuple<Dictionary<string, string>, Entity> GetEntityByExternalId(string schemaName, int externalId, UserConnection userConnection, bool addAllColumn, params string[] columns) {
+		public static Tuple<Dictionary<string, string>, Entity> GetEntityByExternalId(string schemaName, int externalId, UserConnection userConnection, bool addAllColumn, params string[] columns)
+		{
 			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, schemaName);
 			var columnDict = new Dictionary<string, string>();
-			if(addAllColumn) {
+			if (addAllColumn)
+			{
 				esq.AddAllSchemaColumns();
-			} else {
-				foreach(var column in columns) {
+			}
+			else
+			{
+				foreach (var column in columns)
+				{
 					var columnSchema = esq.AddColumn(column);
 					columnDict.Add(column, columnSchema.Name);
 				}
 			}
 			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, CsConstant.ServiceColumnInBpm.Identifier, externalId));
 			var entity = esq.GetEntityCollection(userConnection).FirstOrDefault();
-			return new Tuple<Dictionary<string,string>,Entity>(columnDict, entity);
+			return new Tuple<Dictionary<string, string>, Entity>(columnDict, entity);
 		}
-		public static bool isEntityExist(string schemaName, UserConnection userConnection, Dictionary<string, object> filters) {
+		public static bool isEntityExist(string schemaName, UserConnection userConnection, Dictionary<string, object> filters)
+		{
 			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, schemaName);
 			var schema = userConnection.EntitySchemaManager.GetInstanceByName(schemaName);
 			esq.AddColumn(esq.CreateAggregationFunction(AggregationTypeStrict.Count, schema.PrimaryColumn.Name));
-			foreach(var filter in filters) {
+			foreach (var filter in filters)
+			{
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, filter.Key, filter.Value));
 			}
 			var select = esq.GetSelectQuery(userConnection);
-			using(DBExecutor dbExecutor = userConnection.EnsureDBConnection()) {
+			using (DBExecutor dbExecutor = userConnection.EnsureDBConnection())
+			{
 				using (IDataReader reader = select.ExecuteReader(dbExecutor))
 				{
 					while (reader.Read())
@@ -175,6 +183,60 @@ namespace QueryConsole.Files.MappingManager
 				}
 			}
 			return false;
+		}
+
+		public static void UpdateOrInsertEntityColumn(string entityName, string setColumn, object setValue, UserConnection userConnection, IEnumerable<Tuple<string, string>> optionalColumns, List<Tuple<string, object>> filters)
+		{
+			filters.AddRange(optionalColumns.Select(x => new Tuple<string, object>(x.Item1, x.Item2)));
+			if (GetEntityCount(entityName, userConnection, filters) > 0) {
+				var update = new Update(userConnection, entityName);
+				if (filters.Any())
+				{
+					update.Where(filters[0].Item1).IsEqual(Column.Parameter(filters[0].Item2));
+					foreach (var filter in filters.Skip(1))
+					{
+						update.And(filter.Item1).IsEqual(Column.Parameter(filter.Item2));
+					}
+				}
+				update.Set(setColumn, Column.Parameter(setValue));
+				foreach(var optionalColumn in optionalColumns) {
+					update.Set(optionalColumn.Item1, Column.Parameter(optionalColumn.Item2));
+				}
+				update.Execute();
+			} else {
+				var insert = new Insert(userConnection).Into(entityName);
+				insert.Set(setColumn, Column.Parameter(setValue));
+				foreach (var optionalColumn in optionalColumns)
+				{
+					insert.Set(optionalColumn.Item1, Column.Parameter(optionalColumn.Item2));
+				}
+				insert.Execute();
+			}
+		}
+
+		public static int GetEntityCount(string entityName, UserConnection userConnection, List<Tuple<string, object>> filters) {
+			var select = new Select(userConnection)
+						.Column(Func.Count("Id")).As("count")
+						.From(entityName);
+			if (filters.Any())
+			{
+				select.Where(filters[0].Item1).IsEqual(Column.Parameter(filters[0].Item2));
+				foreach (var filter in filters.Skip(1))
+				{
+					select.And(filter.Item1).IsEqual(Column.Parameter(filter.Item2));
+				}
+			}
+			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
+			{
+				using (IDataReader reader = select.ExecuteReader(dbExecutor))
+				{
+					while (reader.Read())
+					{
+						return DBUtilities.GetColumnValue<int>(reader, "count");
+					}
+				}
+			}
+			return 0;
 		}
 	}
 }

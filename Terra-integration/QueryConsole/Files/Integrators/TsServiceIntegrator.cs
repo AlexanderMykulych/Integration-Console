@@ -122,17 +122,21 @@ namespace QueryConsole.Files
 			switch(info.Method) {
 				case TRequstMethod.GET:
 					try {
-						IntegrationConsole.SetCurrentResponseSucces(responseJObj["total"].Value<int>(), responseJObj["skip"].Value<int>(), responseJObj["limit"].Value<int>());
 						IEnumerable<JObject> resultObjects;
-						if(string.IsNullOrEmpty(info.ServiceObjectId)) {
+						if (string.IsNullOrEmpty(info.ServiceObjectId))
+						{
+							IntegrationConsole.SetCurrentResponseSucces(responseJObj["total"].Value<int>(), responseJObj["skip"].Value<int>(), responseJObj["limit"].Value<int>());
 							var objArray = responseJObj["data"] as JArray;
 							resultObjects = objArray.Select(x => x as JObject);
-						} else {
+						}
+						else
+						{
 							resultObjects = new List<JObject>() {
-								responseJObj.First as JObject
+								responseJObj
 							};
 						}
-						foreach(var jObj in resultObjects) {
+						foreach (var jObj in resultObjects)
+						{
 							IntegrateServiceEntity(jObj, info.ServiceObjectName);
 						}
 					} catch(Exception e) {

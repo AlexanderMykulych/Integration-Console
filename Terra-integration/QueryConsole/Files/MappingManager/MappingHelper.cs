@@ -440,7 +440,8 @@ namespace Terrasoft.TsConfiguration
 		ArrayOfCompositObject = 4,
 		Const = 5,
 		ArrayOfReference = 6,
-		ManyToMany = 8
+		ManyToMany = 8,
+		ToDetail = 9
 	}
 	#endregion
 

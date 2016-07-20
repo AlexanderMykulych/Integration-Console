@@ -11,30 +11,38 @@ namespace QueryConsole.Files.IntegratorTester {
 		public UserConnection UserConnection;
 		public List<BaseIntegratorTester> Testers;
 		public List<Action> Actions = new List<Action>();
-		public List<Tuple<string, int, int>> Configs;
+		public List<Tuple<string, int, int, int>> Configs;
 
 		public TesterManager(UserConnection userConnection, params BaseIntegratorTester[] testers) {
 			UserConnection = userConnection;
 			Testers = testers.ToList();
-			Configs = new List<Tuple<string, int, int>>();
+			Configs = new List<Tuple<string, int, int, int>>();
 		}
 
-		public void Add(string Name, int limit, int skip, int count = -1) {
-			IntegrationConsole.AddEntityProgress(Name, limit*count);
-			if (count == -1) {
-				Configs.Add(new Tuple<string, int, int>(Name, limit, skip));
-			} else {
-				for(var i = 0; i < count; i++) {
-					Configs.Add(new Tuple<string, int, int>(Name, limit, skip + i*limit));
+		public void Add(string Name, int limit, int skip, int count = -1, int id = 0)
+		{
+			IntegrationConsole.AddEntityProgress(Name, limit * count);
+			if (count == -1)
+			{
+				Configs.Add(new Tuple<string, int, int, int>(Name, limit, skip, id));
+			}
+			else
+			{
+				for (var i = 0; i < count; i++)
+				{
+					Configs.Add(new Tuple<string, int, int, int>(Name, limit, skip + i * limit, id));
 				}
 			}
 		}
+
+		
 
 		public void GenerateActions() {
 			for(var i = Configs.Count - 1; i >= 0; i--) {
 				var name = Configs[i].Item1;
 				var limit = Configs[i].Item2;
 				var skip = Configs[i].Item3;
+				var id = Configs[i].Item4;
 				var j = i;
 				if(i == Configs.Count - 1) {
 					Actions.Add(() => {
@@ -42,10 +50,16 @@ namespace QueryConsole.Files.IntegratorTester {
 						var tester = GetTesterByEntityName(name);
 						tester.Limit = limit;
 						tester.Skip = skip;
-						tester.ExportServiceEntity(name, () =>
+						Action afterSaveAction = () =>
 						{
 							IntegrationConsole.EndIntegrated();
-						});
+						};
+						if (id == 0)
+						{
+							tester.ExportServiceEntity(name, afterSaveAction);
+						} else {
+							tester.ExportById(name, id, afterSaveAction);
+						}
 					});
 				} else {
 					Actions.Add(() => {
@@ -53,7 +67,12 @@ namespace QueryConsole.Files.IntegratorTester {
 						var tester = GetTesterByEntityName(name);
 						tester.Limit = limit;
 						tester.Skip = skip;
-						tester.ExportServiceEntity(name, Actions[Configs.Count - 2 - j]);
+						if (id == 0)
+						{
+							tester.ExportServiceEntity(name, Actions[Configs.Count - 2 - j]);
+						} else {
+							tester.ExportById(name, id, Actions[Configs.Count - 2 - j]);
+						}
 					});
 				}
 			}

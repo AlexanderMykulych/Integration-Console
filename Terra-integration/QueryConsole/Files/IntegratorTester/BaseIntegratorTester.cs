@@ -56,6 +56,16 @@ namespace QueryConsole.Files.IntegratorTester
 			serviceRequestInfo.AfterIntegrate = AfterIntegrate;
 			Integrator.GetRequest(serviceRequestInfo);
 		}
+		public void ExportServiceEntity(string name, int id, Action afterIntegrate = null)
+		{
+			AfterIntegrate = afterIntegrate;
+			var serviceRequestInfo = ServiceRequestInfo.CreateForExportInBpm(name);
+			serviceRequestInfo.Limit = Limit.ToString();
+			serviceRequestInfo.Skip = Skip.ToString();
+			serviceRequestInfo.ServiceObjectId = id.ToString();
+			serviceRequestInfo.AfterIntegrate = AfterIntegrate;
+			Integrator.GetRequest(serviceRequestInfo);
+		}
 		public void ExportAllServiceEntities(int limit = 10, int skip = 0) {
 			Limit = limit;
 			Skip = skip;
@@ -69,7 +79,9 @@ namespace QueryConsole.Files.IntegratorTester
 				ClonsoleGreen("End: " + name);
 			}
 		}
-
+		public void ExportById(string name, int id, Action afterIntegrate = null) {
+			ExportServiceEntity(name, id, afterIntegrate);
+		}
 		public abstract BaseServiceIntegrator CreateIntegrator();
 		public abstract List<string> InitEntitiesName();
 		public abstract List<string> InitServiceEntitiesName();

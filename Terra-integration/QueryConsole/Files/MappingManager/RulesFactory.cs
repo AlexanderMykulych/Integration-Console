@@ -19,7 +19,8 @@ namespace QueryConsole.Files.MappingManager
 				new ArrayOfCompositeObjectMappRule(),
 				new ArrayOfReferenceMappRule(),
 				new ComplexFieldMappRule(),
-				new ManyToManyMappRule()
+				new ManyToManyMappRule(),
+				new ToDetailMappRule()
 			};
 		}
 		public IMappRule GetRule(string type) {

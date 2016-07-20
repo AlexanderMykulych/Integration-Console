@@ -18,7 +18,7 @@ namespace QueryConsole.Files
 		{
 			string resultUrl = baseUrls[type];
 			resultUrl += "/" + objectName;
-			if ((method == TRequstMethod.PUT || method == TRequstMethod.DELETE) && !string.IsNullOrEmpty(objectId))
+			if (!string.IsNullOrEmpty(objectId))
 			{
 				resultUrl += "/" + objectId;
 				return resultUrl;

@@ -51,6 +51,12 @@ namespace Terrasoft.TsConfiguration
 		public bool SerializeIfZero {get;set;}
 
 		public bool Key {get;set;}
+
+		public string TsDetailName { get; set; }
+		public string TsDetailPath { get; set; }
+		public string TsDetailResPath { get; set; }
+		public string TsTag { get; set; }
+		public string TsDetailTag { get; set; }
 		#endregion
 
 		#region Constructor: MappingItem
