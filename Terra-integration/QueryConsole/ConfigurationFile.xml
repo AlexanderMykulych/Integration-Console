@@ -540,7 +540,7 @@
   </configItem>
   <configItem JName="Contract" TsName="Contract">
     <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsLrsAccountId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsExternalId"/>
-    <mappingItem JSourcePath="createdByUser" MapType="#StringToDictionaryGuid" TsSourcePath="OwnerId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
+    <!--<mappingItem JSourcePath="createdByUser" MapType="#StringToDictionaryGuid" TsSourcePath="OwnerId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>-->
     <mappingItem JSourcePath="contractType" MapType="#RefToGuid" TsSourcePath="TypeId" TsDestinationName="ContractType"/>
     <!--<mappingItem JSourcePath="firstParty" MapType="#RefToGuid" TsSourcePath="TsProductId" TsDestinationName="Account" TsExternalIdPath="TsOrderServiceId"/>-->
     <mappingItem JSourcePath="secondParty" MapType="#RefToGuid" TsSourcePath="AccountId" TsDestinationName="Account" TsExternalIdPath="TsOrderServiceId"/>
@@ -562,6 +562,7 @@
     <mappingItem JSourcePath="deliverySchedule" MapType="#StringToDictionaryGuid" TsSourcePath="TsScheduleId" TsDestinationName="TsWorkingSchedule"/>
     <mappingItem JSourcePath="paymentMethod" MapType="#StringToDictionaryGuid" TsSourcePath="TsPayTypeId" TsDestinationName="TsContractPayType" TsDestinationPath="Id" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="deliveryInfo" TsSourcePath="TsAddDeliveryInfo"/>
+    <mappingItem JSourcePath="manager" TsSourcePath="OwnerId" TsMapType="#RefToGuid" TsDestinationName="Contact" TsExternalIdPath="TsOrderServiceId" TsDestinationPath="Id"/>
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>

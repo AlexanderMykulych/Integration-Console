@@ -144,6 +144,10 @@ namespace Terrasoft.TsConfiguration
 			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, extId));
 			return esq.GetEntityCollection(userConnection).FirstOrDefault();
 		}
+
+		public virtual bool IsExport(IntegrationInfo integrationInfo) {
+			return true;
+		}
 	}
 
 	[ImportHandlerAttribute("CompanyProfile")]
@@ -960,6 +964,11 @@ namespace Terrasoft.TsConfiguration
 					integrationInfo.IntegratedEntity.UpdateInDB(false);
 				}
 			}
+		}
+
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return integrationInfo.IntegratedEntity != null && integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("StateId") == CsConstant.TsContractState.Signed;
 		}
 	}
 

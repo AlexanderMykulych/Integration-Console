@@ -163,6 +163,9 @@ namespace Terrasoft.TsConfiguration
 			}
 			if (x is Int64)
 			{
+				if((Int64)x > Int32.MaxValue) {
+					return new DateTime(Int32.MaxValue - 1, 1, 1);
+				}
 				return new DateTime(Convert.ToInt32((Int64)x), 1, 1);
 			}
 			return x;

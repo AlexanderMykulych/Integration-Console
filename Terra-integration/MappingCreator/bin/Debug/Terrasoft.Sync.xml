@@ -395,6 +395,11 @@
             <summary>
             Актуализрует состояние метаданных хранилища перед началом синхронизации </summary>
         </member>
+        <member name="M:Terrasoft.Sync.SyncAgent.ClearMetadata">
+            <summary>
+            Clears metadata for records, deleted in local and remote storage.
+            </summary>
+        </member>
         <member name="M:Terrasoft.Sync.SyncAgent.ConvertLocalItemToRemoteItemAndSave(Terrasoft.Sync.IRemoteItem,Terrasoft.Sync.LocalItem,Terrasoft.Sync.ItemMetadata)">
             <summary>
             Применяет изменения во внешнем элементе синхронизации syncItem
@@ -542,6 +547,23 @@
             <returns>Результат разрешения конфикта.</returns>
             <remarks>Считается, что последнее изменение было в локальном хранилище в том случае, если хотя бы один 
             элемент был изменен позже, чем во внешнем хранилище - приоритет изменений из локального хранилища.</remarks>
+        </member>
+        <member name="M:Terrasoft.Sync.RemoteProvider.RealeaseItem(Terrasoft.Sync.IRemoteItem)">
+            <summary>
+            Releases <paramref name = "remoteItem"/> from enumerator.</summary>
+            <param name="remoteItem">Remote item.</param>
+        </member>
+        <member name="M:Terrasoft.Sync.RemoteProvider.RealeaseItem(Terrasoft.Sync.IRemoteItem,Terrasoft.Sync.LocalItem)">
+            <summary>
+            Remotes <paramref name = "remoteItem"/> from enumerator and removes processes on
+            <paramref name = "localItem"/></summary>
+            <param name="remoteItem">Remote item.</param>
+            <param name="localItem">Local item.</param>
+        </member>
+        <member name="M:Terrasoft.Sync.RemoteProvider.NeedMetaDataActualization">
+            <summary>
+            Returns a flag that requires actualized metadata.
+            </summary>
         </member>
         <member name="M:Terrasoft.Sync.RemoteProvider.GetLocallyModifiedItemsMetadata(Terrasoft.Sync.SyncContext,Terrasoft.Core.Entities.EntitySchemaQuery)">
             <summary>

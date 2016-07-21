@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,13 +26,11 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -64,78 +64,6 @@
     <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\DevDefined.OAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Charts.v10.2.Core, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.Charts.v10.2.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.CodeParser.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.CodeParser.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Data.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.Data.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.PivotGrid.v10.2.Core, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.PivotGrid.v10.2.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.RichEdit.v10.2.Core, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.RichEdit.v10.2.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Utils.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.Utils.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraBars.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraBars.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraCharts.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraCharts.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraCharts.v10.2.Extensions, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraCharts.v10.2.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraEditors.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraEditors.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraNavBar.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraNavBar.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraPivotGrid.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraPivotGrid.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraPrinting.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraReports.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraReports.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraReports.v10.2.Extensions, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraReports.v10.2.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraRichEdit.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraRichEdit.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraTreeList.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraTreeList.v10.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraVerticalGrid.v10.2, Version=10.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DevExpress.XtraVerticalGrid.v10.2.dll</HintPath>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -182,11 +110,13 @@
     <Reference Include="Quartz">
       <HintPath>..\..\..\WebApp\Armtek\Terrasoft.WebApp\bin\Quartz.dll</HintPath>
     </Reference>
-    <Reference Include="SharpSvn">
-      <HintPath>..\packages\SharpSvn.1.8-x86.1.8016.3866.130\lib\net40\SharpSvn.dll</HintPath>
+    <Reference Include="SharpSvn, Version=1.8016.3866.130, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=AMD64">
+      <HintPath>..\packages\SharpSvn.1.8-x64.1.8016.3866.130\lib\net40\SharpSvn.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SharpSvn.UI">
-      <HintPath>..\packages\SharpSvn.1.8-x86.1.8016.3866.130\lib\net40\SharpSvn.UI.dll</HintPath>
+    <Reference Include="SharpSvn.UI, Version=1.8016.3866.130, Culture=neutral, PublicKeyToken=33789aa53ca44aa9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpSvn.1.8-x64.1.8016.3866.130\lib\net40\SharpSvn.UI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -205,64 +135,64 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Terrasoft.Common, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Common, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Common.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Configuration">
-      <HintPath>..\..\..\..\..\Dev\Armtek_D\C#\A.Mykulych\Terrasoft.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Terrasoft.Core, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Core, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Core.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Core.Packages, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Core.Packages, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Core.Packages.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Core.Packages.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Core.Scheduler, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Core.Scheduler, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Core.Scheduler.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Core.Scheduler.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Messaging.Common, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Messaging.Common.dll</HintPath>
+    <Reference Include="Terrasoft.Core.ServiceModelContract">
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Core.ServiceModelContract.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Nui, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.DB.MSSql, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Nui.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.DB.MSSql.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Nui.ServiceModel, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.DB.Oracle, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Nui.ServiceModel.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.DB.Oracle.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Reports, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Messaging.FlashPolicyService, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Reports.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Messaging.FlashPolicyService.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Social, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Mobile, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Social.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Mobile.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Svn, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Redis, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Terrasoft.Svn.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Redis.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Sync, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Reports, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Sync.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Reports.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Tools.Common, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Store.WebAdapters, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Terrasoft.Tools.Common.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Store.WebAdapters.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.UI.WebControls, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.UI.WebControls, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.UI.WebControls.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.UI.WebControls.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Web.Common, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Web.Common, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Web.Common.dll</HintPath>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.WebApp.Loader, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.WebApp.Loader.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +234,7 @@
     <Compile Include="Files\MappingManager\MappRule\ManyToManyMappRule.cs" />
     <Compile Include="Files\MappingManager\MappRule\ReferensToEntityMappRule.cs" />
     <Compile Include="Files\MappingManager\MappRule\SimpleMappRule.cs" />
+    <Compile Include="Files\MappingManager\MappRule\ToDetailMappRule.cs" />
     <Compile Include="Files\MappingManager\RuleExportInfo.cs" />
     <Compile Include="Files\MappingManager\RuleImportInfo.cs" />
     <Compile Include="Files\MappingManager\RuleInfo.cs" />

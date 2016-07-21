@@ -16,6 +16,7 @@ namespace Terrasoft.TsConfiguration
 		void Unknown(IntegrationInfo integrationInfo);
 		void ProcessResponse(IntegrationInfo integrationInfo);
 		JObject ToJson(IntegrationInfo integrationInfo);
+		bool IsExport(IntegrationInfo integrationInfo);
 		bool IsEntityAlreadyExist(IntegrationInfo integrationInfo);
 	}
 }
