@@ -662,6 +662,8 @@
     <mappingItem JSourcePath="companyRegistrationNumberName" TsSourcePath="TsRegNumberTypeId" MapType="#StringToDictionaryGuid" TsDestinationName="TsRegNumberType" />
     <mappingItem JSourcePath="companyRegistrationNumber" TsSourcePath="TsKPP"/>
     <mappingItem JSourcePath="agentId" TsSourcePath="TsServicePostId"/>
+    <mappingItem JSourcePath="manager" TsSourcePath="OwnerId" MapType="#RefToGuid" TsDestinationName="Contact" TsExternalIdPath="TsOrderServiceId"/>
+    <mappingItem JSourcePath="headManager" TsSourcePath="TsHeadOwnerId" MapType="#RefToGuid" TsDestinationName="Contact" TsExternalIdPath="TsOrderServiceId"/>
     <mappingItem JSourcePath="address" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="AccountAddress" TsDetailPath ="AccountId" TsDetailResPath="Address" TsTag="simple" MapExecuteType="#AfterEntitySave"  TsDetailTag="AddressTypeId|770bf68c-4b6e-df11-b988-001d60e938c6"/>
     <mappingItem JSourcePath="locationAddress" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="AccountAddress" TsDetailPath ="AccountId" TsDetailResPath="Address" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="AddressTypeId|780bf68c-4b6e-df11-b988-001d60e938c6"/>
     <mappingItem JSourcePath="facebook" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="AccountCommunication" TsDetailPath ="AccountId" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|2795dd03-bacf-e011-92c3-00155d04c01d"/>
