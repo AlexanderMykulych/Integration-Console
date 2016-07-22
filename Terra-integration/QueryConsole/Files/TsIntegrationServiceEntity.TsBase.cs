@@ -938,6 +938,10 @@ namespace Terrasoft.TsConfiguration
 			integrationInfo.Data["ContractBalance"]["id"] = integrationInfo.Data["ContractBalance"]["contract"]["#ref"]["id"];
 			return base.IsEntityAlreadyExist(integrationInfo);
 		}
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return false;
+		}
 	}
 
 	[ImportHandlerAttribute("Contract")]

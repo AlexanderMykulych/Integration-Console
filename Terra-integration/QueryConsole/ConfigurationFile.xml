@@ -551,7 +551,7 @@
     <mappingItem JSourcePath="tillDate" TsSourcePath="EndDate" MacrosName="DateWithouTime"/>
     <mappingItem JSourcePath="priceGroupId" MapType="#StringToDictionaryGuid" TsSourcePath="TsPriceTypeId" TsDestinationName="TsPriceType" TsDestinationPath="Id" TsDestinationResPath="TsExternalId"/>
     <!--<mappingItem JSourcePath="personalDiscount" TsSourcePath="TsNote"/>-->
-    <!--<mappingItem JSourcePath="agentId" TsSourcePath="TsVat"/>-->
+    <mappingItem JSourcePath="agentId" TsSourcePath="AccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Id" TsDestinationResPath="TsSpAccount.TsOrderServiceId" MapIntegrationType="#Export"/>
     <mappingItem JSourcePath="active" TsSourcePath="TsActive"/>
     <mappingItem JSourcePath="creditLimit" TsSourcePath="TsCreditLimit"/>
     <mappingItem JSourcePath="normalDebtPeriodDays" TsSourcePath="TsDelayPeriod"/>
