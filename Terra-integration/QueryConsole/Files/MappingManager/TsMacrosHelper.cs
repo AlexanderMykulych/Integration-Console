@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Terrasoft.TsConfiguration
 {
+	public enum MacrosType
+	{
+		Rule,
+		OverRule
+	}
 	public static class TsMacrosHelper
 	{
 		public static Dictionary<string, Func<object, object>> MacrosDictImport = new Dictionary<string, Func<object, object>>() {
@@ -21,23 +27,55 @@ namespace Terrasoft.TsConfiguration
 			{ "TimeSpanToDate", x => DateToTimeSpan(x) },
 			{ "TimeSpanToDateTime", x => DateToTimeSpan(x) }
 		};
+		public static Dictionary<string, Func<object, object>> OverMacrosDictImport = new Dictionary<string, Func<object, object>>() {
+			{ "ConvertJson", x => ConvertStringToJson(x)}
+		};
+		public static Dictionary<string, Func<object, object>> OverMacrosDictExport = new Dictionary<string, Func<object, object>>() {
+			{ "ConvertJson", x => ConvertJsonToString(x)}
+		};
 
-		public static object GetMacrosResultImport(string macrosName, object value)
+		public static object GetMacrosResultImport(string macrosName, object value, MacrosType type = MacrosType.Rule)
 		{
-			if (MacrosDictImport.ContainsKey(macrosName) && MacrosDictImport[macrosName] != null)
+			switch (type)
 			{
-				return MacrosDictImport[macrosName](value);
+				case MacrosType.Rule:
+					if (MacrosDictImport.ContainsKey(macrosName) && MacrosDictImport[macrosName] != null)
+					{
+						return MacrosDictImport[macrosName](value);
+					}
+					return value;
+				case MacrosType.OverRule:
+					if (OverMacrosDictImport.ContainsKey(macrosName) && OverMacrosDictImport[macrosName] != null)
+					{
+						return OverMacrosDictImport[macrosName](value);
+					}
+					return value;
+				default:
+					return value;
 			}
-			return value;
+
 		}
-		public static object GetMacrosResultExport(string macrosName, object value)
+		public static object GetMacrosResultExport(string macrosName, object value, MacrosType type = MacrosType.Rule)
 		{
-			if (MacrosDictExport.ContainsKey(macrosName) && MacrosDictExport[macrosName] != null)
+			switch (type)
 			{
-				return MacrosDictExport[macrosName](value);
+				case MacrosType.Rule:
+					if (MacrosDictExport.ContainsKey(macrosName) && MacrosDictExport[macrosName] != null)
+					{
+						return MacrosDictExport[macrosName](value);
+					}
+					return value;
+				case MacrosType.OverRule:
+					if (OverMacrosDictExport.ContainsKey(macrosName) && OverMacrosDictExport[macrosName] != null)
+					{
+						return OverMacrosDictExport[macrosName](value);
+					}
+					return value;
+				default:
+					return value;
 			}
-			return value;
 		}
+
 		#region Macros: Import
 		public static Func<object, object> DateTimeToYearInteger = (x) =>
 		{
@@ -142,6 +180,27 @@ namespace Terrasoft.TsConfiguration
 			}
 			return x;
 		};
+
+		public static Func<object, object> ConvertJsonToString = (x) =>
+		{
+			if (x == null)
+				return null;
+			if (x is JToken)
+			{
+				return ((JToken)x).ToString();
+			}
+			return x;
+		};
+		public static Func<object, object> ConvertStringToJson = (x) =>
+		{
+			if (x == null)
+				return null;
+			if (x is string)
+			{
+				return JToken.Parse((string)x);
+			}
+			return x;
+		};
 		#endregion
 
 		#region Macros: Export
@@ -163,7 +222,8 @@ namespace Terrasoft.TsConfiguration
 			}
 			if (x is Int64)
 			{
-				if((Int64)x > Int32.MaxValue) {
+				if ((Int64)x > Int32.MaxValue)
+				{
 					return new DateTime(Int32.MaxValue - 1, 1, 1);
 				}
 				return new DateTime(Convert.ToInt32((Int64)x), 1, 1);

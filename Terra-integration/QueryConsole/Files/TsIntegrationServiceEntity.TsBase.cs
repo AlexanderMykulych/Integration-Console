@@ -1096,4 +1096,16 @@ namespace Terrasoft.TsConfiguration
 			JName = "Counteragent";
 		}
 	}
+
+	[ImportHandlerAttribute("")]
+	[ExportHandlerAttribute("AccountBillingInfo")]
+	public class AccountBillingInfoHandler : EntityHandler
+	{
+		public AccountBillingInfoHandler()
+		{
+			Mapper = new MappingHelper();
+			EntityName = "AccountBillingInfo";
+			JName = "";
+		}
+	}
 }

@@ -57,6 +57,7 @@ namespace Terrasoft.TsConfiguration
 		public string TsDetailResPath { get; set; }
 		public string TsTag { get; set; }
 		public string TsDetailTag { get; set; }
+		public string OverRuleMacros { get; set; }
 		#endregion
 
 		#region Constructor: MappingItem

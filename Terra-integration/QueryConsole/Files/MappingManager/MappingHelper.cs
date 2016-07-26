@@ -150,12 +150,12 @@ namespace Terrasoft.TsConfiguration
 							throw new ArgumentNullException("Field " + item.JSourcePath + " required!");
 						if(jObjItem == null && !item.SerializeIfNull) {
 							resultJ.Parent.Remove();
-							return;
+							continue;
 						}
 						if (jObjItem != null && jObjItem.ToString() == "0" && !item.SerializeIfZero)
 						{
 							resultJ.Parent.Remove();
-							return;
+							continue;
 						}
 						resultJ.Replace(jObjItem);
 					}
@@ -203,6 +203,7 @@ namespace Terrasoft.TsConfiguration
 					{
 						case TIntegrationType.ExportResponseProcess:
 						case TIntegrationType.Import:
+							ExecuteOverRuleMacros(mapItem, ref jToken, integrationInfo);
 							ruleInfo = new RuleImportInfo()
 							{
 								config = mapItem,
@@ -234,6 +235,7 @@ namespace Terrasoft.TsConfiguration
 							};
 							rule.Export((RuleExportInfo)ruleInfo);
 							jToken = ruleInfo.json;
+							ExecuteOverRuleMacros(mapItem, ref jToken, integrationInfo);
 							break;
 					}
 				}
@@ -242,7 +244,22 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		
+		public void ExecuteOverRuleMacros(MappingItem mapItem, ref JToken jToken, IntegrationInfo integrationInfo)
+		{
+			if(mapItem.OverRuleMacros.IsNullOrEmpty()) {
+				return;
+			}
+			switch (integrationInfo.IntegrationType)
+			{
+				case TIntegrationType.ExportResponseProcess:
+				case TIntegrationType.Import:
+					jToken = TsMacrosHelper.GetMacrosResultImport(mapItem.OverRuleMacros, jToken.Value<string>(), MacrosType.OverRule) as JToken;
+					break;
+				case TIntegrationType.Export:
+					jToken = JToken.FromObject(TsMacrosHelper.GetMacrosResultExport(mapItem.OverRuleMacros, jToken, MacrosType.OverRule));
+					break;
+			}
+		}
 		public void CompositObject(MappingItem mappingItem, IntegrationInfo integrationInfo, ref JToken jToken)
 		{
 			try
@@ -408,7 +425,7 @@ namespace Terrasoft.TsConfiguration
 			{
 				if (!jToken.HasValues || jToken[pItem] == null)
 				{
-					if (type == TIntegrationType.Import) {
+					if (type != TIntegrationType.Import) {
 						jToken[pItem] = new JObject();
 					} else {
 						return new JObject();
