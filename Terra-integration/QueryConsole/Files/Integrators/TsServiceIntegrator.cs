@@ -162,13 +162,15 @@ namespace QueryConsole.Files
 			if (integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
 			{
 				var json = integrationInfo.Result.Data.ToString();
-				System.Diagnostics.Debugger.Break();
-				//var requestInfo = ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
-				//if(IntegrationEntityHelper.isEntityAlreadyIntegrated(entity)) {
-				//	UpdateRequest(requestInfo);
-				//} else {
-				//	InsertRequest(requestInfo);
-				//}
+				var requestInfo = ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
+				if (IntegrationEntityHelper.isEntityAlreadyIntegrated(entity))
+				{
+					UpdateRequest(requestInfo);
+				}
+				else
+				{
+					InsertRequest(requestInfo);
+				}
 			}
 		}
 

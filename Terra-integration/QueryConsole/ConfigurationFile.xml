@@ -132,6 +132,7 @@
   <!--<configItem JName = "ContactInfo" TsName=""><mappingItem JSourcePath = "name" MapType="#Const" ConstValue="ContactInfo"/><mappingItem JSourcePath = "emailAllowed" TsSourcePath="DoNotUseEmail"/><mappingItem JSourcePath = "phoneAllowed" TsSourcePath = "DoNotUseCall"/><mappingItem JSourcePath = "faxAllowed" TsSourcePath = "DoNotUseFax"/><mappingItem JSourcePath = "smsAllowed" TsSourcePath = "DoNotUseSms"/><mappingItem JSourcePath = "mailAllowed" TsSourcePath = "DoNotUseMail"/><mappingItem JSourcePath = "records" TsSourcePath = "Id" TsDestinationPath="Contact" TsDestinationName="ContactCommunication" MapType="#ArrayOfCompositObject" JSourceName="ContactRecord"/><mappingItem JSourcePath = "addresses" TsSourcePath = "Id" TsDestinationPath="Contact" TsDestinationName="ContactAddress" MapType="#ArrayOfCompositObject" JSourceName="AddressInfo"/></configItem>-->
   <configItem JName="ClientRequest" TsName="Case">
     <mappingItem JSourcePath="number" TsSourcePath="Number"/>
+    <mappingItem JSourcePath="ownerAgentId" TsSourcePath="TsSalesMarketId" MapType="#StringToDictionaryGuid" TsDestinationName="TsLocSalMarket" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="state" MapType="#StringToDictionaryGuid" TsDestinationName="CaseStatus" TsSourcePath="StatusId"/>
     <mappingItem JSourcePath="priority" MapType="#StringToDictionaryGuid" TsDestinationName="CasePriority" TsSourcePath="PriorityId"/>
     <mappingItem JSourcePath="origin" MapType="#StringToDictionaryGuid" TsDestinationName="CaseOrigin" TsSourcePath="OriginId"/>
