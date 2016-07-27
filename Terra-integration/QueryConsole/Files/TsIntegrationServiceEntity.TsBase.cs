@@ -962,14 +962,51 @@ namespace Terrasoft.TsConfiguration
 		public override void AfterEntitySave(IntegrationInfo integrationInfo)
 		{
 			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
+				SetState(integrationInfo);
+			}
+		}
+		public void SetState(IntegrationInfo integrationInfo) {
+			try {
 				var isActive = integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsActive");
-				if(isActive) {
+				if (isActive)
+				{
 					integrationInfo.IntegratedEntity.SetColumnValue("StateId", CsConstant.TsContractState.Signed);
 					integrationInfo.IntegratedEntity.UpdateInDB(false);
 				}
+			} catch(Exception e) {
+				//TODO: Add Logging
+			}
+		}
+		public void SetBussinesProtocol(IntegrationInfo integrationInfo) {
+			try {
+				var accountId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("AccountId");
+				if(accountId != Guid.Empty) {
+					var isLegal = IsAccountLegal(accountId, integrationInfo.UserConnection);
+					integrationInfo.IntegratedEntity.SetColumnValue(isLegal ? "TsB2B" : "TsB2C", true);
+					integrationInfo.IntegratedEntity.UpdateInDB(false);
+				}
+			} catch(Exception e) {
+				//TODO: Add Logging
 			}
 		}
 
+		public bool IsAccountLegal(Guid accountId, UserConnection userConnection) {
+			var select = new Select(userConnection)
+							.Column("TsIsLawPerson").As("IsLegal")
+							.From("Account")
+							.Where("Id").IsEqual(Column.Parameter(accountId)) as Select;
+			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
+			{
+				using (IDataReader reader = select.ExecuteReader(dbExecutor))
+				{
+					while (reader.Read())
+					{
+						return DBUtilities.GetColumnValue<bool>(reader, "IsLegal");
+					}
+				}
+			}
+			throw new Exception("IsAccountLegal throw exception: No account with id = " + accountId.ToString());
+		}
 		public override bool IsExport(IntegrationInfo integrationInfo)
 		{
 			return integrationInfo.IntegratedEntity != null && integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("StateId") == CsConstant.TsContractState.Signed;
