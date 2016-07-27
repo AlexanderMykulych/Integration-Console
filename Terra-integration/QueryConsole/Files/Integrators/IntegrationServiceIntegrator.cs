@@ -78,6 +78,9 @@ namespace QueryConsole.Files.Integrators
 			});
 		}
 
+		public void IniciateLoadChanges() {
+			
+		}
 		/// <summary>
 		/// Всем нотификейшенам в ReadedNotificationIds ставит статус "Прочитано"
 		/// </summary>

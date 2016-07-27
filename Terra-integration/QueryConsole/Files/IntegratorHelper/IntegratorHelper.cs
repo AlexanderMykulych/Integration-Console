@@ -129,7 +129,6 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		#region Class: ResponceParams
 		private class ResponceParams
 		{
 			public ResponceParams(HttpWebRequest request, Action<string, UserConnection> callback, UserConnection userConnection, string jsonData)
@@ -144,7 +143,6 @@ namespace Terrasoft.TsConfiguration
 			public UserConnection UserConnection;
 			public string JsonData;
 		}
-		#endregion
 		#endregion
 	}
 }

@@ -26,12 +26,6 @@ namespace Terrasoft.TsConfiguration
 	using QueryConsole.Files.BpmEntityHelper;
 	using QueryConsole.Files.Constants;
 
-
-	#region Class: ClientServiceIntegrator
-	
-	#endregion
-
-	#region Static Class: ExtensionHelper
 	public static class ExtensionHelper {
 		#region Methods: Public
 		/// <summary>
@@ -53,16 +47,12 @@ namespace Terrasoft.TsConfiguration
 		}
 		#endregion
 	}
-	#endregion
 
-	#region Interface: IMappingMethod
 	public interface IMappingMethod {
 		//TODO: Вынести методы маппера в отдельные сущности
 		void Evaluate(MappingItem mappItem, IntegrationInfo integrationInfo);
 	}
-	#endregion
 
-	#region Class: MappingMethodAttribute
 	public class MappingMethodAttribute : System.Attribute {
 		private string methodName;
 		public string MethodName {
@@ -75,9 +65,7 @@ namespace Terrasoft.TsConfiguration
 			this.methodName = methodName;
 		}
 	}
-	#endregion
 
-	#region Class: IntegrationConfigurationManager
 	public static class IntegrationConfigurationManager {
 		
 		#region Static Fields: Private
@@ -324,5 +312,4 @@ namespace Terrasoft.TsConfiguration
 		#endregion
 		
 	}
-	#endregion
 }

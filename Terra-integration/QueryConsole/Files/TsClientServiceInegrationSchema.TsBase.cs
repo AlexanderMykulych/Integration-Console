@@ -9,8 +9,6 @@
 	using Terrasoft.Core;
 	using Terrasoft.Core.Configuration;
 
-	#region Class: TsClientServiceInegrationSchema
-
 	/// <exclude/>
 	public class TsClientServiceInegrationSchema : Terrasoft.Core.SourceCodeSchema
 	{
@@ -51,8 +49,5 @@
 		#endregion
 
 	}
-
-	#endregion
-
 }
 

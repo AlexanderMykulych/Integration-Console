@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terrasoft.TsConfiguration;
 
 namespace MappingCreator.FormConnector {
 	public class FormConnector {
@@ -21,5 +22,13 @@ namespace MappingCreator.FormConnector {
 		public void SetSelectedMappingItem(int index) {
 			SelectedIndex = index;
 		}
+
+		public List<MappingItem> GetMappingsItem() {
+			if(SelectedIndex > -1) {
+				return _manager._mappingConfiguration.ConfigItems[SelectedIndex].MappingItems;
+			}
+			return new List<MappingItem>();
+		}
+
 	}
 }

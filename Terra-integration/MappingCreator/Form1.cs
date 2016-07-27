@@ -57,6 +57,13 @@ namespace MappingCreator
 		private void entityNameGridView_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
 			var index = (sender as DataGridView).SelectedRows[0].Index;
 			FormConnector.SetSelectedMappingItem(index);
+			var source = new BindingSource();
+			source.DataSource = FormConnector.GetMappingsItem();
+			//GridPanel
+			var grid = new DataGridView();
+			grid.DataSource = source;
+			grid.Dock = DockStyle.Fill;
+			GridPanel.Controls.Add(grid);
 		}
 	}
 }
