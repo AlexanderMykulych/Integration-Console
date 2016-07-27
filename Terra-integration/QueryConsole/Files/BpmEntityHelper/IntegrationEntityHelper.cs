@@ -116,7 +116,7 @@ namespace QueryConsole.Files.BpmEntityHelper
 			{
 				try
 				{
-					if (integrationInfo.IntegrationType == TIntegrationType.Export)
+					if (integrationInfo.IntegrationType == TIntegrationType.Export && handler.IsExport(integrationInfo))
 					{
 						var result = new CsConstant.IntegrationResult(CsConstant.IntegrationResult.TResultType.Success, handler.ToJson(integrationInfo));
 						integrationInfo.Result = result;

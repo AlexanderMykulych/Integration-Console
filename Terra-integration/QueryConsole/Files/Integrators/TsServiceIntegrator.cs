@@ -163,9 +163,12 @@ namespace QueryConsole.Files
 			{
 				var json = integrationInfo.Result.Data.ToString();
 				var requestInfo = ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
-				if(IntegrationEntityHelper.isEntityAlreadyIntegrated(entity)) {
+				if (IntegrationEntityHelper.isEntityAlreadyIntegrated(entity))
+				{
 					UpdateRequest(requestInfo);
-				} else {
+				}
+				else
+				{
 					InsertRequest(requestInfo);
 				}
 			}

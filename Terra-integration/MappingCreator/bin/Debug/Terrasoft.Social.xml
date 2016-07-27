@@ -4,6 +4,18 @@
         <name>Terrasoft.Social</name>
     </assembly>
     <members>
+        <member name="F:Terrasoft.Social.Google.GoogleConsumer._googleServerConnector">
+            <summary>
+            Returns instance of google server connector.
+            </summary>
+            <value>Instance of google server connector.</value>
+        </member>
+        <member name="F:Terrasoft.Social.Google.GoogleConsumer._sharedConsumerInfo">
+            <summary>
+            Returns shared google application consumer info.
+            </summary>
+            <value>Shared consumer info.</value>
+        </member>
         <member name="F:Terrasoft.Social.Google.GoogleConsumer._consumerInfoServiceAccessInfoPageUri">
             <summary>
             Returns URI of social service AccessInfoPage.aspx.
@@ -13,6 +25,9 @@
         <member name="M:Terrasoft.Social.Google.GoogleConsumer.AuthorizeUserInApp(System.String@,System.String@,System.String@)">
             <summary>
             Gets access tokens for user.
+            <param name="accessToken">Access token.</param>
+            <param name="accessSecretToken">Access secret token.</param>
+            <param name="redirectUri">Redirect uri.</param>
             </summary>
         </member>
         <member name="P:Terrasoft.Social.Google.GoogleConsumer.UseSharedApplication">
@@ -42,6 +57,46 @@
             <summary>
             Используется только для тестов
             </summary>
+        </member>
+        <member name="F:Terrasoft.Social.ConsumerTokenManager._googleConsumerInfo">
+            <summary>
+            Returns consumer information about google shared application.
+            </summary>
+            <value>Consumer information.</value>
+        </member>
+        <member name="F:Terrasoft.Social.ConsumerTokenManager._consumerKey">
+            <summary>
+            Returns value of "GoogleConsumerKey" system setting.
+            </summary>
+            <value>Boolean value of "GoogleConsumerKey" system setting.</value>
+        </member>
+        <member name="F:Terrasoft.Social.ConsumerTokenManager._consumerSecret">
+            <summary>
+            Returns value of "GoogleConsumerSecret" system setting.
+            </summary>
+            <value>Boolean value of "GoogleConsumerSecret" system setting.</value>
+        </member>
+        <member name="M:Terrasoft.Social.ConsumerTokenManager.GetSysSettingValue``1(Terrasoft.Core.UserConnection,System.String)">
+            <summary>
+            Returns system setting value.
+            <param name="userConnection">User connection.</param>
+            <param name="code">System setting code.</param>
+            </summary>
+            <returns>System setting value.</returns>
+        </member>
+        <member name="M:Terrasoft.Social.ConsumerTokenManager.GetKeyFromSysSettings(Terrasoft.Core.UserConnection,System.String)">
+            <summary>
+            Returns key value.
+            <param name="userConnection">User connection.</param>
+            <param name="keyName">Key name.</param>
+            </summary>
+            <returns>Key value.</returns>
+        </member>
+        <member name="P:Terrasoft.Social.ConsumerTokenManager.UseGoogleSharedApplication">
+            <summary>
+            Returns boolean value of "Use shared Google application" system setting.
+            </summary>
+            <value>Boolean value of "Use shared Google application" system setting.</value>
         </member>
     </members>
 </doc>
