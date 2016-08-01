@@ -57,7 +57,9 @@ namespace QueryConsole.Files.MappingManager
 				{
 					return ((DateTime)value).ToString("yyyy-MM-dd");
 				}
-
+				if(value is bool) {
+					return (bool)value == true ? true : false;
+				}
 				return value;
 			}
 			catch (Exception e)

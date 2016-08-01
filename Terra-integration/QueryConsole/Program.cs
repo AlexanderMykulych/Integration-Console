@@ -39,156 +39,23 @@ namespace QueryConsole
 				AddBindings();
 				Console.WriteLine("Press any button to start integrate");
 				Console.ReadKey();
-
+				Console.WriteLine("Start");
 				var testers = new List<BaseIntegratorTester>() {
 					new OrderServiceIntegratorTester(consoleApp.SystemUserConnection),
 					new ClientServiceIntegratorTester(consoleApp.SystemUserConnection)
 				};
-				//	//Account
-
-				//	var esq = new EntitySchemaQuery(consoleApp.SystemUserConnection.EntitySchemaManager, "Account");
-				//	esq.AddAllSchemaColumns();
-				//	esq.RowCount = 1;
-				//	var createdOn = esq.AddColumn("CreatedOn");
-				//	createdOn.OrderByDesc();
-				//	var entity = esq.GetEntityCollection(consoleApp.SystemUserConnection)[0];
-				//	testers[1].ImportBpmEntity(entity);
-				////Contact
-
-				//	var esq2 = new EntitySchemaQuery(consoleApp.SystemUserConnection.EntitySchemaManager, "Contact");
-				//	esq2.AddAllSchemaColumns();
-				//	esq2.RowCount = 1;
-				//	var createdOn2 = esq2.AddColumn("CreatedOn");
-				//	createdOn2.OrderByDesc();
-				//	var entity2 = esq2.GetEntityCollection(consoleApp.SystemUserConnection)[0];
-				//	testers[1].ImportBpmEntity(entity2);
-				////TsAutomobile
-				//	var esq3 = new EntitySchemaQuery(consoleApp.SystemUserConnection.EntitySchemaManager, "TsAutomobile");
-				//	esq3.AddAllSchemaColumns();
-				//	esq3.RowCount = 1;
-				//	var createdOn3 = esq3.AddColumn("CreatedOn");
-				//	createdOn3.OrderByDesc();
-				//	var entity3 = esq3.GetEntityCollection(consoleApp.SystemUserConnection)[0];
-				//	testers[1].ImportBpmEntity(entity3);
-				//	int limit = 10;
-				//	limit = int.Parse(Console.ReadLine());
-				//testers[0].Limit = 50;
-				//testers[0].Skip = 0;
-				//testers[0].ExportServiceEntity("CounteragentContactInfo", () =>
-				//{
-				var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
-					{"ManagerInfo", 500, 0, 1},
-					{"CounteragentContactInfo", 500, 0, 1},
-					{"Counteragent", 500, 0, 1},
-					{"Contract", 500, 0, 1},
-					{"Order", 500, 0, 1},
-					{"Shipment", 500, 0, 1},
-					{"Payment", 500, 0, 1},
-					{"Return", 500, 0, 1},
-				};
-				testerManager.Run();
-				//		testers[0].Limit = 1000;
-				//		testers[0].Skip = 2000;
-				//		testers[0].ExportServiceEntity("Counteragent", () =>
-				//		{
-				//			testers[0].Limit = 1000;
-				//			testers[0].Skip = 3000;
-				//			testers[0].ExportServiceEntity("Counteragent", () =>
-				//			{
-				//				testers[0].Limit = 1000;
-				//				testers[0].Skip = 4000;
-				//				testers[0].ExportServiceEntity("Counteragent", () =>
-				//				{
-				//					testers[0].Limit = 1000;
-				//					testers[0].Skip = 5000;
-				//					testers[0].ExportServiceEntity("Counteragent", () =>
-				//					{
-				//						testers[0].Limit = 1000;
-				//						testers[0].Skip = 6000;
-				//						testers[0].ExportServiceEntity("Counteragent", () =>
-				//						{
-											
-				//									testers[0].Limit = 1000;
-				//									testers[0].Skip = 0;
-				//									testers[0].ExportServiceEntity("Contract", () =>
-				//									{
-				//										testers[0].Limit = 1000;
-				//										testers[0].Skip = 1000;
-				//										testers[0].ExportServiceEntity("Contract", () =>
-				//										{
-				//											testers[0].Limit = 1000;
-				//											testers[0].Skip = 2000;
-				//											testers[0].ExportServiceEntity("Contract", () =>
-				//											{
-				//												testers[0].Limit = 1000;
-				//												testers[0].Skip = 3000;
-				//												testers[0].ExportServiceEntity("Contract", () =>
-				//												{
-				//													testers[0].Limit = 1000;
-				//													testers[0].Skip = 4000;
-				//													testers[0].ExportServiceEntity("Contract", () =>
-				//													{
-				//														testers[0].Limit = 1000;
-				//														testers[0].Skip = 5000;
-				//														testers[0].ExportServiceEntity("Contract", () =>
-				//														{
-				//															testers[0].Limit = 1000;
-				//															testers[0].Skip = 6000;
-				//															testers[0].ExportServiceEntity("Contract", () =>
-				//															{
-																				//testers[0].Limit = 10;
-																				//testers[0].Skip = 0;
-																				//testers[0].ExportServiceEntity("Order", () =>
-																				//{
-																				//	testers[0].Limit = 1000;
-																				//	testers[0].Skip = 500;
-																				//	testers[0].ExportServiceEntity("Order", () =>
-																				//	{
-																				//		testers[0].Limit = 1500;
-																				//		testers[0].Skip = 0;
-																				//		testers[0].ExportServiceEntity("Shipment", () =>
-																				//		{
-																				//			testers[0].Limit = 1500;
-																				//			testers[0].Skip = 0;
-																				//			testers[0].ExportServiceEntity("Payment", () =>
-																				//			{
-																				//				testers[0].Limit = 1500;
-																				//				testers[0].Skip = 0;
-																				//				testers[0].ExportServiceEntity("Return", () =>
-																				//				{
-
-																				//							});
-																				//						});
-																				//					});
-																				//				});
-																				//			});
-																				//		});
-																					
-																				//});
-				//															});
-				//														});
-
-				//													});
-															
-				//										});
-				//									});
-				//								});
-				//							});
-				//						});
-				//				});
-				//			});
-				//		});
-				//	});
-				//});
-
-				
-				//var test3 = new IntegrationServiceIntegrator(consoleApp.SystemUserConnection);
-				//test3.GetBusEventNotification(true);
-				//tester.ExportAllServiceEntities(1000);
-				//tester.ExportAllServiceEntitiesByStep(20, 3500);
-				//
-				//tester2.ExportAllServiceEntities(100);
-				//tester.ImportAllBpmEntity();
+				//var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
+				//	{"ManagerInfo", 500, 0, 1},
+				//	{"CounteragentContactInfo", 500, 0, 1},
+				//	{"Counteragent", 500, 0, 1},
+				//	{"Contract", 500, 0, 1},
+				//	{"Order", 500, 0, 1},
+				//	{"Shipment", 500, 0, 1},
+				//	{"Payment", 500, 0, 1},
+				//	{"Return", 500, 0, 1},
+				//};
+				//testerManager.Run();
+				testers[1].ImportAllBpmEntity();
 				while (true) {
 				}
 			} catch (ReflectionTypeLoadException e1) {

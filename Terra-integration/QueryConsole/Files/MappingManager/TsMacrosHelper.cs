@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,10 +29,12 @@ namespace Terrasoft.TsConfiguration
 			{ "TimeSpanToDateTime", x => DateToTimeSpan(x) }
 		};
 		public static Dictionary<string, Func<object, object>> OverMacrosDictImport = new Dictionary<string, Func<object, object>>() {
-			{ "ConvertJson", x => ConvertStringToJson(x)}
+			{ "ConvertJson", x => ConvertStringToJson(x)},
+			{ "ConvertJsonArray", x => ConvertJsonToArray(x)}
 		};
 		public static Dictionary<string, Func<object, object>> OverMacrosDictExport = new Dictionary<string, Func<object, object>>() {
-			{ "ConvertJson", x => ConvertJsonToString(x)}
+			{ "ConvertJson", x => ConvertJsonToString(x)},
+			{ "ConvertJsonArray", x => ConvertArrayToJson(x)}
 		};
 
 		public static object GetMacrosResultImport(string macrosName, object value, MacrosType type = MacrosType.Rule)
@@ -191,13 +194,27 @@ namespace Terrasoft.TsConfiguration
 			}
 			return x;
 		};
-		public static Func<object, object> ConvertStringToJson = (x) =>
-		{
+		public static Func<object, object> ConvertStringToJson = (x) => {
 			if (x == null)
 				return null;
-			if (x is string)
-			{
+			if (x is string) {
 				return JToken.Parse((string)x);
+			}
+			return x;
+		};
+		public static Func<object, object> ConvertJsonToArray = (x) => {
+			if (x == null)
+				return null;
+			if (x is string) {
+				return JToken.Parse((string)x);
+			}
+			return x;
+		};
+		public static Func<object, object> ConvertArrayToJson = (x) => {
+			if (x == null)
+				return null;
+			if (x is IEnumerable) {
+				return JArray.FromObject((IEnumerable)x);
 			}
 			return x;
 		};

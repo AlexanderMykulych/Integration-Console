@@ -86,11 +86,17 @@ namespace QueryConsole.Files.BpmEntityHelper
 		{
 			var attributeType = GetAttributeType(integrationInfo);
 			var types = GetIntegrationTypes(integrationInfo);
+			if(integrationInfo.Handler != null) {
+				return integrationInfo.Handler;
+			}
+			var handlerName = integrationInfo.EntityName;
 			foreach (var type in types)
 			{
 				var attributes = type.GetCustomAttributes(attributeType, true);
+
 				foreach(IntegrationHandlerAttribute attribute in attributes) {
-					if (attribute != null && attribute.EntityName == integrationInfo.EntityName)
+					
+					if (attribute != null && attribute.EntityName == handlerName)
 					{
 						if (EntityHandlers.ContainsKey(type))
 						{
@@ -112,6 +118,9 @@ namespace QueryConsole.Files.BpmEntityHelper
 		/// <param name="handler">объект, который отвечает за интеграцию конкретной сущности</param>
 		public void ExecuteHandlerMethod(IntegrationInfo integrationInfo, IIntegrationEntityHandler handler)
 		{
+			if(integrationInfo.Handler == null && handler is EntityHandler) {
+				integrationInfo.Handler = (EntityHandler)handler;
+			}
 			if (handler != null)
 			{
 				try

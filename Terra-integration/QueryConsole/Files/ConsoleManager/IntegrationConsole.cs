@@ -27,18 +27,24 @@ namespace QueryConsole.Files
 			ConsoleInfo.IntegrationStatus = "Finish";
 		}
 		public static void EntityIntegratedSuccess(string name) {
-			if (name.ToLower() == ConsoleInfo.CurrentEntityName.ToLower())
-			{
-				ConsoleInfo.EntityProgress[ConsoleInfo.CurrentEntityName].Second++;
-				RecalculateAllProgress();
+			try {
+				if (!string.IsNullOrEmpty(ConsoleInfo.CurrentEntityName) && name.ToLower() == ConsoleInfo.CurrentEntityName.ToLower())
+				{
+					ConsoleInfo.EntityProgress[ConsoleInfo.CurrentEntityName].Second++;
+					RecalculateAllProgress();
+				}
+			} catch(Exception e) {
+
 			}
 		}
 
 		public static void EntityIntegratedError(string name)
 		{
-			if (name.ToLower() == ConsoleInfo.CurrentEntityName.ToLower())
-			{
-				ConsoleInfo.EntityProgress[ConsoleInfo.CurrentEntityName].Third++;
+			try {
+				if (!string.IsNullOrEmpty(ConsoleInfo.CurrentEntityName) && name.ToLower() == ConsoleInfo.CurrentEntityName.ToLower()) {
+					ConsoleInfo.EntityProgress[ConsoleInfo.CurrentEntityName].Third++;
+				}
+			} catch (Exception) {
 			}
 		}
 		
@@ -52,6 +58,7 @@ namespace QueryConsole.Files
 
 		public static void SetCurrentResponseSucces(int total, int skip, int limit) {
 			ConsoleInfo.Response = string.Format("total={0} skip={1} limit={2}", total, skip, limit);
+			Console.WriteLine("Ok");
 		}
 
 		public static int GetPersent(string name)

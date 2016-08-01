@@ -246,7 +246,7 @@ namespace Terrasoft.TsConfiguration
 
 		public void ExecuteOverRuleMacros(MappingItem mapItem, ref JToken jToken, IntegrationInfo integrationInfo)
 		{
-			if(mapItem.OverRuleMacros.IsNullOrEmpty()) {
+			if (mapItem.OverRuleMacros.IsNullOrEmpty() || jToken == null) {
 				return;
 			}
 			switch (integrationInfo.IntegrationType)
@@ -334,8 +334,14 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		public bool CheckIsExist(string entityName, int externalId, string externalIdPath = "TsExternalId")
+		public bool CheckIsExist(string entityName, int externalId, string externalIdPath = "TsExternalId", int entityExternalId = 0)
 		{
+			if(entityExternalId != 0) {
+				return true;
+			}
+			if (externalId == 0) {
+				return false;
+			}
 			var select = new Select(UserConnection)
 							.Column(Func.Count(CsConstant.ServiceColumnInBpm.Identifier)).As("Count")
 							.From(entityName)

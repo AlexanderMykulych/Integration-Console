@@ -18,7 +18,7 @@ namespace QueryConsole.Files
 		void GetRequest(ServiceRequestInfo info);
 		void UpdateRequest(ServiceRequestInfo info);
 		void InsertRequest(ServiceRequestInfo info);
-		void IntegrateBpmEntity(Entity entity);
+		void IntegrateBpmEntity(Entity entity, EntityHandler handler = null);
 	}
 	#endregion
 
@@ -41,6 +41,7 @@ namespace QueryConsole.Files
 		public string Limit;
 		public string Skip;
 		public Action AfterIntegrate;
+		public EntityHandler Handler;
 		public static ServiceRequestInfo CreateForUpdateInService(Entity entity, string serviceName, string jsonData) {
 			return new ServiceRequestInfo() {
 				ServiceObjectId = entity.GetTypedColumnValue<string>(CsConstant.ServiceColumnInBpm.Identifier),
@@ -150,20 +151,24 @@ namespace QueryConsole.Files
 				case TRequstMethod.PUT:
 					var integrationInfo = IntegrationInfo.CreateForResponse(userConnection, info.Entity);
 					integrationInfo.StrData = responseJObj.ToString();
+					integrationInfo.Handler = info.Handler;
 					entityHelper.IntegrateEntity(integrationInfo);
+					Console.WriteLine("Ok");
 				break;
 			}
 			
 		}
 
-		public virtual void IntegrateBpmEntity(Entity entity) {
+		public virtual void IntegrateBpmEntity(Entity entity, EntityHandler handler = null) {
 			var integrationInfo = IntegrationInfo.CreateForExport(userConnection, entity);
+			integrationInfo.Handler = handler;
 			entityHelper.IntegrateEntity(integrationInfo);
 			if (integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
 			{
 				var json = integrationInfo.Result.Data.ToString();
-				var requestInfo = ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
-				if (IntegrationEntityHelper.isEntityAlreadyIntegrated(entity))
+				var requestInfo = integrationInfo.Handler != null ? integrationInfo.Handler.GetRequestInfo(integrationInfo) : ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
+				requestInfo = requestInfo ?? ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
+				if (integrationInfo.Handler != null && integrationInfo.Handler.IsEntityAlreadyExist(integrationInfo))
 				{
 					UpdateRequest(requestInfo);
 				}

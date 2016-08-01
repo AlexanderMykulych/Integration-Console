@@ -15,14 +15,14 @@ namespace Terrasoft.CsConfiguration
 		{
 			baseUrls = new Dictionary<TServiceObject, string>() {
 				//{ TServiceObject.Dict, "http://api.client-service.bus.stage2.auto3n.ru/v2/dict/AUTO3N" },
-				//{ TServiceObject.Entity, "http://api.client-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
+				{ TServiceObject.Entity, "http://api.client-service.stage2.laximo.ru/v2/entity/AUTO3N" }
 				////{ TServiceObject.Dict, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/dict/AUTO3N" },
 				//{ TServiceObject.Entity, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/entity/AUTO3N" }
 			};
 			integratorHelper = new Terrasoft.TsConfiguration.IntegratorHelper();
 			UrlMaker = new ServiceUrlMaker(baseUrls);
 			ServiceName = "ClientService";
-			Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==";
+			Auth = "Basic YnBtb25saW5lMjoxMjM0NTY=";
 		}
 	}
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
+using Terrasoft.TsConfiguration;
 
 namespace QueryConsole.Files.Constants
 {
@@ -79,6 +80,7 @@ namespace QueryConsole.Files.Constants
 			public Entity IntegratedEntity { get; set; }
 			public string TsExternalIdPath { get; set; }
 			public string TsExternalVersionPath { get; set; }
+			public EntityHandler Handler {get; set;}
 			#endregion
 
 			#region Constructor: Public

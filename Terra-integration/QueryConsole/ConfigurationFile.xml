@@ -52,15 +52,16 @@
     <mappingItem JSourcePath="b2b" TsSourcePath="TsB2B"/>
     <mappingItem JSourcePath="b2s" TsSourcePath="TsB2S"/>
     <mappingItem ConstType="#Bool" ConstValue="true" JSourcePath="liquidation" MapType="#Const"/>
-    <mappingItem ConstValue="ИНН" JSourcePath="taxRegistrationNumberName" MapType="#Const"/>
+		<mappingItem JSourcePath="taxRegistrationNumberName" MapType="#StringToDictionaryGuid" TsDestinationName="TsTaxNumberType" TsSourcePath="TsTaxNumberTypeId"/>
     <mappingItem JSourcePath="taxRegistrationNumber" TsSourcePath="TsINN"/>
     <mappingItem JSourcePath="companyRegistrationNumber" TsSourcePath="TsKPP"/>
-    <mappingItem ConstValue="КПП" JSourcePath="companyRegistrationNumberName" MapType="#Const"/>
+		<mappingItem JSourcePath="companyRegistrationNumberName" TsSourcePath="TsRegNumberTypeId" MapType="#StringToDictionaryGuid" TsDestinationName="TsRegNumberType" />
     <mappingItem JSourcePath="scenario" MapType="#StringToDictionaryGuid" TsDestinationName="TsScenarioServiceText" TsSourcePath="TsServiceScenarioId"/>
     <mappingItem JSourcePath="bankrupt" TsSourcePath="TsBankrucyFact"/>
     <mappingItem JSourcePath = "ownerAgentId" TsSourcePath = "TsLrsAccountId" TsDestinationName = "TsLocSalMarket" MapType = "#StringToDictionaryGuid" TsDestinationPath="TsAccount" TsDestinationResPath="TsExternalId" SerializeIfNull="#false" SerializeIfZero="#false"/>
     <mappingItem JSourcePath="specialization" MapExecuteType="#BeforeEntitySave" MapIntegrationType="#Export" MapType="#StringToDictionaryGuid" TsDestinationName="TsAccountSpec" TsDestinationPath="TsAccount" TsDestinationResPath="TsSpecialization.Name" TsSourcePath="Id"/>
-    <mappingItem JSourcePath="billingInfos" TsSourcePath="Id" MapExecuteType="#AfterEntitySave" MapType="#ArrayOfCompositObject" TsDestinationName="AccountBillingInfo" TsDestinationPath="Account"  OverRuleMacros="ConvertJson"/>
+		<mappingItem JSourcePath="billingInfos" TsSourcePath="Id" MapExecuteType="#AfterEntitySave" MapType="#ArrayOfCompositObject" TsDestinationName="AccountBillingInfo" TsDestinationPath="Account"  OverRuleMacros="ConvertJsonArray"/>
+		<mappingItem JSourcePath="anniversaryDates" TsSourcePath="Id" MapExecuteType="#AfterEntitySave" MapType="#ArrayOfCompositObject" TsDestinationName="AccountAnniversary" TsDestinationPath="Account"  OverRuleMacros="ConvertJsonArray"/>
     <!--<mappingItem JSourcePath = "relationships" TsSourcePath = "Id" TsDestinationPath = "AccountA" TsDestinationName = "Relationship" MapType = "#ArrayOfReference" JSourceName = "Relationship" MapExecuteType = "#AfterEntitySave" MapIntegrationType="#Export"/>-->
     <mappingItem ConstType="#EmptyArray" JSourcePath="relationships" MapType="#Const"/>
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
@@ -78,24 +79,28 @@
     <mappingItem JSourcePath="additionalInfo.retailMarkup" TsSourcePath="TsRetailMarkUpPercent"/>
     <mappingItem JSourcePath="additionalInfo.wolesaleMakup" TsSourcePath="TsWholesaleMarkUpPercent"/>
 
-    <mappingItem JSourcePath = "localMarkets" TsSourcePath = "Id" TsDestinationPath = "TsAccount" TsDestinationName = "TsAccountMarketHistory" MapType = "#ArrayOfReference" JSourceName = "Market" MapExecuteType = "#AfterEntitySave" MapIntegrationType="#Export" TsDestinationResPath="TsLrsAccount.TsExternalId"/>
+    <mappingItem JSourcePath = "localMarkets" TsSourcePath = "Id" TsDestinationPath = "TsAccount" TsDestinationName = "TsAccountMarketHistory" MapType = "#ArrayOfReference" JSourceName = "Market" MapExecuteType = "#AfterEntitySave" MapIntegrationType="#Export" TsDestinationResPath="TsLrsAccount.TsLocalMarket.TsExternalId"/>
 
     <mappingItem JSourceName="CompanyProfileAssignment" JSourcePath="assignments" MapExecuteType="#AfterEntitySave" MapType="#ArrayOfCompositObject" TsDestinationName="TsAccountManagerGroup" TsDestinationPath="TsAccount" TsSourcePath="Id"/>
   </configItem>
-  <configItem JName="" TsName="AccountBillingInfo">
-    <mappingItem JSourcePath="name" TsSourcePath="Name"/>
-    <mappingItem JSourcePath="companyName" TsSourcePath="AccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account"/>
-    <mappingItem JSourcePath="companyAddress" TsSourcePath="TsLegalAddress"/>
-    <mappingItem JSourcePath="bankName" TsSourcePath="TsBankName"/>
-    <mappingItem JSourcePath="bankAddress" TsSourcePath="TsBankAddress"/>
-    <mappingItem JSourcePath="bankTaxRegistrationNumber" TsSourcePath="TsBankINN"/>
-    <mappingItem JSourcePath="bankTaxRegistrationNumberName" ConstValue="ИНН" MapType="#Const"/>
-    <mappingItem JSourcePath="companyBankAccount" TsSourcePath="TsBankAccountNumber"/>
-    <mappingItem JSourcePath="correspondentBankAccount" TsSourcePath="TsCorrespondentNumber"/>
-    <mappingItem JSourcePath="correspondentBankName" TsSourcePath="TsCorrespondentBank"/>
-    <mappingItem JSourcePath="bic" TsSourcePath="TsBIK"/>
-    <mappingItem JSourcePath="description" TsSourcePath="TsCorrespondentBank"/>
-  </configItem>
+	<configItem JName="" TsName="AccountBillingInfo">
+		<mappingItem JSourcePath="name" TsSourcePath="Name"/>
+		<mappingItem JSourcePath="companyName" TsSourcePath="AccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account"/>
+		<mappingItem JSourcePath="companyAddress" TsSourcePath="TsLegalAddress"/>
+		<mappingItem JSourcePath="bankName" TsSourcePath="TsBankName"/>
+		<mappingItem JSourcePath="bankAddress" TsSourcePath="TsBankAddress"/>
+		<mappingItem JSourcePath="bankTaxRegistrationNumber" TsSourcePath="TsBankINN"/>
+		<mappingItem JSourcePath="bankTaxRegistrationNumberName" ConstValue="ИНН" MapType="#Const"/>
+		<mappingItem JSourcePath="companyBankAccount" TsSourcePath="TsBankAccountNumber"/>
+		<mappingItem JSourcePath="correspondentBankAccount" TsSourcePath="TsCorrespondentNumber"/>
+		<mappingItem JSourcePath="correspondentBankName" TsSourcePath="TsCorrespondentBank"/>
+		<mappingItem JSourcePath="bic" TsSourcePath="TsBIK"/>
+		<mappingItem JSourcePath="description" TsSourcePath="TsCorrespondentBank"/>
+	</configItem>
+	<configItem JName="" TsName="AccountAnniversary">
+		<mappingItem JSourcePath="type" TsSourcePath="AnniversaryTypeId" MapType="#StringToDictionaryGuid" TsDestinationName="AnniversaryType"/>
+		<mappingItem JSourcePath="date" TsSourcePath="Date"/>
+	</configItem>
   <configItem JName="PersonProfile" TsName="Contact">
     <mappingItem JSourcePath="name" TsSourcePath="Name"/>
     <mappingItem JSourcePath="b2b" TsSourcePath="TsBpB2B"/>
@@ -123,7 +128,7 @@
     <mappingItem JSourcePath="contact.ContactInfo.faxAllowed" TsSourcePath="DoNotUseFax"/>
     <mappingItem JSourcePath="contact.ContactInfo.smsAllowed" TsSourcePath="DoNotUseSms"/>
     <mappingItem JSourcePath="contact.ContactInfo.mailAllowed" TsSourcePath="DoNotUseMail"/>
-    <mappingItem JSourcePath="assignedGroup" TsSourcePath="TsManagerGroupId" HandlerName="ManagerGroup" JSourceName="ManagerGroup" MapType="#RefToGuid" TsDestinationName="SysAdminUnit"/>
+    <!--<mappingItem JSourcePath="assignedGroup" TsSourcePath="TsManagerGroupId" HandlerName="ManagerGroup" JSourceName="ManagerGroup" MapType="#RefToGuid" TsDestinationName="SysAdminUnit"/>-->
     <mappingItem JSourcePath = "localMarkets" TsSourcePath = "Id" TsDestinationPath = "TsContact" TsDestinationName = "TsContactMarketHistory" MapType = "#ArrayOfReference" JSourceName = "Market" MapExecuteType = "#AfterEntitySave" MapIntegrationType="#Export" TsDestinationResPath="TsLocSalMarket.TsExternalId"/>
 
     <mappingItem JSourceName="ContactRecord" JSourcePath="contact.ContactInfo.records" MapType="#ArrayOfCompositObject" TsDestinationName="ContactCommunication" TsDestinationPath="Contact" TsSourcePath="Id"/>
@@ -179,7 +184,7 @@
     <mappingItem JSourcePath="monthlyMileageKm" TsSourcePath="TsMonthlyMileage"/>
     <!--<mappingItem JSourcePath="currentPassport.ReferenceClientService.Id" TsSourcePath="TsPassportExternalId"/>
 		<mappingItem JSourcePath="currentPassport.ReferenceClientService.type" ConstValue="VehiclePassport" MapType="#Const"/>-->
-    <mappingItem JSourcePath="currentPassport" MapType="#RefToGuid" TsSourcePath="Id" TsDestinationName="TsAutomobile" TsDestinationPath="Id" TsExternalIdPath="TsPassportExternalId"/>
+    <mappingItem JSourcePath="currentPassport" MapType="#RefToGuid" TsSourcePath="Id" TsDestinationName="TsAutomobile" TsDestinationPath="Id" TsExternalIdPath="TsPassportExternalId" JSourceName="VehiclePassport"/>
     <mappingItem JSourceName="VehicleRelationship" JSourcePath="currentOwner" MapType="#RefToGuid" TsDestinationName="TsAutoOwnerInfo" TsDestinationPath="TsAutomobile" TsSourcePath="Id"/>
     <mappingItem JSourcePath="additionalInfo.NextServDate" TsSourcePath="TsNextTechDate" MacrosName="ToDateTime"/>
     <mappingItem JSourcePath="additionalInfo.EngOil" TsSourcePath="TsEngineOilInfo"/>
@@ -188,6 +193,18 @@
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
     <mappingItem JSourcePath="version" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>
+	<configItem JName="VehiclePassport" TsName="TsAutomobile">
+		<mappingItem JSourcePath="documentNo" TsSourcePath="TsCertificateNumber"/>
+		<mappingItem JSourcePath="issuedBy" TsSourcePath="TsTrafficPoliceGiven"/>
+		<mappingItem JSourcePath="registrationPlate" TsSourcePath="TsRegistrationSign"/>
+		<mappingItem JSourcePath="vehiclePassportNo" TsSourcePath="TsPassportSeries"/>
+		<mappingItem JSourcePath="notes" TsSourcePath="TsNotes"/>
+		<mappingItem JSourcePath="vin" TsSourcePath="TsVehVin"/>
+		<mappingItem JSourcePath="engineNo" TsSourcePath="TsEngineNo"/>
+		<mappingItem JSourcePath="chassisNo" TsSourcePath="TsChassisNo"/>
+		<mappingItem JSourcePath="frameNo" TsSourcePath="TsFrameNo"/>
+		<mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsPassportExternalId"/>
+	</configItem>
   <configItem JName="Employee" TsName="ContactCareer">
     <mappingItem JSourcePath="job" MapType="#StringToDictionaryGuid" TsDestinationName="Job" TsSourcePath="JobId"/>
     <mappingItem JSourcePath="jobTitle" TsSourcePath="JobTitle"/>
@@ -278,9 +295,9 @@
   </configItem>
   <configItem JName="NotificationProfile" TsName="TsContactNotifications">
     <mappingItem EFieldRequier="#true" JSourceName="PersonProfile" JSourcePath="person" MapType="#RefToGuid" TsDestinationName="Contact" TsSourcePath="TsContactId"/>
-    <!--<mappingItem JSourcePath="type" TsSourcePath="TsTypeName"/>-->
+    <mappingItem JSourcePath="type" TsSourcePath="TsNotificationTypeId" MapType="#StringToDictionaryGuid" TsDestinationName="TsNotificationType"/>
     <mappingItem JSourcePath="disabled" TsSourcePath="TsIsTurnOff"/>
-    <!--<mappingItem EFieldRequier="#true" JSourcePath="notifyOnHolidays" TsSourcePath="TsWeekendNotify"/>-->
+    <mappingItem JSourcePath="notifyOnHolidays" TsSourcePath="TsIsWeekendNotification"/>
     <mappingItem JSourcePath="timeFrom" TsSourcePath="TsTimeFrom"/>
     <mappingItem JSourcePath="timeTo" TsSourcePath="TsTimeTo"/>
     <!--<mappingItem JSourcePath="notificationChannel" MapType="#StringToDictionaryGuid" TsSourcePath="TsNotificationChanelId" TsDestinationName="CommunicationType" />-->

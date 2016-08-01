@@ -11,6 +11,8 @@ using Terrasoft.Core.DB;
 using TSysAdminUnitType = QueryConsole.Files.Constants.CsConstant.TSysAdminUnitType;
 using System.Data;
 using Terrasoft.Common;
+using Terrasoft.CsConfiguration;
+using QueryConsole.Files;
 
 namespace Terrasoft.TsConfiguration
 {
@@ -99,7 +101,7 @@ namespace Terrasoft.TsConfiguration
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
 			integrationInfo.TsExternalVersionPath = ExternalVersionPath;
 			Mapper.UserConnection = integrationInfo.UserConnection;
-			return Mapper.CheckIsExist(EntityName, integrationInfo.Data[JName].Value<int>("id"), integrationInfo.TsExternalIdPath);
+			return Mapper.CheckIsExist(EntityName, integrationInfo.Data[JName].Value<int>("id"), integrationInfo.TsExternalIdPath, integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath));
 		}
 
 		public virtual void ProcessResponse(IntegrationInfo integrationInfo)
@@ -148,6 +150,10 @@ namespace Terrasoft.TsConfiguration
 		public virtual bool IsExport(IntegrationInfo integrationInfo) {
 			return true;
 		}
+
+		public virtual ServiceRequestInfo GetRequestInfo(IntegrationInfo integrationInfo) {
+			return null;
+		}
 	}
 
 	[ImportHandlerAttribute("CompanyProfile")]
@@ -180,7 +186,12 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "";
 			JName = "VehicleRelationship";
 		}
-
+		string handlerName = "TsAutoOwnerInfo";
+		public override string HandlerName {
+			get {
+				return handlerName;
+			}
+		}
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
 			var typeId = integrationInfo.Data[JName]["type"]["#ref"]["id"].Value<int>();
@@ -193,12 +204,15 @@ namespace Terrasoft.TsConfiguration
 			switch(typeId) {
 				case 1:
 				case 2:
+				handlerName = "TsAutoOwnerInfo";
 					return "TsAutoOwnerInfo";
 				case 3:
 				case 4:
+					handlerName = "TsAutoOwnerInfo";
 					return "TsAutoOwnerHistory";
 				case 5:
 				case 6:
+					handlerName = "TsAutoTechService";
 					return "TsAutoTechService";
 				default:
 					return "TsAutoTechService";
@@ -307,7 +321,51 @@ namespace Terrasoft.TsConfiguration
 			JName = "VehicleProfile";
 		}
 
+		public override void ProcessResponse(IntegrationInfo integrationInfo) {
+			base.ProcessResponse(integrationInfo);
+			integratePassport(integrationInfo);
+		}
+
+		public void integratePassport(IntegrationInfo integrationInfo) {
+			var automobileId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
+			if(automobileId != Guid.Empty) {
+				var helper = new Terrasoft.CsConfiguration.ClientServiceIntegrator(integrationInfo.UserConnection);
+				helper.IntegrateBpmEntity(integrationInfo.IntegratedEntity, new VehiclePassportHandler());
+			}
+		}
 		//public override 
+	}
+
+	[ImportHandlerAttribute("VehiclePassport")]
+	[ExportHandlerAttribute("VehiclePassport")]
+	public class VehiclePassportHandler: EntityHandler {
+		public VehiclePassportHandler() {
+			Mapper = new MappingHelper();
+			EntityName = "TsAutomobile";
+			JName = "VehiclePassport";
+		}
+
+		public override string ExternalIdPath {
+			get {
+				return "TsPassportExternalId";
+			}
+		}
+		public override string HandlerName {
+			get {
+				return JName;
+			}
+		}
+
+		public override ServiceRequestInfo GetRequestInfo(IntegrationInfo integrationInfo) {
+			return new ServiceRequestInfo() {
+				ServiceObjectId = integrationInfo.IntegratedEntity.GetTypedColumnValue<string>(ExternalIdPath),
+				ServiceObjectName = JName,
+				Type = TServiceObject.Entity,
+				RequestJson = integrationInfo.Data.ToString(),
+				Entity = integrationInfo.IntegratedEntity,
+				Handler = this
+			};
+		}
 	}
 
 	[ImportHandlerAttribute("ContactInfo")]
@@ -1136,12 +1194,20 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("")]
 	[ExportHandlerAttribute("AccountBillingInfo")]
-	public class AccountBillingInfoHandler : EntityHandler
-	{
-		public AccountBillingInfoHandler()
-		{
+	public class AccountBillingInfoHandler: EntityHandler {
+		public AccountBillingInfoHandler() {
 			Mapper = new MappingHelper();
 			EntityName = "AccountBillingInfo";
+			JName = "";
+		}
+	}
+
+	[ImportHandlerAttribute("")]
+	[ExportHandlerAttribute("AccountAnniversary")]
+	public class AccountAnniversaryHandler: EntityHandler {
+		public AccountAnniversaryHandler() {
+			Mapper = new MappingHelper();
+			EntityName = "AccountAnniversary";
 			JName = "";
 		}
 	}

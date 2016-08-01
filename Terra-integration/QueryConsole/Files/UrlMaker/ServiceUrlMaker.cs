@@ -14,11 +14,11 @@ namespace QueryConsole.Files
 		{
 			this.baseUrls = baseUrls;
 		}
-		public string Make(TServiceObject type, string objectName, string objectId, string filters, TRequstMethod method, string limit, string skip)
+		public virtual string Make(TServiceObject type, string objectName, string objectId, string filters, TRequstMethod method, string limit, string skip)
 		{
 			string resultUrl = baseUrls[type];
 			resultUrl += "/" + objectName;
-			if (!string.IsNullOrEmpty(objectId))
+			if (!string.IsNullOrEmpty(objectId) && objectId != "0")
 			{
 				resultUrl += "/" + objectId;
 				return resultUrl;
@@ -37,7 +37,7 @@ namespace QueryConsole.Files
 			}
 			return resultUrl;
 		}
-		public string Make(ServiceRequestInfo info)
+		public virtual string Make(ServiceRequestInfo info)
 		{
 			return Make(info.Type, info.ServiceObjectName, info.ServiceObjectId, info.Filters, info.Method, info.Limit, info.Skip); ;
 		}
