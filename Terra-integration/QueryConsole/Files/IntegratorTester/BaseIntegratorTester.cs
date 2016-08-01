@@ -41,7 +41,7 @@ namespace QueryConsole.Files.IntegratorTester
 		}
 		public EntityCollection GetEntitiesBySchemaNames(string name, bool withoutIntegrated = true) {
 			var esq = new EntitySchemaQuery(UserConnection.EntitySchemaManager, name);
-			esq.RowCount = 50;
+			//esq.RowCount = 50;
 			esq.AddAllSchemaColumns();
 			var dateColumn = esq.AddColumn("ModifiedOn");
 			dateColumn.OrderByDesc();

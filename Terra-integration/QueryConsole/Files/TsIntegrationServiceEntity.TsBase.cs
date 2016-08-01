@@ -180,6 +180,7 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("TsAutoOwnerInfo")]
 	[ExportHandlerAttribute("TsAutoOwnerHistory")]
 	[ExportHandlerAttribute("TsAutoTechService")]
+	[ExportHandlerAttribute("TsAutoTechHistory")]
 	public class TsAutoOwnerInfoHandler : EntityHandler {
 		public TsAutoOwnerInfoHandler() {
 			Mapper = new MappingHelper();
@@ -194,10 +195,12 @@ namespace Terrasoft.TsConfiguration
 		}
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
-			var typeId = integrationInfo.Data[JName]["type"]["#ref"]["id"].Value<int>();
-			EntityName = GetEntityNameByTypeId(typeId);
-			Mapper.UserConnection = integrationInfo.UserConnection;
-			return Mapper.CheckIsExist(EntityName, integrationInfo.Data[JName].Value<int>("id"));
+			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
+				var typeId = integrationInfo.Data[JName]["type"]["#ref"]["id"].Value<int>();
+				EntityName = GetEntityNameByTypeId(typeId);
+				Mapper.UserConnection = integrationInfo.UserConnection;
+			}
+			return base.IsEntityAlreadyExist(integrationInfo);
 		}
 
 		public string GetEntityNameByTypeId(int typeId) {
@@ -208,14 +211,23 @@ namespace Terrasoft.TsConfiguration
 					return "TsAutoOwnerInfo";
 				case 3:
 				case 4:
-					handlerName = "TsAutoOwnerInfo";
+					handlerName = "TsAutoOwnerHistory";
 					return "TsAutoOwnerHistory";
 				case 5:
+					handlerName = "TsAutoTechHistory";
+					return "TsAutoTechHistory";
 				case 6:
 					handlerName = "TsAutoTechService";
 					return "TsAutoTechService";
 				default:
 					return "TsAutoTechService";
+			}
+		}
+
+		public override void BeforeMapping(IntegrationInfo integrationInfo) {
+			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Export) {
+				EntityName = integrationInfo.IntegratedEntity.GetType().Name;
+				handlerName = EntityName;
 			}
 		}
 	}
@@ -432,7 +444,7 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("TsLocSalMarket")]
 	public class TsLocSalMarketHandler : EntityHandler
 	{
-		public bool TypeIsLp;
+		public bool TypeIsLp = false;
 		public static readonly Guid TypeLp = new Guid("f11e685a-060d-43cc-a221-26246317257d");
 		public TsLocSalMarketHandler()
 		{
