@@ -452,21 +452,21 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "TsLocSalMarket";
 			JName = "Market";
 		}
-		public override List<MappingItem> GetMapConfig(UserConnection userConnection)
-		{
-			if (TypeIsLp)
-			{
-				return IntegrationConfigurationManager.GetConfigItem(userConnection, HandlerName, "lp");
-			}
-			return IntegrationConfigurationManager.GetConfigItem(userConnection, HandlerName, "gp");
-		}
+		//public override List<MappingItem> GetMapConfig(UserConnection userConnection)
+		//{
+		//	if (TypeIsLp)
+		//	{
+		//		return IntegrationConfigurationManager.GetConfigItem(userConnection, HandlerName, "lp");
+		//	}
+		//	return IntegrationConfigurationManager.GetConfigItem(userConnection, HandlerName, "gp");
+		//}
 
-		public override void BeforeMapping(IntegrationInfo integrationInfo)
-		{
-			if(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsMarketTypeId") == TypeLp) {
-				TypeIsLp = true;
-			}
-		}
+		//public override void BeforeMapping(IntegrationInfo integrationInfo)
+		//{
+		//	if(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsMarketTypeId") == TypeLp) {
+		//		TypeIsLp = true;
+		//	}
+		//}
 	}
 
 	[ImportHandlerAttribute("Payment")]
