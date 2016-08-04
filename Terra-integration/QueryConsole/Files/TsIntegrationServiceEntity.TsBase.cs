@@ -1211,7 +1211,7 @@ namespace Terrasoft.TsConfiguration
 						.Column(Func.Count("c", "Id")).As("count")
 						.From("Contract").As("c")
 						.Where("c", "AccountId").IsEqual(Column.Parameter(accountId))
-						.And("c", "Active").IsEqual(Column.Parameter(true)) as Select;
+						.And("c", "TsActive").IsEqual(Column.Parameter(true)) as Select;
 
 			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection()) {
 				using (IDataReader reader = select.ExecuteReader(dbExecutor)) {
