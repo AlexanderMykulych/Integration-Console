@@ -467,6 +467,58 @@ namespace Terrasoft.TsConfiguration
 		//		TypeIsLp = true;
 		//	}
 		//}
+
+		public override JObject ToJson(IntegrationInfo integrationInfo) {
+			var result = base.ToJson(integrationInfo);
+			var salesPerCapita = integrationInfo.IntegratedEntity.GetTypedColumnValue<double>("TsSalesForPersonInReg") + integrationInfo.IntegratedEntity.GetTypedColumnValue<double>("TsSalesForPersonInRegG");
+			var capacity = integrationInfo.IntegratedEntity.GetTypedColumnValue<double>("TsMarketVolume") + integrationInfo.IntegratedEntity.GetTypedColumnValue<double>("TsMarketVolumeG");
+			var population = Math.Max(integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("TsPopulationCount"), integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("TsPopulationCountG"));
+			result[JName]["salesPerCapita"] = JToken.FromObject(salesPerCapita);
+			result[JName]["capacity"] = JToken.FromObject(capacity);
+			result[JName]["population"] = JToken.FromObject(population);
+
+			ValidateType(integrationInfo, result);
+			return result;
+		}
+		public void ValidateType(IntegrationInfo integrationInfo, JObject jObj) {
+			var type = jObj[JName]["type"].ToString();
+			switch(type) {
+				case "cargo":
+					jObj[JName]["additionalInfo"]["auto"].Remove();
+				break;
+				case "auto":
+					jObj[JName]["additionalInfo"]["cargo"].Remove();
+				break;
+			}
+		}
+
+		public override void AfterEntitySave(IntegrationInfo integrationInfo) {
+			try {
+			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
+				var type = integrationInfo.Data[JName]["type"].ToString();
+				bool isLp = false;
+				bool isGp = false;
+				switch (type) {
+					case "cargo":
+						isGp = true;
+					break;
+					case "auto":
+						isLp = true;
+					break;
+					case "cargo+auto":
+					case "auto+cargo":
+						isGp = true;
+						isLp = true;
+					break;
+				}
+				integrationInfo.IntegratedEntity.SetColumnValue("TsCargoProgram", isGp);
+				integrationInfo.IntegratedEntity.SetColumnValue("TsPassengerProgram", isLp);
+				integrationInfo.IntegratedEntity.UpdateInDB(false);
+			}
+			} catch(Exception e) {
+				//TODO: 
+			}
+		}
 	}
 
 	[ImportHandlerAttribute("Payment")]

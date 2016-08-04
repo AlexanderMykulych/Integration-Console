@@ -428,16 +428,12 @@
 
 	<configItem JName="Market" TsName="TsLocSalMarket">
     <mappingItem JSourcePath="name" TsSourcePath="TsName"/>
-    <mappingItem JSourcePath="type" MapType="#StringToDictionaryGuid" TsDestinationName="TsMarketType" TsSourcePath="TsMarketTypeId"/>
     <mappingItem JSourcePath="additionalInfo.auto.profileCompleteness" MapType="#StringToDictionaryGuid" TsDestinationName="Completeness" TsSourcePath="TsDataFilnessId"/>
     <mappingItem JSourcePath="salesDivision" MapType="#StringToDictionaryGuid" TsDestinationName="TsSalesDivision" TsSourcePath="TsSalesDivisionId"/>
     <mappingItem JSourcePath="additionalInfo.auto.vehicleServiceCostYear" TsSourcePath="TsYearConsumptionTc"/>
-    <mappingItem JSourcePath="population" TsSourcePath="TsPopulationCount"/>
     <mappingItem JSourcePath="additionalInfo.auto.vehiclePerCapita" TsSourcePath="TsAmPersonInRegion"/>
     <mappingItem JSourcePath="additionalInfo.auto.selfVehicleCount" TsSourcePath="TsOurFleetCount"/>
     <mappingItem JSourcePath="additionalInfo.auto.vehicleTotal" TsSourcePath="TsAllFleetCount"/>
-    <mappingItem JSourcePath="capacity" TsSourcePath="TsMarketVolume"/>
-    <mappingItem JSourcePath="salesPerCapita" TsSourcePath="TsSalesForPersonInReg"/>
     <!-- <mappingItem JSourcePath="additionalInfo.salesForecats.year" TsSourcePath="TsYear"/>  -->
     <mappingItem JSourcePath="additionalInfo.auto.salesForecats.value" TsSourcePath="TsSalesForecast"/>
     <!-- <mappingItem JSourcePath="additionalInfo.salesPotential.year" TsSourcePath="TsYear"/>  -->
@@ -453,9 +449,14 @@
     <mappingItem JSourcePath="additionalInfo.auto.personPerServiceDepot" TsSourcePath="TsStoPersonCount"/>
     <mappingItem JSourcePath="additionalInfo.auto.personPerShop" TsSourcePath="TsSmaPersonCount"/>
     <mappingItem JSourcePath="additionalInfo.auto.vehiclePerServiceDepot" TsSourcePath="TsStoCarCount"/>
-    <mappingItem JSourcePath="additionalInfo.auto.vehiclePerShop" TsSourcePath="TsSmaCarCount"/>
-    <!-- <mappingItem JSourcePath="baseCountry" TsSourcePath="TsPotentialStoCarCount"/> -->
+		<mappingItem JSourcePath="additionalInfo.auto.vehiclePerShop" TsSourcePath="TsSmaCarCount"/>
+		<mappingItem JSourcePath="additionalInfo.auto.capacity" TsSourcePath="TsMarketVolume"/>
+		<mappingItem JSourcePath="additionalInfo.auto.salesPerCapita" TsSourcePath="TsSalesForPersonInReg"/>
 
+		<!-- <mappingItem JSourcePath="baseCountry" TsSourcePath="TsPotentialStoCarCount"/> -->
+
+		<mappingItem JSourcePath="additionalInfo.cargo.salesPerCapita" TsSourcePath="TsSalesForPersonInRegG"/>
+		<mappingItem JSourcePath="additionalInfo.cargo.capacity" TsSourcePath="TsMarketVolumeG"/>
 		<mappingItem JSourcePath="additionalInfo.cargo.profileCompleteness" MapType="#StringToDictionaryGuid" TsDestinationName="Completeness" TsSourcePath="TsDataFilnessId"/>
 		<mappingItem JSourcePath="additionalInfo.cargo.vehicleServiceCostYear" TsSourcePath="TsYearConsumptionTcG"/>
 		<mappingItem JSourcePath="additionalInfo.cargo.vehiclePerCapita" TsSourcePath="TsAmPersonInRegionG"/>
