@@ -18,13 +18,13 @@ namespace QueryConsole.Files.BpmEntityHelper
 	{
 		#region Properties: Private
 		private static List<Type> IntegrationEntityTypes { get; set; }
-		private static Dictionary<Type, IIntegrationEntityHandler> EntityHandlers { get; set; }
+		private static Dictionary<Type, EntityHandler> EntityHandlers { get; set; }
 		#endregion
 
 		#region Constructor: Public
 		public IntegrationEntityHelper()
 		{
-			EntityHandlers = new Dictionary<Type, IIntegrationEntityHandler>();
+			EntityHandlers = new Dictionary<Type, EntityHandler>();
 		}
 		#endregion
 
@@ -82,33 +82,54 @@ namespace QueryConsole.Files.BpmEntityHelper
 		/// </summary>
 		/// <param name="integrationInfo">Настройки интеграции</param>
 		/// <returns></returns>
-		public IIntegrationEntityHandler GetIntegrationHandler(IntegrationInfo integrationInfo)
-		{
+		public IIntegrationEntityHandler GetIntegrationHandler(IntegrationInfo integrationInfo) {
 			var attributeType = GetAttributeType(integrationInfo);
 			var types = GetIntegrationTypes(integrationInfo);
-			if(integrationInfo.Handler != null) {
+			if (integrationInfo.Handler != null) {
 				return integrationInfo.Handler;
 			}
 			var handlerName = integrationInfo.EntityName;
-			foreach (var type in types)
-			{
+			foreach (var type in types) {
 				var attributes = type.GetCustomAttributes(attributeType, true);
 
-				foreach(IntegrationHandlerAttribute attribute in attributes) {
-					
-					if (attribute != null && attribute.EntityName == handlerName)
-					{
-						if (EntityHandlers.ContainsKey(type))
-						{
+				foreach (IntegrationHandlerAttribute attribute in attributes) {
+
+					if (attribute != null && attribute.EntityName == handlerName) {
+						if (EntityHandlers.ContainsKey(type)) {
 							return EntityHandlers[type];
 						}
-						var entityHandler = Activator.CreateInstance(type) as IIntegrationEntityHandler;
+						var entityHandler = Activator.CreateInstance(type) as EntityHandler;
 						EntityHandlers.Add(type, entityHandler);
 						return entityHandler;
 					}
 				}
 			}
 			return null;
+		}
+
+		public List<EntityHandler> GetAllIntegrationHandler(IntegrationInfo integrationInfo) {
+			var result = new List<EntityHandler>();
+
+			var attributeType = GetAttributeType(integrationInfo);
+			var types = GetIntegrationTypes(integrationInfo);
+
+			var handlerName = integrationInfo.EntityName;
+			foreach (var type in types) {
+				var attributes = type.GetCustomAttributes(attributeType, true);
+
+				foreach (IntegrationHandlerAttribute attribute in attributes) {
+
+					if (attribute != null && attribute.EntityName == handlerName) {
+						if (EntityHandlers.ContainsKey(type)) {
+							result.Add((EntityHandler)EntityHandlers[type]);
+						}
+						var entityHandler = Activator.CreateInstance(type) as EntityHandler;
+						EntityHandlers.Add(type, entityHandler);
+						result.Add(entityHandler);
+					}
+				}
+			}
+			return result;
 		}
 
 		/// <summary>

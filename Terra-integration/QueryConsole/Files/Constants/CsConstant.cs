@@ -264,8 +264,10 @@ namespace QueryConsole.Files.Constants
 		public static class ServiceColumnInBpm {
 			public const string Identifier = @"TsExternalId";
 			public const string IdentifierOrder = @"TsOrderServiceId";
+			public const string IdentifierManagerInfo = @"TsManagerInfoId";
 			public const string Version = @"TsExternalVersion";
 			public const string VersionOrder = @"TsOsVersion";
+			public const string VersionManagerInfo = @"TsManagerVersion";
 		}
 
 

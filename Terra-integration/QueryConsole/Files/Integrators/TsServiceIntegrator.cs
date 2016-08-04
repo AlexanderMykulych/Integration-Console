@@ -62,12 +62,12 @@ namespace QueryConsole.Files
 	}
 
 	public abstract class BaseServiceIntegrator: IServiceIntegrator {
-		public Dictionary<TServiceObject, string> baseUrls;
+		public static Dictionary<TServiceObject, string> baseUrls;
 		public IntegratorHelper integratorHelper;
 		public UserConnection userConnection;
 		public ServiceUrlMaker UrlMaker;
 		public IntegrationEntityHelper entityHelper;
-		public string ServiceName;
+		public static string ServiceName;
 		public string Auth;
 		public BaseServiceIntegrator(UserConnection userConnection) {
 			this.userConnection = userConnection;
@@ -77,7 +77,7 @@ namespace QueryConsole.Files
 		public virtual void GetRequest(ServiceRequestInfo info)
 		{
 			info.Method = TRequstMethod.GET;
-			info.FullUrl = UrlMaker.Make(info);
+			info.FullUrl = info.FullUrl ?? UrlMaker.Make(info);
 			IntegrationConsole.SetCurrentRequestUrl(info.FullUrl);
 			MakeRequest(info);
 		}
@@ -85,14 +85,14 @@ namespace QueryConsole.Files
 		public virtual void UpdateRequest(ServiceRequestInfo info)
 		{
 			info.Method = TRequstMethod.PUT;
-			info.FullUrl = UrlMaker.Make(info);
+			info.FullUrl = info.FullUrl ?? UrlMaker.Make(info);
 			MakeRequest(info);
 		}
 
 		public virtual void InsertRequest(ServiceRequestInfo info)
 		{
 			info.Method = TRequstMethod.POST;;
-			info.FullUrl = UrlMaker.Make(info); ;
+			info.FullUrl = info.FullUrl ?? UrlMaker.Make(info);
 			MakeRequest(info);
 		}
 
@@ -159,22 +159,25 @@ namespace QueryConsole.Files
 			
 		}
 
-		public virtual void IntegrateBpmEntity(Entity entity, EntityHandler handler = null) {
+		public virtual void IntegrateBpmEntity(Entity entity, EntityHandler defHandler = null) {
 			var integrationInfo = IntegrationInfo.CreateForExport(userConnection, entity);
-			integrationInfo.Handler = handler;
-			entityHelper.IntegrateEntity(integrationInfo);
-			if (integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
-			{
-				var json = integrationInfo.Result.Data.ToString();
-				var requestInfo = integrationInfo.Handler != null ? integrationInfo.Handler.GetRequestInfo(integrationInfo) : ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
-				requestInfo = requestInfo ?? ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
-				if (integrationInfo.Handler != null && integrationInfo.Handler.IsEntityAlreadyExist(integrationInfo))
+			var handlers = defHandler == null ? entityHelper.GetAllIntegrationHandler(integrationInfo) : new List<EntityHandler>() { defHandler };
+			foreach(var handler in handlers) {
+				integrationInfo.Handler = handler;
+				entityHelper.IntegrateEntity(integrationInfo);
+				if (integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
 				{
-					UpdateRequest(requestInfo);
-				}
-				else
-				{
-					InsertRequest(requestInfo);
+					var json = integrationInfo.Result.Data.ToString();
+					var requestInfo = integrationInfo.Handler != null ? integrationInfo.Handler.GetRequestInfo(integrationInfo) : ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
+					requestInfo = requestInfo ?? ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
+					if (integrationInfo.Handler != null && integrationInfo.Handler.IsEntityAlreadyExist(integrationInfo))
+					{
+						UpdateRequest(requestInfo);
+					}
+					else
+					{
+						InsertRequest(requestInfo);
+					}
 				}
 			}
 		}

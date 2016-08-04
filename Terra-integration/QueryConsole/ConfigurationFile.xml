@@ -348,7 +348,7 @@
   </configItem>
   <configItem JName="ManagerGroup" TsName="ManagerGroup">
     <mappingItem ConstType="#Null" JSourcePath="head" MapType="#Const" MapIntegrationType="#Export"/>
-    <mappingItem ConstType="#EmptyArray" JSourcePath="workers" MapType="#Const" MapIntegrationType="#Export"/>
+    <!--<mappingItem ConstType="#EmptyArray" JSourcePath="workers" MapType="#Const" MapIntegrationType="#Export"/>-->
     <mappingItem JSourcePath="name" TsSourcePath="Name"/>
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
     <mappingItem JSourcePath="version" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
@@ -714,20 +714,20 @@
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>
   <configItem JName="ManagerInfo" TsName="Contact">
-    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsSalesMarket" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsOwnerAgentId"/>
+    <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsLocalMarketId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsOwnerAgentId"/>
     <mappingItem JSourcePath="name" TsSourcePath="Name"/>
     <mappingItem JSourcePath="firstName" TsSourcePath="GivenName"/>
     <mappingItem JSourcePath="middleName" TsSourcePath="MiddleName"/>
     <mappingItem JSourcePath="lastName" TsSourcePath="Surname"/>
-    <mappingItem JSourcePath="address" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactAddress" TsDetailPath ="ContactId" TsDetailResPath="Address" TsTag="simple" MapExecuteType="#AfterEntitySave"/>
-    <mappingItem JSourcePath="facebook" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="ContactId" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|2795dd03-bacf-e011-92c3-00155d04c01d"/>
-    <mappingItem JSourcePath="twitter" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="ContactId" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|e7139487-bad3-e011-92c3-00155d04c01d"/>
-    <mappingItem JSourcePath="vk" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="ContactId" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave"/>
-    <mappingItem JSourcePath="workPhone" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="ContactId" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|3dddb3cc-53ee-49c4-a71f-e9e257f59e49"/>
-    <mappingItem JSourcePath="mobilePhone" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="ContactId" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|d4a2dc80-30ca-df11-9b2a-001d60e938c6"/>
-    <mappingItem JSourcePath="email" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="ContactId" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|ee1c85c3-cfcb-df11-9b2a-001d60e938c6"/>
-    <mappingItem JSourcePath="region" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactAddress" TsDetailPath ="ContactId" TsDetailResPath="RegionId" TsTag="stringtoguid" MapExecuteType="#AfterEntitySave" TsDestinationName="Region" TsDestinationPath="Id" TsDestinationResPath="Name"/>
-    <mappingItem JSourcePath="country" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactAddress" TsDetailPath ="ContactId" TsDetailResPath="CountryId" TsTag="stringtoguid" MapExecuteType="#AfterEntitySave" TsDestinationName="Country" TsDestinationPath="Id" TsDestinationResPath="Name"/>
+    <mappingItem JSourcePath="address" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactAddress" TsDetailPath ="Contact" TsDetailResPath="Address" TsTag="simple" MapExecuteType="#AfterEntitySave"/>
+    <mappingItem JSourcePath="facebook" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="Contact" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|2795dd03-bacf-e011-92c3-00155d04c01d"/>
+    <mappingItem JSourcePath="twitter" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="Contact" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|e7139487-bad3-e011-92c3-00155d04c01d"/>
+    <mappingItem JSourcePath="vk" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="Contact" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave"/>
+    <mappingItem JSourcePath="workPhone" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="Contact" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|3dddb3cc-53ee-49c4-a71f-e9e257f59e49"/>
+    <mappingItem JSourcePath="mobilePhone" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="Contact" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|d4a2dc80-30ca-df11-9b2a-001d60e938c6"/>
+    <mappingItem JSourcePath="email" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactCommunication" TsDetailPath ="Contact" TsDetailResPath="Number" TsTag="simple" MapExecuteType="#AfterEntitySave" TsDetailTag="CommunicationTypeId|ee1c85c3-cfcb-df11-9b2a-001d60e938c6"/>
+    <mappingItem JSourcePath="region" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactAddress" TsDetailPath ="Contact" TsDetailResPath="Region" TsTag="stringtoguid" MapExecuteType="#AfterEntitySave" TsDestinationName="Region" TsDestinationPath="Id" TsDestinationResPath="Name"/>
+    <mappingItem JSourcePath="country" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactAddress" TsDetailPath ="Contact" TsDetailResPath="Country" TsTag="stringtoguid" MapExecuteType="#AfterEntitySave" TsDestinationName="Country" TsDestinationPath="Id" TsDestinationResPath="Name"/>
     <!--<mappingItem JSourcePath="externalId" MapType="#StringToDictionaryGuid" TsDestinationName="ContactType" TsSourcePath="TypeId"/>-->
     <!--<mappingItem JSourcePath="login" MapType="#StringToDictionaryGuid" TsDestinationName="ContactSalutationType" TsSourcePath="SalutationTypeId"/>-->
     <mappingItem JSourcePath="position" MapType="#StringToDictionaryGuid" TsDestinationName="Job" TsSourcePath="JobId"/>
@@ -735,9 +735,9 @@
     <!--<mappingItem JSourcePath="office" TsSourcePath="TsSpAccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Name"/>-->
     <!--<mappingItem JSourcePath="address" TsSourcePath="TsSpAccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Address"/>-->
     <mappingItem JSourcePath="department" TsSourcePath="TsLocalMarketId" MapType="#StringToDictionaryGuid" TsDestinationName="TsLocSalMarket" TsDestinationResPath="TsName"/>
-    <mappingItem JSourcePath="company" TsSourcePath="AccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Name"/>
-    <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsOrderServiceId"/>
-    <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsOsVersion"/>
+    <mappingItem JSourcePath="company" TsSourcePath="AccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Id" TsDestinationResPath="Name"/>
+    <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsManagerInfoId"/>
+    <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsManagerVersion"/>
   </configItem>
   <configItem JName="CounteragentContactInfo" TsName="Contact">
     <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsLocalMarketId" TsDestinationName="TsLocSalMarket" TsDestinationPath="Id" TsDestinationResPath="TsOwnerAgentId"/>

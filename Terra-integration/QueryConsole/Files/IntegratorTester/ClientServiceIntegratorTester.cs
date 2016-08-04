@@ -23,7 +23,7 @@ namespace QueryConsole.Files.IntegratorTester
 		public override List<string> InitEntitiesName() {
 			return new List<string>() {
 				//"Account",
-				//"Contact",
+				"Contact",
 				//"TsAutoOwnerInfo",
 				//"TsAutomobile",
 				//"SysAdminUnit",
@@ -37,7 +37,7 @@ namespace QueryConsole.Files.IntegratorTester
 				//"TsAutoOwnerHistory",
 				//"TsAutoOwnerInfo",
 				//"TsAutoTechHistory",
-				"TsLocSalMarket"
+				//"TsLocSalMarket"
 			};
 		}
 		public override void ImportBpmEntity(Entity entity)

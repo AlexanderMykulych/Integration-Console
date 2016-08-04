@@ -48,6 +48,12 @@ namespace QueryConsole.Files.IntegratorTester
 			if(withoutIntegrated) {
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, CsConstant.ServiceColumnInBpm.Identifier, 0));
 			}
+			if(name == "SysAdminUnit") {
+				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Less, "SysAdminUnitTypeValue", 4));
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "SysAdminUnitTypeValue", 4));
+			} else if(name == "Contact") {
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.IsNotNull, "[SysAdminUnit:Contact:Id].Id"));
+			}
 			return esq.GetEntityCollection(UserConnection);
 		}
 		public void ExportServiceEntity(string name, Action afterIntegrate = null)

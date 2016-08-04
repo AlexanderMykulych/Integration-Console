@@ -266,6 +266,8 @@ namespace Terrasoft.TsConfiguration
 	[ImportHandlerAttribute("ManagerGroup")]
 	[ExportHandlerAttribute("SysAdminUnit")]
 	public class SysAdminUnitHandler : EntityHandler {
+		public ServiceUrlMaker UrlMaker;
+
 		public override string HandlerName {
 			get {
 				return JName;
@@ -275,6 +277,7 @@ namespace Terrasoft.TsConfiguration
 			Mapper = new MappingHelper();
 			EntityName = "SysAdminUnit";
 			JName = "";
+			UrlMaker = new ServiceUrlMaker(ClientServiceIntegrator.baseUrls);
 		}
 
 		public override void BeforeMapping(IntegrationInfo integrationInfo) {
@@ -298,9 +301,32 @@ namespace Terrasoft.TsConfiguration
 
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
-			JName = integrationInfo.EntityName;
 			Mapper.UserConnection = integrationInfo.UserConnection;
-			return Mapper.CheckIsExist("SysAdminUnit", integrationInfo.Data[JName].Value<int>("id"));
+			return Mapper.CheckIsExist("SysAdminUnit", integrationInfo.Data[JName].Value<int>("id"), "TsExternalId", integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("TsExternalId"));
+		}
+		public override ServiceRequestInfo GetRequestInfo(IntegrationInfo integrationInfo) {
+			var info = ServiceRequestInfo.CreateForUpdateInService(integrationInfo.IntegratedEntity, ClientServiceIntegrator.ServiceName, integrationInfo.Result.Data.ToString());
+			info.ServiceObjectName = JName;
+			return info;
+		}
+		public override void ProcessResponse(IntegrationInfo integrationInfo) {
+			base.ProcessResponse(integrationInfo);
+			if(JName == "Manager" && integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("SysAdminUnitTypeValue") == (int)TSysAdminUnitType.User) {
+				try {
+					ResaveContact(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("ContactId"), integrationInfo.UserConnection);
+				} catch(Exception e) {
+					//TODO:
+				}
+			}
+		}
+
+		public void ResaveContact(Guid contactId, UserConnection userConnection) {
+			if(contactId != Guid.Empty) {
+				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "Contact");
+				esq.AddAllSchemaColumns();
+				var entity = esq.GetEntity(userConnection, contactId);
+				entity.Save(false);
+			}
 		}
 	}
 
@@ -1148,7 +1174,7 @@ namespace Terrasoft.TsConfiguration
 	}
 
 	[ImportHandlerAttribute("ManagerInfo")]
-	[ExportHandlerAttribute("")]
+	[ExportHandlerAttribute("Contact")]
 	public class ManagerInfoHandler : EntityHandler
 	{
 		public override string HandlerName
@@ -1162,7 +1188,7 @@ namespace Terrasoft.TsConfiguration
 		{
 			get
 			{
-				return CsConstant.ServiceColumnInBpm.IdentifierOrder;
+				return CsConstant.ServiceColumnInBpm.IdentifierManagerInfo;
 			}
 		}
 
@@ -1170,7 +1196,7 @@ namespace Terrasoft.TsConfiguration
 		{
 			get
 			{
-				return CsConstant.ServiceColumnInBpm.VersionOrder;
+				return CsConstant.ServiceColumnInBpm.VersionManagerInfo;
 			}
 		}
 
@@ -1180,9 +1206,28 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "Contact";
 			JName = "ManagerInfo";
 		}
+
+		public override bool IsExport(IntegrationInfo integrationInfo) {
+			return IsContactHave(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.IntegratedEntity.UserConnection);
+		}
+
+		public bool IsContactHave(Guid contactId, UserConnection userConnection) {
+			var select = new Select(userConnection)
+						.Column(Func.Count("Id")).As("count")
+						.From("SysAdminUnit").As("sau")
+						.Where("sau", "ContactId").IsEqual(Column.Parameter(contactId)) as Select;
+			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection()) {
+				using (IDataReader reader = select.ExecuteReader(dbExecutor)) {
+					while (reader.Read()) {
+						return DBUtilities.GetColumnValue<int>(reader, "count") > 0;
+					}
+				}
+			}
+			return false;
+		}
 	}
 	[ImportHandlerAttribute("CounteragentContactInfo")]
-	[ExportHandlerAttribute("")]
+	[ExportHandlerAttribute("Contact")]
 	public class CounteragentContactInfoHandler : EntityHandler
 	{
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
@@ -1255,7 +1300,7 @@ namespace Terrasoft.TsConfiguration
 			JName = "Counteragent";
 		}
 		public override bool IsExport(IntegrationInfo integrationInfo) {
-			return isAccountContracted(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
+			return isAccountExported(integrationInfo) && isAccountContracted(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
 		}
 
 		public bool isAccountContracted(Guid accountId, UserConnection userConnection) {
@@ -1273,6 +1318,10 @@ namespace Terrasoft.TsConfiguration
 				}
 			}
 			return false;
+		}
+
+		public bool isAccountExported(IntegrationInfo integrationInfo) {
+			return integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsDontIntegrate");
 		}
 	}
 
