@@ -64,7 +64,8 @@
 		<mappingItem JSourcePath="anniversaryDates" TsSourcePath="Id" MapExecuteType="#AfterEntitySave" MapType="#ArrayOfCompositObject" TsDestinationName="AccountAnniversary" TsDestinationPath="Account"  OverRuleMacros="ConvertJsonArray"/>
     <!--<mappingItem JSourcePath = "relationships" TsSourcePath = "Id" TsDestinationPath = "AccountA" TsDestinationName = "Relationship" MapType = "#ArrayOfReference" JSourceName = "Relationship" MapExecuteType = "#AfterEntitySave" MapIntegrationType="#Export"/>-->
     <mappingItem ConstType="#EmptyArray" JSourcePath="relationships" MapType="#Const"/>
-    <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
+		<mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
+		<mappingItem JSourcePath="counteragentId" TsSourcePath="TsOrderServiceId" SerializeIfZero="#false"/>
     <mappingItem JSourcePath="version" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
     <mappingItem JSourceName="NotificationProfile" JSourcePath="notificationProfiles" MapExecuteType="#AfterEntitySave" MapIntegrationType="#Export" MapType="#ArrayOfCompositObject" TsDestinationName="TsAccountNotification" TsDestinationPath="TsAccount" TsSourcePath="Id"/>
     <mappingItem JSourcePath="additionalInfo.category" MapType="#StringToDictionaryGuid" TsDestinationName="AccountCategory" TsSourcePath="AccountCategoryId"/>
