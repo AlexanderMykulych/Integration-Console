@@ -35,9 +35,9 @@ namespace QueryConsole.Files.IntegratorTester
 				//"ContactAddress",
 				//"TsAutoTechService",
 				//"TsAutoOwnerHistory",
-				"TsAutoOwnerInfo",
+				//"TsAutoOwnerInfo",
 				//"TsAutoTechHistory",
-				//"TsLocSalMarket"
+				"TsLocSalMarket"
 			};
 		}
 		public override void ImportBpmEntity(Entity entity)

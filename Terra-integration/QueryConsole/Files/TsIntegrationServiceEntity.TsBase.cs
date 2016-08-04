@@ -1202,6 +1202,26 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "Account";
 			JName = "Counteragent";
 		}
+		public override bool IsExport(IntegrationInfo integrationInfo) {
+			return isAccountContracted(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
+		}
+
+		public bool isAccountContracted(Guid accountId, UserConnection userConnection) {
+			var select = new Select(userConnection)
+						.Column(Func.Count("c", "Id")).As("count")
+						.From("Contract").As("c")
+						.Where("c", "AccountId").IsEqual(Column.Parameter(accountId))
+						.And("c", "Active").IsEqual(Column.Parameter(true)) as Select;
+
+			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection()) {
+				using (IDataReader reader = select.ExecuteReader(dbExecutor)) {
+					while (reader.Read()) {
+						return DBUtilities.GetColumnValue<int>(reader, "count") > 0;
+					}
+				}
+			}
+			return false;
+		}
 	}
 
 	[ImportHandlerAttribute("")]
