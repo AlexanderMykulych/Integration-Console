@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using QueryConsole.Files.Integrators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
+using Terrasoft.CsConfiguration;
 using Terrasoft.TsConfiguration;
 
 namespace QueryConsole.Files.Constants
@@ -170,26 +172,6 @@ namespace QueryConsole.Files.Constants
 			//AssortmentRequestStatus - unrecognize
 		};
 
-		public static Dictionary<string, string> orderserviceEntity = new Dictionary<string,string>() {
-			{ "TsPayment", "Payment" },
-			{ "Order", "Order" },
-			{ "OrderProduct", "OrderItem" },
-			{ "TsReturn", "Return" },
-			{ "TsShipment", "Shipment" },
-			{ "TsShipmentPosition", "ShipmentItem" },
-			{ "Contract", "Contract" },
-			{ "TsContractDebt", "Debt" }
-		};
-
-		public static Dictionary<string, Dictionary<string, string>> servicesEntitiesName = new Dictionary<string,Dictionary<string,string>>() {
-			{ "clientservice", clientserviceEntity },
-			{ "orderservice", orderserviceEntity }
-		};
-		public static string GetServiceEntityTypeByBmpEntity(Entity entity, string serviceName) {
-			string bpmEntityName = entity.SchemaName;
-			var entitiesDict = servicesEntitiesName[serviceName.ToLower()];
-			return entitiesDict[bpmEntityName];
-		}
 		public static class VehicleRelationshipType
 		{
 			public const int Owner = 1;
@@ -293,6 +275,43 @@ namespace QueryConsole.Files.Constants
 		public static class TsContractState
 		{
 			public static readonly Guid Signed = new Guid("1f703f42-f7e8-4e3f-9b54-2b85f62ea507");
+		}
+		public static class IntegratorSettings {
+			public static Dictionary<Type, Dictionary<TServiceObject, string>> Urls = new Dictionary<Type,Dictionary<TServiceObject,string>>() {
+				{ typeof(Terrasoft.CsConfiguration.ClientServiceIntegrator), new Dictionary<TServiceObject, string>() {
+						//{ TServiceObject.Dict, "http://api.client-service.bus.stage2.auto3n.ru/v2/dict/AUTO3N" },
+						{ TServiceObject.Entity, "http://api.client-service.stage2.laximo.ru/v2/entity/AUTO3N" }
+						////{ TServiceObject.Dict, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/dict/AUTO3N" },
+						//{ TServiceObject.Entity, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/entity/AUTO3N" }
+					}
+				},
+				{ typeof(OrderServiceIntegrator), new Dictionary<TServiceObject, string>() {
+						//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
+						//{ TServiceObject.Entity, "http://api.order-service.bus2.auto3n.ru/v2/entity/AUTO3N" }
+						{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
+						{ TServiceObject.Entity, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" }
+				
+					}
+				},
+			};
+
+			public static Dictionary<Type, string> Names = new Dictionary<Type,string>() {
+				{ typeof(Terrasoft.CsConfiguration.ClientServiceIntegrator), "ClientService" },
+				{ typeof(OrderServiceIntegrator), "OrderService" },
+			};
+
+			public static Dictionary<TServiceObject, string> GetUrlsByServiceName(string serviceName) {
+				var serviceType = Names.FirstOrDefault(x => x.Value == serviceName).Key;
+				if(Urls.ContainsKey(serviceType)) {
+					return Urls[serviceType];
+				}
+				return new Dictionary<TServiceObject,string>();
+			}
+		}
+
+		public static class XmlManagerConstant {
+			public static readonly string XmlConfigRootNodeName = @"MapingConfiguration";
+			public static readonly string XmlConfigEntityConfigNodeName = @"integrationHandlerConfig";
 		}
 	}
 }

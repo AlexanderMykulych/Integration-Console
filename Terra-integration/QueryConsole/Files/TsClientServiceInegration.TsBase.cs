@@ -25,6 +25,7 @@ namespace Terrasoft.TsConfiguration
 	using System.Threading.Tasks;
 	using QueryConsole.Files.BpmEntityHelper;
 	using QueryConsole.Files.Constants;
+	using QueryConsole.Files.XmlManager;
 
 	public static class ExtensionHelper {
 		#region Methods: Public
@@ -75,7 +76,30 @@ namespace Terrasoft.TsConfiguration
 		private static XmlDocument _xDocument;
 		private static MappingItem _defaultItem;
 		private static Dictionary<string, string> _prerenderConfigDict;
+		private static IntegrationPathConfig _pathConfig;
 		#endregion
+
+		public static IntegrationPathConfig IntegrationPathConfig {
+			get {
+				if (_pathConfig == null) {
+					if(_xDocument == null) {
+						return null;
+					}
+					var node = _xDocument[CsConstant.XmlManagerConstant.XmlConfigRootNodeName][CsConstant.XmlManagerConstant.XmlConfigEntityConfigNodeName];
+					_pathConfig = new IntegrationPathConfig();
+					var resultList = new List<IntegrationPath>();
+					var pathType = typeof(IntegrationPath);
+					foreach (XmlNode pathNode in node.ChildNodes) {
+						var path = DynamicXmlParser.StartMapXmlToObj<IntegrationPath>(pathNode, pathType);
+						if (path != null) {
+							resultList.Add(path);
+						}
+					}
+					_pathConfig.Paths = resultList;
+				}
+				return _pathConfig;
+			}
+		}
 
 		#region Methods: Private
 		/// <summary>

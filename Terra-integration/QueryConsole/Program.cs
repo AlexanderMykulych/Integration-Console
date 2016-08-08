@@ -35,6 +35,7 @@ namespace QueryConsole
 					consoleApp.ConsoleColorWrite("Connect to Database: Failed", ConsoleColor.Red);
 					Console.WriteLine(e.Message);
 				}
+
 				consoleApp.ConsoleColorWrite("Connect to Database: Success");
 				AddBindings();
 				Console.WriteLine("Press any button to start integrate");

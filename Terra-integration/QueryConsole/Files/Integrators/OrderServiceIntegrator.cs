@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QueryConsole.Files.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,17 +14,11 @@ namespace QueryConsole.Files.Integrators
 		public OrderServiceIntegrator(UserConnection userConnection)
 			: base(userConnection)
 		{
-			baseUrls = new Dictionary<TServiceObject, string>() {
-				//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
-				//{ TServiceObject.Entity, "http://api.order-service.bus2.auto3n.ru/v2/entity/AUTO3N" }
-				{ TServiceObject.Dict, @"http://api.order-service.stage3.laximo.ru//v2/entity/AUTO3N" },
-				{ TServiceObject.Entity, @"http://api.order-service.stage3.laximo.ru//v2/entity/AUTO3N" }
-				
-			};
+			baseUrls = CsConstant.IntegratorSettings.Urls[this.GetType()];
 			integratorHelper = new IntegratorHelper();
 			UrlMaker = new ServiceUrlMaker(baseUrls);
-			ServiceName = "OrderService";
-			Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==";
+			ServiceName = CsConstant.IntegratorSettings.Names[this.GetType()];
+			Auth = "Basic YnBtb25saW5lMjoxMjM0NTY=";
 		}
 	}
 }

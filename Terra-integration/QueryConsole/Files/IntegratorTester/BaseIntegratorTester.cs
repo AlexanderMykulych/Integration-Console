@@ -41,9 +41,9 @@ namespace QueryConsole.Files.IntegratorTester
 		}
 		public EntityCollection GetEntitiesBySchemaNames(string name, bool withoutIntegrated = true) {
 			var esq = new EntitySchemaQuery(UserConnection.EntitySchemaManager, name);
-			//esq.RowCount = 50;
+			esq.RowCount = 1;
 			esq.AddAllSchemaColumns();
-			var dateColumn = esq.AddColumn("ModifiedOn");
+			var dateColumn = esq.AddColumn("CreatedOn");
 			dateColumn.OrderByDesc();
 			if(withoutIntegrated) {
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, CsConstant.ServiceColumnInBpm.Identifier, 0));

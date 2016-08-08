@@ -16,10 +16,17 @@ namespace QueryConsole.Files
 		}
 		public virtual string Make(TServiceObject type, string objectName, string objectId, string filters, TRequstMethod method, string limit, string skip)
 		{
-			string resultUrl = baseUrls[type];
+			return MakeUrl(baseUrls[type], objectName, objectId, filters, method, limit, skip);
+		}
+		public virtual string Make(ServiceRequestInfo info)
+		{
+			return Make(info.Type, info.ServiceObjectName, info.ServiceObjectId, info.Filters, info.Method, info.Limit, info.Skip); ;
+		}
+
+		public static string MakeUrl(string baseUrl, string objectName, string objectId, string filters, TRequstMethod method, string limit, string skip) {
+			string resultUrl = baseUrl;
 			resultUrl += "/" + objectName;
-			if (!string.IsNullOrEmpty(objectId) && objectId != "0")
-			{
+			if (!string.IsNullOrEmpty(objectId) && objectId != "0") {
 				resultUrl += "/" + objectId;
 				return resultUrl;
 			}
@@ -27,19 +34,17 @@ namespace QueryConsole.Files
 			if (!string.IsNullOrEmpty(limit)) {
 				resultUrl += (resultUrl.IndexOf("?") > -1 ? "&" : "?") + "limit=" + limit;
 			}
-			if (!string.IsNullOrEmpty(skip) && int.Parse(skip) > 0)
-			{
+			if (!string.IsNullOrEmpty(skip) && int.Parse(skip) > 0) {
 				resultUrl += (resultUrl.IndexOf("?") > -1 ? "&" : "?") + "skip=" + skip;
 			}
-			if (!string.IsNullOrEmpty(filters))
-			{
+			if (!string.IsNullOrEmpty(filters)) {
 				resultUrl += "?" + filters;
 			}
 			return resultUrl;
 		}
-		public virtual string Make(ServiceRequestInfo info)
-		{
-			return Make(info.Type, info.ServiceObjectName, info.ServiceObjectId, info.Filters, info.Method, info.Limit, info.Skip); ;
+
+		public static string MakeUrl(string baseUrl, ServiceRequestInfo info) {
+			return MakeUrl(baseUrl, info.ServiceObjectName, info.ServiceObjectId, info.Filters, info.Method, info.Limit, info.Skip);
 		}
 	}
 }

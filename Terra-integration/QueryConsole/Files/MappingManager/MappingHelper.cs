@@ -424,7 +424,7 @@ namespace Terrasoft.TsConfiguration
 			return strings.FirstOrDefault(x => !string.IsNullOrEmpty(x));
 		}
 
-		private JToken GetJTokenByPath(JToken jToken, string path, TIntegrationType type = TIntegrationType.Import)
+		private static JToken GetJTokenByPath(JToken jToken, string path, TIntegrationType type = TIntegrationType.Import)
 		{
 			var pItems = path.Split('.');
 			foreach (var pItem in pItems)

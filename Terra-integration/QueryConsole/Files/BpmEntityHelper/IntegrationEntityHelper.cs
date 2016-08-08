@@ -146,10 +146,12 @@ namespace QueryConsole.Files.BpmEntityHelper
 			{
 				try
 				{
-					if (integrationInfo.IntegrationType == TIntegrationType.Export && handler.IsExport(integrationInfo))
+					if (integrationInfo.IntegrationType == TIntegrationType.Export)
 					{
-						var result = new CsConstant.IntegrationResult(CsConstant.IntegrationResult.TResultType.Success, handler.ToJson(integrationInfo));
-						integrationInfo.Result = result;
+						if(handler.IsExport(integrationInfo)) {
+							var result = new CsConstant.IntegrationResult(CsConstant.IntegrationResult.TResultType.Success, handler.ToJson(integrationInfo));
+							integrationInfo.Result = result;
+						}
 						return;
 					}
 					else if (integrationInfo.IntegrationType == TIntegrationType.ExportResponseProcess)

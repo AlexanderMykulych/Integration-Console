@@ -10,14 +10,13 @@ using Terrasoft.Core.Entities;
 using Terrasoft.TsConfiguration;
 using CsConstant = QueryConsole.Files.Constants.CsConstant;
 using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
+using QueryConsole.Files.Extension;
 
 namespace QueryConsole.Files
 {
 	#region Interface: IServiceIntegrator
 	public interface IServiceIntegrator {
 		void GetRequest(ServiceRequestInfo info);
-		void UpdateRequest(ServiceRequestInfo info);
-		void InsertRequest(ServiceRequestInfo info);
 		void IntegrateBpmEntity(Entity entity, EntityHandler handler = null);
 	}
 	#endregion
@@ -42,16 +41,7 @@ namespace QueryConsole.Files
 		public string Skip;
 		public Action AfterIntegrate;
 		public EntityHandler Handler;
-		public static ServiceRequestInfo CreateForUpdateInService(Entity entity, string serviceName, string jsonData) {
-			return new ServiceRequestInfo() {
-				ServiceObjectId = entity.GetTypedColumnValue<string>(CsConstant.ServiceColumnInBpm.Identifier),
-				ServiceObjectName = CsConstant.GetServiceEntityTypeByBmpEntity(entity, serviceName),
-				Type = TServiceObject.Entity,
-				RequestJson = jsonData,
-				Entity = entity
-			};
-		}
-
+		
 		public static ServiceRequestInfo CreateForExportInBpm(string serviceObjectName, TServiceObject type = TServiceObject.Entity) {
 			return new ServiceRequestInfo() {
 				ServiceObjectName = serviceObjectName,
@@ -62,12 +52,12 @@ namespace QueryConsole.Files
 	}
 
 	public abstract class BaseServiceIntegrator: IServiceIntegrator {
-		public static Dictionary<TServiceObject, string> baseUrls;
+		public Dictionary<TServiceObject, string> baseUrls;
 		public IntegratorHelper integratorHelper;
 		public UserConnection userConnection;
 		public ServiceUrlMaker UrlMaker;
 		public IntegrationEntityHelper entityHelper;
-		public static string ServiceName;
+		public string ServiceName;
 		public string Auth;
 		public BaseServiceIntegrator(UserConnection userConnection) {
 			this.userConnection = userConnection;
@@ -79,20 +69,6 @@ namespace QueryConsole.Files
 			info.Method = TRequstMethod.GET;
 			info.FullUrl = info.FullUrl ?? UrlMaker.Make(info);
 			IntegrationConsole.SetCurrentRequestUrl(info.FullUrl);
-			MakeRequest(info);
-		}
-
-		public virtual void UpdateRequest(ServiceRequestInfo info)
-		{
-			info.Method = TRequstMethod.PUT;
-			info.FullUrl = info.FullUrl ?? UrlMaker.Make(info);
-			MakeRequest(info);
-		}
-
-		public virtual void InsertRequest(ServiceRequestInfo info)
-		{
-			info.Method = TRequstMethod.POST;;
-			info.FullUrl = info.FullUrl ?? UrlMaker.Make(info);
 			MakeRequest(info);
 		}
 
@@ -163,21 +139,14 @@ namespace QueryConsole.Files
 			var integrationInfo = IntegrationInfo.CreateForExport(userConnection, entity);
 			var handlers = defHandler == null ? entityHelper.GetAllIntegrationHandler(integrationInfo) : new List<EntityHandler>() { defHandler };
 			foreach(var handler in handlers) {
+				integrationInfo = IntegrationInfo.CreateForExport(userConnection, entity);
 				integrationInfo.Handler = handler;
 				entityHelper.IntegrateEntity(integrationInfo);
-				if (integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
+				if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
 				{
 					var json = integrationInfo.Result.Data.ToString();
-					var requestInfo = integrationInfo.Handler != null ? integrationInfo.Handler.GetRequestInfo(integrationInfo) : ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
-					requestInfo = requestInfo ?? ServiceRequestInfo.CreateForUpdateInService(entity, ServiceName, json);
-					if (integrationInfo.Handler != null && integrationInfo.Handler.IsEntityAlreadyExist(integrationInfo))
-					{
-						UpdateRequest(requestInfo);
-					}
-					else
-					{
-						InsertRequest(requestInfo);
-					}
+					var requestInfo = integrationInfo.Handler.GetRequestInfo(integrationInfo);
+					MakeRequest(requestInfo);
 				}
 			}
 		}

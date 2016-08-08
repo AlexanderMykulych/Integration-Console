@@ -1,4 +1,5 @@
 ﻿using QueryConsole.Files;
+using QueryConsole.Files.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +14,10 @@ namespace Terrasoft.CsConfiguration
 		public ClientServiceIntegrator(UserConnection userConnection)
 			: base(userConnection)
 		{
-			baseUrls = new Dictionary<TServiceObject, string>() {
-				//{ TServiceObject.Dict, "http://api.client-service.bus.stage2.auto3n.ru/v2/dict/AUTO3N" },
-				{ TServiceObject.Entity, "http://api.client-service.stage2.laximo.ru/v2/entity/AUTO3N" }
-				////{ TServiceObject.Dict, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/dict/AUTO3N" },
-				//{ TServiceObject.Entity, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/entity/AUTO3N" }
-			};
+			baseUrls = CsConstant.IntegratorSettings.Urls[this.GetType()];
 			integratorHelper = new Terrasoft.TsConfiguration.IntegratorHelper();
 			UrlMaker = new ServiceUrlMaker(baseUrls);
-			ServiceName = "ClientService";
+			ServiceName = CsConstant.IntegratorSettings.Names[this.GetType()];
 			Auth = "Basic YnBtb25saW5lMjoxMjM0NTY=";
 		}
 	}

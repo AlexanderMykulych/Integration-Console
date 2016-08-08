@@ -26,8 +26,9 @@ namespace QueryConsole.Files.IntegratorTester
 				//"TsReturn",
 				//"TsShipment",
 				//"TsShipmentPosition",
-				"TsContractDebt",
-				"Contract"
+				//"TsContractDebt",
+				//"Contract"
+				"Contact"
 			};
 		}
 		public override void ImportBpmEntity(Entity entity)
