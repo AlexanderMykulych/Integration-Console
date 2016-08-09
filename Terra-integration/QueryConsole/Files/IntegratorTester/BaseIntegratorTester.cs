@@ -47,6 +47,9 @@ namespace QueryConsole.Files.IntegratorTester
 			dateColumn.OrderByDesc();
 			//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Name", "Наша компания"));
 			///*esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("a37*/d31d9-4b81-4c40-925c-1b1d658e926d")));
+			if(name == "Contact") {
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("08ac7862-1849-4057-8d24-b3f3d855baa1")));
+			}
 			if(name == "ContactCareer") {
 				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("6D20D35D-82B9-4CFD-9D18-670003D79AB7")));
 			}

@@ -1516,6 +1516,11 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "AccountAnniversary";
 			JName = "";
 		}
+		public override JObject ToJson(IntegrationInfo integrationInfo) {
+			base.ToJson(integrationInfo);
+			integrationInfo.Data = (JObject)integrationInfo.Data.First;
+			return integrationInfo.Data;
+		}
 	}
 
 	[ImportHandlerAttribute("")]
@@ -1527,6 +1532,14 @@ namespace Terrasoft.TsConfiguration
 			Mapper = new MappingHelper();
 			EntityName = "ContactAnniversary";
 			JName = "";
+		}
+		public override JObject ToJson(IntegrationInfo integrationInfo) {
+			base.ToJson(integrationInfo);
+			if(integrationInfo.Data.First != null && integrationInfo.Data.First.First != null) {
+				integrationInfo.Data = (JObject)integrationInfo.Data.First.First;
+				return integrationInfo.Data;
+			}
+			return null;
 		}
 	}
 }
