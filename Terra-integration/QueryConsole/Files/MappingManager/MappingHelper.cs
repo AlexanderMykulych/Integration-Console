@@ -16,6 +16,7 @@ using Terrasoft.Core.DB;
 using Terrasoft.Core.Entities;
 using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
 using TIntegrationType = QueryConsole.Files.Constants.CsConstant.TIntegrationType;
+using Terrasoft.CsConfiguration;
 
 
 namespace Terrasoft.TsConfiguration
@@ -424,22 +425,9 @@ namespace Terrasoft.TsConfiguration
 			return strings.FirstOrDefault(x => !string.IsNullOrEmpty(x));
 		}
 
-		private static JToken GetJTokenByPath(JToken jToken, string path, TIntegrationType type = TIntegrationType.Import)
+		private JToken GetJTokenByPath(JToken jToken, string path, TIntegrationType type = TIntegrationType.Import)
 		{
-			var pItems = path.Split('.');
-			foreach (var pItem in pItems)
-			{
-				if (!jToken.HasValues || jToken[pItem] == null)
-				{
-					if (type != TIntegrationType.Import) {
-						jToken[pItem] = new JObject();
-					} else {
-						return new JObject();
-					}
-				}
-				jToken = jToken[pItem];
-			}
-			return jToken;
+			return jToken.GetJTokenByPath(path, type);
 		}
 
 		private void ExecuteMapMethodQueue()

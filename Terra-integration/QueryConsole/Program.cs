@@ -45,18 +45,18 @@ namespace QueryConsole
 					new OrderServiceIntegratorTester(consoleApp.SystemUserConnection),
 					new ClientServiceIntegratorTester(consoleApp.SystemUserConnection)
 				};
-				//var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
-				//	{"ManagerInfo", 500, 0, 1},
-				//	{"CounteragentContactInfo", 500, 0, 1},
-				//	{"Counteragent", 500, 0, 1},
-				//	{"Contract", 500, 0, 1},
-				//	{"Order", 500, 0, 1},
-				//	{"Shipment", 500, 0, 1},
-				//	{"Payment", 500, 0, 1},
-				//	{"Return", 500, 0, 1},
-				//};
-				//testerManager.Run();
-				testers[1].ImportAllBpmEntity();
+				var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
+					//{"ManagerInfo", 500, 0, 1},
+					//{"CounteragentContactInfo", 500, 0, 1},
+					//{"Counteragent", 500, 0, 1},
+					//{"Contract", 500, 0, 1},
+					//{"Order", 500, 0, 1},
+					{"Shipment", 5, 0, 1},
+					//{"Payment", 500, 0, 1},
+					//{"Return", 500, 0, 1},
+				};
+				testerManager.Run();
+				//testers[1].ImportAllBpmEntity();
 				while (true) {
 				}
 			} catch (ReflectionTypeLoadException e1) {

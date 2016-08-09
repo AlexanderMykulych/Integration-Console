@@ -129,7 +129,11 @@ namespace Terrasoft.TsConfiguration
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
 			integrationInfo.TsExternalVersionPath = ExternalVersionPath;
 			Mapper.UserConnection = integrationInfo.UserConnection;
-			return Mapper.CheckIsExist(EntityName, integrationInfo.Data[JName].Value<int>("id"), integrationInfo.TsExternalIdPath, integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath));
+			int externalId = 0;
+			if(integrationInfo.IntegratedEntity != null) {
+				externalId = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath);
+			}
+			return Mapper.CheckIsExist(EntityName, integrationInfo.Data[JName].Value<int>("id"), integrationInfo.TsExternalIdPath, externalId);
 		}
 
 		public virtual void ProcessResponse(IntegrationInfo integrationInfo)
@@ -209,8 +213,7 @@ namespace Terrasoft.TsConfiguration
 	}
 
 	[ImportHandlerAttribute("PersonProfile")]
-	//[ExportHandlerAttribute("Contact")]
-	[ExportHandlerAttribute("")]
+	[ExportHandlerAttribute("Contact")]
 	public class ContactHandler : EntityHandler {
 		public ContactHandler() {
 			Mapper = new MappingHelper();
@@ -1374,8 +1377,7 @@ namespace Terrasoft.TsConfiguration
 		}
 	}
 	[ImportHandlerAttribute("CounteragentContactInfo")]
-	//[ExportHandlerAttribute("Contact")]
-	[ExportHandlerAttribute("")]
+	[ExportHandlerAttribute("Contact")]
 	public class CounteragentContactInfoHandler : EntityHandler
 	{
 		public override void BeforeMapping(IntegrationInfo integrationInfo)

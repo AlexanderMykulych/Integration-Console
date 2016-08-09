@@ -28,7 +28,7 @@ namespace QueryConsole.Files.IntegratorTester
 				//"TsShipmentPosition",
 				//"TsContractDebt",
 				//"Contract"
-				"Contact"
+				//"Contact"
 			};
 		}
 		public override void ImportBpmEntity(Entity entity)
@@ -38,17 +38,17 @@ namespace QueryConsole.Files.IntegratorTester
 		public override List<string> InitServiceEntitiesName()
 		{
 			return new List<string>() {
-                "Payment",
-               "Order",
-                "OrderItem",
-                "Return",
-                "Shipment",
-               "Debt",
-                "Contract",
-                "ContractBalance",
-                "ManagerInfo",
-                "CounteragentContactInfo",
-              "Counteragent"
+			  //  "Payment",
+			  // "Order",
+			  //  "OrderItem",
+			  //  "Return",
+			  "Shipment",
+			  // "Debt",
+			  //  "Contract",
+			  //  "ContractBalance",
+			  //  "ManagerInfo",
+			  //  "CounteragentContactInfo",
+			  //"Counteragent"
 			};
 		}
 	}
