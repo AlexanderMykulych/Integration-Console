@@ -19,15 +19,34 @@ namespace QueryConsole.Files.MappingManager.MappRule
 		}
 		public override void Import(RuleImportInfo info)
 		{
-			if (info.json is JArray)
+			if (info.integrationType == Constants.CsConstant.TIntegrationType.ExportResponseProcess)
 			{
-				var jArray = (JArray)info.json;
-				foreach (JToken jArrayItem in jArray)
+				//var dscValue = srcEntity.GetColumnValue(info.config.TsSourcePath);
+				//var resultJObjs = JsonEntityHelper.GetCompositeJObjects(dscValue, info.config.TsDestinationPath, info.config.TsDestinationName, handlerName, info.userConnection);
+				//if (info.json is JArray)
+				//{
+				//	var jArray = (JArray)info.json;
+				//	foreach (JToken jArrayItem in jArray)
+				//	{
+				//		JObject jObj = jArrayItem as JObject;
+				//		var integrator = new IntegrationEntityHelper();
+				//		var objIntegrInfo = new IntegrationInfo(jObj, info.userConnection, info.integrationType, null, jObj.Properties().First().Name, info.action);
+				//		integrator.IntegrateEntity(objIntegrInfo);
+				//	}
+				//}
+			}
+			else
+			{
+				if (info.json is JArray)
 				{
-					JObject jObj = jArrayItem as JObject;
-					var integrator = new IntegrationEntityHelper();
-					var objIntegrInfo = new IntegrationInfo(jObj, info.userConnection, info.integrationType, null, jObj.Properties().First().Name, info.action);
-					integrator.IntegrateEntity(objIntegrInfo);
+					var jArray = (JArray)info.json;
+					foreach (JToken jArrayItem in jArray)
+					{
+						JObject jObj = jArrayItem as JObject;
+						var integrator = new IntegrationEntityHelper();
+						var objIntegrInfo = new IntegrationInfo(jObj, info.userConnection, info.integrationType, null, jObj.Properties().First().Name, info.action);
+						integrator.IntegrateEntity(objIntegrInfo);
+					}
 				}
 			}
 		}

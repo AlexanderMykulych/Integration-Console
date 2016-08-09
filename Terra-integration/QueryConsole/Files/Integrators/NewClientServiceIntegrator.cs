@@ -18,7 +18,8 @@ namespace Terrasoft.CsConfiguration
 			integratorHelper = new Terrasoft.TsConfiguration.IntegratorHelper();
 			UrlMaker = new ServiceUrlMaker(baseUrls);
 			ServiceName = CsConstant.IntegratorSettings.Names[this.GetType()];
-			Auth = "Basic YnBtb25saW5lMjoxMjM0NTY=";
+			Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==";
+			//Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==";
 		}
 	}
 }

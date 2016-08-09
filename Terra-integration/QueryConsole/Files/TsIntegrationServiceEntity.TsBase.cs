@@ -1324,7 +1324,7 @@ namespace Terrasoft.TsConfiguration
 	}
 
 	[ImportHandlerAttribute("ManagerInfo")]
-	[ExportHandlerAttribute("Contact")]
+	//[ExportHandlerAttribute("Contact")]
 	public class ManagerInfoHandler : EntityHandler
 	{
 		public override string HandlerName
@@ -1377,7 +1377,7 @@ namespace Terrasoft.TsConfiguration
 		}
 	}
 	[ImportHandlerAttribute("CounteragentContactInfo")]
-	[ExportHandlerAttribute("Contact")]
+	//[ExportHandlerAttribute("Contact")]
 	public class CounteragentContactInfoHandler : EntityHandler
 	{
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
@@ -1504,13 +1504,28 @@ namespace Terrasoft.TsConfiguration
 			JName = "";
 		}
 	}
+	
 
-	[ImportHandlerAttribute("")]
+   [ImportHandlerAttribute("")]
 	[ExportHandlerAttribute("AccountAnniversary")]
-	public class AccountAnniversaryHandler: EntityHandler {
-		public AccountAnniversaryHandler() {
+	public class AccountAnniversaryHandler : EntityHandler
+	{
+		public AccountAnniversaryHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "AccountAnniversary";
+			JName = "";
+		}
+	}
+
+	[ImportHandlerAttribute("")]
+	[ExportHandlerAttribute("ContactAnniversary")]
+	public class ContactAnniversaryHandler : EntityHandler
+	{
+		public ContactAnniversaryHandler()
+		{
+			Mapper = new MappingHelper();
+			EntityName = "ContactAnniversary";
 			JName = "";
 		}
 	}

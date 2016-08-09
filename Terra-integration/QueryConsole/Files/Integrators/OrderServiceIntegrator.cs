@@ -18,7 +18,7 @@ namespace QueryConsole.Files.Integrators
 			integratorHelper = new IntegratorHelper();
 			UrlMaker = new ServiceUrlMaker(baseUrls);
 			ServiceName = CsConstant.IntegratorSettings.Names[this.GetType()];
-			Auth = "Basic YnBtb25saW5lMjoxMjM0NTY=";
+			Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==";
 		}
 	}
 }

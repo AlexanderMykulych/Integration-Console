@@ -22,7 +22,7 @@ namespace QueryConsole.Files.Integrators
 		private IntegrationEntityHelper _integrationEntityHelper;
 		private string _basePostboxUrl = @"http://api.integration.stage2.laximo.ru/v2/entity";
 		private string _baseClientServiceUrl = @"http://api.client-service.stage2.laximo.ru/v2/entity/AUTO3N";
-		private int _postboxId = 1009;
+		private int _postboxId = 1004;
 		private int _notifyLimit = 10;
 		private bool _isImportAllow = true;
 		#endregion

@@ -6,7 +6,6 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Terrasoft.Configuration;
 using Terrasoft.Core;
 using Terrasoft.TsConfiguration;
 
@@ -57,7 +56,7 @@ namespace QueryConsole.Files.WCFService {
 				integrator.IniciateLoadChanges();
 				return true;
 			} catch(Exception e) {
-				TsEntityLogger.Error("AUTO3N Service Error, NotifyChange: {0}", e.ToString());
+				//TsEntityLogger.Error("AUTO3N Service Error, NotifyChange: {0}", e.ToString());
 				return false;
 			}
 		}

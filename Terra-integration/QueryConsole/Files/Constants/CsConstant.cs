@@ -280,16 +280,16 @@ namespace QueryConsole.Files.Constants
 			public static Dictionary<Type, Dictionary<TServiceObject, string>> Urls = new Dictionary<Type,Dictionary<TServiceObject,string>>() {
 				{ typeof(Terrasoft.CsConfiguration.ClientServiceIntegrator), new Dictionary<TServiceObject, string>() {
 						//{ TServiceObject.Dict, "http://api.client-service.bus.stage2.auto3n.ru/v2/dict/AUTO3N" },
-						{ TServiceObject.Entity, "http://api.client-service.stage2.laximo.ru/v2/entity/AUTO3N" }
+						{ TServiceObject.Entity, "http://api.client-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
 						////{ TServiceObject.Dict, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/dict/AUTO3N" },
-						//{ TServiceObject.Entity, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/entity/AUTO3N" }
+						//{ TServiceObject.Entity, "http://api.client-service.stage3.laximo.ru/v2/entity/AUTO3N" }
 					}
 				},
 				{ typeof(OrderServiceIntegrator), new Dictionary<TServiceObject, string>() {
 						//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
 						//{ TServiceObject.Entity, "http://api.order-service.bus2.auto3n.ru/v2/entity/AUTO3N" }
-						{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
-						{ TServiceObject.Entity, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" }
+						//{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
+						{ TServiceObject.Entity, @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
 				
 					}
 				},

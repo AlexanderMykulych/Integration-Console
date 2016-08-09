@@ -116,6 +116,8 @@ namespace QueryConsole.Files.MappingManager
 				var jObjectsList = new List<JObject>();
 				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, entityName);
 				esq.AddAllSchemaColumns();
+				var dateColumn = esq.AddColumn("CreatedOn");
+				dateColumn.OrderByDesc();
 				if (maxCount > 0)
 					esq.RowCount = maxCount;
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, colName, colValue));
