@@ -212,6 +212,8 @@
     <Compile Include="Files\ConsoleManager\TableRowNameAttribute.cs" />
     <Compile Include="Files\ConsoleManager\Trio.cs" />
     <Compile Include="Files\Constants\CsConstant.cs" />
+    <Compile Include="Files\Extension\JTokeExtension.cs" />
+    <Compile Include="Files\Extension\ObjectExstension.cs" />
     <Compile Include="Files\IntegratorHelper\IntegratorHelper.cs" />
     <Compile Include="Files\Integrators\ClientServiceIntegrator.cs" />
     <Compile Include="Files\Integrators\IntegrationServiceIntegrator.cs" />
@@ -250,6 +252,9 @@
     <Compile Include="Files\TsClientServiceInegrationSchema.TsBase.cs" />
     <Compile Include="Files\TsIntegrationServiceEntity.TsBase.cs" />
     <Compile Include="Files\TsIntegrationServiceEntitySchema.TsBase.cs" />
+    <Compile Include="Files\XmlManager\DynamicXmlParser.cs" />
+    <Compile Include="Files\XmlManager\IntegrationPath.cs" />
+    <Compile Include="Files\XmlManager\IntegrationPathConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
