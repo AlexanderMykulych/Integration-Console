@@ -21,6 +21,7 @@ namespace Terrasoft.TsConfiguration
 		public MappingHelper Mapper;
 		public string EntityName;
 		public string JName;
+
 		public virtual string HandlerName { get {
 			return EntityName;
 		}}
@@ -66,6 +67,12 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
+		public virtual bool IsJsonWithHeader {
+			get {
+				return true;
+			}
+		}
+
 		public virtual void Create(IntegrationInfo integrationInfo) {
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
 			integrationInfo.TsExternalVersionPath = ExternalVersionPath;
@@ -73,7 +80,7 @@ namespace Terrasoft.TsConfiguration
 			integrationInfo.IntegratedEntity = entitySchema.CreateEntity(integrationInfo.UserConnection);
 			integrationInfo.IntegratedEntity.SetDefColumnValues();
 			BeforeMapping(integrationInfo);
-			Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection));
+			Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection), IsJsonWithHeader);
 			AfterMapping(integrationInfo);
 			try {
 				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName);
@@ -1822,6 +1829,13 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("AccountAnniversary")]
 	public class AccountAnniversaryHandler : EntityHandler
 	{
+		public override bool IsJsonWithHeader
+		{
+			get
+			{
+				return false;
+			}
+		}
 		public AccountAnniversaryHandler()
 		{
 			Mapper = new MappingHelper();
@@ -1837,12 +1851,31 @@ namespace Terrasoft.TsConfiguration
 			}
 			return null;
 		}
+		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
+		{
+			return false;
+		}
+		public override void BeforeMapping(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
+				integrationInfo.Data["contactId"] = integrationInfo.ParentEntity.GetTypedColumnValue<string>("Id");
+			}
+		}
+
 	}
 
 	[ImportHandlerAttribute("ContactAnniversary")]
 	[ExportHandlerAttribute("ContactAnniversary")]
 	public class ContactAnniversaryHandler : EntityHandler
 	{
+		public override bool IsJsonWithHeader
+		{
+			get
+			{
+				return false;
+			}
+		}
 		public ContactAnniversaryHandler()
 		{
 			Mapper = new MappingHelper();
@@ -1858,56 +1891,15 @@ namespace Terrasoft.TsConfiguration
 			return null;
 		}
 
-		public override void BeforeMapping(IntegrationInfo integrationInfo)
-		{
-			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
-			{
-				if (integrationInfo.ParentEntity != null)
-				{
-					integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
-				}
-			}
-		}
-
-		public override Entity GetEntityByExternalId(IntegrationInfo integrationInfo)
-		{
-			//if (integrationInfo.ParentEntity != null)
-			//{
-			//	integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
-			//	string externalIdPath = integrationInfo.TsExternalIdPath;
-			//	var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
-			//	esq.AddAllSchemaColumns();
-			//	var columnExt = esq.AddColumn("TsExternalId");
-			//	columnExt.OrderByDesc();
-			//	esq.RowCount = 1;
-			//	esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
-			//	var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
-			//		esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
-			//		esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
-			//	};
-			//	esq.Filters.Add(group);
-			//	return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
-			//}
-			return base.GetEntityByExternalId(integrationInfo);
-		}
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
-			//if (integrationInfo.ParentEntity != null)
-			//{
-			//	string externalIdPath = ExternalIdPath;
-			//	var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
-			//	var columnExt = esq.AddColumn("Id");
-			//	columnExt.OrderByDesc();
-			//	esq.RowCount = 1;
-			//	esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact", integrationInfo.ParentEntity.GetTypedColumnValue<Guid>("Id")));
-			//	var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
-			//		esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
-			//		esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
-			//	};
-			//	esq.Filters.Add(group);
-			//	return esq.GetEntityCollection(integrationInfo.UserConnection).Count > 0;
-			//}
-			return base.IsEntityAlreadyExist(integrationInfo);
+			return false;
+		}
+		public override void BeforeMapping(IntegrationInfo integrationInfo)
+		{
+			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
+				integrationInfo.Data["contactId"] = integrationInfo.ParentEntity.GetTypedColumnValue<string>("Id");
+			}
 		}
 	}
 }

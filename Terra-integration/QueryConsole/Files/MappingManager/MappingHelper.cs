@@ -62,7 +62,7 @@ namespace Terrasoft.TsConfiguration
 		#endregion
 
 		#region Methods: Public
-		public void StartMappByConfig(IntegrationInfo integrationInfo, string jName, List<MappingItem> mapConfig)
+		public void StartMappByConfig(IntegrationInfo integrationInfo, string jName, List<MappingItem> mapConfig, bool withHeader = true)
 		{
 			try
 			{
@@ -70,7 +70,7 @@ namespace Terrasoft.TsConfiguration
 				{
 					case TIntegrationType.Import:
 						{
-							StartMappImportByConfig(integrationInfo, jName, mapConfig);
+							StartMappImportByConfig(integrationInfo, jName, mapConfig, withHeader);
 							break;
 						}
 					case TIntegrationType.Export:
@@ -92,11 +92,11 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		public void StartMappImportByConfig(IntegrationInfo integrationInfo, string jName, List<MappingItem> mapConfig)
+		public void StartMappImportByConfig(IntegrationInfo integrationInfo, string jName, List<MappingItem> mapConfig, bool withHeader = true)
 		{
 			if (integrationInfo.IntegratedEntity == null)
 				throw new Exception(string.Format("Integration Entity not exist {0} ({1})", jName));
-			var entityJObj = integrationInfo.Data[jName];
+			var entityJObj = withHeader ? integrationInfo.Data[jName] : integrationInfo.Data;
 			foreach (var item in mapConfig)
 			{
 				if (item.MapIntegrationType == TIntegrationType.All || item.MapIntegrationType == TIntegrationType.Import)

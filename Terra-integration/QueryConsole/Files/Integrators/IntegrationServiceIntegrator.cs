@@ -65,7 +65,7 @@ namespace QueryConsole.Files.Integrators
 				withData == true ? TIntegratorRequest.BusEventNotificationData : TIntegratorRequest.BusEventNotification,
 				TRequstMethod.GET,
 				"0",
-				"100",//_notifyLimit.ToString(),
+				"10000",//_notifyLimit.ToString(),
 				CsConstant.DefaultBusEventFilters,
 				CsConstant.DefaultBusEventSorts
 			);

@@ -93,7 +93,7 @@
     <mappingItem JSourcePath = "ownerAgentId" TsSourcePath = "TsLrsAccountId" TsDestinationName = "TsLocSalMarket" MapType = "#StringToDictionaryGuid" TsDestinationPath="TsAccount" TsDestinationResPath="TsOwnerAgentId" SerializeIfNull="#false" SerializeIfZero="#false"/>
     <mappingItem JSourcePath="specialization" MapExecuteType="#BeforeEntitySave" MapIntegrationType="#Export" MapType="#StringToDictionaryGuid" TsDestinationName="TsAccountSpec" TsDestinationPath="TsAccount" TsDestinationResPath="TsSpecialization.Name" TsSourcePath="Id"/>
 		<mappingItem JSourcePath="billingInfos" TsSourcePath="Id" MapExecuteType="#AfterEntitySave" MapType="#ArrayOfCompositObject" TsDestinationName="AccountBillingInfo" TsDestinationPath="Account"  OverRuleMacros="ConvertJsonArray"/>
-		<mappingItem JSourcePath="anniversaryDates" TsSourcePath="Id" MapExecuteType="#AfterEntitySave" MapType="#ArrayOfCompositObject" TsDestinationName="AccountAnniversary" TsDestinationPath="Account"  OverRuleMacros="ConvertJsonArray"/>
+		<mappingItem JSourcePath="anniversaryDates" TsSourcePath="Id" MapExecuteType="#AfterEntitySave" MapType="#ArrayOfCompositObject" TsDestinationName="AccountAnniversary" TsDestinationPath="Account"  OverRuleMacros="ConvertJsonArray" DeleteBeforeExport="#true"/>
     <!--<mappingItem JSourcePath = "relationships" TsSourcePath = "Id" TsDestinationPath = "AccountA" TsDestinationName = "Relationship" MapType = "#ArrayOfReference" JSourceName = "Relationship" MapExecuteType = "#AfterEntitySave" MapIntegrationType="#Export"/>-->
     <mappingItem ConstType="#EmptyArray" JSourcePath="relationships" MapType="#Const"/>
 		<mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
@@ -135,11 +135,13 @@
 	</configItem>
   <configItem JName="" TsName="AccountAnniversary">
     <mappingItem JSourcePath="type" TsSourcePath="AnniversaryTypeId" MapType="#StringToDictionaryGuid" TsDestinationName="AnniversaryType"/>
-    <mappingItem JSourcePath="date" TsSourcePath="Date"/>
+    <mappingItem JSourcePath="date" TsSourcePath="Date" MacrosName="DateWithouTime"/>
+    <mappingItem JSourcePath="contactId" TsSourcePath="ContactId"/>
   </configItem>
   <configItem JName="" TsName="ContactAnniversary">
     <mappingItem JSourcePath="type" TsSourcePath="AnniversaryTypeId" MapType="#StringToDictionaryGuid" TsDestinationName="AnniversaryType"/>
-    <mappingItem JSourcePath="date" TsSourcePath="Date"/>
+    <mappingItem JSourcePath="date" TsSourcePath="Date" MacrosName="DateWithouTime"/>
+    <mappingItem JSourcePath="contactId" TsSourcePath="ContactId"/>
   </configItem>
   <configItem JName="PersonProfile" TsName="Contact">
     <mappingItem JSourcePath="name" TsSourcePath="Name"/>
