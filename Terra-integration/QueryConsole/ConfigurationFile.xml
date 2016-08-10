@@ -72,8 +72,8 @@
     <mappingItem JSourcePath="mainContactInfo.ContactInfo.faxAllowed" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="DoNotUseFax" TsSourcePath="PrimaryContactId"/>
     <mappingItem JSourcePath="mainContactInfo.ContactInfo.smsAllowed" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="DoNotUseSms" TsSourcePath="PrimaryContactId"/>
     <mappingItem JSourcePath="mainContactInfo.ContactInfo.mailAllowed" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="DoNotUseMail" TsSourcePath="PrimaryContactId"/>
-    <mappingItem JSourceName="ContactRecord" JSourcePath="mainContactInfo.ContactInfo.records" MapType="#ArrayOfCompositObject" TsDestinationName="AccountCommunication" TsDestinationPath="Account" TsSourcePath="Id" HandlerName="ContactRecord2"/>
-    <mappingItem JSourceName="AddressInfo" JSourcePath="mainContactInfo.ContactInfo.addresses" MapType="#ArrayOfCompositObject" TsDestinationName="AccountAddress" TsDestinationPath="Account" TsSourcePath="Id"/>
+    <mappingItem JSourceName="ContactRecord" JSourcePath="mainContactInfo.ContactInfo.records" MapType="#ArrayOfCompositObject" TsDestinationName="AccountCommunication" TsDestinationPath="Account" TsSourcePath="Id" HandlerName="ContactRecordAccount"/>
+    <mappingItem JSourceName="AddressInfo" JSourcePath="mainContactInfo.ContactInfo.addresses" MapType="#ArrayOfCompositObject" TsDestinationName="AccountAddress" TsDestinationPath="Account" TsSourcePath="Id" HandlerName="AddressInfoAccount"/>
     <mappingItem IgnoreError="#false" JSourceName="CompanyProfile" JSourcePath="parentCompany" MapType="#RefToGuid" TsDestinationName="Account" TsSourcePath="ParentId"/>
     <mappingItem JSourcePath="name" TsSourcePath="Name"/>
     <mappingItem JSourcePath="type" MapType="#StringToDictionaryGuid" TsDestinationName="AccountType" TsDestinationResPath="Name" TsSourcePath="TypeId"/>
@@ -136,12 +136,12 @@
   <configItem JName="" TsName="AccountAnniversary">
     <mappingItem JSourcePath="type" TsSourcePath="AnniversaryTypeId" MapType="#StringToDictionaryGuid" TsDestinationName="AnniversaryType"/>
     <mappingItem JSourcePath="date" TsSourcePath="Date" MacrosName="DateWithouTime"/>
-    <mappingItem JSourcePath="contactId" TsSourcePath="ContactId"/>
+    <mappingItem JSourcePath="contactId" TsSourcePath="ContactId" MapIntegrationType="#Import"/>
   </configItem>
   <configItem JName="" TsName="ContactAnniversary">
     <mappingItem JSourcePath="type" TsSourcePath="AnniversaryTypeId" MapType="#StringToDictionaryGuid" TsDestinationName="AnniversaryType"/>
     <mappingItem JSourcePath="date" TsSourcePath="Date" MacrosName="DateWithouTime"/>
-    <mappingItem JSourcePath="contactId" TsSourcePath="ContactId"/>
+    <mappingItem JSourcePath="contactId" TsSourcePath="ContactId" MapIntegrationType="#Import"/>
   </configItem>
   <configItem JName="PersonProfile" TsName="Contact">
     <mappingItem JSourcePath="name" TsSourcePath="Name"/>
@@ -339,7 +339,7 @@
     
     <mappingItem JSourcePath="parentContactId" TsSourcePath="ContactId" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationResPath="TsExternalId" TsDestinationPath="Id" MapIntegrationType="#Import"/>
     
-    <mappingItem JSourcePath="primary" TsSourcePath="NonActual"/>
+    <mappingItem ConstValue="true" JSourcePath="primary" MapType="#Const"/>
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
     <mappingItem JSourcePath="version" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
   </configItem>

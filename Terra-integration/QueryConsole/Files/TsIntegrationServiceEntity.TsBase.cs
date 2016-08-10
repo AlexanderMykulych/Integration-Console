@@ -303,7 +303,7 @@ namespace Terrasoft.TsConfiguration
 	}
 
 	[ImportHandlerAttribute("NotificationProfileContact")]
-	[ExportHandlerAttribute("TsContactNotifications")]
+	[ExportHandlerAttribute("NotificationProfileContact")]
 	public class TsContactNotificationsHandler : EntityHandler
 	{
 		public TsContactNotificationsHandler()
@@ -375,7 +375,7 @@ namespace Terrasoft.TsConfiguration
 	}
 
 	[ImportHandlerAttribute("NotificationProfileAccount")]
-	[ExportHandlerAttribute("TsAccountNotification")]
+	[ExportHandlerAttribute("NotificationProfileAccount")]
 	public class TsAccountNotificationHandler : EntityHandler {
 		public TsAccountNotificationHandler() {
 			Mapper = new MappingHelper();
@@ -594,15 +594,92 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("AddressInfo")]
 	[ExportHandlerAttribute("ContactAddress")]
-	public class AddressInfoHandler : EntityHandler {
-		public AddressInfoHandler() {
+	public class AddressInfoHandler : EntityHandler
+	{
+		public AddressInfoHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "ContactAddress";
 			JName = "AddressInfo";
 		}
 
-		public override string HandlerName {
-			get {
+		public override string HandlerName
+		{
+			get
+			{
+				return JName;
+			}
+		}
+
+		public override void BeforeMapping(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
+				if (integrationInfo.ParentEntity != null)
+				{
+					integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+				}
+			}
+		}
+
+		public override Entity GetEntityByExternalId(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.ParentEntity != null)
+			{
+				integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+				string externalIdPath = integrationInfo.TsExternalIdPath;
+				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
+				esq.AddAllSchemaColumns();
+				var columnExt = esq.AddColumn("TsExternalId");
+				columnExt.OrderByDesc();
+				esq.RowCount = 1;
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
+				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
+				};
+				esq.Filters.Add(group);
+				return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
+			}
+			return base.GetEntityByExternalId(integrationInfo);
+		}
+		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.ParentEntity != null)
+			{
+				integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+				string externalIdPath = ExternalIdPath;
+				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
+				var columnExt = esq.AddColumn("TsExternalId");
+				columnExt.OrderByDesc();
+				esq.RowCount = 1;
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
+				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
+				};
+				esq.Filters.Add(group);
+				return esq.GetEntityCollection(integrationInfo.UserConnection).Count > 0;
+			}
+			return base.IsEntityAlreadyExist(integrationInfo);
+		}
+	}
+
+	[ImportHandlerAttribute("AddressInfoAccount")]
+	[ExportHandlerAttribute("AddressInfoAccount")]
+	public class AddressInfoAccountHandler : EntityHandler
+	{
+		public AddressInfoAccountHandler()
+		{
+			Mapper = new MappingHelper();
+			EntityName = "ContactAddress";
+			JName = "AddressInfo";
+		}
+
+		public override string HandlerName
+		{
+			get
+			{
 				return JName;
 			}
 		}
@@ -733,8 +810,8 @@ namespace Terrasoft.TsConfiguration
 		}
 	}
 
-	[ImportHandlerAttribute("ContactRecord2")]
-	[ExportHandlerAttribute("AccountCommunication")]
+	[ImportHandlerAttribute("ContactRecordAccount")]
+	[ExportHandlerAttribute("ContactRecordAccount")]
 	public class AccountCommunicationHandler : EntityHandler
 	{
 		public AccountCommunicationHandler()
