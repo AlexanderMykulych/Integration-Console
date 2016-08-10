@@ -83,6 +83,7 @@ namespace QueryConsole.Files.Constants
 			public string TsExternalIdPath { get; set; }
 			public string TsExternalVersionPath { get; set; }
 			public EntityHandler Handler {get; set;}
+			public Entity ParentEntity { get; set; }
 			#endregion
 
 			#region Constructor: Public
@@ -199,7 +200,7 @@ namespace QueryConsole.Files.Constants
 			{"isRead", "false"}
 		};
 		public static Dictionary<string, string> DefaultBusEventSorts = new Dictionary<string, string>() {
-			{"loggedAt", "desc"}
+			{"createdAt", "asc"}
 		};
 		#endregion
 

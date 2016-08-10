@@ -20,9 +20,9 @@ namespace QueryConsole.Files.Integrators
 		private List<string> ReadedNotificationIds = new List<string>();
 		private IntegratorHelper _integratorHelper = new IntegratorHelper();
 		private IntegrationEntityHelper _integrationEntityHelper;
-		private string _basePostboxUrl = @"http://api.integration.stage2.laximo.ru/v2/entity";
-		private string _baseClientServiceUrl = @"http://api.client-service.stage2.laximo.ru/v2/entity/AUTO3N";
-		private int _postboxId = 1004;
+		private string _basePostboxUrl = @"http://api.integration.bus.stage2.auto3n.ru/v2/entity";
+		private string _baseClientServiceUrl = @"http://api.integration.bus.stage2.auto3n.ru/v2/entity/AUTO3N";
+		private int _postboxId = 10004;
 		private int _notifyLimit = 10;
 		private bool _isImportAllow = true;
 		#endregion
@@ -45,9 +45,9 @@ namespace QueryConsole.Files.Integrators
 		public IntegrationServiceIntegrator(UserConnection userConnection)
 		{
 			_userConnection = userConnection;
-			_postboxId = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.TerrasoftPostboxId, _postboxId);
-			_basePostboxUrl = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.IntegrationServiceBaseUrl, _basePostboxUrl);
-			_baseClientServiceUrl = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.ClientServiceBaseUrl, _basePostboxUrl);
+			//_postboxId = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.TerrasoftPostboxId, _postboxId);
+			//_basePostboxUrl = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.IntegrationServiceBaseUrl, _basePostboxUrl);
+			//_baseClientServiceUrl = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.ClientServiceBaseUrl, _basePostboxUrl);
 			_notifyLimit = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.NotificationLimit, _notifyLimit);
 			_isImportAllow = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.AllowImport, _isImportAllow);
 			_integrationEntityHelper = new IntegrationEntityHelper();
@@ -65,7 +65,7 @@ namespace QueryConsole.Files.Integrators
 				withData == true ? TIntegratorRequest.BusEventNotificationData : TIntegratorRequest.BusEventNotification,
 				TRequstMethod.GET,
 				"0",
-				_notifyLimit.ToString(),
+				"100",//_notifyLimit.ToString(),
 				CsConstant.DefaultBusEventFilters,
 				CsConstant.DefaultBusEventSorts
 			);
@@ -74,7 +74,10 @@ namespace QueryConsole.Files.Integrators
 			{
 				var responceObj = x.DeserializeJson();
 				var busEventNotifications = (JArray)responceObj["data"];
-				OnBusEventNotificationsDataRecived(busEventNotifications, y);
+				if (busEventNotifications != null)
+				{
+					OnBusEventNotificationsDataRecived(busEventNotifications, y);
+				}
 			});
 		}
 
@@ -165,7 +168,7 @@ namespace QueryConsole.Files.Integrators
 					AddReadId(notifyId);
 				}
 			}
-			SetNotifyRead();
+			//SetNotifyRead();
 		}
 
 		/// <summary>
@@ -185,6 +188,7 @@ namespace QueryConsole.Files.Integrators
 			string sortStr = "";
 			string skipStr = "";
 			string limitStr = "";
+			//createdAt
 			#region Requst Method
 			switch (requstMethod)
 			{
@@ -269,7 +273,7 @@ namespace QueryConsole.Files.Integrators
 		{
 			if (_isImportAllow)
 			{
-				_integratorHelper.PushRequest(requestMethod, url, jsonText, callback, UserConnection);
+				_integratorHelper.PushRequest(requestMethod, url, jsonText, callback, UserConnection, null, null, "Basic YnBtb25saW5lOmJwbW9ubGluZQ==");
 			}
 		}
 		#endregion

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
 using Terrasoft.TsConfiguration;
+using Terrasoft.Core.DB;
 
 namespace QueryConsole.Files.MappingManager.MappRule
 {
@@ -40,15 +41,26 @@ namespace QueryConsole.Files.MappingManager.MappRule
 				if (info.json is JArray)
 				{
 					var jArray = (JArray)info.json;
+					var handlerName = info.config.HandlerName;
+					var integrator = new IntegrationEntityHelper();
+					if (info.config.DeleteBeforeExport)
+					{
+						//var delete = new Delete(info.userConnection)
+						//				.From(info.config.TsDestinationName)
+						//				.Where(info.config.TsDestinationPath).IsEqual(Column.Parameter(info.entity.GetTypedColumnValue(info.config.TsSourcePath));
+										
+					}
 					foreach (JToken jArrayItem in jArray)
 					{
 						JObject jObj = jArrayItem as JObject;
-						var integrator = new IntegrationEntityHelper();
-						var objIntegrInfo = new IntegrationInfo(jObj, info.userConnection, info.integrationType, null, jObj.Properties().First().Name, info.action);
+						handlerName = handlerName ?? jObj.Properties().First().Name;
+						var objIntegrInfo = new IntegrationInfo(jObj, info.userConnection, info.integrationType, null, handlerName, info.action);
+						objIntegrInfo.ParentEntity = info.entity;
 						integrator.IntegrateEntity(objIntegrInfo);
 					}
 				}
 			}
+
 		}
 		public override void Export(RuleExportInfo info)
 		{

@@ -254,7 +254,7 @@ namespace Terrasoft.TsConfiguration
 			{
 				case TIntegrationType.ExportResponseProcess:
 				case TIntegrationType.Import:
-					jToken = TsMacrosHelper.GetMacrosResultImport(mapItem.OverRuleMacros, jToken.Value<string>(), MacrosType.OverRule) as JToken;
+					jToken = TsMacrosHelper.GetMacrosResultImport(mapItem.OverRuleMacros, jToken.Value<JArray>(), MacrosType.OverRule) as JToken;
 					break;
 				case TIntegrationType.Export:
 					jToken = JToken.FromObject(TsMacrosHelper.GetMacrosResultExport(mapItem.OverRuleMacros, jToken, MacrosType.OverRule));

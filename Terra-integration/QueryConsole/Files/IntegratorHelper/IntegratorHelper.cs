@@ -59,7 +59,7 @@ namespace Terrasoft.TsConfiguration
 		{
 			try
 			{
-				
+				Console.WriteLine(url);
 				var _request = WebRequest.Create(new Uri(url)) as HttpWebRequest;
 				_request.Method = requestMethod.ToString();
 				_request.ContentType = "application/json";
@@ -96,7 +96,8 @@ namespace Terrasoft.TsConfiguration
 					{
 						string responceText = sr.ReadToEnd();
 						IntegrationLogger.ResponseError(logId, e, responceText, requestId, jsonText);
-						if(errorCallback != null) {
+						if (errorCallback != null)
+						{
 							errorCallback(responceText, userConnection, requestId);
 						}
 					}

@@ -47,9 +47,9 @@ namespace QueryConsole.Files.IntegratorTester
 			dateColumn.OrderByDesc();
 			//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Name", "Наша компания"));
 			///*esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("a37*/d31d9-4b81-4c40-925c-1b1d658e926d")));
-			if(name == "Contact") {
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("08ac7862-1849-4057-8d24-b3f3d855baa1")));
-			}
+			//if(name == "Contact") {
+			//	esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("A37D31D9-4B81-4C40-925C-1B1D658E926D")));
+			//}
 			if(name == "ContactCareer") {
 				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("6D20D35D-82B9-4CFD-9D18-670003D79AB7")));
 			}
@@ -57,8 +57,15 @@ namespace QueryConsole.Files.IntegratorTester
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, CsConstant.ServiceColumnInBpm.Identifier, 0));
 			}
 			if(name == "SysAdminUnit") {
+				//Manager Group
 				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Less, "SysAdminUnitTypeValue", 4));
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "SysAdminUnitTypeValue", 4));
+				////Lrs Moskov
+				////esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("735379a1-301a-411a-aa98-2e65651961ac")));
+				////Sp
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("220f42be-85d4-48b6-8fa1-1fa3c992fc64")));
+
+				//Manager
+				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "SysAdminUnitTypeValue", 4));
 			}
 			return esq.GetEntityCollection(UserConnection);
 		}

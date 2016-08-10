@@ -22,8 +22,8 @@ namespace QueryConsole.Files.IntegratorTester
 		}
 		public override List<string> InitEntitiesName() {
 			return new List<string>() {
-				//"Account",
-				"Contact",
+				"Account",
+				//"Contact",
 				//"TsAutoOwnerInfo",
 				//"TsAutomobile",
 				//"SysAdminUnit",

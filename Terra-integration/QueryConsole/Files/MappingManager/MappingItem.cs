@@ -41,6 +41,8 @@ namespace Terrasoft.TsConfiguration
 
 		public string HandlerName { get; set; }
 
+		public bool DeleteBeforeExport { get; set; }
+
 		public string MacrosName { get; set; }
 
 		public string TsExternalSource {get;set;}
