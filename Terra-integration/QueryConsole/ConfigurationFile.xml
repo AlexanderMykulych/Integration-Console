@@ -292,8 +292,8 @@
 	<configItem JName="VehicleRelationship" TsName="TsAutoOwnerInfo">
 		<mappingItem ConstValue="false" JSourcePath="casual" MapType="#Const"/>
 		<mappingItem ConstValue="false" JSourcePath="active" MapType="#Const"/>
-		<mappingItem JSourcePath="dateFrom" TsSourcePath="TsStartDate" MacrosName="DateWithouTime"/>
-		<mappingItem JSourcePath="dateTo" TsSourcePath="TsDueDate" MacrosName="DateWithouTime"/>
+		<!--<mappingItem JSourcePath="dateFrom" TsSourcePath="TsStartDate" MacrosName="DateWithouTime"/>-->
+		<!--<mappingItem JSourcePath="dateTo" TsSourcePath="TsDueDate" MacrosName="DateWithouTime"/>-->
 		<mappingItem JSourceName="CompanyProfile" JSourcePath="companyProfile" MapType="#RefToGuid" TsDestinationName="Account" TsSourcePath="TsAccountOwnerId"/>
 		<mappingItem JSourceName="PersonProfile" JSourcePath="personProfile" MapType="#RefToGuid" TsDestinationName="Contact" TsSourcePath="TsContactOwnerId"/>
 		<mappingItem ConstValue="4" JSourcePath="type.ReferenceClientService.id" MapType="#Const"/>

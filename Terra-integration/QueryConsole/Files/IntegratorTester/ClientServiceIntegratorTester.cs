@@ -22,7 +22,7 @@ namespace QueryConsole.Files.IntegratorTester
 		}
 		public override List<string> InitEntitiesName() {
 			return new List<string>() {
-				"Account",
+				//"Account",
 				//"Contact",
 				//"TsAutoOwnerInfo",
 				//"TsAutomobile",
@@ -33,7 +33,7 @@ namespace QueryConsole.Files.IntegratorTester
 				//"TsContactNotifications",
 				//"TsAccountNotification",
 				//"ContactAddress",
-				//"TsAutoTechService",
+				"TsAutoTechService",
 				//"TsAutoOwnerHistory",
 				//"TsAutoOwnerInfo",
 				//"TsAutoTechHistory",

@@ -200,7 +200,7 @@ namespace QueryConsole.Files.Constants
 			{"isRead", "false"}
 		};
 		public static Dictionary<string, string> DefaultBusEventSorts = new Dictionary<string, string>() {
-			{"createdAt", "asc"}
+			{"createdAt", "desc"}
 		};
 		#endregion
 

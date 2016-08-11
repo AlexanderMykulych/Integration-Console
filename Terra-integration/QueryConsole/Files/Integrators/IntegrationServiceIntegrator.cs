@@ -65,7 +65,7 @@ namespace QueryConsole.Files.Integrators
 				withData == true ? TIntegratorRequest.BusEventNotificationData : TIntegratorRequest.BusEventNotification,
 				TRequstMethod.GET,
 				"0",
-				"10000",//_notifyLimit.ToString(),
+				"20",//_notifyLimit.ToString(),
 				CsConstant.DefaultBusEventFilters,
 				CsConstant.DefaultBusEventSorts
 			);
@@ -74,6 +74,7 @@ namespace QueryConsole.Files.Integrators
 			{
 				var responceObj = x.DeserializeJson();
 				var busEventNotifications = (JArray)responceObj["data"];
+				//var total = (responceObj["total"] as JToken).Value<int>();
 				if (busEventNotifications != null)
 				{
 					OnBusEventNotificationsDataRecived(busEventNotifications, y);
@@ -168,7 +169,7 @@ namespace QueryConsole.Files.Integrators
 					AddReadId(notifyId);
 				}
 			}
-			//SetNotifyRead();
+			SetNotifyRead();
 		}
 
 		/// <summary>
