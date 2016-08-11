@@ -100,7 +100,7 @@ namespace Terrasoft.TsConfiguration
 			}
 			return null;
 		}
-
+		private Object thisLock = new Object();
 		public List<EntityHandler> GetAllIntegrationHandler(IntegrationInfo integrationInfo) {
 			var result = new List<EntityHandler>();
 
@@ -114,12 +114,16 @@ namespace Terrasoft.TsConfiguration
 				foreach (IntegrationHandlerAttribute attribute in attributes) {
 
 					if (attribute != null && attribute.EntityName == handlerName) {
-						if (EntityHandlers.ContainsKey(type)) {
+						if (EntityHandlers.ContainsKey(type))
+						{
 							result.Add((EntityHandler)EntityHandlers[type]);
 						}
-						var entityHandler = Activator.CreateInstance(type) as EntityHandler;
-						EntityHandlers.Add(type, entityHandler);
-						result.Add(entityHandler);
+						else
+						{
+							var entityHandler = Activator.CreateInstance(type) as EntityHandler;
+							EntityHandlers.Add(type, entityHandler);
+							result.Add(entityHandler);
+						}
 					}
 				}
 			}

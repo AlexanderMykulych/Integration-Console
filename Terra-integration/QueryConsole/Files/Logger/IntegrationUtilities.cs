@@ -109,7 +109,7 @@ namespace Terrasoft.TsConfiguration
 		}
 
 		public static void MappingError(Exception e, MappingItem item) {
-			IntegrationConsole.AddMappingError();
+			//IntegrationConsole.AddMappingError();
 		}
 	}
 
