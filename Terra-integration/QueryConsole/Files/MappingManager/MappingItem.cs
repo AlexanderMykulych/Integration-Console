@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TIntegrationType = QueryConsole.Files.Constants.CsConstant.TIntegrationType;
 
 namespace Terrasoft.TsConfiguration
 {
 	public class MappingItem
 	{
 
-		#region Properties: Public
-		public string TsSourcePath { get; set; }
+				public string TsSourcePath { get; set; }
 		public string TsSourceName { get; set; }
 
 		public string JSourceName { get; set; }
@@ -24,7 +22,7 @@ namespace Terrasoft.TsConfiguration
 
 		public TMapType MapType { get; set; }
 		public TMapExecuteType MapExecuteType { get; set; }
-		public TIntegrationType MapIntegrationType { get; set; }
+		public CsConstant.TIntegrationType MapIntegrationType { get; set; }
 		public bool IFieldRequier { get; set; }
 		public bool EFieldRequier { get; set; }
 
@@ -60,20 +58,18 @@ namespace Terrasoft.TsConfiguration
 		public string TsTag { get; set; }
 		public string TsDetailTag { get; set; }
 		public string OverRuleMacros { get; set; }
-		#endregion
+		 
 
-		#region Constructor: MappingItem
-		public MappingItem()
+				public MappingItem()
 		{
 
 		}
-		#endregion
+		 
 
-		#region Methods: Public
-		public override string ToString()
+				public override string ToString()
 		{
 			return string.Format("MappingItem: Path = {0} DecPath = {1} EntityName = {2} Type = {3} JObjType = {4}", TsSourcePath ?? "null", TsDestinationPath ?? "null", TsSourceName ?? "null", MapType.ToString() ?? "null", JSourceName ?? "null");
 		}
-		#endregion
+		 
 	}
 }

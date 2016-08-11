@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.TsConfiguration;
 
-namespace QueryConsole.Files.MappingManager.MappRule
+namespace Terrasoft.TsConfiguration
 {
 	public class ConstMappRule: BaseMappRule
 	{

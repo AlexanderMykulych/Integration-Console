@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using QueryConsole.Files.Integrators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,27 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
-using Terrasoft.CsConfiguration;
 using Terrasoft.TsConfiguration;
 
-namespace QueryConsole.Files.Constants
+namespace Terrasoft.TsConfiguration
 {
 	public static class CsConstant
 	{
-		#region Class: IntegrationResult
-		public class IntegrationResult
+		 		public class IntegrationResult
 		{
 
-			#region Properties: Public
-			public bool Success { get; set; }
+			 			public bool Success { get; set; }
 			public JObject Data { get; set; }
 			public TResultType Type { get; set; }
 			public TResultException Exception { get; set; }
 			public string ExceptionMessage { get; set; }
-			#endregion
+			 
 
-			#region Constructor: Public
-			public IntegrationResult()
+			 			public IntegrationResult()
 			{
 
 			}
@@ -50,10 +45,9 @@ namespace QueryConsole.Files.Constants
 				ExceptionMessage = message;
 				Data = data;
 			}
-			#endregion
+			 
 
-			#region Enum: Public
-			public enum TResultException
+			 			public enum TResultException
 			{
 				OnCreateEntityExist
 			}
@@ -62,16 +56,14 @@ namespace QueryConsole.Files.Constants
 				Exception,
 				Success
 			}
-			#endregion
+			 
 		}
-		#endregion
+		 
 
-		#region Class: IntegrationInfo
-		public class IntegrationInfo
+		 		public class IntegrationInfo
 		{
 
-			#region Properties: Public
-			public JObject Data { get; set; }
+			 			public JObject Data { get; set; }
 			public string StrData { get; set; }
 			public UserConnection UserConnection { get; set; }
 			public TIntegrationType IntegrationType { get; set; }
@@ -84,10 +76,9 @@ namespace QueryConsole.Files.Constants
 			public string TsExternalVersionPath { get; set; }
 			public EntityHandler Handler {get; set;}
 			public Entity ParentEntity { get; set; }
-			#endregion
+			 
 
-			#region Constructor: Public
-			public IntegrationInfo(JObject data, UserConnection userConnection, TIntegrationType integrationType = TIntegrationType.Export,
+			 			public IntegrationInfo(JObject data, UserConnection userConnection, TIntegrationType integrationType = TIntegrationType.Export,
 					Guid? entityIdentifier = null, string entityName = "", string action = "Create", Entity integratedEntity = null)
 			{
 				Data = data;
@@ -98,14 +89,13 @@ namespace QueryConsole.Files.Constants
 				Action = action;
 				IntegratedEntity = integratedEntity;
 			}
-			#endregion
+			 
 
-			#region Method Override: public
-			public override string ToString()
+			 			public override string ToString()
 			{
 				return string.Format("Data = {0}\nIntegrationType={1} EntityIdentifier={2}", Data, IntegrationType.ToString(), EntityIdentifier);
 			}
-			#endregion
+			 
 
 			public static IntegrationInfo CreateForImport(UserConnection userConnection, string action, string serviceEntityName, JObject data)
 			{
@@ -120,10 +110,8 @@ namespace QueryConsole.Files.Constants
 				return new IntegrationInfo(null, userConnection, TIntegrationType.ExportResponseProcess, entity.PrimaryColumnValue, entity.SchemaName, CsConstant.IntegrationActionName.UpdateFromResponse, entity);
 			}
 		}
-		#endregion
 
-		#region Enum: Public
-		public enum TIntegrationType
+		 		public enum TIntegrationType
 		{
 			Export = 0,
 			Import = 1,
@@ -140,10 +128,9 @@ namespace QueryConsole.Files.Constants
 			SelfServicePortalUser = 5,
 			FunctionalRole = 6
 		}
-		#endregion
+		 
 
-		#region Properties: Public
-		public const string clientserviceEntityUrl = "http://api.client-service.stage2.laximo.ru/v2/entity/AUTO3N";
+		 		public const string clientserviceEntityUrl = "http://api.client-service.stage2.laximo.ru/v2/entity/AUTO3N";
 		public const string clientserviceDictUrl = "http://api.client-service.stage2.laximo.ru/v2/dict/AUTO3N";
 		public static Dictionary<string, string> clientserviceEntity = new Dictionary<string, string>() {
 			{ "Account", "CompanyProfile" },
@@ -202,18 +189,16 @@ namespace QueryConsole.Files.Constants
 		public static Dictionary<string, string> DefaultBusEventSorts = new Dictionary<string, string>() {
 			{"createdAt", "asc"}
 		};
-		#endregion
+		 
 
-		#region Static Class: IntegrationEventName
-		public static class IntegrationEventName
+		 		public static class IntegrationEventName
 		{
 			public const string BusEventNotify = @"BusEventNotification";
 			public const string BusEventNotifyData = @"BusEventNotificationData";
 		}
-		#endregion
+		 
 
-		#region Static Class: IntegrationActionName
-		public static class IntegrationActionName
+		 		public static class IntegrationActionName
 		{
 			public const string Create = @"create";
 			public const string Update = @"update";
@@ -221,10 +206,9 @@ namespace QueryConsole.Files.Constants
 			public const string UpdateFromResponse = @"updateFromResponse";
 			public const string Empty = @"";
 		}
-		#endregion
+		 
 
-		#region Static Class: SysSettingsCode
-		public static class SysSettingsCode
+		 		public static class SysSettingsCode
 		{
 			public const string AllowImport = @"IntegrServAllowImport";
 			public const string IntegrationServiceBaseUrl = @"IntegrServBaseUrl";
@@ -235,14 +219,13 @@ namespace QueryConsole.Files.Constants
 			public const string ConfigurationData = @"IntegrationXmlConfigData";
 			public const string IsIntegrationActive = @"IsIntegrationActive";
 		}
-		#endregion
+		 
 
-		#region Static Class: IntegrationFlagSetting
-		public static class IntegrationFlagSetting
+		 		public static class IntegrationFlagSetting
 		{
 			public const bool AllowErrorOnColumnAssign = false;
 		}
-		#endregion
+		 
 
 		public static class ServiceColumnInBpm {
 			public const string Identifier = @"TsExternalId";
@@ -279,7 +262,7 @@ namespace QueryConsole.Files.Constants
 		}
 		public static class IntegratorSettings {
 			public static Dictionary<Type, Dictionary<TServiceObject, string>> Urls = new Dictionary<Type,Dictionary<TServiceObject,string>>() {
-				{ typeof(Terrasoft.CsConfiguration.ClientServiceIntegrator), new Dictionary<TServiceObject, string>() {
+				{ typeof(ClientServiceIntegrator), new Dictionary<TServiceObject, string>() {
 						//{ TServiceObject.Dict, "http://api.client-service.bus.stage2.auto3n.ru/v2/dict/AUTO3N" },
 						{ TServiceObject.Entity, "http://api.client-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
 						////{ TServiceObject.Dict, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/dict/AUTO3N" },
@@ -297,7 +280,7 @@ namespace QueryConsole.Files.Constants
 			};
 
 			public static Dictionary<Type, string> Names = new Dictionary<Type,string>() {
-				{ typeof(Terrasoft.CsConfiguration.ClientServiceIntegrator), "ClientService" },
+				{ typeof(ClientServiceIntegrator), "ClientService" },
 				{ typeof(OrderServiceIntegrator), "OrderService" },
 			};
 

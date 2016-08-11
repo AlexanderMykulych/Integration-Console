@@ -18,18 +18,12 @@ using System.Web.Configuration;
 
 namespace Terrasoft.TsConfiguration
 {
-	using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
-	using TIntegrationType = QueryConsole.Files.Constants.CsConstant.TIntegrationType;
 	using System.Configuration;
 	using System.Collections;
 	using System.Threading.Tasks;
-	using QueryConsole.Files.BpmEntityHelper;
-	using QueryConsole.Files.Constants;
-	using QueryConsole.Files.XmlManager;
 
 	public static class ExtensionHelper {
-		#region Methods: Public
-		/// <summary>
+				/// <summary>
 		/// Сериализирует объект
 		/// </summary>
 		/// <param name="obj">Объект</param>
@@ -46,12 +40,12 @@ namespace Terrasoft.TsConfiguration
 		public static Dictionary<string, object> DeserializeJson(this string json) {
 			return Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
 		}
-		#endregion
+		 
 	}
 
 	public interface IMappingMethod {
 		//TODO: Вынести методы маппера в отдельные сущности
-		void Evaluate(MappingItem mappItem, IntegrationInfo integrationInfo);
+		void Evaluate(MappingItem mappItem, Terrasoft.TsConfiguration.CsConstant.IntegrationInfo integrationInfo);
 	}
 
 	public class MappingMethodAttribute : System.Attribute {
@@ -69,15 +63,14 @@ namespace Terrasoft.TsConfiguration
 
 	public static class IntegrationConfigurationManager {
 		
-		#region Static Fields: Private
-		private static List<string> _columnNames;
+				private static List<string> _columnNames;
 		
 		private static string _xmlData;
 		private static XmlDocument _xDocument;
 		private static MappingItem _defaultItem;
 		private static Dictionary<string, string> _prerenderConfigDict;
 		private static IntegrationPathConfig _pathConfig;
-		#endregion
+		 
 
 		public static IntegrationPathConfig IntegrationPathConfig {
 			get {
@@ -101,8 +94,7 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		#region Methods: Private
-		/// <summary>
+				/// <summary>
 		/// Возвращает xml документ c настройками маппинга
 		/// </summary>
 		/// <param name="userConnection"></param>
@@ -292,10 +284,9 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		#endregion
+		 
 
-		#region Methods: Public
-		public static List<MappingItem> GetConfigItem(UserConnection userConnection, string Name, string tag = null) {
+				public static List<MappingItem> GetConfigItem(UserConnection userConnection, string Name, string tag = null) {
 			try {
 				var result = new List<MappingItem>();
 				XmlDocument xDoc = GetConfigXmlDocument(userConnection);
@@ -321,19 +312,17 @@ namespace Terrasoft.TsConfiguration
 				throw;
 			}
 		}
-		#endregion
+		 
 
-		#region Static Fields: Public
-		public static Type _mapItemType = typeof(MappingItem);
-		#endregion
+				public static Type _mapItemType = typeof(MappingItem);
+		 
 
-		#region Properties: Public
-		public static List<string> ColumnNames {
+				public static List<string> ColumnNames {
 			get {
 				return _columnNames == null || !_columnNames.Any() ? _columnNames = _mapItemType.GetProperties().Where(x => x.MemberType == MemberTypes.Property).Select(x => x.Name).ToList() : _columnNames;
 			}
 		}
-		#endregion
+		 
 		
 	}
 }

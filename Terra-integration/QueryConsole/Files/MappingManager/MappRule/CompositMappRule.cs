@@ -1,14 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
-using QueryConsole.Files.BpmEntityHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.TsConfiguration;
-using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
 
-namespace QueryConsole.Files.MappingManager.MappRule
+namespace Terrasoft.TsConfiguration
 {
 	public class CompositMappRule: BaseMappRule
 	{
@@ -21,7 +19,7 @@ namespace QueryConsole.Files.MappingManager.MappRule
 			var integrator = new IntegrationEntityHelper();
 			//var objIntegrInfo = new IntegrationInfo(jToken, integrationInfo.UserConnection, integrationInfo.IntegrationType, null, null, integrationInfo.Action);
 			var jObject = info.json as JObject;
-			var objIntegrInfo = new IntegrationInfo(jObject, info.userConnection, info.integrationType, null, jObject.Properties().First().Name, info.action);
+			var objIntegrInfo = new CsConstant.IntegrationInfo(jObject, info.userConnection, info.integrationType, null, jObject.Properties().First().Name, info.action);
 			integrator.IntegrateEntity(objIntegrInfo);
 		}
 		public override void Export(RuleExportInfo info)

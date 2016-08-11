@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
+using Terrasoft.TempConfiguration;
 
-namespace QueryConsole.Files.IntegratorTester {
+namespace Terrasoft.TsConfiguration {
 	public class TesterManager: IEnumerable {
 		public UserConnection UserConnection;
 		public List<BaseIntegratorTester> Testers;

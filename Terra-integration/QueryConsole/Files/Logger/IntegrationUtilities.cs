@@ -1,5 +1,4 @@
 ﻿using QueryConsole.Files;
-using QueryConsole.Files.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +7,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.DB;
+using Terrasoft.TempConfiguration;
 
 namespace Terrasoft.TsConfiguration
 {
 	public static class IntegrationLogger
 	{
-		#region Fields: Private
 		private static UniqueLogger<TsLogger> _log = new UniqueLogger<TsLogger>(() => new TsLogger());
-		#endregion
+		
 		public static void BeforeRequestError(Guid? logId, Exception e) {
 			if(!logId.HasValue)
 				return;
@@ -31,8 +30,7 @@ namespace Terrasoft.TsConfiguration
 			logger.Error(string.Format("Error - text = {0} callStack = {1}", e.Message, e.StackTrace));
 		}
 
-		#region Methods: Public
-		public static void StartTransaction(Guid? id, LogTransactionInfo info)
+				public static void StartTransaction(Guid? id, LogTransactionInfo info)
 		{
 			if (!id.HasValue)
 				return;
@@ -72,7 +70,6 @@ namespace Terrasoft.TsConfiguration
 			logger.UpdateResponseError(id.Value, requestId.Value, e.Message, e.StackTrace, text, requestJson);
 			//Console.WriteLine(string.Format("ResponseError - id = {0} requestId={1} message={2}", id.Value, requestId, text));
 		}
-		#endregion
 
 		public static Dictionary<int, Guid> ThreadLogIds = new Dictionary<int,Guid>();
 		public static void SetCurentThreadLogId(Guid Id)

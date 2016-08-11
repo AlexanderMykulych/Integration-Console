@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Terrasoft.Core.Entities;
 using Terrasoft.TsConfiguration;
 
-namespace QueryConsole.Files.MappingManager
+namespace Terrasoft.TsConfiguration
 {
 	public class RuleImportInfo: RuleInfo
 	{

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QueryConsole.Files.MappingManager.MappRule
+namespace Terrasoft.TsConfiguration
 {
 	class ToDetailMappRule : BaseMappRule
 	{

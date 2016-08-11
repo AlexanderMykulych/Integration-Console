@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using QueryConsole.Files.BpmEntityHelper;
-using QueryConsole.Files.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.TsConfiguration;
-using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
-using TIntegrationType = QueryConsole.Files.Constants.CsConstant.TIntegrationType;
+using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;
 
-namespace QueryConsole.Files.Integrators
+namespace Terrasoft.TsConfiguration
 {
 	public class IntegrationServiceIntegrator
 	{
-		#region Properties: Private
-		private UserConnection _userConnection;
+				private UserConnection _userConnection;
 		private List<string> ReadedNotificationIds = new List<string>();
 		private IntegratorHelper _integratorHelper = new IntegratorHelper();
 		private IntegrationEntityHelper _integrationEntityHelper;
@@ -25,10 +21,9 @@ namespace QueryConsole.Files.Integrators
 		private int _postboxId = 10004;
 		private int _notifyLimit = 10;
 		private bool _isImportAllow = true;
-		#endregion
+		 
 
-		#region Properties: Public
-		public UserConnection UserConnection
+				public UserConnection UserConnection
 		{
 			get { return _userConnection; }
 		}
@@ -39,10 +34,9 @@ namespace QueryConsole.Files.Integrators
 				return _integrationEntityHelper;
 			}
 		}
-		#endregion
+		 
 
-		#region Constructor: Public
-		public IntegrationServiceIntegrator(UserConnection userConnection)
+				public IntegrationServiceIntegrator(UserConnection userConnection)
 		{
 			_userConnection = userConnection;
 			//_postboxId = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.TerrasoftPostboxId, _postboxId);
@@ -52,10 +46,9 @@ namespace QueryConsole.Files.Integrators
 			_isImportAllow = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.AllowImport, _isImportAllow);
 			_integrationEntityHelper = new IntegrationEntityHelper();
 		}
-		#endregion
+		 
 
-		#region Methods: Public
-		/// <summary>
+				/// <summary>
 		/// Получает BusEventNotification, после чего вызывает OnBusEventNotificationsDataRecived
 		/// </summary>
 		/// <param name="withData"></param>
@@ -158,7 +151,7 @@ namespace QueryConsole.Files.Integrators
 					var notifyId = busEvent["id"].ToString();
 					if (!string.IsNullOrEmpty(objectType) && data != null)
 					{
-						var integrationInfo = new IntegrationInfo(data, userConnection, TIntegrationType.Import, null, objectType, action, null);
+						var integrationInfo = new IntegrationInfo(data, userConnection, CsConstant.TIntegrationType.Import, null, objectType, action, null);
 						_integrationEntityHelper.IntegrateEntity(integrationInfo);
 						if (integrationInfo.Result != null && integrationInfo.Result.Exception == CsConstant.IntegrationResult.TResultException.OnCreateEntityExist)
 						{
@@ -189,8 +182,7 @@ namespace QueryConsole.Files.Integrators
 			string skipStr = "";
 			string limitStr = "";
 			//createdAt
-			#region Requst Method
-			switch (requstMethod)
+						switch (requstMethod)
 			{
 				case TRequstMethod.GET:
 				case TRequstMethod.PUT:
@@ -199,10 +191,9 @@ namespace QueryConsole.Files.Integrators
 				default:
 					throw new NotImplementedException();
 			}
-			#endregion
+			 
 
-			#region Integration Request
-			switch (integratorRequestType)
+						switch (integratorRequestType)
 			{
 				case TIntegratorRequest.BusEventNotification:
 					result += GenerateRouteToRequest("Postbox", _postboxId, "BusEventNotification");
@@ -214,20 +205,17 @@ namespace QueryConsole.Files.Integrators
 					result += GenerateRouteToRequest("Postbox");
 					break;
 			}
-			#endregion
+			 
 
-			#region skip
-			if (!string.IsNullOrEmpty(skip))
+						if (!string.IsNullOrEmpty(skip))
 				skipStr = string.Format("skip={0}", skip);
-			#endregion
+			 
 
-			#region limit
-			if (!string.IsNullOrEmpty(limit))
+						if (!string.IsNullOrEmpty(limit))
 				limitStr = string.Format("limit={0}", limit);
-			#endregion
+			 
 
-			#region filters
-			if (filters != null && filters.Any())
+						if (filters != null && filters.Any())
 			{
 				foreach (var filter in filters)
 				{
@@ -235,10 +223,9 @@ namespace QueryConsole.Files.Integrators
 				}
 				filtersStr = filtersStr.Remove(filtersStr.Length - 1);
 			}
-			#endregion
+			 
 
-			#region sort
-			if (sorts != null && sorts.Any())
+						if (sorts != null && sorts.Any())
 			{
 				foreach (var sort in sorts)
 				{
@@ -246,21 +233,19 @@ namespace QueryConsole.Files.Integrators
 				}
 				sortStr = sortStr.Remove(sortStr.Length - 1);
 			}
-			#endregion
+			 
 
-			#region Param
-			string paramStr = GenerateParamRoRequest(skipStr, limitStr, filtersStr, sortStr);
+						string paramStr = GenerateParamRoRequest(skipStr, limitStr, filtersStr, sortStr);
 			if (!string.IsNullOrEmpty(paramStr))
 			{
 				result += string.Format("?{0}", paramStr);
 			}
-			#endregion
+			 
 			return result;
 		}
-		#endregion
+		 
 
-		#region Methods: Private
-		private string GenerateRouteToRequest(params object[] routes)
+				private string GenerateRouteToRequest(params object[] routes)
 		{
 			return "/" + routes.Aggregate((cur, next) => cur.ToString() + "/" + next.ToString()).ToString();
 		}
@@ -276,15 +261,14 @@ namespace QueryConsole.Files.Integrators
 				_integratorHelper.PushRequest(requestMethod, url, jsonText, callback, UserConnection, null, null, "Basic YnBtb25saW5lOmJwbW9ubGluZQ==");
 			}
 		}
-		#endregion
+		 
 
-		#region Enum: Public
-		public enum TIntegratorRequest
+				public enum TIntegratorRequest
 		{
 			BusEventNotificationData,
 			BusEventNotification,
 			Postbox
 		}
-		#endregion
+		 
 	}
 }

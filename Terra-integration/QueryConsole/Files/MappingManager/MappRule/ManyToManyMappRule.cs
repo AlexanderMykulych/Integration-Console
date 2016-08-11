@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core.Entities;
 
-namespace QueryConsole.Files.MappingManager.MappRule
+namespace Terrasoft.TsConfiguration
 {
 	public class ManyToManyMappRule: BaseMappRule
 	{

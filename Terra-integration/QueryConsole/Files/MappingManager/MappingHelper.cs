@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using QueryConsole.Files.BpmEntityHelper;
-using QueryConsole.Files.Constants;
-using QueryConsole.Files.MappingManager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,9 +11,8 @@ using Terrasoft.Core;
 using Terrasoft.Core.Configuration;
 using Terrasoft.Core.DB;
 using Terrasoft.Core.Entities;
-using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
-using TIntegrationType = QueryConsole.Files.Constants.CsConstant.TIntegrationType;
-using Terrasoft.CsConfiguration;
+using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;
+using TIntegrationType = Terrasoft.TsConfiguration.CsConstant.TIntegrationType;
 
 
 namespace Terrasoft.TsConfiguration
@@ -24,17 +20,15 @@ namespace Terrasoft.TsConfiguration
 	public class MappingHelper
 	{
 
-		#region Fields: Public
-		public string RefName = @"#ref";
+				public string RefName = @"#ref";
 		public bool _isInsertToDB;
 		public List<MappingItem> MapConfig;
 		public UserConnection UserConnection;
 		public Queue<Action> MethodQueue;
 		public RulesFactory RulesFactory;
-		#endregion
+		 
 
-		#region Properties: Public
-		public bool IsInsertToDB
+				public bool IsInsertToDB
 		{
 			get
 			{
@@ -50,35 +44,33 @@ namespace Terrasoft.TsConfiguration
 				return _isInsertToDB;
 			}
 		}
-		#endregion
+		 
 
-		#region Constructor: Public
-		public MappingHelper()
+				public MappingHelper()
 		{
 			_isInsertToDB = false;
 			MethodQueue = new Queue<Action>();
 			RulesFactory = new RulesFactory();
 		}
-		#endregion
+		 
 
-		#region Methods: Public
-		public void StartMappByConfig(IntegrationInfo integrationInfo, string jName, List<MappingItem> mapConfig, bool withHeader = true)
+				public void StartMappByConfig(CsConstant.IntegrationInfo integrationInfo, string jName, List<MappingItem> mapConfig, bool withHeader = true)
 		{
 			try
 			{
 				switch (integrationInfo.IntegrationType)
 				{
-					case TIntegrationType.Import:
+					case CsConstant.TIntegrationType.Import:
 						{
 							StartMappImportByConfig(integrationInfo, jName, mapConfig, withHeader);
 							break;
 						}
-					case TIntegrationType.Export:
+					case CsConstant.TIntegrationType.Export:
 						{
 							StartMappExportByConfig(integrationInfo, jName, mapConfig);
 							break;
 						}
-					case TIntegrationType.ExportResponseProcess:
+					case CsConstant.TIntegrationType.ExportResponseProcess:
 						{
 							StartMappExportResponseProcessByConfig(integrationInfo, jName, mapConfig);
 							break;
@@ -99,7 +91,7 @@ namespace Terrasoft.TsConfiguration
 			var entityJObj = withHeader ? integrationInfo.Data[jName] : integrationInfo.Data;
 			foreach (var item in mapConfig)
 			{
-				if (item.MapIntegrationType == TIntegrationType.All || item.MapIntegrationType == TIntegrationType.Import)
+				if (item.MapIntegrationType == CsConstant.TIntegrationType.All || item.MapIntegrationType == CsConstant.TIntegrationType.Import)
 				{
 					try
 					{
@@ -124,7 +116,7 @@ namespace Terrasoft.TsConfiguration
 				integrationInfo.Data[jName] = new JObject();
 			foreach (var item in mapConfig)
 			{
-				if (item.MapIntegrationType == TIntegrationType.All || item.MapIntegrationType == TIntegrationType.Export)
+				if (item.MapIntegrationType == CsConstant.TIntegrationType.All || item.MapIntegrationType == CsConstant.TIntegrationType.Export)
 				{
 					var jObjItem = (new JObject()) as JToken;
 					try
@@ -401,10 +393,9 @@ namespace Terrasoft.TsConfiguration
 		{
 			return !string.IsNullOrEmpty(json) ? JObject.Parse(json) : null;
 		}
-		#endregion
+		 
 
-		#region Methods: Private
-		private string PrepareColumn(string columnName, bool withId = false)
+				private string PrepareColumn(string columnName, bool withId = false)
 		{
 			var endWithId = columnName.EndsWith("Id");
 			return withId ? (endWithId ? columnName : columnName + "Id") : (endWithId ? columnName.Substring(0, columnName.Length - 2) : columnName);
@@ -438,11 +429,10 @@ namespace Terrasoft.TsConfiguration
 				method();
 			}
 		}
-		#endregion
+		 
 	}
 
-	#region Enum: TMapType
-	public enum TMapType
+		public enum TMapType
 	{
 		RefToGuid = 0,
 		Simple = 1,
@@ -454,17 +444,15 @@ namespace Terrasoft.TsConfiguration
 		ManyToMany = 8,
 		ToDetail = 9
 	}
-	#endregion
+	 
 
-	#region Enum: TMapExecuteType
-	public enum TMapExecuteType
+		public enum TMapExecuteType
 	{
 		AfterEntitySave = 0,
 		BeforeEntitySave = 1
 	}
-	#endregion
-	#region Enum: TConstType
-	public enum TConstType
+	 
+		public enum TConstType
 	{
 		String = 0,
 		Bool = 1,
@@ -472,5 +460,5 @@ namespace Terrasoft.TsConfiguration
 		Null = 3,
 		EmptyArray = 4
 	}
-	#endregion
+	 
 }

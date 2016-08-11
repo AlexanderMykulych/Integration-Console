@@ -5,14 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
-using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
-using TIntegrationType = QueryConsole.Files.Constants.CsConstant.TIntegrationType;
-using IntegrationResult =  QueryConsole.Files.Constants.CsConstant.IntegrationResult;
-
-using Terrasoft.TsConfiguration;
-using QueryConsole.Files.Constants;
-using QueryConsole.Files.BpmEntityHelper;
-namespace QueryConsole.Files.Integrators
+namespace Terrasoft.TsConfiguration2
 {
 	public class ClientServiceIntegrator
 	{
@@ -166,10 +159,10 @@ namespace QueryConsole.Files.Integrators
 		/// <returns></returns>
 		private string GetEntityJson(Entity entity)
 		{
-			var integrationInfo = new IntegrationInfo(null, UserConnection, TIntegrationType.Export, entity.PrimaryColumnValue, entity.SchemaName, CsConstant.IntegrationActionName.Empty, entity);
+			var integrationInfo = new CsConstant.IntegrationInfo(null, UserConnection, CsConstant.TIntegrationType.Export, entity.PrimaryColumnValue, entity.SchemaName, CsConstant.IntegrationActionName.Empty, entity);
 			var integrationEntityHelper = new IntegrationEntityHelper();
 			integrationEntityHelper.IntegrateEntity(integrationInfo);
-			if (integrationInfo.Result.Type == IntegrationResult.TResultType.Success)
+			if (integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
 			{
 				return integrationInfo.Result.Data.ToString();
 			}

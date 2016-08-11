@@ -5,31 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core.Entities;
 using Terrasoft.TsConfiguration;
-using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
-using TIntegrationType = QueryConsole.Files.Constants.CsConstant.TIntegrationType;
-using CsConstant = QueryConsole.Files.Constants.CsConstant;
-using QueryConsole.Files.Integrators;
 using Terrasoft.Core.DB;
 using System.Data;
+using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;
 
-namespace QueryConsole.Files.BpmEntityHelper
+namespace Terrasoft.TsConfiguration
 {
 	public class IntegrationEntityHelper
 	{
-		#region Properties: Private
-		private static List<Type> IntegrationEntityTypes { get; set; }
+				private static List<Type> IntegrationEntityTypes { get; set; }
 		private static Dictionary<Type, EntityHandler> EntityHandlers { get; set; }
-		#endregion
+		 
 
-		#region Constructor: Public
-		public IntegrationEntityHelper()
+				public IntegrationEntityHelper()
 		{
 			EntityHandlers = new Dictionary<Type, EntityHandler>();
 		}
-		#endregion
+		 
 
-		#region Methods: Public
-		/// <summary>
+				/// <summary>
 		/// Експортирует или импортирует объекты в зависимости от настроек
 		/// </summary>
 		/// <param name="integrationInfo">Настройки интеграции</param>
@@ -47,10 +41,10 @@ namespace QueryConsole.Files.BpmEntityHelper
 		{
 			switch (integrationInfo.IntegrationType)
 			{
-				case TIntegrationType.Import:
+				case CsConstant.TIntegrationType.Import:
 					return typeof(ImportHandlerAttribute);
-				case TIntegrationType.Export:
-				case TIntegrationType.ExportResponseProcess:
+				case CsConstant.TIntegrationType.Export:
+				case CsConstant.TIntegrationType.ExportResponseProcess:
 					return typeof(ExportHandlerAttribute);
 				default:
 					return typeof(ExportHandlerAttribute);
@@ -146,15 +140,14 @@ namespace QueryConsole.Files.BpmEntityHelper
 			{
 				try
 				{
-					if (integrationInfo.IntegrationType == TIntegrationType.Export)
+					if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Export)
 					{
 						if(handler.IsExport(integrationInfo)) {
 							var result = new CsConstant.IntegrationResult(CsConstant.IntegrationResult.TResultType.Success, handler.ToJson(integrationInfo));
 							integrationInfo.Result = result;
 						}
 						return;
-					}
-					else if (integrationInfo.IntegrationType == TIntegrationType.ExportResponseProcess)
+					} else if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.ExportResponseProcess)
 					{
 						handler.ProcessResponse(integrationInfo);
 						return;
@@ -198,7 +191,7 @@ namespace QueryConsole.Files.BpmEntityHelper
 				}
 			}
 		}
-		#endregion
+		 
 
 		public static bool isEntityAlreadyIntegrated(Entity entity)
 		{

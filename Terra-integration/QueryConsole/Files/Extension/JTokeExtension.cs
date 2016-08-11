@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Terrasoft.CsConfiguration{
+namespace Terrasoft.TsConfiguration {
 	public static class JTokeExtension {
-		public static JToken GetJTokenByPath(this JToken jToken, string path, QueryConsole.Files.Constants.CsConstant.TIntegrationType type = QueryConsole.Files.Constants.CsConstant.TIntegrationType.Import) {
+		public static JToken GetJTokenByPath(this JToken jToken, string path, CsConstant.TIntegrationType type = CsConstant.TIntegrationType.Import) {
 			var pItems = path.Split('.');
 			foreach (var pItem in pItems) {
 				if (!jToken.HasValues || jToken[pItem] == null) {
-					if (type != QueryConsole.Files.Constants.CsConstant.TIntegrationType.Import) {
+					if (type != CsConstant.TIntegrationType.Import) {
 						jToken[pItem] = new JObject();
 					} else {
 						return new JObject();
@@ -22,7 +22,7 @@ namespace Terrasoft.CsConfiguration{
 			return jToken;
 		}
 
-		public static T GetJTokenValuePath<T>(this JToken jToken, string path, QueryConsole.Files.Constants.CsConstant.TIntegrationType type = QueryConsole.Files.Constants.CsConstant.TIntegrationType.Import, T defValue = default(T)) {
+		public static T GetJTokenValuePath<T>(this JToken jToken, string path, CsConstant.TIntegrationType type = CsConstant.TIntegrationType.Import, T defValue = default(T)) {
 			var resJToken = jToken.GetJTokenByPath(path, type);
 			if(resJToken != null) {
 				return resJToken.Value<T>();

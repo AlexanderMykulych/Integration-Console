@@ -1,5 +1,4 @@
-﻿using QueryConsole.Files.Constants;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
 
-namespace QueryConsole.Files.IntegratorTester
+namespace Terrasoft.TsConfiguration
 {
 	public abstract class BaseIntegratorTester
 	{

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using QueryConsole.Files.BpmEntityHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
-using Terrasoft.TsConfiguration;
-using CsConstant = QueryConsole.Files.Constants.CsConstant;
-using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
-using QueryConsole.Files.Extension;
+using Terrasoft.TempConfiguration;
 
-namespace QueryConsole.Files
+namespace Terrasoft.TsConfiguration
 {
-	#region Interface: IServiceIntegrator
-	public interface IServiceIntegrator {
+		public interface IServiceIntegrator {
 		void GetRequest(ServiceRequestInfo info);
 		void IntegrateBpmEntity(Entity entity, EntityHandler handler = null);
 	}
-	#endregion
+	 
 
 	public enum TServiceObject {
 		Entity,
@@ -125,7 +120,7 @@ namespace QueryConsole.Files
 				break;
 				case TRequstMethod.POST:
 				case TRequstMethod.PUT:
-					var integrationInfo = IntegrationInfo.CreateForResponse(userConnection, info.Entity);
+					var integrationInfo = CsConstant.IntegrationInfo.CreateForResponse(userConnection, info.Entity);
 					integrationInfo.StrData = responseJObj.ToString();
 					integrationInfo.Handler = info.Handler;
 					entityHelper.IntegrateEntity(integrationInfo);
@@ -136,10 +131,10 @@ namespace QueryConsole.Files
 		}
 
 		public virtual void IntegrateBpmEntity(Entity entity, EntityHandler defHandler = null) {
-			var integrationInfo = IntegrationInfo.CreateForExport(userConnection, entity);
+			var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
 			var handlers = defHandler == null ? entityHelper.GetAllIntegrationHandler(integrationInfo) : new List<EntityHandler>() { defHandler };
 			foreach(var handler in handlers) {
-				integrationInfo = IntegrationInfo.CreateForExport(userConnection, entity);
+				integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
 				integrationInfo.Handler = handler;
 				entityHelper.IntegrateEntity(integrationInfo);
 				if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)

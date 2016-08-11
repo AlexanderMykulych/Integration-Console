@@ -1,17 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
-using QueryConsole.Files.BpmEntityHelper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
 using Terrasoft.TsConfiguration;
 using Terrasoft.Core.DB;
 using Terrasoft.Core.Entities;
 
-namespace QueryConsole.Files.MappingManager.MappRule
+namespace Terrasoft.TsConfiguration
 {
 	public class ArrayOfCompositeObjectMappRule: BaseMappRule
 	{
@@ -21,7 +19,7 @@ namespace QueryConsole.Files.MappingManager.MappRule
 		}
 		public override void Import(RuleImportInfo info)
 		{
-			if (info.integrationType == Constants.CsConstant.TIntegrationType.ExportResponseProcess)
+			if (info.integrationType == CsConstant.TIntegrationType.ExportResponseProcess)
 			{
 				//var dscValue = srcEntity.GetColumnValue(info.config.TsSourcePath);
 				//var resultJObjs = JsonEntityHelper.GetCompositeJObjects(dscValue, info.config.TsDestinationPath, info.config.TsDestinationName, handlerName, info.userConnection);
@@ -59,7 +57,7 @@ namespace QueryConsole.Files.MappingManager.MappRule
 						{
 							JObject jObj = jArrayItem as JObject;
 							handlerName = handlerName ?? jObj.Properties().First().Name;
-							var objIntegrInfo = new IntegrationInfo(jObj, info.userConnection, info.integrationType, null, handlerName, info.action);
+							var objIntegrInfo = new CsConstant.IntegrationInfo(jObj, info.userConnection, info.integrationType, null, handlerName, info.action);
 							objIntegrInfo.ParentEntity = info.entity;
 							integrator.IntegrateEntity(objIntegrInfo);
 						}

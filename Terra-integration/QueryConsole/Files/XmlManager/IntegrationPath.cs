@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QueryConsole.Files.XmlManager {
+namespace Terrasoft.TsConfiguration {
 	public class IntegrationPath {
 		public string Name {get;set;}
 		public string Path {get;set;}

@@ -5,9 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
-using Terrasoft.CsConfiguration;
 
-namespace QueryConsole.Files.IntegratorTester
+namespace Terrasoft.TsConfiguration
 {
 	class ClientServiceIntegratorTester : BaseIntegratorTester
 	{

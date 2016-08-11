@@ -8,14 +8,10 @@ using Terrasoft.Common;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
 using Terrasoft.TsConfiguration;
-using TIntegrationType = QueryConsole.Files.Constants.CsConstant.TIntegrationType;
-using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
-using QueryConsole.Files.BpmEntityHelper;
-using QueryConsole.Files.Constants;
 using Terrasoft.Core.DB;
 using System.Data;
 
-namespace QueryConsole.Files.MappingManager
+namespace Terrasoft.TsConfiguration
 {
 	public static class JsonEntityHelper
 	{
@@ -151,7 +147,7 @@ namespace QueryConsole.Files.MappingManager
 				{
 					try
 					{
-						var integrationInfo = new IntegrationInfo(new JObject(), userConnection, TIntegrationType.Export, null, handlerName, "", item);
+						var integrationInfo = new CsConstant.IntegrationInfo(new JObject(), userConnection, CsConstant.TIntegrationType.Export, null, handlerName, "", item);
 						var handler = (new IntegrationEntityHelper()).GetIntegrationHandler(integrationInfo);
 						if (handler != null)
 						{

@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QueryConsole.Files.Extension {
+namespace Terrasoft.TsConfiguration {
 	public static class ObjectExtension {
 		public static object CloneObject(this object objSource) {
 			Type typeSource = objSource.GetType();

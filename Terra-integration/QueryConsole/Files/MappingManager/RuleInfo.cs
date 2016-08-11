@@ -6,10 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
-using Terrasoft.TsConfiguration;
-using TIntegrationType = QueryConsole.Files.Constants.CsConstant.TIntegrationType;
 
-namespace QueryConsole.Files.MappingManager
+namespace Terrasoft.TsConfiguration
 {
 	public class RuleInfo
 	{
@@ -17,7 +15,7 @@ namespace QueryConsole.Files.MappingManager
 		public Entity entity;
 		public JToken json;
 		public UserConnection userConnection;
-		public TIntegrationType integrationType;
+		public CsConstant.TIntegrationType integrationType;
 		public string action;
 	}
 }

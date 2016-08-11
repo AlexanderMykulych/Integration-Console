@@ -22,8 +22,7 @@ namespace Terrasoft.TsConfiguration
 	public class IntegratorHelper
 	{
 
-		#region Methods: public
-		/// <summary>
+				/// <summary>
 		/// Конструктор
 		/// </summary>
 		/// <param name="requestMethod">Get, Put, Post</param>
@@ -42,10 +41,9 @@ namespace Terrasoft.TsConfiguration
 			IntegrationLogger.PushRequest(logId, requestMethod, url, jsonText, requestId);
 			ThreadPool.QueueUserWorkItem(((x) => MakeAsyncRequest(requestMethod, url, jsonText, callback, userConnection, logId, requestId, errorCallback, auth)));
 		}
-		#endregion
+		 
 
-		#region Methods: Private
-		/// <summary>
+				/// <summary>
 		/// Делает асинхронный запрос
 		/// </summary>
 		/// <param name="requestMethod"></param>
@@ -145,6 +143,6 @@ namespace Terrasoft.TsConfiguration
 			public UserConnection UserConnection;
 			public string JsonData;
 		}
-		#endregion
+		 
 	}
 }

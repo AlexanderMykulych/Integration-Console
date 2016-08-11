@@ -10,10 +10,6 @@ using Terrasoft.Core.Entities;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
-using QueryConsole.Files.Integrators;
-using QueryConsole.Files.BpmEntityHelper;
-using QueryConsole.Files.Constants;
-using QueryConsole.Files.IntegratorTester;
 using Terrasoft.Core.Factories;
 
 namespace QueryConsole
@@ -27,6 +23,7 @@ namespace QueryConsole
 		}
 		public static void Main(string[] args) {
 			try {
+				var date = Convert.ToDateTime("2016-08-11T06:58:59.673+0000");
 				//var consoleApp = new TerrasoftConsoleClass("A.Mykulych");
 				var consoleApp = new TerrasoftConsoleClass("Default");
 				try {
@@ -45,18 +42,18 @@ namespace QueryConsole
 					new OrderServiceIntegratorTester(consoleApp.SystemUserConnection),
 					new ClientServiceIntegratorTester(consoleApp.SystemUserConnection)
 				};
-				var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
-					//{"ManagerInfo", 500, 0, 1},
-					//{"CounteragentContactInfo", 500, 0, 1},
-					//{"Counteragent", 500, 0, 1},
-					//{"Contract", 500, 0, 1},
-					//{"Order", 500, 0, 1},
-					{"Shipment", 5, 0, 1},
-					//{"Payment", 500, 0, 1},
-					//{"Return", 500, 0, 1},
-				};
-				testerManager.Run();
-				//testers[1].ImportAllBpmEntity();
+				//var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
+				//	//{"ManagerInfo", 500, 0, 1},
+				//	//{"CounteragentContactInfo", 500, 0, 1},
+				//	//{"Counteragent", 500, 0, 1},
+				//	//{"Contract", 500, 0, 1},
+				//	//{"Order", 500, 0, 1},
+				//	{"Shipment", 5, 0, 1},
+				//	//{"Payment", 500, 0, 1},
+				//	//{"Return", 500, 0, 1},
+				//};
+				//testerManager.Run();
+				testers[1].ImportAllBpmEntity();
 				while (true) {
 				}
 			} catch (ReflectionTypeLoadException e1) {
@@ -70,12 +67,10 @@ namespace QueryConsole
 		}
 	}
 
-	#region Class: TerrasoftConsoleClass
-
+	
 	public class TerrasoftConsoleClass
 	{
-		#region Constructors: Public
-
+		
 		public TerrasoftConsoleClass(string workspaceName) {
 			WorkspaceName = workspaceName;
 			SystemUserConnection = AppConnection.SystemUserConnection;
@@ -83,10 +78,9 @@ namespace QueryConsole
 			= _appManagerProvider ?? (_appManagerProvider = AppConnection.AppManagerProvider);
 		}
 
-		#endregion
+		 
 
-		#region Properties: Public
-
+		
 		public string WorkspaceName {
 			get;
 			set;
@@ -112,10 +106,9 @@ namespace QueryConsole
 
 		public ManagerProvider AppManagerProvider;
 
-		#endregion
+		 
 
-		#region Methods: Protected
-
+		
 		protected virtual Assembly CurrentDomainAssemblyResolve(object sender, ResolveEventArgs args) {
 			string requestingAssemblyName = args.Name;
 			var appUri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase);
@@ -152,10 +145,9 @@ namespace QueryConsole
 			AppConnection.InitializeWorkspace(WorkspaceName);
 		}
 
-		#endregion
+		 
 
-		#region Methods: Public
-
+		
 		public void Run() {
 			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainAssemblyResolve;
 			AppConfigurationSectionGroup appSettings = GetAppSettings();
@@ -172,47 +164,14 @@ namespace QueryConsole
 			return esq.GetEntityCollection(SystemUserConnection);
 		}
 
-		public void UpdateEntity(string entityName) {
-			ConsoleColorWrite(string.Format("{0}: Start Integrate", entityName));
-			var entities = GetEntitiesForUpdate(entityName);
-			int j = 1, count = entities.Count;
-			ConsoleColorWrite(string.Format("{0} count: {1}", entityName, count));
-			foreach(var entity in entities) {
-				Console.WriteLine("{0} with id = '{1}'", entityName, entity.PrimaryColumnValue.ToString());
-				var integrator = new ClientServiceIntegrator(SystemUserConnection);
-				var sw = new Stopwatch();
-				sw.Start();
-				integrator.Update(entity);
-				sw.Stop();
-				ConsoleColorWrite("sec = " + sw.ElapsedMilliseconds / 1000.0 + " ");
-				Console.WriteLine(j++ + "/" + count);
-			}
-			ConsoleColorWrite(entityName + ": end integrate");
-		}
-		public void Import(string json, string entityName) {
-			var integrator = new IntegrationEntityHelper();
-			var integrationInfo = new CsConstant.IntegrationInfo(Newtonsoft.Json.JsonConvert.DeserializeObject(json) as JObject, SystemUserConnection, CsConstant.TIntegrationType.Import, null, entityName, "create");
-			var sw = new Stopwatch();
-			sw.Start();
-			integrator.IntegrateEntity(integrationInfo);
-			sw.Stop();
-			Console.WriteLine("sec = " + sw.ElapsedMilliseconds / 1000.0);
-			Console.WriteLine("millisec = " + sw.ElapsedMilliseconds);
-			if(integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success) {
-				Console.ForegroundColor = ConsoleColor.Green;
-				Console.WriteLine("Success");
-			}
-		}
-
+		
 		public void ConsoleColorWrite(string text, ConsoleColor color = ConsoleColor.Green) {
 			var buff = Console.ForegroundColor;
 			Console.ForegroundColor = color;
 			Console.WriteLine(text);
 			Console.ForegroundColor = buff;
 		}
-		#endregion
+		 
 	}
-
-	#endregion
 
 }

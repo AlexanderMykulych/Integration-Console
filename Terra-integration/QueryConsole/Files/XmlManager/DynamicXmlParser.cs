@@ -5,9 +5,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using QueryConsole.Files.Extension;
 
-namespace QueryConsole.Files.XmlManager {
+namespace Terrasoft.TsConfiguration {
 	public static class DynamicXmlParser {
 		public static T StartMapXmlToObj<T>(XmlNode node, Type objType, object defObj = null, Func<string, string> prepareValuePredicate = null) {
 			object resultObj = null;

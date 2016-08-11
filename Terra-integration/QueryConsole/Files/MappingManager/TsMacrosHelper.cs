@@ -79,8 +79,7 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		#region Macros: Import
-		public static Func<object, object> DateTimeToYearInteger = (x) =>
+				public static Func<object, object> DateTimeToYearInteger = (x) =>
 		{
 			if (x == null)
 				return null;
@@ -218,10 +217,9 @@ namespace Terrasoft.TsConfiguration
 			}
 			return x;
 		};
-		#endregion
+		 
 
-		#region Macros: Export
-		public static Func<object, object> YearIntegerToDateTime = (x) =>
+				public static Func<object, object> YearIntegerToDateTime = (x) =>
 		{
 			if (x == null)
 				return null;
@@ -265,6 +263,6 @@ namespace Terrasoft.TsConfiguration
 			}
 			return x;
 		};
-		#endregion
+		 
 	}
 }

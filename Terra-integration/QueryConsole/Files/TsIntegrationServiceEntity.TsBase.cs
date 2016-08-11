@@ -4,16 +4,11 @@ using System.Linq;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
 using Newtonsoft.Json.Linq;
-using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
-using QueryConsole.Files.Constants;
-using QueryConsole.Files.MappingManager;
 using Terrasoft.Core.DB;
-using TSysAdminUnitType = QueryConsole.Files.Constants.CsConstant.TSysAdminUnitType;
 using System.Data;
 using Terrasoft.Common;
-using Terrasoft.CsConfiguration;
 using QueryConsole.Files;
-using QueryConsole.Files.Integrators;
+using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;
 
 namespace Terrasoft.TsConfiguration
 {
@@ -177,7 +172,7 @@ namespace Terrasoft.TsConfiguration
 			return IntegrationConfigurationManager.GetConfigItem(userConnection, HandlerName);
 		}
 
-		public virtual Entity GetEntityByExternalId(IntegrationInfo integrationInfo) {
+		public virtual Entity GetEntityByExternalId(CsConstant.IntegrationInfo integrationInfo) {
 			string externalIdPath = integrationInfo.TsExternalIdPath;
 			var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
 			esq.AddAllSchemaColumns();
@@ -186,11 +181,11 @@ namespace Terrasoft.TsConfiguration
 			return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
 		}
 
-		public virtual bool IsExport(IntegrationInfo integrationInfo) {
+		public virtual bool IsExport(CsConstant.IntegrationInfo integrationInfo) {
 			return true;
 		}
 
-		public virtual ServiceRequestInfo GetRequestInfo(IntegrationInfo integrationInfo) {
+		public virtual ServiceRequestInfo GetRequestInfo(CsConstant.IntegrationInfo integrationInfo) {
 			var requestInfo = new ServiceRequestInfo() {
 				ServiceObjectId = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath).ToString(),
 				ServiceObjectName = JName,
@@ -461,7 +456,7 @@ namespace Terrasoft.TsConfiguration
 			Mapper = new MappingHelper();
 			EntityName = "SysAdminUnit";
 			JName = "";
-			UrlMaker = new ServiceUrlMaker(CsConstant.IntegratorSettings.Urls[typeof(Terrasoft.CsConfiguration.ClientServiceIntegrator)]);
+			UrlMaker = new ServiceUrlMaker(CsConstant.IntegratorSettings.Urls[typeof(ClientServiceIntegrator)]);
 		}
 
 		public override void BeforeMapping(IntegrationInfo integrationInfo) {
@@ -476,9 +471,9 @@ namespace Terrasoft.TsConfiguration
 			}
 			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
 				if(JName == "Manager") {
-					integrationInfo.IntegratedEntity.SetColumnValue("SysAdminUnitTypeValue", TSysAdminUnitType.User);
+					integrationInfo.IntegratedEntity.SetColumnValue("SysAdminUnitTypeValue", CsConstant.TSysAdminUnitType.User);
 				} else {
-					integrationInfo.IntegratedEntity.SetColumnValue("SysAdminUnitTypeValue", TSysAdminUnitType.Unit);
+					integrationInfo.IntegratedEntity.SetColumnValue("SysAdminUnitTypeValue", CsConstant.TSysAdminUnitType.Unit);
 				}
 			}
 		}
@@ -491,7 +486,7 @@ namespace Terrasoft.TsConfiguration
 
 		public override void ProcessResponse(IntegrationInfo integrationInfo) {
 			base.ProcessResponse(integrationInfo);
-			if(JName == "Manager" && integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("SysAdminUnitTypeValue") == (int)TSysAdminUnitType.User) {
+			if(JName == "Manager" && integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("SysAdminUnitTypeValue") == (int)CsConstant.TSysAdminUnitType.User) {
 				try {
 					ResaveContact(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("ContactId"), integrationInfo.UserConnection);
 				} catch(Exception e) {
@@ -547,7 +542,7 @@ namespace Terrasoft.TsConfiguration
 		public void integratePassport(IntegrationInfo integrationInfo) {
 			var automobileId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
 			if(automobileId != Guid.Empty) {
-				var helper = new Terrasoft.CsConfiguration.ClientServiceIntegrator(integrationInfo.UserConnection);
+				var helper = new ClientServiceIntegrator(integrationInfo.UserConnection);
 				helper.IntegrateBpmEntity(integrationInfo.IntegratedEntity, new VehiclePassportHandler());
 			}
 		}

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IntegrationInfo = QueryConsole.Files.Constants.CsConstant.IntegrationInfo;
+using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;
 
 namespace Terrasoft.TsConfiguration
 {
