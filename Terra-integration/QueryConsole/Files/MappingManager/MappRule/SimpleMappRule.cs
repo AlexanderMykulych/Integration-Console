@@ -29,10 +29,12 @@ namespace QueryConsole.Files.MappingManager.MappRule
 			if (!string.IsNullOrEmpty(info.config.MacrosName))
 			{
 				simpleResult = TsMacrosHelper.GetMacrosResultExport(info.config.MacrosName, simpleResult);
+				if (simpleResult is DateTime)
+				{
+					simpleResult = ((DateTime)simpleResult).ToString("yyyy-MM-dd");
+				}
 			}
-			if(simpleResult is DateTime) {
-				simpleResult = ((DateTime)simpleResult).ToString("yyyy-MM-dd");
-			}
+			
 			info.json = simpleResult != null ? JToken.FromObject(simpleResult) : null;
 		}
 	}

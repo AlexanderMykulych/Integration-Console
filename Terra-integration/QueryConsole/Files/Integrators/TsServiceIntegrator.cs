@@ -154,7 +154,7 @@ namespace QueryConsole.Files
 		public virtual void IntegrateServiceEntity(JObject serviceEntity, string serviceObjectName) {
 			var integrationInfo = CsConstant.IntegrationInfo.CreateForImport(userConnection, CsConstant.IntegrationActionName.Create, serviceObjectName, serviceEntity);
 			entityHelper.IntegrateEntity(integrationInfo);
-			if (integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Exception)
+			if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Exception)
 			{
 				if (integrationInfo.Result.Exception == CsConstant.IntegrationResult.TResultException.OnCreateEntityExist)
 				{

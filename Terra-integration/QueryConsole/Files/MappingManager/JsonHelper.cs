@@ -55,9 +55,10 @@ namespace QueryConsole.Files.MappingManager
 			{
 				if (value is DateTime)
 				{
-					return ((DateTime)value).ToString("yyyy-MM-dd");
+					return ((DateTime)value).ToString("yyyy-MM-dd'T'HH:mm:ss");
 				}
-				if(value is bool) {
+				if (value is bool)
+				{
 					return (bool)value == true ? true : false;
 				}
 				return value;
@@ -70,7 +71,7 @@ namespace QueryConsole.Files.MappingManager
 		}
 
 		public static List<object> GetColumnValues(UserConnection userConnection, string entityName, string entityPath, object entityPathValue, string resultColumnName, int limit = -1,
-			string orderColumnName = "CreatedOn", OrderDirection orderType = OrderDirection.Descending)
+			string orderColumnName = "CreatedOn", OrderDirection orderType = OrderDirection.Descending, Dictionary<string, string> filters = null)
 		{
 			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, entityName);
 			if (limit > 0)
@@ -86,6 +87,13 @@ namespace QueryConsole.Files.MappingManager
 				orderColumn.OrderPosition = 0;
 			}
 			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, entityPath, entityPathValue));
+			if (filters != null)
+			{
+				foreach (var filter in filters)
+				{
+					esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, filter.Key, filter.Value));
+				}
+			}
 			return esq.GetEntityCollection(userConnection).Select(x =>
 				x.GetColumnValue(resColumn.IsLookup ? PrepareColumn(resColumn.Name, true) : resColumn.Name)
 			).ToList();
@@ -108,7 +116,8 @@ namespace QueryConsole.Files.MappingManager
 				orderColumn.OrderPosition = 0;
 			}
 			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, entityPath, entityPathValue));
-			foreach(var filter in filters) {
+			foreach (var filter in filters)
+			{
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, filter.Item1, filter.Item2));
 			}
 			return esq.GetEntityCollection(userConnection).Select(x =>
@@ -217,7 +226,8 @@ namespace QueryConsole.Files.MappingManager
 		public static void UpdateOrInsertEntityColumn(string entityName, string setColumn, object setValue, UserConnection userConnection, IEnumerable<Tuple<string, string>> optionalColumns, List<Tuple<string, object>> filters)
 		{
 			filters.AddRange(optionalColumns.Select(x => new Tuple<string, object>(x.Item1, x.Item2)));
-			if (GetEntityCount(entityName, userConnection, filters) > 0) {
+			if (GetEntityCount(entityName, userConnection, filters) > 0)
+			{
 				var update = new Update(userConnection, entityName);
 				if (filters.Any())
 				{
@@ -228,11 +238,14 @@ namespace QueryConsole.Files.MappingManager
 					}
 				}
 				update.Set(setColumn, Column.Parameter(setValue));
-				foreach(var optionalColumn in optionalColumns) {
+				foreach (var optionalColumn in optionalColumns)
+				{
 					update.Set(optionalColumn.Item1, Column.Parameter(optionalColumn.Item2));
 				}
 				update.Execute();
-			} else {
+			}
+			else
+			{
 				var insert = new Insert(userConnection).Into(entityName);
 				insert.Set(setColumn, Column.Parameter(setValue));
 				foreach (var optionalColumn in optionalColumns)
@@ -243,7 +256,8 @@ namespace QueryConsole.Files.MappingManager
 			}
 		}
 
-		public static int GetEntityCount(string entityName, UserConnection userConnection, List<Tuple<string, object>> filters) {
+		public static int GetEntityCount(string entityName, UserConnection userConnection, List<Tuple<string, object>> filters)
+		{
 			var select = new Select(userConnection)
 						.Column(Func.Count("Id")).As("count")
 						.From(entityName);
@@ -266,6 +280,19 @@ namespace QueryConsole.Files.MappingManager
 				}
 			}
 			return 0;
+		}
+
+		public static Dictionary<string, string> ParsToDictionary(string text, char first, char second) {
+			var result = new Dictionary<string, string>();
+			if(string.IsNullOrEmpty(text)) {
+				return result;
+			}
+			var pairs = text.Split(first);
+			foreach(var pair in pairs) {
+				var values = pair.Split(second);
+				result.AddIfNotExists(new KeyValuePair<string, string>(values.First(), values.Last()));
+			}
+			return result;
 		}
 	}
 }

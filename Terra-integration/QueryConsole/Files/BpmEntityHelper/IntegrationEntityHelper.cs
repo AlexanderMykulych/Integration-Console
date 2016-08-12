@@ -99,6 +99,10 @@ namespace QueryConsole.Files.BpmEntityHelper
 							return EntityHandlers[type];
 						}
 						var entityHandler = Activator.CreateInstance(type) as EntityHandler;
+						if (EntityHandlers.ContainsKey(type))
+						{
+							return EntityHandlers[type];
+						}
 						EntityHandlers.Add(type, entityHandler);
 						return entityHandler;
 					}

@@ -44,15 +44,7 @@ namespace QueryConsole.Files.MappingManager.MappRule
 					var jArray = (JArray)info.json;
 					var handlerName = info.config.HandlerName;
 					var integrator = new IntegrationEntityHelper();
-					List<QueryColumnExpression> deleteIds = null;
-					if (info.config.DeleteBeforeExport)
-					{
-						var esq = new EntitySchemaQuery(info.userConnection.EntitySchemaManager, info.config.TsDestinationName);
-						var identColumn = esq.AddColumn("Id");
-						esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, info.config.TsDestinationPath, info.entity.GetColumnValue(info.config.TsSourcePath)));
-						var collection = esq.GetEntityCollection(info.userConnection);
-						deleteIds = collection.Select(x => Column.Parameter(x.GetTypedColumnValue<Guid>(x.Schema.Columns.GetByName(identColumn.Name)))).ToList();
-					}
+					List<QueryColumnExpression> deleteIds = new List<QueryColumnExpression>();
 					try
 					{
 						foreach (JToken jArrayItem in jArray)
@@ -62,11 +54,14 @@ namespace QueryConsole.Files.MappingManager.MappRule
 							var objIntegrInfo = new IntegrationInfo(jObj, info.userConnection, info.integrationType, null, handlerName, info.action);
 							objIntegrInfo.ParentEntity = info.entity;
 							integrator.IntegrateEntity(objIntegrInfo);
+							if(info.config.DeleteBeforeExport) {
+								deleteIds.Add(Column.Parameter(objIntegrInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id")));
+							}
 						}
 						if(info.config.DeleteBeforeExport && deleteIds != null && deleteIds.Any()) {
 							var delete = new Delete(info.userConnection)
 									.From(info.config.TsDestinationName)
-									.Where("Id").In(deleteIds) as Delete;
+									.Where("Id").Not().In(deleteIds) as Delete;
 							delete.Execute();
 						}
 					} catch(Exception e) {
