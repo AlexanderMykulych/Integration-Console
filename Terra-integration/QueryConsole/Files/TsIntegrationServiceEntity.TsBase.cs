@@ -856,7 +856,7 @@ namespace Terrasoft.TsConfiguration
 			result[JName]["capacity"] = JToken.FromObject(capacity);
 			result[JName]["population"] = JToken.FromObject(population);
 
-			ValidateType(integrationInfo, result);
+			//ValidateType(integrationInfo, result);
 			return result;
 		}
 		public void ValidateType(IntegrationInfo integrationInfo, JObject jObj) {
@@ -1759,7 +1759,7 @@ namespace Terrasoft.TsConfiguration
 	}
 
 	[ImportHandlerAttribute("Counteragent")]
-	[ExportHandlerAttribute("")]
+	[ExportHandlerAttribute("Account")]
 	public class CounteragentHandler : EntityHandler
 	{
 		public override string HandlerName
@@ -1791,7 +1791,7 @@ namespace Terrasoft.TsConfiguration
 			JName = "Counteragent";
 		}
 		public override bool IsExport(IntegrationInfo integrationInfo) {
-			return isAccountExported(integrationInfo) && isAccountContracted(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
+			return !isAccountExported(integrationInfo) && isAccountContracted(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
 		}
 
 		public bool isAccountContracted(Guid accountId, UserConnection userConnection) {

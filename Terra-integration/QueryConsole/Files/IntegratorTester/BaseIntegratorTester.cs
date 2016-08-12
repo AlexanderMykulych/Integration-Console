@@ -48,7 +48,7 @@ namespace QueryConsole.Files.IntegratorTester
 			//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Name", "Наша компания"));
 			///*esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("a37*/d31d9-4b81-4c40-925c-1b1d658e926d")));
 			//if(name == "Contact") {
-			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("6A7C7BDE-CD28-461A-AAA8-53DC1766F213")));
+			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("3aa33fe9-1685-4ad5-8a3e-d5f8aabc280d")));
 			//}
 			if (name == "ContactCareer") {
 				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("6D20D35D-82B9-4CFD-9D18-670003D79AB7")));
@@ -66,6 +66,10 @@ namespace QueryConsole.Files.IntegratorTester
 
 				//Manager
 				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "SysAdminUnitTypeValue", 4));
+			}
+			if(name=="Contact") {
+				//
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("3C65F32F-AAC7-4815-90C7-02882E859E16")));
 			}
 			return esq.GetEntityCollection(UserConnection);
 		}

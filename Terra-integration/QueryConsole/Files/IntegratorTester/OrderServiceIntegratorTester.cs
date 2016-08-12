@@ -22,6 +22,7 @@ namespace QueryConsole.Files.IntegratorTester
 			return new List<string>() {
 				//"TsPayment",
 				//"Order",
+				"Account",
 				//"OrderProduct",
 				//"TsReturn",
 				//"TsShipment",

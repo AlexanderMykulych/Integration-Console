@@ -27,7 +27,7 @@ namespace QueryConsole.Files.IntegratorTester
 				//"TsAutoOwnerInfo",
 				//"TsAutomobile",
 				//"SysAdminUnit",
-				"Case",
+				//"Case",
 				//"Relationship",
 				//"ContactCareer",
 				//"TsContactNotifications",
