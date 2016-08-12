@@ -8,79 +8,121 @@ using Terrasoft.Core;
 using Terrasoft.Core.Entities;
 using Terrasoft.TsConfiguration;
 
-namespace Terrasoft.TsConfiguration
-{
-	public static class CsConstant
-	{
-		 		public class IntegrationResult
-		{
+namespace Terrasoft.TsConfiguration {
+	public static class CsConstant {
+		public class IntegrationResult {
+			public bool Success {
+				get;
+				set;
+			}
+			public JObject Data {
+				get;
+				set;
+			}
+			public TResultType Type {
+				get;
+				set;
+			}
+			public TResultException Exception {
+				get;
+				set;
+			}
+			public string ExceptionMessage {
+				get;
+				set;
+			}
 
-			 			public bool Success { get; set; }
-			public JObject Data { get; set; }
-			public TResultType Type { get; set; }
-			public TResultException Exception { get; set; }
-			public string ExceptionMessage { get; set; }
-			 
 
-			 			public IntegrationResult()
-			{
+			public IntegrationResult() {
 
 			}
 
-			public IntegrationResult(JObject data)
-			{
+			public IntegrationResult(JObject data) {
 				Data = data;
 			}
 
-			public IntegrationResult(TResultType type, JObject data = null)
-			{
+			public IntegrationResult(TResultType type, JObject data = null) {
 				Type = type;
 				Data = data;
 			}
 
-			public IntegrationResult(TResultException exception, string message = null, JObject data = null)
-			{
+			public IntegrationResult(TResultException exception, string message = null, JObject data = null) {
 				Type = TResultType.Exception;
 				Exception = exception;
 				ExceptionMessage = message;
 				Data = data;
 			}
-			 
 
-			 			public enum TResultException
-			{
+
+			public enum TResultException {
 				OnCreateEntityExist
 			}
-			public enum TResultType
-			{
+			public enum TResultType {
 				Exception,
 				Success
 			}
-			 
+
 		}
-		 
 
-		 		public class IntegrationInfo
-		{
 
-			 			public JObject Data { get; set; }
-			public string StrData { get; set; }
-			public UserConnection UserConnection { get; set; }
-			public TIntegrationType IntegrationType { get; set; }
-			public string EntityName { get; set; }
-			public string Action { get; set; }
-			public Guid? EntityIdentifier { get; set; }
-			public IntegrationResult Result { get; set; }
-			public Entity IntegratedEntity { get; set; }
-			public string TsExternalIdPath { get; set; }
-			public string TsExternalVersionPath { get; set; }
-			public EntityHandler Handler {get; set;}
-			public Entity ParentEntity { get; set; }
-			 
+		public class IntegrationInfo {
 
-			 			public IntegrationInfo(JObject data, UserConnection userConnection, TIntegrationType integrationType = TIntegrationType.Export,
-					Guid? entityIdentifier = null, string entityName = "", string action = "Create", Entity integratedEntity = null)
-			{
+			public JObject Data {
+				get;
+				set;
+			}
+			public string StrData {
+				get;
+				set;
+			}
+			public UserConnection UserConnection {
+				get;
+				set;
+			}
+			public TIntegrationType IntegrationType {
+				get;
+				set;
+			}
+			public string EntityName {
+				get;
+				set;
+			}
+			public string Action {
+				get;
+				set;
+			}
+			public Guid? EntityIdentifier {
+				get;
+				set;
+			}
+			public IntegrationResult Result {
+				get;
+				set;
+			}
+			public Entity IntegratedEntity {
+				get;
+				set;
+			}
+			public string TsExternalIdPath {
+				get;
+				set;
+			}
+			public string TsExternalVersionPath {
+				get;
+				set;
+			}
+			public EntityHandler Handler {
+				get;
+				set;
+			}
+			public Entity ParentEntity {
+				get;
+				set;
+			}
+
+
+			public IntegrationInfo(JObject data, UserConnection userConnection, TIntegrationType integrationType = TIntegrationType.Export,
+			Guid? entityIdentifier = null, string entityName = "", string action = "Create", Entity integratedEntity = null) {
 				Data = data;
 				UserConnection = userConnection;
 				IntegrationType = integrationType;
@@ -89,37 +131,31 @@ namespace Terrasoft.TsConfiguration
 				Action = action;
 				IntegratedEntity = integratedEntity;
 			}
-			 
 
-			 			public override string ToString()
-			{
+
+			public override string ToString() {
 				return string.Format("Data = {0}\nIntegrationType={1} EntityIdentifier={2}", Data, IntegrationType.ToString(), EntityIdentifier);
 			}
-			 
 
-			public static IntegrationInfo CreateForImport(UserConnection userConnection, string action, string serviceEntityName, JObject data)
-			{
+
+			public static IntegrationInfo CreateForImport(UserConnection userConnection, string action, string serviceEntityName, JObject data) {
 				return new IntegrationInfo(data, userConnection, TIntegrationType.Import, null, serviceEntityName, action, null);
 			}
-			public static IntegrationInfo CreateForExport(UserConnection userConnection, Entity entity)
-			{
+			public static IntegrationInfo CreateForExport(UserConnection userConnection, Entity entity) {
 				return new IntegrationInfo(null, userConnection, TIntegrationType.Export, entity.PrimaryColumnValue, entity.SchemaName, CsConstant.IntegrationActionName.Empty, entity);
 			}
-			public static IntegrationInfo CreateForResponse(UserConnection userConnection, Entity entity)
-			{
+			public static IntegrationInfo CreateForResponse(UserConnection userConnection, Entity entity) {
 				return new IntegrationInfo(null, userConnection, TIntegrationType.ExportResponseProcess, entity.PrimaryColumnValue, entity.SchemaName, CsConstant.IntegrationActionName.UpdateFromResponse, entity);
 			}
 		}
 
-		 		public enum TIntegrationType
-		{
+		public enum TIntegrationType {
 			Export = 0,
 			Import = 1,
 			All = 3,
 			ExportResponseProcess = 4
 		}
-		public enum TSysAdminUnitType
-		{
+		public enum TSysAdminUnitType {
 			Organization = 0,
 			Unit = 1,
 			Head = 2,
@@ -128,9 +164,9 @@ namespace Terrasoft.TsConfiguration
 			SelfServicePortalUser = 5,
 			FunctionalRole = 6
 		}
-		 
 
-		 		public const string clientserviceEntityUrl = "http://api.client-service.stage2.laximo.ru/v2/entity/AUTO3N";
+
+		public const string clientserviceEntityUrl = "http://api.client-service.stage2.laximo.ru/v2/entity/AUTO3N";
 		public const string clientserviceDictUrl = "http://api.client-service.stage2.laximo.ru/v2/dict/AUTO3N";
 		public static Dictionary<string, string> clientserviceEntity = new Dictionary<string, string>() {
 			{ "Account", "CompanyProfile" },
@@ -160,8 +196,7 @@ namespace Terrasoft.TsConfiguration
 			//AssortmentRequestStatus - unrecognize
 		};
 
-		public static class VehicleRelationshipType
-		{
+		public static class VehicleRelationshipType {
 			public const int Owner = 1;
 			public const int Leasing = 2;
 			public const int Driver = 3;
@@ -189,27 +224,24 @@ namespace Terrasoft.TsConfiguration
 		public static Dictionary<string, string> DefaultBusEventSorts = new Dictionary<string, string>() {
 			{"createdAt", "desc"}
 		};
-		 
 
-		 		public static class IntegrationEventName
-		{
+
+		public static class IntegrationEventName {
 			public const string BusEventNotify = @"BusEventNotification";
 			public const string BusEventNotifyData = @"BusEventNotificationData";
 		}
-		 
 
-		 		public static class IntegrationActionName
-		{
+
+		public static class IntegrationActionName {
 			public const string Create = @"create";
 			public const string Update = @"update";
 			public const string Delete = @"delete";
 			public const string UpdateFromResponse = @"updateFromResponse";
 			public const string Empty = @"";
 		}
-		 
 
-		 		public static class SysSettingsCode
-		{
+
+		public static class SysSettingsCode {
 			public const string AllowImport = @"IntegrServAllowImport";
 			public const string IntegrationServiceBaseUrl = @"IntegrServBaseUrl";
 			public const string TerrasoftPostboxId = @"IntegrServTerrasoftPostboxId";
@@ -219,13 +251,12 @@ namespace Terrasoft.TsConfiguration
 			public const string ConfigurationData = @"IntegrationXmlConfigData";
 			public const string IsIntegrationActive = @"IsIntegrationActive";
 		}
-		 
 
-		 		public static class IntegrationFlagSetting
-		{
+
+		public static class IntegrationFlagSetting {
 			public const bool AllowErrorOnColumnAssign = false;
 		}
-		 
+
 
 		public static class ServiceColumnInBpm {
 			public const string Identifier = @"TsExternalId";
@@ -256,41 +287,76 @@ namespace Terrasoft.TsConfiguration
 		public static class TsAddressType {
 			public static readonly Guid Delivery = new Guid("760bf68c-4b6e-df11-b988-001d60e938c6");
 		}
-		public static class TsContractState
-		{
+		public static class TsContractState {
 			public static readonly Guid Signed = new Guid("1f703f42-f7e8-4e3f-9b54-2b85f62ea507");
 		}
 		public static class IntegratorSettings {
-			public static Dictionary<Type, Dictionary<TServiceObject, string>> Urls = new Dictionary<Type,Dictionary<TServiceObject,string>>() {
-				{ typeof(ClientServiceIntegrator), new Dictionary<TServiceObject, string>() {
-						//{ TServiceObject.Dict, "http://api.client-service.bus.stage2.auto3n.ru/v2/dict/AUTO3N" },
-						{ TServiceObject.Entity, "http://api.client-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
-						////{ TServiceObject.Dict, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/dict/AUTO3N" },
-						//{ TServiceObject.Entity, "http://api.client-service.stage3.laximo.ru/v2/entity/AUTO3N" }
-					}
-				},
-				{ typeof(OrderServiceIntegrator), new Dictionary<TServiceObject, string>() {
-						//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
-						//{ TServiceObject.Entity, "http://api.order-service.bus2.auto3n.ru/v2/entity/AUTO3N" }
-						//{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
-						{ TServiceObject.Entity, @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
-				
-					}
-				},
-			};
-
-			public static Dictionary<Type, string> Names = new Dictionary<Type,string>() {
-				{ typeof(ClientServiceIntegrator), "ClientService" },
-				{ typeof(OrderServiceIntegrator), "OrderService" },
-			};
 
 			public static Dictionary<TServiceObject, string> GetUrlsByServiceName(string serviceName) {
-				var serviceType = Names.FirstOrDefault(x => x.Value == serviceName).Key;
-				if(Urls.ContainsKey(serviceType)) {
-					return Urls[serviceType];
+				var serviceType = Settings.FirstOrDefault(x => x.Value.Name == serviceName);
+				if ((object)serviceType != null) {
+					return serviceType.Value.BaseUrl;
 				}
-				return new Dictionary<TServiceObject,string>();
+				return new Dictionary<TServiceObject, string>();
 			}
+			public static Dictionary<Type, IntegratorSetting> Settings = new Dictionary<Type, IntegratorSetting>() {
+				{
+					typeof(ClientServiceIntegrator),
+					new IntegratorSetting() {
+						Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==",
+						Name = "ClientService",
+						BaseUrl = new Dictionary<TServiceObject, string>() {
+							//{ TServiceObject.Dict, "http://api.client-service.bus.stage2.auto3n.ru/v2/dict/AUTO3N" },
+							{ TServiceObject.Entity, "http://api.client-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
+							////{ TServiceObject.Dict, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/dict/AUTO3N" },
+							//{ TServiceObject.Entity, "http://api.client-service.stage3.laximo.ru/v2/entity/AUTO3N" }
+						},
+						IsIntegratorActive = false
+					}
+				},
+				{
+					typeof(OrderServiceIntegrator),
+					new IntegratorSetting() {
+						Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==",
+						Name = "OrderService",
+						BaseUrl = new Dictionary<TServiceObject, string>() {
+							//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
+							//{ TServiceObject.Entity, "http://api.order-service.bus2.auto3n.ru/v2/entity/AUTO3N" }
+							//{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
+							{ TServiceObject.Entity, @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
+				
+						},
+						IsIntegratorActive = false
+					}
+				},
+				{
+					typeof(IntegrationServiceIntegrator),
+					new IntegratorIntegrationServiceSetting() {
+						Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==",
+						Name = "IntegrationService",
+						BaseUrl = new Dictionary<TServiceObject, string>() {
+							//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
+							//{ TServiceObject.Entity, "http://api.order-service.bus2.auto3n.ru/v2/entity/AUTO3N" }
+							//{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
+							{ TServiceObject.Entity, @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
+						},
+						PostboxId = 10004,
+						NotifyLimit = 50
+					}
+				}
+			};
+			#region Class: Setting
+			public class IntegratorSetting {
+				public Dictionary<TServiceObject, string> BaseUrl;
+				public string Name;
+				public string Auth;
+				public bool IsIntegratorActive;
+			}
+			public class IntegratorIntegrationServiceSetting: IntegratorSetting {
+				public int PostboxId;
+				public int NotifyLimit;
+			}
+			#endregion
 		}
 
 		public static class XmlManagerConstant {

@@ -14,6 +14,11 @@ using System.Xml;
 using System.Reflection;
 using System.Threading;
 using System.Web.Configuration;
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//При использовании в системе раскоментировать
+//using TsConfigurationManager = System.Web.Configuration.WebConfigurationManager;
+//При использовании в системе закоментировать
+using TsConfigurationManager = System.Configuration.ConfigurationManager;
 
 
 namespace Terrasoft.TsConfiguration
@@ -45,7 +50,7 @@ namespace Terrasoft.TsConfiguration
 
 	public interface IMappingMethod {
 		//TODO: Вынести методы маппера в отдельные сущности
-		void Evaluate(MappingItem mappItem, Terrasoft.TsConfiguration.CsConstant.IntegrationInfo integrationInfo);
+		void Evaluate(MappingItem mappItem, CsConstant.IntegrationInfo integrationInfo);
 	}
 
 	public class MappingMethodAttribute : System.Attribute {
@@ -104,14 +109,14 @@ namespace Terrasoft.TsConfiguration
 				if(_xDocument != null)
 					return _xDocument;
 
-				string confLocation = System.Configuration.ConfigurationManager.AppSettings["XmlConfigurationLocation"] ?? "db";
+				string confLocation = TsConfigurationManager.AppSettings["XmlConfigurationLocation"] ?? "db";
 				if(confLocation == "db") {
 					if(string.IsNullOrEmpty(_xmlData)) {
 						_xmlData = Terrasoft.Core.Configuration.SysSettings.GetValue(userConnection, CsConstant.SysSettingsCode.ConfigurationData, "<?xml version=\"1.0\" encoding=\"utf-8\"?>");
 					}
 				} else if(confLocation == "file") {
 					if(string.IsNullOrEmpty(_xmlData)) {
-						string confPath = System.Configuration.ConfigurationManager.AppSettings["XmlConfigurationFilePath"] ?? "IntegrationConfig.xml";
+						string confPath = TsConfigurationManager.AppSettings["XmlConfigurationFilePath"] ?? "IntegrationConfig.xml";
 						using(var stream = new StreamReader(confPath)) {
 							_xmlData = stream.ReadToEnd();
 						}

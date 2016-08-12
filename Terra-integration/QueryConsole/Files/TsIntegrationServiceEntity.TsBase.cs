@@ -7,7 +7,6 @@ using Newtonsoft.Json.Linq;
 using Terrasoft.Core.DB;
 using System.Data;
 using Terrasoft.Common;
-using QueryConsole.Files;
 using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;
 
 namespace Terrasoft.TsConfiguration
@@ -456,7 +455,7 @@ namespace Terrasoft.TsConfiguration
 			Mapper = new MappingHelper();
 			EntityName = "SysAdminUnit";
 			JName = "";
-			UrlMaker = new ServiceUrlMaker(CsConstant.IntegratorSettings.Urls[typeof(ClientServiceIntegrator)]);
+			UrlMaker = new ServiceUrlMaker(CsConstant.IntegratorSettings.Settings[typeof(ClientServiceIntegrator)].BaseUrl);
 		}
 
 		public override void BeforeMapping(IntegrationInfo integrationInfo) {

@@ -1,5 +1,4 @@
-﻿using QueryConsole.Files;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.DB;
-using Terrasoft.TempConfiguration;
 
 namespace Terrasoft.TsConfiguration
 {
@@ -88,7 +86,7 @@ namespace Terrasoft.TsConfiguration
 
 		public static void AfterSaveError(Exception e, string typeName)
 		{
-			IntegrationConsole.EntityIntegratedError(typeName);
+			//IntegrationConsole.EntityIntegratedError(typeName);
 			//var buff = Console.ForegroundColor;
 			//Console.ForegroundColor = ConsoleColor.Red;
 			//Console.WriteLine("Error: " + typeName);
@@ -97,7 +95,7 @@ namespace Terrasoft.TsConfiguration
 
         public static Dictionary<string, int> IncDict = new Dictionary<string, int>();
 		public static void SuccessSave(string typeName) {
-			IntegrationConsole.EntityIntegratedSuccess(typeName);
+			//IntegrationConsole.EntityIntegratedSuccess(typeName);
 			if (IncDict.ContainsKey(typeName))
             {
                 //Console.WriteLine((++IncDict[typeName]).ToString() + ".Save: " + typeName);
@@ -109,7 +107,7 @@ namespace Terrasoft.TsConfiguration
 		}
 
 		public static void MappingError(Exception e, MappingItem item) {
-			//IntegrationConsole.AddMappingError();
+			////IntegrationConsole.AddMappingError();
 		}
 	}
 

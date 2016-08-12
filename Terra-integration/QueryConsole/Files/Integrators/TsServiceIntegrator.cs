@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
-using Terrasoft.TempConfiguration;
 
 namespace Terrasoft.TsConfiguration
 {
@@ -43,32 +42,69 @@ namespace Terrasoft.TsConfiguration
 				Type = type
 			};
 		}
-
 	}
 
 	public abstract class BaseServiceIntegrator: IServiceIntegrator {
-		public Dictionary<TServiceObject, string> baseUrls;
 		public IntegratorHelper integratorHelper;
 		public UserConnection userConnection;
 		public ServiceUrlMaker UrlMaker;
 		public IntegrationEntityHelper entityHelper;
-		public string ServiceName;
-		public string Auth;
+
+		#region settings
+		private CsConstant.IntegratorSettings.IntegratorSetting _Settings;
+		public CsConstant.IntegratorSettings.IntegratorSetting Settings {
+			get {
+				if(_Settings == null) {
+					_Settings = CsConstant.IntegratorSettings.Settings[this.GetType()];
+				}
+				return _Settings;
+			}
+		}
+		public bool IsIntegratorActive {
+			get {
+				return Settings.IsIntegratorActive;
+			}
+		}
+		public string ServiceName {
+			get {
+				return Settings.Name;
+			}
+		}
+		public string Auth {
+			get {
+				return Settings.Auth;
+			}
+		}
+		public Dictionary<TServiceObject, string> baseUrls {
+			get {
+				return Settings.BaseUrl;
+			}
+		}
+		#endregion
+
 		public BaseServiceIntegrator(UserConnection userConnection) {
 			this.userConnection = userConnection;
 			entityHelper = new IntegrationEntityHelper();
+			integratorHelper = new IntegratorHelper();
+			UrlMaker = new ServiceUrlMaker(baseUrls);
 		}
 
 		public virtual void GetRequest(ServiceRequestInfo info)
 		{
+			if (!IsIntegratorActive) {
+				return;
+			}
 			info.Method = TRequstMethod.GET;
 			info.FullUrl = info.FullUrl ?? UrlMaker.Make(info);
-			IntegrationConsole.SetCurrentRequestUrl(info.FullUrl);
+			//IntegrationConsole.SetCurrentRequestUrl(info.FullUrl);
 			MakeRequest(info);
 		}
 
 		public virtual void MakeRequest(ServiceRequestInfo info)
 		{
+			if(!IsIntegratorActive) {
+				return;
+			}
 			var logId = Guid.NewGuid();
 			IntegrationLogger.StartTransaction(logId, new LogTransactionInfo() {
 				RequesterName = CsConstant.PersonName.Bpm,
@@ -90,6 +126,9 @@ namespace Terrasoft.TsConfiguration
 
 		public virtual void OnGetResponse(ServiceRequestInfo info)
 		{
+			if (!IsIntegratorActive) {
+				return;
+			}
 			var responseJObj = JObject.Parse(info.ResponseData);
 			switch(info.Method) {
 				case TRequstMethod.GET:
@@ -97,7 +136,7 @@ namespace Terrasoft.TsConfiguration
 						IEnumerable<JObject> resultObjects;
 						if (string.IsNullOrEmpty(info.ServiceObjectId))
 						{
-							IntegrationConsole.SetCurrentResponseSucces(responseJObj["total"].Value<int>(), responseJObj["skip"].Value<int>(), responseJObj["limit"].Value<int>());
+							//IntegrationConsole.SetCurrentResponseSucces(responseJObj["total"].Value<int>(), responseJObj["skip"].Value<int>(), responseJObj["limit"].Value<int>());
 							var objArray = responseJObj["data"] as JArray;
 							resultObjects = objArray.Select(x => x as JObject);
 						}
@@ -131,6 +170,9 @@ namespace Terrasoft.TsConfiguration
 		}
 
 		public virtual void IntegrateBpmEntity(Entity entity, EntityHandler defHandler = null) {
+			if(!IsIntegratorActive) {
+				return;
+			}
 			var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
 			var handlers = defHandler == null ? entityHelper.GetAllIntegrationHandler(integrationInfo) : new List<EntityHandler>() { defHandler };
 			foreach(var handler in handlers) {
@@ -147,6 +189,9 @@ namespace Terrasoft.TsConfiguration
 		}
 
 		public virtual void IntegrateServiceEntity(JObject serviceEntity, string serviceObjectName) {
+			if (!IsIntegratorActive) {
+				return;
+			}
 			var integrationInfo = CsConstant.IntegrationInfo.CreateForImport(userConnection, CsConstant.IntegrationActionName.Create, serviceObjectName, serviceEntity);
 			entityHelper.IntegrateEntity(integrationInfo);
 			if (integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Exception)

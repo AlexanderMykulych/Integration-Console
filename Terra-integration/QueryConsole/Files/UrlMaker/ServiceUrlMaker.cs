@@ -19,7 +19,7 @@ namespace Terrasoft.TsConfiguration
 		}
 		public virtual string Make(ServiceRequestInfo info)
 		{
-			return Make(info.Type, info.ServiceObjectName, info.ServiceObjectId, info.Filters, info.Method, info.Limit, info.Skip); ;
+			return Make(info.Type, info.ServiceObjectName, info.ServiceObjectId, info.Filters, info.Method, info.Limit, info.Skip);
 		}
 
 		public static string MakeUrl(string baseUrl, string objectName, string objectId, string filters, TRequstMethod method, string limit, string skip) {

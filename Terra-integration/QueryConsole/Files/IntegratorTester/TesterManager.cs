@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
-using Terrasoft.TempConfiguration;
 
 namespace Terrasoft.TsConfiguration {
 	public class TesterManager: IEnumerable {
@@ -22,7 +21,7 @@ namespace Terrasoft.TsConfiguration {
 
 		public void Add(string Name, int limit, int skip, int count = -1, int id = 0)
 		{
-			IntegrationConsole.AddEntityProgress(Name, limit * count);
+			//IntegrationConsole.AddEntityProgress(Name, limit * count);
 			if (count == -1)
 			{
 				Configs.Add(new Tuple<string, int, int, int>(Name, limit, skip, id));
@@ -47,13 +46,13 @@ namespace Terrasoft.TsConfiguration {
 				var j = i;
 				if(i == Configs.Count - 1) {
 					Actions.Add(() => {
-						IntegrationConsole.SetCurrentEntity(name);
+						//IntegrationConsole.SetCurrentEntity(name);
 						var tester = GetTesterByEntityName(name);
 						tester.Limit = limit;
 						tester.Skip = skip;
 						Action afterSaveAction = () =>
 						{
-							IntegrationConsole.EndIntegrated();
+							//IntegrationConsole.EndIntegrated();
 						};
 						if (id == 0)
 						{
@@ -64,7 +63,7 @@ namespace Terrasoft.TsConfiguration {
 					});
 				} else {
 					Actions.Add(() => {
-						IntegrationConsole.SetCurrentEntity(name);
+						//IntegrationConsole.SetCurrentEntity(name);
 						var tester = GetTesterByEntityName(name);
 						tester.Limit = limit;
 						tester.Skip = skip;
@@ -81,7 +80,7 @@ namespace Terrasoft.TsConfiguration {
 
 		public void Run() {
 			GenerateActions();
-			IntegrationConsole.StartIntegrate();
+			//IntegrationConsole.StartIntegrate();
 			Actions.Last()();
 		}
 

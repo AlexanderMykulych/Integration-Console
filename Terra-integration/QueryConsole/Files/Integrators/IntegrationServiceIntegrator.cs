@@ -8,88 +8,106 @@ using Terrasoft.Core;
 using Terrasoft.TsConfiguration;
 using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;
 
-namespace Terrasoft.TsConfiguration
-{
-	public class IntegrationServiceIntegrator
-	{
-				private UserConnection _userConnection;
+namespace Terrasoft.TsConfiguration {
+	public class IntegrationServiceIntegrator {
+		private UserConnection _userConnection;
 		private List<string> ReadedNotificationIds = new List<string>();
 		private IntegratorHelper _integratorHelper = new IntegratorHelper();
 		private IntegrationEntityHelper _integrationEntityHelper;
-		private string _basePostboxUrl = @"http://api.integration.bus.stage2.auto3n.ru/v2/entity";
-		private string _baseClientServiceUrl = @"http://api.integration.bus.stage2.auto3n.ru/v2/entity/AUTO3N";
-		private int _postboxId = 10004;
-		private int _notifyLimit = 10;
-		private bool _isImportAllow = true;
-		 
-
-				public UserConnection UserConnection
-		{
-			get { return _userConnection; }
+		private string _basePostboxUrl {
+			get {
+				return Settings.BaseUrl[TServiceObject.Entity];
+			}
 		}
-		public IntegrationEntityHelper IntegrationEntityHelper
-		{
-			get
-			{
+		private string _baseClientServiceUrl;
+		private int _postboxId {
+			get {
+				return Settings.PostboxId;
+			}
+		}
+		private int _notifyLimit {
+			get {
+				return Settings.NotifyLimit;
+			}
+		}
+		private bool _isIntegratorActive {
+			get {
+				return Settings.IsIntegratorActive;
+			}
+		}
+		private string _auth {
+			get {
+				return Settings.Auth;
+			}
+		}
+		private CsConstant.IntegratorSettings.IntegratorIntegrationServiceSetting _Settings;
+		public CsConstant.IntegratorSettings.IntegratorIntegrationServiceSetting Settings {
+			get {
+				if (_Settings == null) {
+					_Settings = (CsConstant.IntegratorSettings.IntegratorIntegrationServiceSetting)CsConstant.IntegratorSettings.Settings[this.GetType()];
+				}
+				return _Settings;
+			}
+		}
+
+		public UserConnection UserConnection {
+			get {
+				return _userConnection;
+			}
+		}
+		public IntegrationEntityHelper IntegrationEntityHelper {
+			get {
 				return _integrationEntityHelper;
 			}
 		}
-		 
 
-				public IntegrationServiceIntegrator(UserConnection userConnection)
-		{
+
+		public IntegrationServiceIntegrator(UserConnection userConnection) {
 			_userConnection = userConnection;
-			//_postboxId = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.TerrasoftPostboxId, _postboxId);
-			//_basePostboxUrl = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.IntegrationServiceBaseUrl, _basePostboxUrl);
-			//_baseClientServiceUrl = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.ClientServiceBaseUrl, _basePostboxUrl);
-			_notifyLimit = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.NotificationLimit, _notifyLimit);
-			_isImportAllow = Terrasoft.Core.Configuration.SysSettings.GetValue(UserConnection, CsConstant.SysSettingsCode.AllowImport, _isImportAllow);
 			_integrationEntityHelper = new IntegrationEntityHelper();
 		}
-		 
 
-				/// <summary>
+
+		/// <summary>
 		/// Получает BusEventNotification, после чего вызывает OnBusEventNotificationsDataRecived
 		/// </summary>
 		/// <param name="withData"></param>
-		public void GetBusEventNotification(bool withData = true)
-		{
+		public void GetBusEventNotification(bool withData = true) {
+			if(!_isIntegratorActive) {
+				return;
+			}
 			var url = GenerateUrl(
 				withData == true ? TIntegratorRequest.BusEventNotificationData : TIntegratorRequest.BusEventNotification,
 				TRequstMethod.GET,
 				"0",
-				"20",//_notifyLimit.ToString(),
+				_notifyLimit.ToString(),
 				CsConstant.DefaultBusEventFilters,
 				CsConstant.DefaultBusEventSorts
 			);
 
-			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y, requestId) =>
-			{
+			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y, requestId) => {
 				var responceObj = x.DeserializeJson();
 				var busEventNotifications = (JArray)responceObj["data"];
 				//var total = (responceObj["total"] as JToken).Value<int>();
-				if (busEventNotifications != null)
-				{
+				if (busEventNotifications != null) {
 					OnBusEventNotificationsDataRecived(busEventNotifications, y);
 				}
 			});
 		}
 
 		public void IniciateLoadChanges() {
-			
+
 		}
 		/// <summary>
 		/// Всем нотификейшенам в ReadedNotificationIds ставит статус "Прочитано"
 		/// </summary>
-		public void SetNotifyRead()
-		{
+		public void SetNotifyRead() {
 			var url = GenerateUrl(
 				TIntegratorRequest.BusEventNotification,
 				TRequstMethod.PUT
 			);
 
-			var json = ReadedNotificationIds.Select(x => new
-			{
+			var json = ReadedNotificationIds.Select(x => new {
 				isRead = true,
 				id = x
 			}).SerializeToJson();
@@ -102,8 +120,7 @@ namespace Terrasoft.TsConfiguration
 		/// Сохраняет нотификейшен, чтобы потом скопом поставить признак прочитано
 		/// </summary>
 		/// <param name="notifyId"></param>
-		public void AddReadId(string notifyId)
-		{
+		public void AddReadId(string notifyId) {
 			ReadedNotificationIds.Add(notifyId);
 		}
 
@@ -111,21 +128,18 @@ namespace Terrasoft.TsConfiguration
 		/// Делает запрос в clientservice и если версия объекта в нем больше за версию в integrationservice, то обновляет объектом из clientservice
 		/// </summary>
 		/// <param name="integrationInfo"></param>
-		public void CreatedOnEntityExist(IntegrationInfo integrationInfo)
-		{
+		public void CreatedOnEntityExist(IntegrationInfo integrationInfo) {
 			string jName = integrationInfo.EntityName;
 			var data = integrationInfo.Data[jName];
 			int version = data.Value<int>("version");
 			int jId = data.Value<int>("id");
 			string url = string.Format("{0}/{1}/{2}", _baseClientServiceUrl, jName, jId);
 
-			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y, requestId) =>
-			{
+			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y, requestId) => {
 				var responceObj = JObject.Parse(x);
 				var csData = responceObj[jName] as JObject;
 				var csVersion = csData.Value<int>("version");
-				if (csVersion > version)
-				{
+				if (csVersion > version) {
 					integrationInfo.Data = responceObj;
 					integrationInfo.EntityName = jName;
 					integrationInfo.Action = CsConstant.IntegrationActionName.Update;
@@ -139,23 +153,18 @@ namespace Terrasoft.TsConfiguration
 		/// </summary>
 		/// <param name="busEventNotifications"></param>
 		/// <param name="userConnection"></param>
-		public void OnBusEventNotificationsDataRecived(JArray busEventNotifications, UserConnection userConnection)
-		{
-			foreach (JObject busEventNotify in busEventNotifications)
-			{
+		public void OnBusEventNotificationsDataRecived(JArray busEventNotifications, UserConnection userConnection) {
+			foreach (JObject busEventNotify in busEventNotifications) {
 				var busEvent = busEventNotify[CsConstant.IntegrationEventName.BusEventNotify] as JObject;
-				if (busEvent != null)
-				{
+				if (busEvent != null) {
 					var data = busEvent["data"] as JObject;
 					var objectType = busEvent["objectType"].ToString();
 					var action = busEvent["action"].ToString();
 					var notifyId = busEvent["id"].ToString();
-					if (!string.IsNullOrEmpty(objectType) && data != null)
-					{
+					if (!string.IsNullOrEmpty(objectType) && data != null) {
 						var integrationInfo = new IntegrationInfo(data, userConnection, CsConstant.TIntegrationType.Import, null, objectType, action, null);
 						_integrationEntityHelper.IntegrateEntity(integrationInfo);
-						if (integrationInfo.Result != null && integrationInfo.Result.Exception == CsConstant.IntegrationResult.TResultException.OnCreateEntityExist)
-						{
+						if (integrationInfo.Result != null && integrationInfo.Result.Exception == CsConstant.IntegrationResult.TResultException.OnCreateEntityExist) {
 							CreatedOnEntityExist(integrationInfo);
 						}
 					}
@@ -175,101 +184,89 @@ namespace Terrasoft.TsConfiguration
 		/// <param name="filters">Фильтры</param>
 		/// <param name="sorts">Сортировки</param>
 		/// <returns></returns>
-		public string GenerateUrl(TIntegratorRequest integratorRequestType, TRequstMethod requstMethod, string skip = null, string limit = null, Dictionary<string, string> filters = null, Dictionary<string, string> sorts = null)
-		{
+		public string GenerateUrl(TIntegratorRequest integratorRequestType, TRequstMethod requstMethod, string skip = null, string limit = null, Dictionary<string, string> filters = null, Dictionary<string, string> sorts = null) {
 			string result = _basePostboxUrl;
 			string filtersStr = "";
 			string sortStr = "";
 			string skipStr = "";
 			string limitStr = "";
 			//createdAt
-						switch (requstMethod)
-			{
+			switch (requstMethod) {
 				case TRequstMethod.GET:
 				case TRequstMethod.PUT:
 
-					break;
+				break;
 				default:
-					throw new NotImplementedException();
+				throw new NotImplementedException();
 			}
-			 
 
-						switch (integratorRequestType)
-			{
+
+			switch (integratorRequestType) {
 				case TIntegratorRequest.BusEventNotification:
-					result += GenerateRouteToRequest("Postbox", _postboxId, "BusEventNotification");
-					break;
+				result += GenerateRouteToRequest("Postbox", _postboxId, "BusEventNotification");
+				break;
 				case TIntegratorRequest.BusEventNotificationData:
-					result += GenerateRouteToRequest("Postbox", _postboxId, "BusEventNotificationData");
-					break;
+				result += GenerateRouteToRequest("Postbox", _postboxId, "BusEventNotificationData");
+				break;
 				case TIntegratorRequest.Postbox:
-					result += GenerateRouteToRequest("Postbox");
-					break;
+				result += GenerateRouteToRequest("Postbox");
+				break;
 			}
-			 
 
-						if (!string.IsNullOrEmpty(skip))
+
+			if (!string.IsNullOrEmpty(skip))
 				skipStr = string.Format("skip={0}", skip);
-			 
 
-						if (!string.IsNullOrEmpty(limit))
+
+			if (!string.IsNullOrEmpty(limit))
 				limitStr = string.Format("limit={0}", limit);
-			 
 
-						if (filters != null && filters.Any())
-			{
-				foreach (var filter in filters)
-				{
+
+			if (filters != null && filters.Any()) {
+				foreach (var filter in filters) {
 					filtersStr += string.Format("filter[{0}]={1}&", filter.Key, filter.Value);
 				}
 				filtersStr = filtersStr.Remove(filtersStr.Length - 1);
 			}
-			 
 
-						if (sorts != null && sorts.Any())
-			{
-				foreach (var sort in sorts)
-				{
+
+			if (sorts != null && sorts.Any()) {
+				foreach (var sort in sorts) {
 					sortStr += string.Format("sort[{0}]={1}&", sort.Key, sort.Value);
 				}
 				sortStr = sortStr.Remove(sortStr.Length - 1);
 			}
-			 
 
-						string paramStr = GenerateParamRoRequest(skipStr, limitStr, filtersStr, sortStr);
-			if (!string.IsNullOrEmpty(paramStr))
-			{
+
+			string paramStr = GenerateParamRoRequest(skipStr, limitStr, filtersStr, sortStr);
+			if (!string.IsNullOrEmpty(paramStr)) {
 				result += string.Format("?{0}", paramStr);
 			}
-			 
+
 			return result;
 		}
-		 
 
-				private string GenerateRouteToRequest(params object[] routes)
-		{
+
+		private string GenerateRouteToRequest(params object[] routes) {
 			return "/" + routes.Aggregate((cur, next) => cur.ToString() + "/" + next.ToString()).ToString();
 		}
-		private string GenerateParamRoRequest(params string[] param)
-		{
+		private string GenerateParamRoRequest(params string[] param) {
 			var collection = param.Where(x => !string.IsNullOrEmpty(x));
 			return collection.Any() ? collection.Aggregate((cur, next) => cur + "&" + next) : "";
 		}
-		private void PushRequestWrapper(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback)
-		{
-			if (_isImportAllow)
-			{
-				_integratorHelper.PushRequest(requestMethod, url, jsonText, callback, UserConnection, null, null, "Basic YnBtb25saW5lOmJwbW9ubGluZQ==");
+		private void PushRequestWrapper(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback) {
+			if (!_isIntegratorActive) {
+				return;
 			}
+			_integratorHelper.PushRequest(requestMethod, url, jsonText, callback, UserConnection, null, null, _auth);
 		}
-		 
 
-				public enum TIntegratorRequest
-		{
+
+		public enum TIntegratorRequest {
 			BusEventNotificationData,
 			BusEventNotification,
 			Postbox
 		}
-		 
+
 	}
 }
