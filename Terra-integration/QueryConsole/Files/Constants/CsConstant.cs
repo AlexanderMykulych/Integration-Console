@@ -317,13 +317,13 @@ namespace Terrasoft.TsConfiguration {
 				{
 					typeof(OrderServiceIntegrator),
 					new IntegratorSetting() {
-						Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==",
+						Auth = "Basic YnBtb25saW5lMjoxMjM0NTY=",
 						Name = "OrderService",
 						BaseUrl = new Dictionary<TServiceObject, string>() {
 							//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
-							//{ TServiceObject.Entity, "http://api.order-service.bus2.auto3n.ru/v2/entity/AUTO3N" }
+							{ TServiceObject.Entity, "http://api.order-service.stage2.laximo.ru/v2/entity/AUTO3N" }
 							//{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
-							{ TServiceObject.Entity, @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
+							//{ TServiceObject.Entity, @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
 				
 						},
 						IsIntegratorActive = false

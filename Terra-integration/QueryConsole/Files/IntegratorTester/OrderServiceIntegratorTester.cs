@@ -21,6 +21,7 @@ namespace Terrasoft.TsConfiguration
 			return new List<string>() {
 				//"TsPayment",
 				//"Order",
+				"Account",
 				//"OrderProduct",
 				//"TsReturn",
 				//"TsShipment",

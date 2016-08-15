@@ -47,9 +47,9 @@ namespace Terrasoft.TsConfiguration
 			//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Name", "Наша компания"));
 			///*esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("a37*/d31d9-4b81-4c40-925c-1b1d658e926d")));
 			//if(name == "Contact") {
-			//	esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("A37D31D9-4B81-4C40-925C-1B1D658E926D")));
+			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("3aa33fe9-1685-4ad5-8a3e-d5f8aabc280d")));
 			//}
-			if(name == "ContactCareer") {
+			if (name == "ContactCareer") {
 				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("6D20D35D-82B9-4CFD-9D18-670003D79AB7")));
 			}
 			if (withoutIntegrated) {
@@ -57,14 +57,18 @@ namespace Terrasoft.TsConfiguration
 			}
 			if(name == "SysAdminUnit") {
 				//Manager Group
-				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Less, "SysAdminUnitTypeValue", 4));
+				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.NotEqual, "SysAdminUnitTypeValue", 4));
 				////Lrs Moskov
 				////esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("735379a1-301a-411a-aa98-2e65651961ac")));
 				////Sp
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("220f42be-85d4-48b6-8fa1-1fa3c992fc64")));
+				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("220f42be-85d4-48b6-8fa1-1fa3c992fc64")));
 
 				//Manager
 				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "SysAdminUnitTypeValue", 4));
+			}
+			if(name=="Contact") {
+				//
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("3C65F32F-AAC7-4815-90C7-02882E859E16")));
 			}
 			return esq.GetEntityCollection(UserConnection);
 		}

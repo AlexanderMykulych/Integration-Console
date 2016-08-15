@@ -80,7 +80,11 @@ namespace Terrasoft.TsConfiguration {
 				withData == true ? TIntegratorRequest.BusEventNotificationData : TIntegratorRequest.BusEventNotification,
 				TRequstMethod.GET,
 				"0",
+<<<<<<< .mine
 				_notifyLimit.ToString(),
+=======
+				"1",//_notifyLimit.ToString(),
+>>>>>>> .theirs
 				CsConstant.DefaultBusEventFilters,
 				CsConstant.DefaultBusEventSorts
 			);
@@ -133,13 +137,14 @@ namespace Terrasoft.TsConfiguration {
 			var data = integrationInfo.Data[jName];
 			int version = data.Value<int>("version");
 			int jId = data.Value<int>("id");
-			string url = string.Format("{0}/{1}/{2}", _baseClientServiceUrl, jName, jId);
+			string url = string.Format("{0}/AUTO3N/{1}/{2}", _baseClientServiceUrl, jName, jId);
 
 			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y, requestId) => {
 				var responceObj = JObject.Parse(x);
 				var csData = responceObj[jName] as JObject;
 				var csVersion = csData.Value<int>("version");
-				if (csVersion > version) {
+				if (csVersion >= version)
+				{
 					integrationInfo.Data = responceObj;
 					integrationInfo.EntityName = jName;
 					integrationInfo.Action = CsConstant.IntegrationActionName.Update;
@@ -160,20 +165,26 @@ namespace Terrasoft.TsConfiguration {
 					var data = busEvent["data"] as JObject;
 					var objectType = busEvent["objectType"].ToString();
 					var action = busEvent["action"].ToString();
-					var notifyId = busEvent["id"].ToString();
-					if (!string.IsNullOrEmpty(objectType) && data != null) {
-						var integrationInfo = new IntegrationInfo(data, userConnection, CsConstant.TIntegrationType.Import, null, objectType, action, null);
-						_integrationEntityHelper.IntegrateEntity(integrationInfo);
-						if (integrationInfo.Result != null && integrationInfo.Result.Exception == CsConstant.IntegrationResult.TResultException.OnCreateEntityExist) {
-							CreatedOnEntityExist(integrationInfo);
-						}
+					var system = busEvent["system"].ToString();
+					var notifyId = busEvent["id"].ToString(); 
+					if (!string.IsNullOrEmpty(objectType) && data != null)
+					{
+						IntegrateServiceEntity(data, objectType);
 					}
 					AddReadId(notifyId);
 				}
 			}
 			SetNotifyRead();
 		}
-
+		public virtual void IntegrateServiceEntity(JObject serviceEntity, string serviceObjectName)
+		{
+			var integrationInfo = CsConstant.IntegrationInfo.CreateForImport(UserConnection, CsConstant.IntegrationActionName.Create, serviceObjectName, serviceEntity);
+			IntegrationEntityHelper.IntegrateEntity(integrationInfo);
+			if (integrationInfo.Result != null && integrationInfo.Result.Exception == CsConstant.IntegrationResult.TResultException.OnCreateEntityExist)
+			{
+				CreatedOnEntityExist(integrationInfo);
+			}
+		}
 		/// <summary>
 		/// Генерирует Url в integrationservice
 		/// </summary>

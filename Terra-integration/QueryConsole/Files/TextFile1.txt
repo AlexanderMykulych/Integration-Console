@@ -29,8 +29,7 @@
 	//		return "";
 	//	}
 
-	//	#region Contact
-	//	public static string ToJsonContact(this Entity contact, TRequstMethod method) {
+	//		//	public static string ToJsonContact(this Entity contact, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [Contact.ToJson] start with parametr: method = {0}", method.ToString());
 	//		var personProfile = new ExpandoObject() as IDictionary<string, object>;
 	//		EntitySetter(contact, personProfile, new Dictionary<string, string>() {
@@ -185,10 +184,9 @@
 	//		IntegrationUtilities.Info("Method [Contact.GetContactAnniversaryDateJson] finish");
 	//		return resultList.Any() ? resultList : null;
 	//	}
-	//	#endregion
+	//	 
 
-	//	#region Account
-	//	public static string ToJson(this Account account, TRequstMethod method) {
+	//		//	public static string ToJson(this Account account, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [Acount.ToJson] start");
 	//		var companyProfile = new ExpandoObject() as IDictionary<string, object>;
 	//		var primaryContact = GetContactEntity(account.UserConnection, account.PrimaryContactId);
@@ -337,10 +335,9 @@
 		//	});
 		//}
 
-	//	#endregion
+	//	 
 
-	//	#region TsAutomobile
-	//	public static string ToJson(this TsAutomobile automobile, TRequstMethod method) {
+	//		//	public static string ToJson(this TsAutomobile automobile, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [TsAutomobile.GetAccountRelationshipObj] start with parametrs: method = {0}", method.ToString());
 	//		var vehicleProfile = new ExpandoObject() as IDictionary<string, object>;
 	//		vehicleProfile.Add("vin", automobile.TsVehVin);
@@ -440,10 +437,9 @@
 	//			FiltBrand = automobile.TsFilterBrandInfo
 	//		};
 	//	}
-	//	#endregion
+	//	 
 
-	//	#region VehicleRelationship TsAutoTechService
-	//	public static string ToJson(this TsAutoTechService autoServ, TRequstMethod method) {
+	//		//	public static string ToJson(this TsAutoTechService autoServ, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [VehicleRelationship.ToJson] start with params: method = {0}", method.ToString());
 	//		var vehicleRelationship = new ExpandoObject() as IDictionary<string, object>;
 	//		vehicleRelationship.Add("casual", false);
@@ -459,10 +455,9 @@
 	//		IntegrationUtilities.Info("Method [VehicleRelationship.ToJson] finish with params: result json = {0}", resultJson);
 	//		return resultJson;
 	//	}
-	//	#endregion
+	//	 
 
-	//	#region TsAutoOwnerHistory
-	//	public static string ToJson(this TsAutoOwnerHistory history, TRequstMethod method) {
+	//		//	public static string ToJson(this TsAutoOwnerHistory history, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [TsAutoOwnerHistory.ToJson] start with params: method = {0}", method.ToString());
 	//		var vehicleRelationship = new ExpandoObject() as IDictionary<string, object>;
 	//		vehicleRelationship.Add("casual", false);
@@ -497,9 +492,8 @@
 	//		IntegrationUtilities.Info("Method [TsAutoOwnerHistory.GetHistoryTypeRef] finish witout result");
 	//		return null;
 	//	}
-	//	#endregion
-	//	#region TsAutoOwnerInfo
-	//	public static string ToJson(this TsAutoOwnerInfo history, TRequstMethod method) {
+	//	 
+	//		//	public static string ToJson(this TsAutoOwnerInfo history, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [TsAutoOwnerInfo.ToJson] start with param: method = {0}", method.ToString());
 	//		var vehicleRelationship = new ExpandoObject() as IDictionary<string, object>;
 	//		vehicleRelationship.Add("casual", false);
@@ -532,9 +526,8 @@
 	//		IntegrationUtilities.Info("Method [TsAutoOwnerInfo.GetHistoryTypeRef] finish without result");
 	//		return null;
 	//	}
-	//	#endregion
-	//	#region TsAutoTechHistory
-	//	public static string ToJson(this TsAutoTechHistory history, TRequstMethod method) {
+	//	 
+	//		//	public static string ToJson(this TsAutoTechHistory history, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [TsAutoTechHistory.ToJson] start with param: method = {0}", method.ToString());
 	//		var vehicleRelationship = new ExpandoObject() as IDictionary<string, object>;
 	//		vehicleRelationship.Add("casual", false);
@@ -569,9 +562,8 @@
 	//		IntegrationUtilities.Info("Method [TsAutoTechHistory.GetHistoryTypeRef] finish without result");
 	//		return null;
 	//	}
-	//	#endregion
-	//	#region Case
-	//	public static string ToJson(this Case caseReq, TRequstMethod method) {
+	//	 
+	//		//	public static string ToJson(this Case caseReq, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [Case.ToJson] start with param");
 	//		var clientRequest = new ExpandoObject() as IDictionary<string, object>;
 	//		clientRequest.Add("number", caseReq.Number);
@@ -613,10 +605,9 @@
 	//		return CsReference.Create(externalId, CsConstant.AccountEntityName);
 	//	}
 
-	//	#endregion
+	//	 
 
-	//	#region SysAdminUnit
-	//	public static string ToJson(this SysAdminUnit adminUnit, TRequstMethod method) {
+	//		//	public static string ToJson(this SysAdminUnit adminUnit, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [SysAdminUnit.ToJson] start");
 	//		if((int)adminUnit.SysAdminUnitTypeValue == (int)CsConstant.TSysAdminUnitType.User) {
 	//			return GetManagerObj(adminUnit, method).SerializeToJson();
@@ -627,8 +618,7 @@
 	//		IntegrationUtilities.Info("Method [SysAdminUnit.ToJson] finish without result");
 	//		return String.Empty;
 	//	}
-	//	#region Manager
-	//	public static object GetManagerObj(this SysAdminUnit adminUnit, TRequstMethod method) {
+	//		//	public static object GetManagerObj(this SysAdminUnit adminUnit, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [Manager.ToJson] start with param: method = {0}", method.ToString());
 	//		var manager = new ExpandoObject() as IDictionary<string, object>;
 	//		manager.Add("chief", adminUnit.GetManagerChiefRef());
@@ -643,10 +633,9 @@
 	//		IntegrationUtilities.Info("Method [Manager.GetManagerChiefRef] finish");
 	//		return null;
 	//	}
-	//	#endregion
+	//	 
 
-	//	#region GroupManager
-	//	public static object GetManagerGroupObj(this SysAdminUnit adminUnit, TRequstMethod method) {
+	//		//	public static object GetManagerGroupObj(this SysAdminUnit adminUnit, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [GroupManager.GetManagerGroupObj] start with param: method = {0}", method);
 	//		var managerGroup = new ExpandoObject() as IDictionary<string, object>;
 	//		managerGroup.Add("name", adminUnit.Name);
@@ -695,12 +684,11 @@
 	//		IntegrationUtilities.Info("Method [GroupManager.GetManagerGroupWorkers] finish with result");
 	//		return resultList.Any() ? resultList : null;
 	//	}
-	//	#endregion
+	//	 
 
-	//	#endregion
+	//	 
 
-	//	#region Relationship
-	//	public static string ToJson(this Relationship relationship, TRequstMethod method) {
+	//		//	public static string ToJson(this Relationship relationship, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [GroupManager.GetManagerGroupWorkers] finish with result");
 	//		var select = GetRelationshipSelect(relationship);
 	//		select.RowCount = 1;
@@ -755,10 +743,9 @@
 	//						.LeftOuterJoin("Account").As("ab").On("ab", "Id").IsEqual("r", "AccountBId")
 	//						.Where("r", "Id").IsEqual(Column.Parameter(relationship.Id)) as Select;
 	//	}
-	//	#endregion
+	//	 
 
-	//	#region Employee
-	//	public static string ToJson(this ContactCareer career, TRequstMethod method) {
+	//		//	public static string ToJson(this ContactCareer career, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [Employee.ToJson] start with param: method = {0}", method.ToString());
 	//		var employee = new ExpandoObject() as IDictionary<string, object>;
 	//		employee.Add("job", career.JobName);
@@ -777,10 +764,9 @@
 	//		IntegrationUtilities.Info("Method [Employee.ToJson] finish with result: result json = {0}", resultJson);
 	//		return resultJson;
 	//	}
-	//	#endregion
+	//	 
 
-	//	#region TsContactNotifications
-	//	public static string ToJson(this TsContactNotifications notify, TRequstMethod method) {
+	//		//	public static string ToJson(this TsContactNotifications notify, TRequstMethod method) {
 	//		IntegrationUtilities.Info("Method [TsContactNotifications.ToJson] start with param: method = {0}", method.ToString());
 	//		var noficationProfile = new ExpandoObject() as IDictionary<string, object>;
 	//		noficationProfile.Add("person", CsReference.Create(GetContactExtId(notify.UserConnection, notify.TsContactId), CsConstant.ContactEntityName));
@@ -798,20 +784,18 @@
 	//		return resultJson;
 	//	}
 
-	//	#endregion
+	//	 
 
-	//	#region dictionary
-	//	public static string ToDictJson(this Entity dict, TRequstMethod method, string entityName) {
+	//		//	public static string ToDictJson(this Entity dict, TRequstMethod method, string entityName) {
 	//		var result = new ExpandoObject() as IDictionary<string, object>;
 	//		result.Add(entityName, new {
 	//			name = dict.GetTypedColumnValue<string>("Name")
 	//		});
 	//		return result.SerializeToJson();
 	//	}
-	//	#endregion
+	//	 
 
-	//	#region Helper
-	//	public static int GetContactExtId(UserConnection userConnection, Guid contactId) {
+	//		//	public static int GetContactExtId(UserConnection userConnection, Guid contactId) {
 	//		IntegrationUtilities.Info("Method [GetContactExtId] start with param: contactId = {0}", contactId.ToString());
 	//		if(contactId == Guid.Empty)
 	//			return 0;
@@ -902,5 +886,5 @@
 	//			destinationDict.Add(mapConfig.Key, sourceEntity.GetColumnValue(mapConfig.Value));
 	//		}
 	//	}
-	//	#endregion
+	//	 
 	//}

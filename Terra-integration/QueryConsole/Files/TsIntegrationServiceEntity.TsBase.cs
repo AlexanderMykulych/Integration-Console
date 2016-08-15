@@ -390,7 +390,7 @@ namespace Terrasoft.TsConfiguration
 			{
 				if (integrationInfo.ParentEntity != null)
 				{
-					integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+					integrationInfo.Data[JName]["parentId"] = JToken.FromObject(integrationInfo.ParentEntity.GetTypedColumnValue<Guid>("Id").ToString());
 				}
 			}
 		}
@@ -399,14 +399,14 @@ namespace Terrasoft.TsConfiguration
 		{
 			if (integrationInfo.ParentEntity != null)
 			{
-				integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+				integrationInfo.Data[JName]["parentId"] = JToken.FromObject(integrationInfo.ParentEntity.GetTypedColumnValue<Guid>("Id").ToString());
 				string externalIdPath = integrationInfo.TsExternalIdPath;
 				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
 				esq.AddAllSchemaColumns();
 				var columnExt = esq.AddColumn("TsExternalId");
 				columnExt.OrderByDesc();
 				esq.RowCount = 1;
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "TsContact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "TsAccount", integrationInfo.Data[JName].Value<string>("parentId")));
 				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
 					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
 					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
@@ -420,13 +420,13 @@ namespace Terrasoft.TsConfiguration
 		{
 			if (integrationInfo.ParentEntity != null)
 			{
-				integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+				integrationInfo.Data[JName]["parentId"] = JToken.FromObject(integrationInfo.ParentEntity.GetTypedColumnValue<Guid>("Id").ToString());
 				string externalIdPath = ExternalIdPath;
 				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
 				var columnExt = esq.AddColumn("TsExternalId");
 				columnExt.OrderByDesc();
 				esq.RowCount = 1;
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "TsContact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "TsAccount", integrationInfo.Data[JName].Value<string>("parentId")));
 				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
 					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
 					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
@@ -666,7 +666,7 @@ namespace Terrasoft.TsConfiguration
 		public AddressInfoAccountHandler()
 		{
 			Mapper = new MappingHelper();
-			EntityName = "ContactAddress";
+			EntityName = "AccountAddress";
 			JName = "AddressInfo";
 		}
 
@@ -674,7 +674,7 @@ namespace Terrasoft.TsConfiguration
 		{
 			get
 			{
-				return JName;
+				return "AddressInfoAccount";
 			}
 		}
 
@@ -684,51 +684,14 @@ namespace Terrasoft.TsConfiguration
 			{
 				if (integrationInfo.ParentEntity != null)
 				{
-					integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+					integrationInfo.Data[JName]["parentAccountId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
 				}
 			}
 		}
 
-		public override Entity GetEntityByExternalId(IntegrationInfo integrationInfo)
-		{
-			if (integrationInfo.ParentEntity != null)
-			{
-				integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
-				string externalIdPath = integrationInfo.TsExternalIdPath;
-				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
-				esq.AddAllSchemaColumns();
-				var columnExt = esq.AddColumn("TsExternalId");
-				columnExt.OrderByDesc();
-				esq.RowCount = 1;
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
-				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
-				};
-				esq.Filters.Add(group);
-				return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
-			}
-			return base.GetEntityByExternalId(integrationInfo);
-		}
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
-			if (integrationInfo.ParentEntity != null)
-			{
-				integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
-				string externalIdPath = ExternalIdPath;
-				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
-				var columnExt = esq.AddColumn("TsExternalId");
-				columnExt.OrderByDesc();
-				esq.RowCount = 1;
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
-				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
-				};
-				esq.Filters.Add(group);
-				return esq.GetEntityCollection(integrationInfo.UserConnection).Count > 0;
-			}
-			return base.IsEntityAlreadyExist(integrationInfo);
+			return false;
 		}
 	}
 
@@ -819,7 +782,7 @@ namespace Terrasoft.TsConfiguration
 		{
 			get
 			{
-				return JName;
+				return EntityName;
 			}
 		}
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
@@ -828,51 +791,13 @@ namespace Terrasoft.TsConfiguration
 			{
 				if (integrationInfo.ParentEntity != null)
 				{
-					integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+					integrationInfo.Data[JName]["parentAccountId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
 				}
 			}
 		}
-
-		public override Entity GetEntityByExternalId(IntegrationInfo integrationInfo)
-		{
-			if (integrationInfo.ParentEntity != null)
-			{
-				integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
-				string externalIdPath = integrationInfo.TsExternalIdPath;
-				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
-				esq.AddAllSchemaColumns();
-				var columnExt = esq.AddColumn("TsExternalId");
-				columnExt.OrderByDesc();
-				esq.RowCount = 1;
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
-				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
-				};
-				esq.Filters.Add(group);
-				return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
-			}
-			return base.GetEntityByExternalId(integrationInfo);
-		}
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
-			if (integrationInfo.ParentEntity != null)
-			{
-				integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
-				string externalIdPath = ExternalIdPath;
-				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
-				var columnExt = esq.AddColumn("TsExternalId");
-				columnExt.OrderByDesc();
-				esq.RowCount = 1;
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
-				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
-				};
-				esq.Filters.Add(group);
-				return esq.GetEntityCollection(integrationInfo.UserConnection).Count > 0;
-			}
-			return base.IsEntityAlreadyExist(integrationInfo);
+			return false;
 		}
 	}
 
@@ -925,7 +850,7 @@ namespace Terrasoft.TsConfiguration
 			result[JName]["capacity"] = JToken.FromObject(capacity);
 			result[JName]["population"] = JToken.FromObject(population);
 
-			ValidateType(integrationInfo, result);
+			//ValidateType(integrationInfo, result);
 			return result;
 		}
 		public void ValidateType(IntegrationInfo integrationInfo, JObject jObj) {
@@ -1828,7 +1753,7 @@ namespace Terrasoft.TsConfiguration
 	}
 
 	[ImportHandlerAttribute("Counteragent")]
-	[ExportHandlerAttribute("")]
+	[ExportHandlerAttribute("Account")]
 	public class CounteragentHandler : EntityHandler
 	{
 		public override string HandlerName
@@ -1860,7 +1785,7 @@ namespace Terrasoft.TsConfiguration
 			JName = "Counteragent";
 		}
 		public override bool IsExport(IntegrationInfo integrationInfo) {
-			return isAccountExported(integrationInfo) && isAccountContracted(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
+			return !isAccountExported(integrationInfo) && isAccountContracted(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
 		}
 
 		public bool isAccountContracted(Guid accountId, UserConnection userConnection) {
@@ -1896,7 +1821,7 @@ namespace Terrasoft.TsConfiguration
 	}
 	
 
-   [ImportHandlerAttribute("")]
+   [ImportHandlerAttribute("AccountAnniversary")]
 	[ExportHandlerAttribute("AccountAnniversary")]
 	public class AccountAnniversaryHandler : EntityHandler
 	{
@@ -1930,7 +1855,7 @@ namespace Terrasoft.TsConfiguration
 		{
 			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
 			{
-				integrationInfo.Data["contactId"] = integrationInfo.ParentEntity.GetTypedColumnValue<string>("Id");
+				integrationInfo.Data["accountId"] = integrationInfo.ParentEntity.GetTypedColumnValue<string>("Id");
 			}
 		}
 

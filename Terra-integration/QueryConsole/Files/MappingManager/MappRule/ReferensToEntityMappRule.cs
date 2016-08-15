@@ -22,7 +22,7 @@ namespace Terrasoft.TsConfiguration
 				var refColumns = info.json[JsonEntityHelper.RefName];
 				var externalId = int.Parse(refColumns["id"].ToString());
 				var type = refColumns["type"];
-				resultGuid = JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsExternalIdPath, externalId, info.config.TsDestinationPath).FirstOrDefault() as Guid?;
+				resultGuid = JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsExternalIdPath, externalId, info.config.TsDestinationPath, -1, "CreatedOn", Terrasoft.Common.OrderDirection.Descending, JsonEntityHelper.ParsToDictionary(info.config.TsTag, '|', ',')).FirstOrDefault() as Guid?;
 			}
 			info.entity.SetColumnValue(info.config.TsSourcePath, resultGuid);
 		}

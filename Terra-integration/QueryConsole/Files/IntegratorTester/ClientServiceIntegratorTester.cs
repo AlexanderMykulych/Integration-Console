@@ -32,7 +32,7 @@ namespace Terrasoft.TsConfiguration
 				//"TsContactNotifications",
 				//"TsAccountNotification",
 				//"ContactAddress",
-				"TsAutoTechService",
+				//"TsAutoTechService",
 				//"TsAutoOwnerHistory",
 				//"TsAutoOwnerInfo",
 				//"TsAutoTechHistory",
