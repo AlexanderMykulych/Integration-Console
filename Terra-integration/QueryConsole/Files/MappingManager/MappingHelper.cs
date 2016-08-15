@@ -141,7 +141,8 @@ namespace Terrasoft.TsConfiguration
 						var resultJ = GetJTokenByPath(integrationInfo.Data[jName], item.JSourcePath, item.MapIntegrationType);
 						if (jObjItem == null && item.EFieldRequier)
 							throw new ArgumentNullException("Field " + item.JSourcePath + " required!");
-						if(jObjItem == null && !item.SerializeIfNull) {
+						if (jObjItem == null && !item.SerializeIfNull)
+						{
 							resultJ.Parent.Remove();
 							continue;
 						}
@@ -232,14 +233,17 @@ namespace Terrasoft.TsConfiguration
 							break;
 					}
 				}
-			} catch(Exception e) {
+			}
+			catch (Exception e)
+			{
 				IntegrationLogger.MappingError(e, mapItem);
 			}
 		}
 
 		public void ExecuteOverRuleMacros(MappingItem mapItem, ref JToken jToken, IntegrationInfo integrationInfo)
 		{
-			if (mapItem.OverRuleMacros.IsNullOrEmpty() || jToken == null) {
+			if (mapItem.OverRuleMacros.IsNullOrEmpty() || jToken == null)
+			{
 				return;
 			}
 			switch (integrationInfo.IntegrationType)
@@ -256,7 +260,7 @@ namespace Terrasoft.TsConfiguration
 		public void CompositObject(MappingItem mappingItem, IntegrationInfo integrationInfo, ref JToken jToken)
 		{
 			try
-			{	
+			{
 				switch (integrationInfo.IntegrationType)
 				{
 					case TIntegrationType.Import:
@@ -289,7 +293,7 @@ namespace Terrasoft.TsConfiguration
 				throw;
 			}
 		}
-		
+
 
 		public List<JObject> GetCompositeJObjects(object colValue, string colName, string entityName, string handlerName, UserConnection userConnection, int maxCount = -1)
 		{
@@ -329,17 +333,20 @@ namespace Terrasoft.TsConfiguration
 
 		public bool CheckIsExist(string entityName, int externalId, string externalIdPath = "TsExternalId", int entityExternalId = 0)
 		{
-			if(entityExternalId != 0) {
+			if (entityExternalId != 0)
+			{
 				return true;
 			}
-			if (externalId == 0) {
+			if (externalId == 0)
+			{
 				return false;
 			}
 			var select = new Select(UserConnection)
 							.Column(Func.Count(CsConstant.ServiceColumnInBpm.Identifier)).As("Count")
 							.From(entityName)
 							.Where(externalIdPath).IsEqual(Column.Parameter(externalId)) as Select;
-			using(DBExecutor dbExecutor = UserConnection.EnsureDBConnection()) {
+			using (DBExecutor dbExecutor = UserConnection.EnsureDBConnection())
+			{
 				using (IDataReader reader = select.ExecuteReader(dbExecutor))
 				{
 					while (reader.Read())
@@ -362,7 +369,7 @@ namespace Terrasoft.TsConfiguration
 					switch (entity.StoringState)
 					{
 						case StoringObjectState.New:
-						if (entity.PrimaryColumnValue == Guid.Empty)
+							if (entity.PrimaryColumnValue == Guid.Empty)
 							{
 								result = entity.Save(false);
 							}
@@ -400,7 +407,7 @@ namespace Terrasoft.TsConfiguration
 			var endWithId = columnName.EndsWith("Id");
 			return withId ? (endWithId ? columnName : columnName + "Id") : (endWithId ? columnName.Substring(0, columnName.Length - 2) : columnName);
 		}
-		
+
 		private bool IsAllNotNullAndEmpty(params object[] values)
 		{
 			foreach (var value in values)

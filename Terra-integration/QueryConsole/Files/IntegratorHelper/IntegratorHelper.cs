@@ -58,6 +58,7 @@ namespace Terrasoft.TsConfiguration
 			try
 			{
 				Console.WriteLine(url);
+				Console.WriteLine(jsonText);
 				var _request = WebRequest.Create(new Uri(url)) as HttpWebRequest;
 				_request.Method = requestMethod.ToString();
 				_request.ContentType = "application/json";

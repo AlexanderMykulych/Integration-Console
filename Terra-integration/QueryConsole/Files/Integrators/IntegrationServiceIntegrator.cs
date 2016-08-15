@@ -170,12 +170,19 @@ namespace Terrasoft.TsConfiguration {
 					if (!string.IsNullOrEmpty(objectType) && data != null)
 					{
 						IntegrateServiceEntity(data, objectType);
+					} else
+					{
+						//if(system == CsConstant.IntegratorSettings)
 					}
 					AddReadId(notifyId);
 				}
 			}
 			SetNotifyRead();
 		}
+		public void IntegrateFromOrderService()
+		{
+
+		} 
 		public virtual void IntegrateServiceEntity(JObject serviceEntity, string serviceObjectName)
 		{
 			var integrationInfo = CsConstant.IntegrationInfo.CreateForImport(UserConnection, CsConstant.IntegrationActionName.Create, serviceObjectName, serviceEntity);

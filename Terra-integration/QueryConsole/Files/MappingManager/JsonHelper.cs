@@ -95,7 +95,7 @@ namespace Terrasoft.TsConfiguration
 			).ToList();
 		}
 
-		public static List<object> GetColumnValuesWithFilters(UserConnection userConnection, string entityName, string entityPath, object entityPathValue, string resultColumnName, List<Tuple<string, string>> filters, int limit = -1,
+		public static List<object> GetColumnValuesWithFilters(UserConnection userConnection, string entityName, string entityPath, object entityPathValue, string resultColumnName, Dictionary<string, string> filters, int limit = -1,
 			string orderColumnName = "CreatedOn", OrderDirection orderType = OrderDirection.Descending)
 		{
 			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, entityName);
@@ -114,7 +114,7 @@ namespace Terrasoft.TsConfiguration
 			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, entityPath, entityPathValue));
 			foreach (var filter in filters)
 			{
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, filter.Item1, filter.Item2));
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, filter.Key, filter.Value));
 			}
 			return esq.GetEntityCollection(userConnection).Select(x =>
 				x.GetColumnValue(resColumn.IsLookup ? PrepareColumn(resColumn.Name, true) : resColumn.Name)
@@ -166,7 +166,7 @@ namespace Terrasoft.TsConfiguration
 					catch (Exception e)
 					{
 						//IntegrationLogger.Error("Method [] catch exception message = {0}", e.Message);
-						throw;
+						//throw;
 					}
 				}
 				return jObjectsList;
