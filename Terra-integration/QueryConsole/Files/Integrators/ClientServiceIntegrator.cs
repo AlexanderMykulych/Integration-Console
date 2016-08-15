@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
+using Terrasoft.TsConfiguration;
+using static Terrasoft.TsConfiguration.CsConstant;
+
 namespace Terrasoft.TsConfiguration2
 {
 	public class ClientServiceIntegrator

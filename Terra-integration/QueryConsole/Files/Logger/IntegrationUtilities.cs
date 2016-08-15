@@ -95,6 +95,7 @@ namespace Terrasoft.TsConfiguration
 
         public static Dictionary<string, int> IncDict = new Dictionary<string, int>();
 		public static void SuccessSave(string typeName) {
+			Console.Write("Save OK");
 			//IntegrationConsole.EntityIntegratedSuccess(typeName);
 			if (IncDict.ContainsKey(typeName))
             {

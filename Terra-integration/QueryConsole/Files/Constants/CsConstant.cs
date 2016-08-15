@@ -311,22 +311,22 @@ namespace Terrasoft.TsConfiguration {
 							////{ TServiceObject.Dict, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/dict/AUTO3N" },
 							//{ TServiceObject.Entity, "http://api.client-service.stage3.laximo.ru/v2/entity/AUTO3N" }
 						},
-						IsIntegratorActive = false
+						IsIntegratorActive = true
 					}
 				},
 				{
 					typeof(OrderServiceIntegrator),
 					new IntegratorSetting() {
-						Auth = "Basic YnBtb25saW5lMjoxMjM0NTY=",
+						Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==",
 						Name = "OrderService",
 						BaseUrl = new Dictionary<TServiceObject, string>() {
 							//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
-							{ TServiceObject.Entity, "http://api.order-service.stage2.laximo.ru/v2/entity/AUTO3N" }
+							{ TServiceObject.Entity, " http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
 							//{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
 							//{ TServiceObject.Entity, @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
 				
 						},
-						IsIntegratorActive = false
+						IsIntegratorActive = true
 					}
 				},
 				{
@@ -338,11 +338,12 @@ namespace Terrasoft.TsConfiguration {
 							//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
 							//{ TServiceObject.Entity, "http://api.order-service.bus2.auto3n.ru/v2/entity/AUTO3N" }
 							//{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
-							{ TServiceObject.Entity, @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
+							{ TServiceObject.Entity, @"http://api.integration.bus.stage2.auto3n.ru/v2/entity" }
 						},
 						PostboxId = 10004,
-						NotifyLimit = 50
-					}
+						NotifyLimit = 50,
+                        IsIntegratorActive = true
+                    }
 				}
 			};
 			#region Class: Setting

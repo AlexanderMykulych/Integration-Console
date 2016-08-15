@@ -21,13 +21,13 @@ namespace Terrasoft.TsConfiguration
 			return new List<string>() {
 				//"TsPayment",
 				//"Order",
-				"Account",
+				//"Account",
 				//"OrderProduct",
 				//"TsReturn",
 				//"TsShipment",
 				//"TsShipmentPosition",
 				//"TsContractDebt",
-				//"Contract"
+				"Contract"
 				//"Contact"
 			};
 		}

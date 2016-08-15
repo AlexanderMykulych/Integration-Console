@@ -1569,6 +1569,10 @@ namespace Terrasoft.TsConfiguration
 		}
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
 		{
+			if(integrationInfo.Data == null)
+			{
+				integrationInfo.Data = new JObject();
+			}
 			integrationInfo.Data["id"] = integrationInfo.Data["contract.#ref.id"];
 		}
 
@@ -1576,6 +1580,7 @@ namespace Terrasoft.TsConfiguration
 		{
 			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
 				SetState(integrationInfo);
+				SetBussinesProtocol(integrationInfo);
 			}
 		}
 		public void SetState(IntegrationInfo integrationInfo) {
@@ -1807,6 +1812,25 @@ namespace Terrasoft.TsConfiguration
 
 		public bool isAccountExported(IntegrationInfo integrationInfo) {
 			return integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsDontIntegrate");
+		}
+
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			SetBussinesProtocol(integrationInfo);
+		}
+		public void SetBussinesProtocol(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				var isLegal = integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsIsLawPerson");
+				integrationInfo.IntegratedEntity.SetColumnValue(isLegal ? "TsB2B" : "TsB2C", true);
+				integrationInfo.IntegratedEntity.UpdateInDB(false);
+			}
+			catch (Exception e)
+			{
+				//TODO: Add Logging
+			}
 		}
 	}
 

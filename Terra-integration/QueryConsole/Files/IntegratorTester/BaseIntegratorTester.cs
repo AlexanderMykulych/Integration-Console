@@ -68,7 +68,7 @@ namespace Terrasoft.TsConfiguration
 			}
 			if(name=="Contact") {
 				//
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("3c65f32f-aac7-4815-90c7-02882e859e16")));
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("E7954750-4215-4228-B26F-940513A4D082")));
 			}
 			return esq.GetEntityCollection(UserConnection);
 		}

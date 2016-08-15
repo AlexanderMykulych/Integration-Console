@@ -23,11 +23,11 @@ namespace Terrasoft.TsConfiguration
 				if (newValue != null && !string.IsNullOrEmpty(newValue.ToString()))
 				{
 					resultId = info.entity.GetColumnValue(info.config.TsSourcePath);
-					var optionalColumns = new List<Tuple<string, string>>();
+					var optionalColumns = new Dictionary<string, string>();
 					if (!string.IsNullOrEmpty(info.config.TsDetailTag)) {
-						optionalColumns = ParseDetailTag(info.config.TsDetailTag).ToList();
-					}
-					optionalColumns.Add(new Tuple<string, string>(info.config.TsDetailPath, resultId.ToString()));
+						optionalColumns = JsonEntityHelper.ParsToDictionary(info.config.TsDetailTag, '|', ',');
+                    }
+					optionalColumns.Add(info.config.TsDetailPath, resultId.ToString());
 					if (info.config.TsTag == "simple")
 					{
 						resultValue = newValue.ToString();

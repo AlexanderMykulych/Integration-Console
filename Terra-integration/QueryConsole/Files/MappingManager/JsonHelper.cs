@@ -219,50 +219,62 @@ namespace Terrasoft.TsConfiguration
 			return false;
 		}
 
-		public static void UpdateOrInsertEntityColumn(string entityName, string setColumn, object setValue, UserConnection userConnection, IEnumerable<Tuple<string, string>> optionalColumns, List<Tuple<string, object>> filters)
+		public static void UpdateOrInsertEntityColumn(string entityName, string setColumn, object setValue, UserConnection userConnection, Dictionary<string, string> optionalColumns, List<Tuple<string, object>> filters)
 		{
-			filters.AddRange(optionalColumns.Select(x => new Tuple<string, object>(x.Item1, x.Item2)));
+			var schema = userConnection.EntitySchemaManager.GetInstanceByName(entityName);
+			
+			filters.AddRange(optionalColumns.Select(x => new Tuple<string, object>(x.Key, x.Value)));
 			if (GetEntityCount(entityName, userConnection, filters) > 0)
 			{
 				var update = new Update(userConnection, entityName);
+				var selectUpdate = new Select(userConnection)
+									.Top(1)
+									.Column("Id")
+									.From(entityName)
+									.OrderByDesc("CreatedOn");
 				if (filters.Any())
 				{
-					update.Where(filters[0].Item1).IsEqual(Column.Parameter(filters[0].Item2));
+					selectUpdate.Where(GetSqlNameByEntity(schema, filters[0].Item1)).IsEqual(Column.Parameter(filters[0].Item2));
 					foreach (var filter in filters.Skip(1))
 					{
-						update.And(filter.Item1).IsEqual(Column.Parameter(filter.Item2));
+						selectUpdate.And(GetSqlNameByEntity(schema, filter.Item1)).IsEqual(Column.Parameter(filter.Item2));
 					}
 				}
-				update.Set(setColumn, Column.Parameter(setValue));
+				update.Where("Id").In(selectUpdate);
+				update.Set(GetSqlNameByEntity(schema, setColumn), Column.Parameter(setValue));
 				foreach (var optionalColumn in optionalColumns)
 				{
-					update.Set(optionalColumn.Item1, Column.Parameter(optionalColumn.Item2));
+					update.Set(GetSqlNameByEntity(schema, optionalColumn.Key), Column.Parameter(optionalColumn.Value));
 				}
 				update.Execute();
 			}
 			else
 			{
 				var insert = new Insert(userConnection).Into(entityName);
-				insert.Set(setColumn, Column.Parameter(setValue));
+				insert.Set(GetSqlNameByEntity(schema, setColumn), Column.Parameter(setValue));
 				foreach (var optionalColumn in optionalColumns)
 				{
-					insert.Set(optionalColumn.Item1, Column.Parameter(optionalColumn.Item2));
+					insert.Set(GetSqlNameByEntity(schema, optionalColumn.Key), Column.Parameter(optionalColumn.Value));
 				}
 				insert.Execute();
 			}
 		}
-
+		public static string GetSqlNameByEntity(EntitySchema schema, string columnName)
+		{
+			return schema.Columns.GetByName(columnName).ColumnValueName;
+		}
 		public static int GetEntityCount(string entityName, UserConnection userConnection, List<Tuple<string, object>> filters)
 		{
+			var schema = userConnection.EntitySchemaManager.GetInstanceByName(entityName);
 			var select = new Select(userConnection)
 						.Column(Func.Count("Id")).As("count")
 						.From(entityName);
 			if (filters.Any())
 			{
-				select.Where(filters[0].Item1).IsEqual(Column.Parameter(filters[0].Item2));
+				select.Where(GetSqlNameByEntity(schema, filters[0].Item1)).IsEqual(Column.Parameter(filters[0].Item2));
 				foreach (var filter in filters.Skip(1))
 				{
-					select.And(filter.Item1).IsEqual(Column.Parameter(filter.Item2));
+					select.And(GetSqlNameByEntity(schema, filter.Item1)).IsEqual(Column.Parameter(filter.Item2));
 				}
 			}
 			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
@@ -278,13 +290,16 @@ namespace Terrasoft.TsConfiguration
 			return 0;
 		}
 
-		public static Dictionary<string, string> ParsToDictionary(string text, char first, char second) {
+		public static Dictionary<string, string> ParsToDictionary(string text, char first, char second)
+		{
 			var result = new Dictionary<string, string>();
-			if(string.IsNullOrEmpty(text)) {
+			if (string.IsNullOrEmpty(text))
+			{
 				return result;
 			}
 			var pairs = text.Split(first);
-			foreach(var pair in pairs) {
+			foreach (var pair in pairs)
+			{
 				var values = pair.Split(second);
 				result.AddIfNotExists(new KeyValuePair<string, string>(values.First(), values.Last()));
 			}

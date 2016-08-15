@@ -80,11 +80,7 @@ namespace Terrasoft.TsConfiguration {
 				withData == true ? TIntegratorRequest.BusEventNotificationData : TIntegratorRequest.BusEventNotification,
 				TRequstMethod.GET,
 				"0",
-<<<<<<< .mine
-				_notifyLimit.ToString(),
-=======
 				"1",//_notifyLimit.ToString(),
->>>>>>> .theirs
 				CsConstant.DefaultBusEventFilters,
 				CsConstant.DefaultBusEventSorts
 			);
@@ -166,13 +162,18 @@ namespace Terrasoft.TsConfiguration {
 					var objectType = busEvent["objectType"].ToString();
 					var action = busEvent["action"].ToString();
 					var system = busEvent["system"].ToString();
-					var notifyId = busEvent["id"].ToString(); 
+					var notifyId = busEvent["id"].ToString();
+					var objectId = busEvent["objectId"].Value<int>();
 					if (!string.IsNullOrEmpty(objectType) && data != null)
 					{
 						IntegrateServiceEntity(data, objectType);
 					} else
 					{
-						//if(system == CsConstant.IntegratorSettings)
+						if (system == CsConstant.IntegratorSettings.Settings[typeof(OrderServiceIntegrator)].Name)
+						{
+							var integrator = new OrderServiceIntegrator(userConnection);
+							ExportServiceEntity(integrator, objectType, objectId);
+						}
 					}
 					AddReadId(notifyId);
 				}
@@ -182,7 +183,17 @@ namespace Terrasoft.TsConfiguration {
 		public void IntegrateFromOrderService()
 		{
 
-		} 
+		}
+
+		public void ExportServiceEntity(BaseServiceIntegrator integrator, string name, int id, Action afterIntegrate = null)
+		{
+			var serviceRequestInfo = ServiceRequestInfo.CreateForExportInBpm(name);
+			serviceRequestInfo.Limit = "1";
+			serviceRequestInfo.Skip = "0";
+			serviceRequestInfo.ServiceObjectId = id.ToString();
+			serviceRequestInfo.AfterIntegrate = afterIntegrate;
+			integrator.GetRequest(serviceRequestInfo);
+		}
 		public virtual void IntegrateServiceEntity(JObject serviceEntity, string serviceObjectName)
 		{
 			var integrationInfo = CsConstant.IntegrationInfo.CreateForImport(UserConnection, CsConstant.IntegrationActionName.Create, serviceObjectName, serviceEntity);
