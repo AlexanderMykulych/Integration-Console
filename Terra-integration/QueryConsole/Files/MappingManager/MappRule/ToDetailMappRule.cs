@@ -47,7 +47,7 @@ namespace QueryConsole.Files.MappingManager.MappRule
 		{
 			object resultObject = null;
 			var sourceValue = info.entity.GetColumnValue(info.config.TsSourcePath);
-			var optionalColumns = ParseDetailTag(info.config.TsDetailTag).ToList();
+			var optionalColumns = JsonEntityHelper.ParsToDictionary(info.config.TsDetailTag, '|', ',');
 			var detailValue = JsonEntityHelper.GetColumnValuesWithFilters(info.userConnection, info.config.TsDetailName, info.config.TsDetailPath, sourceValue, info.config.TsDetailResPath, optionalColumns).FirstOrDefault();
 			if (info.config.TsTag == "simple")
 			{

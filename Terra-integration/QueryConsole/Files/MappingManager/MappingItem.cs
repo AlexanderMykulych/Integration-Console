@@ -51,6 +51,7 @@ namespace Terrasoft.TsConfiguration
 		public string TsDestinationPathToExternal {get;set;}
 		public bool SerializeIfNull {get;set;}
 		public bool SerializeIfZero {get;set;}
+		public bool SerializeIfEmpty { get; set; }
 
 		public bool Key {get;set;}
 
