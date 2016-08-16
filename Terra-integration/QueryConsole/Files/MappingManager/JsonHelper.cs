@@ -94,6 +94,42 @@ namespace Terrasoft.TsConfiguration
 				x.GetColumnValue(resColumn.IsLookup ? PrepareColumn(resColumn.Name, true) : resColumn.Name)
 			).ToList();
 		}
+		
+		public static List<object> CreateColumnValues(UserConnection userConnection, string entityName, string entityPath, object entityPathValue, string resultColumnName, int limit = -1,
+			string orderColumnName = "CreatedOn", OrderDirection orderType = OrderDirection.Descending, Dictionary<string, string> filters = null)
+		{
+			try
+			{
+				var schema = userConnection.EntitySchemaManager.GetInstanceByName(entityName);
+				var insert = new Insert(userConnection)
+								.Into(entityName) as Insert;
+				object resultValue;
+				var resultColumn = schema.Columns.GetByName(resultColumnName);
+				if (resultColumn.DataValueType.ValueType == typeof(Guid))
+				{
+					resultValue = Guid.NewGuid();
+				}
+				else
+				{
+					resultValue = resultColumn.DataValueType.DefValue;
+				}
+				var resColumn = insert.Set(GetSqlNameByEntity(schema, resultColumnName), Column.Parameter(resultValue));
+				insert.Set(GetSqlNameByEntity(schema, entityPath), Column.Parameter(entityPathValue));
+				if (filters != null)
+				{
+					foreach (var filter in filters)
+					{
+						insert.Set(GetSqlNameByEntity(schema, filter.Key), Column.Parameter(filter.Value));
+					}
+				}
+				insert.Execute();
+				return new List<object>() { resultValue };
+			} catch(Exception e)
+			{
+				//TODO
+				return new List<object>();
+			}
+		}
 
 		public static List<object> GetColumnValuesWithFilters(UserConnection userConnection, string entityName, string entityPath, object entityPathValue, string resultColumnName, Dictionary<string, string> filters, int limit = -1,
 			string orderColumnName = "CreatedOn", OrderDirection orderType = OrderDirection.Descending)

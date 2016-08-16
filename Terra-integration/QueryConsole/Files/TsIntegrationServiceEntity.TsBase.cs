@@ -1054,7 +1054,6 @@ namespace Terrasoft.TsConfiguration
 						.Set("Id", Column.Parameter(addressId))
 						.Set("Primary", Column.Parameter(true))
 						.Set("Zip", Column.Parameter(zip))
-						.Set("CityId", Column.Parameter(cityId))
 						.Set("Address", Column.Parameter(address)) as Insert;
 			foreach(var column in columns) {
 				if(column.Value != Guid.Empty) {
@@ -1598,7 +1597,7 @@ namespace Terrasoft.TsConfiguration
 		public void SetBussinesProtocol(IntegrationInfo integrationInfo) {
 			try {
 				var accountId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("AccountId");
-				if(accountId != Guid.Empty) {
+				if(accountId != Guid.Empty && integrationInfo.Action == CsConstant.IntegrationActionName.Create) {
 					var isLegal = IsAccountLegal(accountId, integrationInfo.UserConnection);
 					integrationInfo.IntegratedEntity.SetColumnValue(isLegal ? "TsB2B" : "TsB2C", true);
 					integrationInfo.IntegratedEntity.UpdateInDB(false);
@@ -1823,9 +1822,12 @@ namespace Terrasoft.TsConfiguration
 		{
 			try
 			{
-				var isLegal = integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsIsLawPerson");
-				integrationInfo.IntegratedEntity.SetColumnValue(isLegal ? "TsB2B" : "TsB2C", true);
-				integrationInfo.IntegratedEntity.UpdateInDB(false);
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.Create)
+				{
+					var isLegal = integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsIsLawPerson");
+					integrationInfo.IntegratedEntity.SetColumnValue(isLegal ? "TsB2B" : "TsB2C", true);
+					integrationInfo.IntegratedEntity.UpdateInDB(false);
+				}
 			}
 			catch (Exception e)
 			{

@@ -58,7 +58,7 @@
 		<hander Name="Counteragent" Path="Counteragent" ServiceName="OrderService"/>
 	</integrationHandlerConfig>
   <configItem JName="" TsName="Default">
-    <mappingItem EFieldRequier="0" IFieldRequier="0" IgnoreError="#true" JSourcePath="" JTypeName="" MapExecuteType="1" MapIntegrationType="#All" MapType="#Simple" SaveOnResponse="#false" TsDestinationName="" TsDestinationPath="Id" TsDestinationResPath="Name" TsDetinationValueType="string" TsExternalIdPath="TsExternalId" TsSourcePath="" SerializeIfNull="#true" SerializeIfZero="#true"/>
+    <mappingItem EFieldRequier="0" IFieldRequier="0" IgnoreError="#true" JSourcePath="" JTypeName="" MapExecuteType="1" MapIntegrationType="#All" MapType="#Simple" SaveOnResponse="#false" TsDestinationName="" TsDestinationPath="Id" TsDestinationResPath="Name" TsDetinationValueType="string" TsExternalIdPath="TsExternalId" TsSourcePath="" SerializeIfNull="#true" SerializeIfZero="#true"  CreateIfNotExist="#false"/>
   </configItem>
   <configItemType>
     <mappingItem MapType="#ManyToMany" TsExternalPath="Id" TsSourcePath="Id" MapExecuteType="#AfterEntitySave"/>
@@ -602,7 +602,7 @@
     <mappingItem JSourcePath="deliveryPlanDateOverride" TsSourcePath="DueDate" MacrosName="DateWithouTime"/>
     <mappingItem JSourcePath="createdAt" TsSourcePath="Date" MacrosName="DateWithouTime"/>
     <mappingItem JSourcePath="deliveryCostOverride" TsSourcePath="PrimaryAmount"/>
-    <mappingItem JSourcePath="note" TsSourcePath="Comment"/>
+    <!--<mappingItem JSourcePath="note" TsSourcePath="Comment"/>-->
     <mappingItem JSourcePath="status" MapType="#RefToGuid" TsSourcePath="StatusId" TsDestinationName="OrderStatus"/>
     <!--<mappingItem JSourcePath="createdPerson.PersonInfo.email" MapType="#StringToDictionaryGuid" TsSourcePath="ContactId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Email"/>
     <mappingItem JSourcePath="createdPerson.PersonInfo.phone" MapType="#StringToDictionaryGuid" TsSourcePath="ContactId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="MobilePhone"/>
@@ -622,7 +622,7 @@
 		<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.building" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>
 		<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.appartament" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>-->
     <mappingItem JSourcePath="shipmentInfo.ShipmentInfo.phone" TsSourcePath="ContactNumber"/>
-    <mappingItem JSourcePath="shipmentInfo.ShipmentInfo.additionalDeliveryCost" TsSourcePath="TsAdditionalExpences"/>
+    <!--<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.additionalDeliveryCost" TsSourcePath="TsAdditionalExpences"/>-->
     <mappingItem JSourcePath="shipmentInfo.ShipmentInfo.contactPerson" TsSourcePath="ReceiverName"/>
     <mappingItem JSourcePath="shipmentInfo.ShipmentInfo.comment" TsSourcePath="Comment"/>
     <!--<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.zipCode" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>-->
@@ -639,7 +639,7 @@
     <mappingItem JSourcePath="createdByUser" MapType="#StringToDictionaryGuid" TsSourcePath="CreatedById" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
     <mappingItem JSourcePath="workItemNumber" TsSourcePath="TsCode"/>
     <mappingItem JSourcePath="name" TsSourcePath="Name"/>
-    <mappingItem JSourcePath="brand" MapType="#StringToDictionaryGuid" TsSourcePath="TsTradeMarkId" TsDestinationName="TradeMark"/>
+    <mappingItem JSourcePath="brand" MapType="#StringToDictionaryGuid" TsSourcePath="TsTradeMarkId" TsDestinationName="TradeMark" CreateIfNotExist="#true"/>
     <!--TODO Это по сути Id продукта(артикул) С.Сарнацкий-->
     <mappingItem JSourcePath="oem" TsSourcePath="TsArticle"/>
     <mappingItem JSourcePath="initialPrice" TsSourcePath="Price"/>
@@ -653,7 +653,7 @@
     <mappingItem JSourcePath="presentInInitialOrder" TsSourcePath="TsAvailableInOrder"/>
     <mappingItem JSourcePath="currentPrice" TsSourcePath="Price"/>
     <mappingItem JSourcePath="currentAmount" TsSourcePath="Quantity"/>
-    <mappingItem JSourcePath="currentDeliveryCost" TsSourcePath="initialDeliveryCost"/>
+    <mappingItem JSourcePath="currentDeliveryCost" TsSourcePath="TsDeliveryTotalCost"/>
     <mappingItem JSourcePath="currentSumTotal" TsSourcePath="TotalAmount"/>
     <mappingItem JSourcePath="shippedAmount" TsSourcePath="TsDeliveredProductsQuantity"/>
     <mappingItem JSourcePath="shippedSum" TsSourcePath="TsDeliveredProductsAmount"/>
@@ -788,7 +788,7 @@
     <mappingItem JSourcePath="brand" TsSourcePath="TsTradeMarkName"/>
     <mappingItem JSourcePath="initialPrice" TsSourcePath="Price"/>
     <mappingItem JSourcePath="taxPercent" TsSourcePath="TsTaxPercent"/>
-    <mappingItem JSourcePath="discountPercent" SourcePath="TsDiscountPercent"/>
+    <mappingItem JSourcePath="discountPercent" TsSourcePath="TsDiscountPercent"/>
     <mappingItem JSourcePath="initialDeliveryCost" TsSourcePath="TsDeliveryCost"/>
     <!--<mappingItem JSourcePath="unitName" TsSourcePath="TsGuarantorId" MapType="#RefToGuid" TsDestinationName="Contact"/>-->
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>

@@ -59,7 +59,8 @@ namespace Terrasoft.TsConfiguration
 		public string TsTag { get; set; }
 		public string TsDetailTag { get; set; }
 		public string OverRuleMacros { get; set; }
-		 
+		
+		public bool CreateIfNotExist { get; set; }
 
 				public MappingItem()
 		{

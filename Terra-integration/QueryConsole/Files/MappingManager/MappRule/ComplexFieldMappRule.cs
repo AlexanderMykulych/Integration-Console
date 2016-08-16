@@ -20,6 +20,10 @@ namespace Terrasoft.TsConfiguration
 			{
 				var newValue = JsonEntityHelper.GetSimpleTypeValue(info.json);
 				resultId = JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1).FirstOrDefault();
+				if(info.config.CreateIfNotExist && (resultId == null || (resultId is Guid && (Guid)resultId == Guid.Empty)))
+				{
+					resultId = JsonEntityHelper.CreateColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1).FirstOrDefault();
+				}
 			}
 			info.entity.SetColumnValue(info.config.TsSourcePath, resultId);
 		}
