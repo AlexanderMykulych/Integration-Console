@@ -568,7 +568,7 @@
   
   <configItem JName="Payment" TsName="TsPayment">
     <mappingItem JSourcePath="ownerAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsSalesMarketId" TsDestinationName="TsLocSalMarket" TsDestinationPath="TsAccount" TsDestinationResPath="TsOwnerAgentId"/>
-    <mappingItem JSourcePath="guid" TsSourcePath="Id"/>
+    <!--<mappingItem JSourcePath="guid" TsSourcePath="Id"/>-->
     <mappingItem JSourcePath="changedByUser" MapType="#StringToDictionaryGuid" TsSourcePath="ModifiedById" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
     <mappingItem JSourcePath="createdByUser" MapType="#StringToDictionaryGuid" TsSourcePath="CreatedById" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
     <mappingItem JSourcePath="paymentType" MapType="#RefToGuid" TsSourcePath="TsPaymentTypeId" TsDestinationName="TsPaymentType"/>
@@ -689,11 +689,12 @@
     <mappingItem JSourcePath="documentDate" TsSourcePath="TsShipmentDate" MacrosName="DateWithouTime"/>
     <mappingItem JSourcePath="status" MapType="#RefToGuid" TsSourcePath="TsStatusId" TsDestinationName="TsShipmentStatus"/>
     <mappingItem JSourcePath="shipmentPerson" MapType="#StringToDictionaryGuid" TsSourcePath="TsOwnerId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Name"/>
-    <mappingItem JSourcePath="shipmentPersonPosition" MapType="#StringToDictionaryGuid" TsSourcePath="TsOwnerId" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="Job.Name"/>
+    <mappingItem JSourcePath="shipmentPersonPosition" MapType="#StringToDictionaryGuid" TsSourcePath="TsJobId" TsDestinationName="Job" TsDestinationPath="Id" TsDestinationResPath="Name"/>
     <mappingItem JSourcePath="contract" MapType="#RefToGuid" TsSourcePath="TsContractId" TsDestinationName="Contract"/>
     <mappingItem JSourcePath="type" MapType="#RefToGuid" TsSourcePath="TsTypeId" TsDestinationName="TsShipmentType"/>
-    <mappingItem JSourcePath="pointFrom" TsSourcePath="TsSenderpoint"/>
-    <mappingItem JSourcePath="pointTo" TsSourcePath="TsSenderpoint"/>
+    <!--Ждем коментарий от клиента. Так как приходит ShipmentPoint-->
+    <!--<mappingItem JSourcePath="pointFrom" TsSourcePath="TsSenderpoint"/>
+    <mappingItem JSourcePath="pointTo" TsSourcePath="TsDeliveryPoint"/>-->
     <mappingItem JSourcePath="shipmentItems" MapType="#ArrayOfCompositObject" TsSourcePath="Id" TsDestinationPath="TsShipment" TsDestinationName="TsShipmentPosition"  MapExecuteType = "#AfterEntitySave" />
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>

@@ -329,7 +329,7 @@ namespace Terrasoft.TsConfiguration {
 				
 						},
 						IsIntegratorActive = true,
-						IsDebugMode = true,
+						IsDebugMode = false,
 						DebugModeInfo = new DebugModeInfo()
 						{
 							FilePath = @"../../Files/Debug/response.json"

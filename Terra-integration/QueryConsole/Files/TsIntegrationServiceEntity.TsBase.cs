@@ -904,6 +904,32 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "TsPayment";
 			JName = "Payment";
 		}
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				var orderId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsOrder");
+				if (orderId != Guid.Empty)
+				{
+					UpdatePaymentSum(orderId, integrationInfo.UserConnection);
+				}
+			} catch(Exception e)
+			{
+				//ToDO:
+			}
+		}
+		public void UpdatePaymentSum(Guid orderId, UserConnection userConnection) {
+			var select = new Select(userConnection)
+									.Top(1)
+									.Column(Func.Sum("p", "TsAmount")).As("amount")
+									.From("TsPaymentInOrder").As("pio")
+									.InnerJoin("TsPayment").As("p").On("pio", "TsPaymentId").IsEqual("p", "Id")
+									.Where("TsOrderId").IsEqual(Column.Parameter(orderId)) as Select;
+			var update = new Update(userConnection, "Order")
+									.Set("PaymentAmount", select)
+									.Where("Id").IsEqual(Column.Parameter(orderId)) as Update;
+			update.Execute();
+		}
 	}
 
 	[ImportHandlerAttribute("Order")]
@@ -956,8 +982,7 @@ namespace Terrasoft.TsConfiguration
                 }
 				try
 				{
-					var paymentSum = GetPaymentSum(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
-					integrationInfo.IntegratedEntity.SetColumnValue("PaymentAmount", paymentSum);
+					integrationInfo.IntegratedEntity.SetColumnValue("PaymentAmount", integrationInfo.IntegratedEntity.GetColumnValue("PrimaryPaymentAmount"));
 				}
 				catch (Exception e)
 				{
@@ -1341,7 +1366,7 @@ namespace Terrasoft.TsConfiguration
 		}
 
 		public override void AfterEntitySave(IntegrationInfo integrationInfo) {
-			importTransportationPointCompany(integrationInfo);
+			//importTransportationPointCompany(integrationInfo);
 		}
 
 		public bool isCourierDeliveryMethod(IntegrationInfo integrationInfo) {
@@ -1513,7 +1538,7 @@ namespace Terrasoft.TsConfiguration
 		}
 
 		public void updateProductUnitName(UserConnection userConnection, Guid productId, string unitName) {
-			var unitId = OrderHandler.GetGuidByValue("Unit", unitName, userConnection);
+			var unitId = OrderHandler.GetGuidByValue("Unit", unitName, userConnection, "ShortName");
 			if (unitId == Guid.Empty)
 				return;
 			var update = new Update(userConnection, "Product")

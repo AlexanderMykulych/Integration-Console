@@ -48,7 +48,7 @@ namespace Terrasoft.TsConfiguration {
 
 		public static T GetJTokenValuePath<T>(this JToken jToken, string path, CsConstant.TIntegrationType type = CsConstant.TIntegrationType.Import, T defValue = default(T)) {
 			var resJToken = jToken.GetJTokenByPath(path, type);
-			if(resJToken != null) {
+			if(resJToken != null && resJToken.HasValues) {
 				return resJToken.Value<T>();
 			}
 			return defValue;
