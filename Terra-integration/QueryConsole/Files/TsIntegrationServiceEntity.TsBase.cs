@@ -951,7 +951,6 @@ namespace Terrasoft.TsConfiguration
                 {
                     var OrderItemSum = GetOrderItemSum(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
 					integrationInfo.IntegratedEntity.SetColumnValue("Amount", OrderItemSum);
-					integrationInfo.IntegratedEntity.SetColumnValue("PrimaryAmount", OrderItemSum);
                 } catch(Exception e)
                 {
                 }
@@ -1521,6 +1520,10 @@ namespace Terrasoft.TsConfiguration
 						.Set("UnitId", Column.Parameter(unitId))
 						.Where("Id").IsEqual(Column.Parameter(productId)) as Update;
 			update.Execute();
+			var updateOrderProduct = new Update(userConnection, "OrderProduct")
+						.Set("UnitId", Column.Parameter(unitId))
+						.Where("ProductId").IsEqual(Column.Parameter(productId)) as Update;
+			updateOrderProduct.Execute();
 		}
 	}
 

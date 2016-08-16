@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -311,7 +312,8 @@ namespace Terrasoft.TsConfiguration {
 							////{ TServiceObject.Dict, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/dict/AUTO3N" },
 							//{ TServiceObject.Entity, "http://api.client-service.stage3.laximo.ru/v2/entity/AUTO3N" }
 						},
-						IsIntegratorActive = true
+						IsIntegratorActive = true,
+						IsDebugMode = false
 					}
 				},
 				{
@@ -326,7 +328,12 @@ namespace Terrasoft.TsConfiguration {
 							//{ TServiceObject.Entity, @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
 				
 						},
-						IsIntegratorActive = true
+						IsIntegratorActive = true,
+						IsDebugMode = true,
+						DebugModeInfo = new DebugModeInfo()
+						{
+							FilePath = @"../../Files/Debug/response.json"
+						}
 					}
 				},
 				{
@@ -342,8 +349,9 @@ namespace Terrasoft.TsConfiguration {
 						},
 						PostboxId = 10004,
 						NotifyLimit = 50,
-                        IsIntegratorActive = true
-                    }
+                        IsIntegratorActive = true,
+						IsDebugMode = false
+					}
 				}
 			};
 			#region Class: Setting
@@ -352,10 +360,25 @@ namespace Terrasoft.TsConfiguration {
 				public string Name;
 				public string Auth;
 				public bool IsIntegratorActive;
+				public bool IsDebugMode;
+				public DebugModeInfo DebugModeInfo;
 			}
 			public class IntegratorIntegrationServiceSetting: IntegratorSetting {
 				public int PostboxId;
 				public int NotifyLimit;
+			}
+
+			public class DebugModeInfo
+			{
+				public string FilePath;
+
+				public string GetDebugDataJson()
+				{
+					using(var stream = new StreamReader(new FileStream(FilePath, FileMode.Open)))
+					{
+						return stream.ReadToEnd();
+					}
+				}
 			}
 			#endregion
 		}

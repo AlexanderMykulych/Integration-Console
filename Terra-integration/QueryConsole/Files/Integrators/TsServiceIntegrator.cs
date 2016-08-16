@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
+using static Terrasoft.TsConfiguration.CsConstant.IntegratorSettings;
 
 namespace Terrasoft.TsConfiguration
 {
@@ -65,6 +66,20 @@ namespace Terrasoft.TsConfiguration
 				return Settings.IsIntegratorActive;
 			}
 		}
+		public bool IsDebugMode
+		{
+			get
+			{
+				return Settings.IsDebugMode;
+			}
+		}
+		public DebugModeInfo DebugModeInfo
+		{
+			get
+			{
+				return Settings.DebugModeInfo;
+			}
+		}
 		public string ServiceName {
 			get {
 				return Settings.Name;
@@ -112,16 +127,26 @@ namespace Terrasoft.TsConfiguration
 				UserConnection = userConnection
 			});
 			info.LogId = logId;
-			integratorHelper.PushRequest(info.Method, info.FullUrl, info.RequestJson, (x, y, requestId) =>
+			if (IsDebugMode)
 			{
-				info.ResponseData = x;
+				info.ResponseData = DebugModeInfo.GetDebugDataJson();
 				OnGetResponse(info);
-			}, userConnection, info.LogId,
-			(x, y, requestId) => {
-				if(info.AfterIntegrate != null) {
-					info.AfterIntegrate();
-				}
-			}, Auth);
+			}
+			else
+			{
+				integratorHelper.PushRequest(info.Method, info.FullUrl, info.RequestJson, (x, y, requestId) =>
+				{
+					info.ResponseData = x;
+					OnGetResponse(info);
+				}, userConnection, info.LogId,
+				(x, y, requestId) =>
+				{
+					if (info.AfterIntegrate != null)
+					{
+						info.AfterIntegrate();
+					}
+				}, Auth);
+			}
 		}
 
 		public virtual void OnGetResponse(ServiceRequestInfo info)

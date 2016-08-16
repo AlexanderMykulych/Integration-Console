@@ -642,7 +642,7 @@
     <mappingItem JSourcePath="brand" MapType="#StringToDictionaryGuid" TsSourcePath="TsTradeMarkId" TsDestinationName="TradeMark" CreateIfNotExist="#true"/>
     <!--TODO Это по сути Id продукта(артикул) С.Сарнацкий-->
     <mappingItem JSourcePath="oem" TsSourcePath="TsArticle"/>
-    <mappingItem JSourcePath="initialPrice" TsSourcePath="Price"/>
+    <mappingItem JSourcePath="initialPrice" TsSourcePath="TsPriceListPrice"/>
     <mappingItem JSourcePath="initialAmount" TsSourcePath="Quantity"/>
     <mappingItem JSourcePath="initialDeliveryCost" TsSourcePath="TsDeliveryCost"/>
     <mappingItem JSourcePath="taxPercent" TsSourcePath="DiscountTax"/>
@@ -662,11 +662,11 @@
     <mappingItem JSourcePath="cancelledAmount" TsSourcePath="TsCanceledAmount"/>
     <mappingItem JSourcePath="restAmount" TsSourcePath="TsRest"/>
     <mappingItem JSourcePath="deleted" TsSourcePath="TsPosDeleted"/>
-    <mappingItem JSourcePath="assignedAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsServicePostId" TsDestinationName="Account" TsDestinationPath="Id" TsDestinationResPath="TsExternalId"/>
+    <mappingItem JSourcePath="assignedAgentId" MapType="#StringToDictionaryGuid" TsSourcePath="TsServicePostId" TsDestinationName="Account" TsDestinationPath="Id" TsDestinationResPath="TsServicePostId"/>
     <mappingItem JSourcePath="order" MapType="#RefToGuid" TsSourcePath="OrderId" TsDestinationName="Order"/>
     <mappingItem JSourcePath="paidSum" TsSourcePath="TsPaymentAmount"/>
-    <mappingItem JSourcePath="estimatedShipmentDates.OrderShipmentDate.shipmentDate" TsSourcePath="TsPlanDeliveryDate" MacrosName="DateWithouTime"/>
-    <mappingItem JSourcePath="estimatedShipmentDates.OrderShipmentDate.amount" TsSourcePath="TsDeliveryQuantity"/>
+    <mappingItem JSourcePath="estimatedShipmentDates.OrderShipmentDate.shipmentDate" TsSourcePath="TsPlanDeliveryDate" MacrosName="DateWithouTime" Selector="estimatedShipmentDates[0].OrderShipmentDate.shipmentDate"/>
+    <mappingItem JSourcePath="estimatedShipmentDates.OrderShipmentDate.amount" TsSourcePath="TsDeliveryQuantity" Selector="estimatedShipmentDates[0].OrderShipmentDate.amount"/>
     <mappingItem JSourcePath="status" MapType="#RefToGuid" TsSourcePath="TsPosStatusId" TsDestinationName="TsPaymentPosStatus"/>
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
     <mappingItem JSourcePath="version" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>

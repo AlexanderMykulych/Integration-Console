@@ -95,8 +95,19 @@ namespace Terrasoft.TsConfiguration
 				{
 					try
 					{
-						var subJObj = GetJTokenByPath(entityJObj, item.JSourcePath, item.MapIntegrationType);
-						MapColumn(item, ref subJObj, integrationInfo);
+						JToken subJObj = null;
+						if (!string.IsNullOrEmpty(item.Selector))
+						{
+							subJObj = entityJObj.SelectToken(item.Selector);
+						}
+						else
+						{
+							subJObj = GetJTokenByPath(entityJObj, item.JSourcePath, item.MapIntegrationType, integrationInfo.IntegrationType);
+						}
+						if (subJObj != null)
+						{
+							MapColumn(item, ref subJObj, integrationInfo);
+						}
 					}
 					catch (Exception e)
 					{
@@ -423,9 +434,9 @@ namespace Terrasoft.TsConfiguration
 			return strings.FirstOrDefault(x => !string.IsNullOrEmpty(x));
 		}
 
-		private JToken GetJTokenByPath(JToken jToken, string path, TIntegrationType type = TIntegrationType.Import)
+		private JToken GetJTokenByPath(JToken jToken, string path, TIntegrationType mapType = TIntegrationType.Import, TIntegrationType type = TIntegrationType.Import)
 		{
-			return jToken.GetJTokenByPath(path, type);
+			return type == TIntegrationType.Export ? jToken.GetJTokenByPath(path, mapType) : jToken.GetJTokenValueByPath(path, mapType);
 		}
 
 		private void ExecuteMapMethodQueue()

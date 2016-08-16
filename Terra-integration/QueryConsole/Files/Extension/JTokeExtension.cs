@@ -21,6 +21,30 @@ namespace Terrasoft.TsConfiguration {
 			}
 			return jToken;
 		}
+		
+		public static JToken GetJTokenValueByPath(this JToken jToken, string path, CsConstant.TIntegrationType type = CsConstant.TIntegrationType.Import)
+		{
+			var pItems = path.Split('.');
+			foreach (var pItem in pItems)
+			{
+				if(jToken == null)
+				{
+					return null;
+				}
+				if(jToken is JObject)
+				{
+					jToken = jToken[pItem];
+				} else if(jToken is JArray)
+				{
+					jToken = ((JArray)jToken).Last;
+					if(jToken != null && jToken is JObject)
+					{
+						jToken = jToken[pItem];
+					}
+				}
+			}
+			return jToken;
+		}
 
 		public static T GetJTokenValuePath<T>(this JToken jToken, string path, CsConstant.TIntegrationType type = CsConstant.TIntegrationType.Import, T defValue = default(T)) {
 			var resJToken = jToken.GetJTokenByPath(path, type);
