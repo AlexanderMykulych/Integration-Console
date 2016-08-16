@@ -942,7 +942,17 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "Order";
 			JName = "Order";
 		}
-
+		public override void BeforeMapping(IntegrationInfo integrationInfo)
+		{
+			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
+				var name = integrationInfo.Data[JName]["createdByUser"].Value<string>();
+				if(name.ToLower() == "shop")
+				{
+					integrationInfo.Data[JName]["createdByUser"] = "Supervisor";
+				}
+			}
+		}
 		public override void AfterEntitySave(IntegrationInfo integrationInfo)
 		{
 			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
@@ -1205,51 +1215,68 @@ namespace Terrasoft.TsConfiguration
 			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
 				try
 				{
-					var id = integrationInfo.Data["contextInfo.OrderItemContextInfo.id"];
-					var catalog = integrationInfo.Data["contextInfo.OrderItemContextInfo.catalog"];
-					var catalogV = integrationInfo.Data["contextInfo.OrderItemContextInfo.catalogVehicleId"];
-					var ssd = integrationInfo.Data["contextInfo.OrderItemContextInfo.ssd"];
-					var vih = integrationInfo.Data["contextInfo.OrderItemContextInfo.vin"];
-					var frame = integrationInfo.Data["contextInfo.OrderItemContextInfo.frame"];
-					var catCate = integrationInfo.Data["contextInfo.OrderItemContextInfo.catalogCategoryId"];
-					var unit = integrationInfo.Data["contextInfo.OrderItemContextInfo.unitId"];
-					var clientData = integrationInfo.Data["contextInfo.OrderItemContextInfo.clientData"];
-					var detailCode = integrationInfo.Data["contextInfo.OrderItemContextInfo.detailCode"];
-					if (id != null)
+					if (integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo") != null)
 					{
-						var auto = JsonEntityHelper.GetEntityByExternalId("TsAutomobile", int.Parse(catalogV.ToString()), integrationInfo.UserConnection, false, "Id");
-						if (JsonEntityHelper.isEntityExist("TsOrderAddInfo", integrationInfo.UserConnection, new Dictionary<string, object>() {
+						var orderId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("OrderId");
+						var productId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("ProductId");
+						var id = integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo.id").Value<int>();
+						var catalog = integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo.catalog").Value<string>();
+						var catalogV = integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo.catalogVehicleId").Value<int>();
+						var ssd = integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo.ssd").Value<string>();
+						var vih = integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo.vin").Value<string>();
+						var frame = integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo.frame").Value<string>();
+						var catCate = integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo.catalogCategoryId").Value<int>();
+						var unit = integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo.unitId").Value<int>();
+						var clientData = integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo.clientData").Value<string>();
+						var detailCode = integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo.detailCode").Value<string>();
+						if (id != 0)
+						{
+							var auto = JsonEntityHelper.GetEntityByExternalId("TsAutomobile", int.Parse(catalogV.ToString()), integrationInfo.UserConnection, false, "Id");
+							if (JsonEntityHelper.isEntityExist("TsOrderAddInfo", integrationInfo.UserConnection, new Dictionary<string, object>() {
 						{ "TsExternalId", id }
 					}))
-						{
-							var update = new Update(integrationInfo.UserConnection, "TsOrderAddInfo")
-										.Set("TsCatalog", Column.Parameter(catalog))
-										.Set("TsAutomobileId", Column.Parameter(auto != null ? auto.Item2.GetTypedColumnValue<Guid>(auto.Item1["Id"]) : Guid.Empty))
-										.Set("TsSSD", Column.Parameter(ssd))
-										.Set("TsVIN", Column.Parameter(vih))
-										.Set("TsFrame", Column.Parameter(frame))
-										.Set("TsCategory", Column.Parameter(catCate))
-										.Set("TsQuantity", Column.Parameter(unit))
-										.Set("TsClientInfo", Column.Parameter(clientData))
-										.Set("TsCode", Column.Parameter(detailCode))
-										.Where("TsExternalId").IsEqual(Column.Parameter(id));
-							update.Execute();
-						}
-						else
-						{
-							var insert = new Insert(integrationInfo.UserConnection)
-											.Into("TsOrderAddInfo")
-											.Set("TsExternalId", Column.Parameter(id))
+							{
+								var update = new Update(integrationInfo.UserConnection, "TsOrderAddInfo")
 											.Set("TsCatalog", Column.Parameter(catalog))
-											.Set("TsAutomobileId", Column.Parameter(auto != null ? auto.Item2.GetTypedColumnValue<Guid>(auto.Item1["Id"]) : Guid.Empty))
 											.Set("TsSSD", Column.Parameter(ssd))
 											.Set("TsVIN", Column.Parameter(vih))
+											.Set("TsOrderId", Column.Parameter(orderId))
+											.Set("TsProductId", Column.Parameter(productId))
 											.Set("TsFrame", Column.Parameter(frame))
 											.Set("TsCategory", Column.Parameter(catCate))
 											.Set("TsQuantity", Column.Parameter(unit))
 											.Set("TsClientInfo", Column.Parameter(clientData))
-											.Set("TsCode", Column.Parameter(detailCode));
-							insert.Execute();
+											.Set("TsCode", Column.Parameter(detailCode))
+											.Where("TsExternalId").IsEqual(Column.Parameter(id)) as Update;
+								var autoId = auto.Item2 != null ? auto.Item2.GetTypedColumnValue<Guid>(auto.Item1["Id"]) : Guid.Empty;
+								if (autoId != Guid.Empty)
+								{
+									update.Set("TsAutomobileId", Column.Parameter(autoId));
+								}
+								update.Execute();
+							}
+							else
+							{
+								var insert = new Insert(integrationInfo.UserConnection)
+												.Into("TsOrderAddInfo")
+												.Set("TsExternalId", Column.Parameter(id))
+												.Set("TsCatalog", Column.Parameter(catalog))
+												.Set("TsOrderId", Column.Parameter(orderId))
+												.Set("TsProductId", Column.Parameter(productId))
+												.Set("TsSSD", Column.Parameter(ssd))
+												.Set("TsVIN", Column.Parameter(vih))
+												.Set("TsFrame", Column.Parameter(frame))
+												.Set("TsCategory", Column.Parameter(catCate))
+												.Set("TsQuantity", Column.Parameter(unit))
+												.Set("TsClientInfo", Column.Parameter(clientData))
+												.Set("TsCode", Column.Parameter(detailCode));
+								var autoId = auto.Item2 != null ? auto.Item2.GetTypedColumnValue<Guid>(auto.Item1["Id"]) : Guid.Empty;
+								if(autoId != Guid.Empty)
+								{
+									insert.Set("TsAutomobileId", Column.Parameter(autoId));
+								}
+								insert.Execute();
+							}
 						}
 					}
 				} catch(Exception e) {
