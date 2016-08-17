@@ -63,27 +63,35 @@ namespace Terrasoft.TsConfiguration
 							delete.Execute();
 						}
 					} catch(Exception e) {
-						//TODO:
+						throw new Exception("Mapp Rule arrayofcompositobject, import", e);
 					}
-
 				}
 			}
 
 		}
 		public override void Export(RuleExportInfo info)
 		{
-			if (JsonEntityHelper.IsAllNotNullAndEmpty(info.entity, info.config.TsSourcePath, info.config.TsDestinationPath, info.config.TsDestinationName))
+			try
 			{
-				var srcEntity = info.entity;
-				var dscValue = srcEntity.GetColumnValue(info.config.TsSourcePath);
-				string handlerName = JsonEntityHelper.GetFirstNotNull(info.config.HandlerName, info.config.TsDestinationName, info.config.JSourceName);
-				var resultJObjs = JsonEntityHelper.GetCompositeJObjects(dscValue, info.config.TsDestinationPath, info.config.TsDestinationName, handlerName, info.userConnection);
-				if(resultJObjs.Any()) {
-					var jArray = (info.json = new JArray()) as JArray;
-					resultJObjs.ForEach(x => jArray.Add(x));
-				} else {
-					info.json = null;
+				if (JsonEntityHelper.IsAllNotNullAndEmpty(info.entity, info.config.TsSourcePath, info.config.TsDestinationPath, info.config.TsDestinationName))
+				{
+					var srcEntity = info.entity;
+					var dscValue = srcEntity.GetColumnValue(info.config.TsSourcePath);
+					string handlerName = JsonEntityHelper.GetFirstNotNull(info.config.HandlerName, info.config.TsDestinationName, info.config.JSourceName);
+					var resultJObjs = JsonEntityHelper.GetCompositeJObjects(dscValue, info.config.TsDestinationPath, info.config.TsDestinationName, handlerName, info.userConnection);
+					if (resultJObjs.Any())
+					{
+						var jArray = (info.json = new JArray()) as JArray;
+						resultJObjs.ForEach(x => jArray.Add(x));
+					}
+					else
+					{
+						info.json = null;
+					}
 				}
+			} catch(Exception e)
+			{
+				throw new Exception("Mapp Rule arrayofcompositobject, export", e);
 			}
 		}
 	}

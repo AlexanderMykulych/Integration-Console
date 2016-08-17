@@ -128,7 +128,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				return _xDocument;
 			} catch(Exception e) {
-				//IntegrationLogger.Error("Method [GetConfigXmlDocument] throw exception: Message = {0}", e.Message);
+				IntegrationLogger.Error(e);
 				throw;
 			}
 		}
@@ -158,7 +158,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				return null;
 			} catch(Exception e) {
-				//IntegrationLogger.Error("Method [GetXmlNodeByNameAttr] throw exception: Message = {0}", e.Message);
+				IntegrationLogger.Error(e, "GetXmlNodeByNameAttr");
 				throw;
 			}
 		}
@@ -201,7 +201,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				return resultObj;
 			} catch(Exception e) {
-				//IntegrationLogger.Error("Method [GetItemByXmlNode] throw exception: Message = {0}", e.Message);
+				IntegrationLogger.Error(e, "GetItemByXmlNode");
 				throw;
 			}
 		}
@@ -229,7 +229,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				return _prerenderConfigDict;
 			} catch(Exception e) {
-				//IntegrationLogger.Error("Method [GetPrerenderConfig] throw exception: Message = {0}", e.Message);
+				IntegrationLogger.Error(e, "GetPrerenderConfig");
 				throw;
 			}
 		}
@@ -247,7 +247,7 @@ namespace Terrasoft.TsConfiguration
 					return configDict[value];
 				return value;
 			} catch(Exception e) {
-				//IntegrationLogger.Error("Method [PrepareValue] throw exception: Message = {0}", e.Message);
+				IntegrationLogger.Error(e, "PrepareValue");
 				throw;
 			}
 		}
@@ -261,7 +261,7 @@ namespace Terrasoft.TsConfiguration
 			try {
 				return _defaultItem == null ? _defaultItem = GetItemByXmlNode(userConnection, GetXmlNodeByNameAttr(GetConfigXmlDocument(userConnection), "Default").ChildNodes[0]) : _defaultItem;
 			} catch(Exception e) {
-				//IntegrationLogger.Error("Method [GetDefaultItem] throw exception: Message = {0}", e.Message);
+				IntegrationLogger.Error(e, "GetDefaultItem");
 				throw;
 			}
 		}
@@ -284,14 +284,14 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				//IntegrationLogger.Error("Method [GetDafaultItemByType] throw exception: Message = {0}", e.Message);
+				IntegrationLogger.Error(e, "GetDafaultItemByType");
 				throw;
 			}
 		}
 
 		 
 
-				public static List<MappingItem> GetConfigItem(UserConnection userConnection, string Name, string tag = null) {
+		public static List<MappingItem> GetConfigItem(UserConnection userConnection, string Name, string tag = null) {
 			try {
 				var result = new List<MappingItem>();
 				XmlDocument xDoc = GetConfigXmlDocument(userConnection);
@@ -313,7 +313,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				return result;
 			} catch(Exception e) {
-				//IntegrationLogger.Error("Method [GetConfigItem] throw exception: Message = {0}", e.Message);
+				IntegrationLogger.Error(e, "GetConfigItem");
 				throw;
 			}
 		}

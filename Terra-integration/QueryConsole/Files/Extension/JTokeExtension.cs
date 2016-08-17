@@ -47,11 +47,12 @@ namespace Terrasoft.TsConfiguration {
 		}
 
 		public static T GetJTokenValuePath<T>(this JToken jToken, string path, CsConstant.TIntegrationType type = CsConstant.TIntegrationType.Import, T defValue = default(T)) {
-			var resJToken = jToken.GetJTokenByPath(path, type);
-			if(resJToken != null && resJToken.HasValues) {
-				return resJToken.Value<T>();
+			var token = jToken.SelectToken(path);
+			if(token == null)
+			{
+				return defValue;
 			}
-			return defValue;
+			return token.Value<T>();
 		}
 	}
 }

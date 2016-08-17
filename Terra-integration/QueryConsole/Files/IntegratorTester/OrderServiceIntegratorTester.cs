@@ -27,8 +27,8 @@ namespace Terrasoft.TsConfiguration
 				//"TsShipment",
 				//"TsShipmentPosition",
 				//"TsContractDebt",
-				"Contract"
-				//"Contact"
+				//"Contract"
+				"Contact"
 			};
 		}
 		public override void ImportBpmEntity(Entity entity)

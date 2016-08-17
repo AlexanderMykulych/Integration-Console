@@ -120,13 +120,12 @@ namespace Terrasoft.TsConfiguration
 			if(!IsIntegratorActive) {
 				return;
 			}
-			var logId = Guid.NewGuid();
-			IntegrationLogger.StartTransaction(logId, new LogTransactionInfo() {
+			IntegrationLogger.StartTransaction(new LogTransactionInfo() {
 				RequesterName = CsConstant.PersonName.Bpm,
 				ResiverName = ServiceName,
 				UserConnection = userConnection
 			});
-			info.LogId = logId;
+			info.LogId = IntegrationLogger.CurrentLogId;
 			if (IsDebugMode)
 			{
 				info.ResponseData = DebugModeInfo.GetDebugDataJson();
@@ -176,7 +175,7 @@ namespace Terrasoft.TsConfiguration
 							IntegrateServiceEntity(jObj, info.ServiceObjectName);
 						}
 					} catch(Exception e) {
-
+						IntegrationLogger.Error(e, "OnGetResponse");
 					}
 					if(info.AfterIntegrate != null) {
 						info.AfterIntegrate();
@@ -198,17 +197,21 @@ namespace Terrasoft.TsConfiguration
 			if(!IsIntegratorActive) {
 				return;
 			}
-			var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
-			var handlers = defHandler == null ? entityHelper.GetAllIntegrationHandler(integrationInfo) : new List<EntityHandler>() { defHandler };
-			foreach(var handler in handlers) {
-				integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
-				integrationInfo.Handler = handler;
-				entityHelper.IntegrateEntity(integrationInfo);
-				if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
+			if (IntegrationLocker.CheckUnLock(entity.SchemaName, entity.PrimaryColumnValue))
+			{
+				var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
+				var handlers = defHandler == null ? entityHelper.GetAllIntegrationHandler(integrationInfo) : new List<EntityHandler>() { defHandler };
+				foreach (var handler in handlers)
 				{
-					var json = integrationInfo.Result.Data.ToString();
-					var requestInfo = integrationInfo.Handler.GetRequestInfo(integrationInfo);
-					MakeRequest(requestInfo);
+					integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
+					integrationInfo.Handler = handler;
+					entityHelper.IntegrateEntity(integrationInfo);
+					if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
+					{
+						var json = integrationInfo.Result.Data.ToString();
+						var requestInfo = integrationInfo.Handler.GetRequestInfo(integrationInfo);
+						MakeRequest(requestInfo);
+					}
 				}
 			}
 		}

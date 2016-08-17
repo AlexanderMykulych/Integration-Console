@@ -96,7 +96,7 @@ namespace Terrasoft.TsConfiguration {
 		}
 
 		public void IniciateLoadChanges() {
-
+			GetBusEventNotification(true);
 		}
 		/// <summary>
 		/// Всем нотификейшенам в ReadedNotificationIds ставит статус "Прочитано"

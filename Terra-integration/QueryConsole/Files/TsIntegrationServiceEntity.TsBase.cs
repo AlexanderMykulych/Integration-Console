@@ -11,37 +11,51 @@ using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;
 
 namespace Terrasoft.TsConfiguration
 {
-	public abstract class EntityHandler: IIntegrationEntityHandler {
+	public abstract class EntityHandler : IIntegrationEntityHandler
+	{
 		public MappingHelper Mapper;
 		public string EntityName;
 		public string JName;
 
-		public virtual string HandlerName { get {
-			return EntityName;
-		}}
-		public virtual string SettingName {
-			get {
+		public virtual string HandlerName
+		{
+			get
+			{
+				return EntityName;
+			}
+		}
+		public virtual string SettingName
+		{
+			get
+			{
 				return JName;
 			}
 		}
 		private string _ServiceName;
-		public virtual string ServiceName {
-			get {
-				if(string.IsNullOrEmpty(_ServiceName)) {
+		public virtual string ServiceName
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(_ServiceName))
+				{
 					_ServiceName = IntegrationConfigurationManager.IntegrationPathConfig.Paths.FirstOrDefault(x => x.Name == SettingName).ServiceName;
 				}
 				return _ServiceName;
 			}
 		}
 
-		public virtual TServiceObject ServiceObjectType {
-			get {
+		public virtual TServiceObject ServiceObjectType
+		{
+			get
+			{
 				return TServiceObject.Entity;
 			}
 		}
 
-		public virtual string Filters {
-			get {
+		public virtual string Filters
+		{
+			get
+			{
 				return null;
 			}
 		}
@@ -61,13 +75,16 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		public virtual bool IsJsonWithHeader {
-			get {
+		public virtual bool IsJsonWithHeader
+		{
+			get
+			{
 				return true;
 			}
 		}
 
-		public virtual void Create(IntegrationInfo integrationInfo) {
+		public virtual void Create(IntegrationInfo integrationInfo)
+		{
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
 			integrationInfo.TsExternalVersionPath = ExternalVersionPath;
 			var entitySchema = integrationInfo.UserConnection.EntitySchemaManager.GetInstanceByName(EntityName);
@@ -76,26 +93,34 @@ namespace Terrasoft.TsConfiguration
 			BeforeMapping(integrationInfo);
 			Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection), IsJsonWithHeader);
 			AfterMapping(integrationInfo);
-			try {
+			try
+			{
 				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName);
-				integrationInfo.Result = new CsConstant.IntegrationResult() {
+				integrationInfo.Result = new CsConstant.IntegrationResult()
+				{
 					Type = CsConstant.IntegrationResult.TResultType.Success
 				};
 				AfterEntitySave(integrationInfo);
-			} catch(Exception e) {
-				integrationInfo.Result = new CsConstant.IntegrationResult() {
+			}
+			catch (Exception e)
+			{
+				integrationInfo.Result = new CsConstant.IntegrationResult()
+				{
 					Type = CsConstant.IntegrationResult.TResultType.Exception,
 					ExceptionMessage = e.Message
 				};
 			}
 		}
-		public virtual void BeforeMapping(IntegrationInfo integrationInfo) {
+		public virtual void BeforeMapping(IntegrationInfo integrationInfo)
+		{
 		}
 
-		public virtual void AfterMapping(IntegrationInfo integrationInfo) {
+		public virtual void AfterMapping(IntegrationInfo integrationInfo)
+		{
 		}
 
-		public virtual void AfterEntitySave(IntegrationInfo integrationInfo) {
+		public virtual void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
 		}
 
 		public virtual void Update(IntegrationInfo integrationInfo)
@@ -103,25 +128,30 @@ namespace Terrasoft.TsConfiguration
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
 			integrationInfo.TsExternalVersionPath = ExternalVersionPath;
 			var entity = GetEntityByExternalId(integrationInfo);
-			if(entity != null) {
+			if (entity != null)
+			{
 				integrationInfo.IntegratedEntity = entity;
 				BeforeMapping(integrationInfo);
 				Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection));
 				AfterMapping(integrationInfo);
 				Mapper.SaveEntity(entity, JName);
 				AfterEntitySave(integrationInfo);
-			} else {
+			}
+			else
+			{
 				throw new Exception(string.Format("Can not create entity {0}", EntityName));
 			}
 		}
 
-		public virtual void Delete(IntegrationInfo integrationInfo) {
+		public virtual void Delete(IntegrationInfo integrationInfo)
+		{
 			//var entity = Mapper.GetEntityByExternalId(EntityName, integrationInfo.Data[JName].Value<int>("id"));
 			//entity.SetColumnValue("TsDeleteInIntegrate", true);
 			//Mapper.SaveEntity(entity);
 		}
 
-		public virtual void Unknown(IntegrationInfo integrationInfo) {
+		public virtual void Unknown(IntegrationInfo integrationInfo)
+		{
 			Update(integrationInfo);
 		}
 
@@ -131,7 +161,8 @@ namespace Terrasoft.TsConfiguration
 			integrationInfo.TsExternalVersionPath = ExternalVersionPath;
 			Mapper.UserConnection = integrationInfo.UserConnection;
 			int externalId = 0;
-			if(integrationInfo.IntegratedEntity != null) {
+			if (integrationInfo.IntegratedEntity != null)
+			{
 				externalId = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath);
 			}
 			return Mapper.CheckIsExist(EntityName, integrationInfo.Data[JName].Value<int>("id"), integrationInfo.TsExternalIdPath, externalId);
@@ -145,20 +176,26 @@ namespace Terrasoft.TsConfiguration
 			BeforeMapping(integrationInfo);
 			Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection));
 			AfterMapping(integrationInfo);
-			try {
-				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName);
-				integrationInfo.Result = new CsConstant.IntegrationResult() {
+			try
+			{
+				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName, true);
+				integrationInfo.Result = new CsConstant.IntegrationResult()
+				{
 					Type = CsConstant.IntegrationResult.TResultType.Success
 				};
-			} catch(Exception e) {
-				integrationInfo.Result = new CsConstant.IntegrationResult() {
+			}
+			catch (Exception e)
+			{
+				integrationInfo.Result = new CsConstant.IntegrationResult()
+				{
 					Type = CsConstant.IntegrationResult.TResultType.Exception,
 					ExceptionMessage = e.Message
 				};
 			}
 		}
 
-		public virtual JObject ToJson(IntegrationInfo integrationInfo) {
+		public virtual JObject ToJson(IntegrationInfo integrationInfo)
+		{
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
 			integrationInfo.TsExternalVersionPath = ExternalVersionPath;
 			BeforeMapping(integrationInfo);
@@ -167,11 +204,13 @@ namespace Terrasoft.TsConfiguration
 			return integrationInfo.Data;
 		}
 
-		public virtual List<MappingItem> GetMapConfig(UserConnection userConnection) {
+		public virtual List<MappingItem> GetMapConfig(UserConnection userConnection)
+		{
 			return IntegrationConfigurationManager.GetConfigItem(userConnection, HandlerName);
 		}
 
-		public virtual Entity GetEntityByExternalId(CsConstant.IntegrationInfo integrationInfo) {
+		public virtual Entity GetEntityByExternalId(CsConstant.IntegrationInfo integrationInfo)
+		{
 			string externalIdPath = integrationInfo.TsExternalIdPath;
 			var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
 			esq.AddAllSchemaColumns();
@@ -180,21 +219,27 @@ namespace Terrasoft.TsConfiguration
 			return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
 		}
 
-		public virtual bool IsExport(CsConstant.IntegrationInfo integrationInfo) {
+		public virtual bool IsExport(CsConstant.IntegrationInfo integrationInfo)
+		{
 			return true;
 		}
 
-		public virtual ServiceRequestInfo GetRequestInfo(CsConstant.IntegrationInfo integrationInfo) {
-			var requestInfo = new ServiceRequestInfo() {
+		public virtual ServiceRequestInfo GetRequestInfo(CsConstant.IntegrationInfo integrationInfo)
+		{
+			var requestInfo = new ServiceRequestInfo()
+			{
 				ServiceObjectId = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath).ToString(),
 				ServiceObjectName = JName,
 				Type = ServiceObjectType,
 				RequestJson = integrationInfo.Result.Data.ToString(),
 				Entity = integrationInfo.IntegratedEntity
 			};
-			if(IsEntityAlreadyExist(integrationInfo)) {
+			if (IsEntityAlreadyExist(integrationInfo))
+			{
 				requestInfo.Method = TRequstMethod.PUT;
-			} else {
+			}
+			else
+			{
 				requestInfo.Method = TRequstMethod.POST;
 			}
 			requestInfo.FullUrl = ServiceUrlMaker.MakeUrl(CsConstant.IntegratorSettings.GetUrlsByServiceName(ServiceName)[ServiceObjectType], requestInfo);
@@ -205,8 +250,10 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("CompanyProfile")]
 	[ExportHandlerAttribute("Account")]
-	public class AccountHandler : EntityHandler {
-		public AccountHandler() {
+	public class AccountHandler : EntityHandler
+	{
+		public AccountHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "Account";
 			JName = "CompanyProfile";
@@ -215,8 +262,10 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("PersonProfile")]
 	[ExportHandlerAttribute("Contact")]
-	public class ContactHandler : EntityHandler {
-		public ContactHandler() {
+	public class ContactHandler : EntityHandler
+	{
+		public ContactHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "Contact";
 			JName = "PersonProfile";
@@ -235,21 +284,26 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("TsAutoOwnerHistory")]
 	[ExportHandlerAttribute("TsAutoTechService")]
 	[ExportHandlerAttribute("TsAutoTechHistory")]
-	public class TsAutoOwnerInfoHandler : EntityHandler {
-		public TsAutoOwnerInfoHandler() {
+	public class TsAutoOwnerInfoHandler : EntityHandler
+	{
+		public TsAutoOwnerInfoHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "";
 			JName = "VehicleRelationship";
 		}
 		string handlerName = "TsAutoOwnerInfo";
-		public override string HandlerName {
-			get {
+		public override string HandlerName
+		{
+			get
+			{
 				return handlerName;
 			}
 		}
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
-			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
 				var typeId = integrationInfo.Data[JName]["type"]["#ref"]["id"].Value<int>();
 				EntityName = GetEntityNameByTypeId(typeId);
 				Mapper.UserConnection = integrationInfo.UserConnection;
@@ -257,11 +311,13 @@ namespace Terrasoft.TsConfiguration
 			return base.IsEntityAlreadyExist(integrationInfo);
 		}
 
-		public string GetEntityNameByTypeId(int typeId) {
-			switch(typeId) {
+		public string GetEntityNameByTypeId(int typeId)
+		{
+			switch (typeId)
+			{
 				case 1:
 				case 2:
-				handlerName = "TsAutoOwnerInfo";
+					handlerName = "TsAutoOwnerInfo";
 					return "TsAutoOwnerInfo";
 				case 3:
 				case 4:
@@ -278,8 +334,10 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		public override void BeforeMapping(IntegrationInfo integrationInfo) {
-			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Export) {
+		public override void BeforeMapping(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Export)
+			{
 				EntityName = integrationInfo.IntegratedEntity.GetType().Name;
 				handlerName = EntityName;
 			}
@@ -288,8 +346,10 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("Relationship")]
 	[ExportHandlerAttribute("Relationship")]
-	public class RelationshipHandler : EntityHandler {
-		public RelationshipHandler() {
+	public class RelationshipHandler : EntityHandler
+	{
+		public RelationshipHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "Relationship";
 			JName = "Relationship";
@@ -370,8 +430,10 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("NotificationProfileAccount")]
 	[ExportHandlerAttribute("NotificationProfileAccount")]
-	public class TsAccountNotificationHandler : EntityHandler {
-		public TsAccountNotificationHandler() {
+	public class TsAccountNotificationHandler : EntityHandler
+	{
+		public TsAccountNotificationHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "TsAccountNotification";
 			JName = "NotificationProfile";
@@ -438,40 +500,53 @@ namespace Terrasoft.TsConfiguration
 		}
 	}
 
-	
+
 
 	[ImportHandlerAttribute("Manager")]
 	[ImportHandlerAttribute("ManagerGroup")]
 	[ExportHandlerAttribute("SysAdminUnit")]
-	public class SysAdminUnitHandler : EntityHandler {
+	public class SysAdminUnitHandler : EntityHandler
+	{
 		public ServiceUrlMaker UrlMaker;
 
-		public override string HandlerName {
-			get {
+		public override string HandlerName
+		{
+			get
+			{
 				return JName;
 			}
 		}
-		public SysAdminUnitHandler() {
+		public SysAdminUnitHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "SysAdminUnit";
 			JName = "";
 			UrlMaker = new ServiceUrlMaker(CsConstant.IntegratorSettings.Settings[typeof(ClientServiceIntegrator)].BaseUrl);
 		}
 
-		public override void BeforeMapping(IntegrationInfo integrationInfo) {
+		public override void BeforeMapping(IntegrationInfo integrationInfo)
+		{
 			base.BeforeMapping(integrationInfo);
-			if(string.IsNullOrEmpty(JName)) {
+			if (string.IsNullOrEmpty(JName))
+			{
 				var typeIndex = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("SysAdminUnitTypeValue");
-				if(typeIndex < 4) {
+				if (typeIndex < 4)
+				{
 					JName = "ManagerGroup";
-				} else {
+				}
+				else
+				{
 					JName = "Manager";
 				}
 			}
-			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
-				if(JName == "Manager") {
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
+				if (JName == "Manager")
+				{
 					integrationInfo.IntegratedEntity.SetColumnValue("SysAdminUnitTypeValue", CsConstant.TSysAdminUnitType.User);
-				} else {
+				}
+				else
+				{
 					integrationInfo.IntegratedEntity.SetColumnValue("SysAdminUnitTypeValue", CsConstant.TSysAdminUnitType.Unit);
 				}
 			}
@@ -483,19 +558,26 @@ namespace Terrasoft.TsConfiguration
 			return Mapper.CheckIsExist("SysAdminUnit", integrationInfo.Data[JName].Value<int>("id"), "TsExternalId", integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("TsExternalId"));
 		}
 
-		public override void ProcessResponse(IntegrationInfo integrationInfo) {
+		public override void ProcessResponse(IntegrationInfo integrationInfo)
+		{
 			base.ProcessResponse(integrationInfo);
-			if(JName == "Manager" && integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("SysAdminUnitTypeValue") == (int)CsConstant.TSysAdminUnitType.User) {
-				try {
+			if (JName == "Manager" && integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("SysAdminUnitTypeValue") == (int)CsConstant.TSysAdminUnitType.User)
+			{
+				try
+				{
 					ResaveContact(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("ContactId"), integrationInfo.UserConnection);
-				} catch(Exception e) {
-					//TODO:
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e, "SysAdminUnitHandler.ProcessResponse");
 				}
 			}
 		}
 
-		public void ResaveContact(Guid contactId, UserConnection userConnection) {
-			if(contactId != Guid.Empty) {
+		public void ResaveContact(Guid contactId, UserConnection userConnection)
+		{
+			if (contactId != Guid.Empty)
+			{
 				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "Contact");
 				esq.AddAllSchemaColumns();
 				var entity = esq.GetEntity(userConnection, contactId);
@@ -506,8 +588,10 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("CompanyProfileAssignment")]
 	[ExportHandlerAttribute("TsAccountManagerGroup")]
-	public class TsAccountManagerGroupHandler : EntityHandler {
-		public TsAccountManagerGroupHandler() {
+	public class TsAccountManagerGroupHandler : EntityHandler
+	{
+		public TsAccountManagerGroupHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "TsAccountManagerGroup";
 			JName = "CompanyProfileAssignment";
@@ -516,8 +600,10 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("ClientRequest")]
 	[ExportHandlerAttribute("Case")]
-	public class CaseHandler : EntityHandler {
-		public CaseHandler() {
+	public class CaseHandler : EntityHandler
+	{
+		public CaseHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "Case";
 			JName = "ClientRequest";
@@ -526,21 +612,26 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("VehicleProfile")]
 	[ExportHandlerAttribute("TsAutomobile")]
-	public class TsAutomobileHandler : EntityHandler {
-		public TsAutomobileHandler() {
+	public class TsAutomobileHandler : EntityHandler
+	{
+		public TsAutomobileHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "TsAutomobile";
 			JName = "VehicleProfile";
 		}
 
-		public override void ProcessResponse(IntegrationInfo integrationInfo) {
+		public override void ProcessResponse(IntegrationInfo integrationInfo)
+		{
 			base.ProcessResponse(integrationInfo);
 			integratePassport(integrationInfo);
 		}
 
-		public void integratePassport(IntegrationInfo integrationInfo) {
+		public void integratePassport(IntegrationInfo integrationInfo)
+		{
 			var automobileId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
-			if(automobileId != Guid.Empty) {
+			if (automobileId != Guid.Empty)
+			{
 				var helper = new ClientServiceIntegrator(integrationInfo.UserConnection);
 				helper.IntegrateBpmEntity(integrationInfo.IntegratedEntity, new VehiclePassportHandler());
 			}
@@ -550,20 +641,26 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("VehiclePassport")]
 	[ExportHandlerAttribute("VehiclePassport")]
-	public class VehiclePassportHandler: EntityHandler {
-		public VehiclePassportHandler() {
+	public class VehiclePassportHandler : EntityHandler
+	{
+		public VehiclePassportHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "TsAutomobile";
 			JName = "VehiclePassport";
 		}
 
-		public override string ExternalIdPath {
-			get {
+		public override string ExternalIdPath
+		{
+			get
+			{
 				return "TsPassportExternalId";
 			}
 		}
-		public override string HandlerName {
-			get {
+		public override string HandlerName
+		{
+			get
+			{
 				return JName;
 			}
 		}
@@ -572,15 +669,19 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("ContactInfo")]
 	[ExportHandlerAttribute("ContactInfo")]
-	public class ContactInfoHandler : EntityHandler {
-		public ContactInfoHandler() {
+	public class ContactInfoHandler : EntityHandler
+	{
+		public ContactInfoHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "Contact";
 			JName = "ContactInfo";
 		}
 
-		public override string HandlerName {
-			get {
+		public override string HandlerName
+		{
+			get
+			{
 				return JName;
 			}
 		}
@@ -841,7 +942,8 @@ namespace Terrasoft.TsConfiguration
 		//	}
 		//}
 
-		public override JObject ToJson(IntegrationInfo integrationInfo) {
+		public override JObject ToJson(IntegrationInfo integrationInfo)
+		{
 			var result = base.ToJson(integrationInfo);
 			var salesPerCapita = integrationInfo.IntegratedEntity.GetTypedColumnValue<double>("TsSalesForPersonInReg") + integrationInfo.IntegratedEntity.GetTypedColumnValue<double>("TsSalesForPersonInRegG");
 			var capacity = integrationInfo.IntegratedEntity.GetTypedColumnValue<double>("TsMarketVolume") + integrationInfo.IntegratedEntity.GetTypedColumnValue<double>("TsMarketVolumeG");
@@ -853,43 +955,51 @@ namespace Terrasoft.TsConfiguration
 			//ValidateType(integrationInfo, result);
 			return result;
 		}
-		public void ValidateType(IntegrationInfo integrationInfo, JObject jObj) {
+		public void ValidateType(IntegrationInfo integrationInfo, JObject jObj)
+		{
 			var type = jObj[JName]["type"].ToString();
-			switch(type) {
+			switch (type)
+			{
 				case "cargo":
 					jObj[JName]["additionalInfo"]["auto"].Remove();
-				break;
+					break;
 				case "auto":
 					jObj[JName]["additionalInfo"]["cargo"].Remove();
-				break;
+					break;
 			}
 		}
 
-		public override void AfterEntitySave(IntegrationInfo integrationInfo) {
-			try {
-			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
-				var type = integrationInfo.Data[JName]["type"].ToString();
-				bool isLp = false;
-				bool isGp = false;
-				switch (type) {
-					case "cargo":
-						isGp = true;
-					break;
-					case "auto":
-						isLp = true;
-					break;
-					case "cargo+auto":
-					case "auto+cargo":
-						isGp = true;
-						isLp = true;
-					break;
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+				{
+					var type = integrationInfo.Data[JName]["type"].ToString();
+					bool isLp = false;
+					bool isGp = false;
+					switch (type)
+					{
+						case "cargo":
+							isGp = true;
+							break;
+						case "auto":
+							isLp = true;
+							break;
+						case "cargo+auto":
+						case "auto+cargo":
+							isGp = true;
+							isLp = true;
+							break;
+					}
+					integrationInfo.IntegratedEntity.SetColumnValue("TsCargoProgram", isGp);
+					integrationInfo.IntegratedEntity.SetColumnValue("TsPassengerProgram", isLp);
+					integrationInfo.IntegratedEntity.UpdateInDB(false);
 				}
-				integrationInfo.IntegratedEntity.SetColumnValue("TsCargoProgram", isGp);
-				integrationInfo.IntegratedEntity.SetColumnValue("TsPassengerProgram", isLp);
-				integrationInfo.IntegratedEntity.UpdateInDB(false);
 			}
-			} catch(Exception e) {
-				//TODO: 
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, "AfterEntitySave");
 			}
 		}
 	}
@@ -913,12 +1023,14 @@ namespace Terrasoft.TsConfiguration
 				{
 					UpdatePaymentSum(orderId, integrationInfo.UserConnection);
 				}
-			} catch(Exception e)
+			}
+			catch (Exception e)
 			{
-				//ToDO:
+				IntegrationLogger.Error(e, "PaymentHandler.AfterEntitySave");
 			}
 		}
-		public void UpdatePaymentSum(Guid orderId, UserConnection userConnection) {
+		public void UpdatePaymentSum(Guid orderId, UserConnection userConnection)
+		{
 			var select = new Select(userConnection)
 									.Top(1)
 									.Column(Func.Sum("p", "TsAmount")).As("amount")
@@ -944,20 +1056,150 @@ namespace Terrasoft.TsConfiguration
 		}
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
 		{
-			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
 			{
 				var name = integrationInfo.Data[JName]["createdByUser"].Value<string>();
-				if(name.ToLower() == "shop")
+				if (name.ToLower() == "shop")
 				{
 					integrationInfo.Data[JName]["createdByUser"] = "Supervisor";
 				}
 			}
 		}
+
+		public void importTransportationPointCompany(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				var transportationId = integrationInfo.Data.GetJTokenValuePath<int>(JName + ".shipmentInfo.ShipmentInfo.transportationPointId");
+				var transportationName = integrationInfo.Data.GetJTokenValuePath<string>(JName + ".shipmentInfo.ShipmentInfo.transportationPointName");
+				var transportationCompanyId = integrationInfo.Data.GetJTokenValuePath<int>(JName + ".shipmentInfo.ShipmentInfo.transportationCompanyId");
+				var transportationCompanyName = integrationInfo.Data.GetJTokenValuePath<string>(JName + ".shipmentInfo.ShipmentInfo.transportationCompanyName");
+				var isCurier = isCourierDeliveryMethod(integrationInfo);
+				var shipmentPointId = GetTransportationIdAndCreateIfNotExist(transportationId, transportationName, integrationInfo.UserConnection);
+				var shipmentCompanyId = GetTransportationCompanyIdAndCreateIfNotExist(transportationCompanyId, transportationCompanyName, integrationInfo.UserConnection);
+				if (shipmentPointId != Guid.Empty)
+				{
+					integrationInfo.IntegratedEntity.SetColumnValue("TsShipmentPointId", shipmentPointId);
+				}
+				if (shipmentCompanyId != Guid.Empty)
+				{
+					integrationInfo.IntegratedEntity.SetColumnValue("TsTransportCompanyId", shipmentCompanyId);
+				}
+				integrationInfo.IntegratedEntity.SetColumnValue("TsIsCourierDelivery", isCurier);
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, "importTransportationPointCompany");
+				throw;
+			}
+		}
+		private Guid GetTransportationIdAndCreateIfNotExist(int transId, string transName, UserConnection userConnection)
+		{
+			if(transId == 0 || string.IsNullOrEmpty(transName))
+			{
+				return Guid.Empty;
+			}
+			try
+			{
+				var select = new Select(userConnection)
+								.Column("Id").As("Id")
+								.From("TsShipmentPoint")
+								.Where("TsExternalId").IsEqual(Column.Parameter(transId)) as Select;
+				using (DBExecutor executor = select.UserConnection.EnsureDBConnection())
+				{
+					using (var reader = select.ExecuteReader(executor))
+					{
+						if (reader.Read())
+						{
+							return reader.GetColumnValue<Guid>("Id");
+						}
+					}
+				}
+
+				var resultId = Guid.NewGuid();
+				var insert = new Insert(userConnection)
+								.Into("TsShipmentPoint")
+								.Set("Id", Column.Parameter(resultId))
+								.Set("TsExternalId", Column.Parameter(transId))
+								.Set("Name", Column.Parameter(transName));
+				insert.Execute();
+				return resultId;
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, "GetTransportationIdAndCreateIfNotExist");
+			}
+			return Guid.Empty;
+		}
+
+		private Guid GetTransportationCompanyIdAndCreateIfNotExist(int transId, string transName, UserConnection userConnection)
+		{
+			if(transId == 0 || string.IsNullOrEmpty(transName))
+			{
+				return Guid.Empty;
+			}
+			try
+			{
+				var select = new Select(userConnection)
+								.Column("Id").As("Id")
+								.From("TsTransportCompany")
+								.Where("TsExternalId").IsEqual(Column.Parameter(transId)) as Select;
+				using (DBExecutor executor = select.UserConnection.EnsureDBConnection())
+				{
+					using (var reader = select.ExecuteReader(executor))
+					{
+						if (reader.Read())
+						{
+							return reader.GetColumnValue<Guid>("Id");
+						}
+					}
+				}
+
+				var resultId = Guid.NewGuid();
+				var insert = new Insert(userConnection)
+								.Into("TsTransportCompany")
+								.Set("Id", Column.Parameter(resultId))
+								.Set("TsExternalId", Column.Parameter(transId))
+								.Set("Name", Column.Parameter(transName));
+				insert.Execute();
+				return resultId;
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, "TsShipmentHandler.GetTransportationCompanyIdAndCreateIfNotExist");
+			}
+			return Guid.Empty;
+		}
+		public bool isCourierDeliveryMethod(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				var additionalInfo = integrationInfo.Data.GetJTokenValuePath<string>(JName + ".shipmentInfo.ShipmentInfo.additionalInfo");
+				if (!string.IsNullOrEmpty(additionalInfo))
+				{
+					var jObject = JObject.Parse(additionalInfo);
+					return jObject.GetJTokenValuePath<bool>("deliveryMethod.DeliveryMethod.isCourierDelivery");
+				}
+				return false;
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, "TsShipmentHandler.isCourierDeliveryMethod");
+			}
+			return false;
+		}
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return false;
+		}
 		public override void AfterEntitySave(IntegrationInfo integrationInfo)
 		{
-			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
-				try {
-					if(integrationInfo.Data["Order"]["shipmentInfo"].HasValues) {
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
+				try
+				{
+					if (integrationInfo.Data["Order"]["shipmentInfo"].HasValues)
+					{
 						var userConnection = integrationInfo.UserConnection;
 						var id = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
 						var country = integrationInfo.Data["Order"]["shipmentInfo"]["ShipmentInfo"]["country"].Value<string>();
@@ -979,53 +1221,71 @@ namespace Terrasoft.TsConfiguration
 								IfNullThanEmpty(zipCode),
 								CsConstant.TsAddressType.Delivery);
 					}
-				} catch(Exception e) {
-                   
-                }
-
-                try
-                {
-                    var OrderItemSum = GetOrderItemSum(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[1 block]");
+				}
+				try
+				{
+					var OrderItemSum = GetOrderItemSum(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
 					integrationInfo.IntegratedEntity.SetColumnValue("Amount", OrderItemSum);
-                } catch(Exception e)
-                {
-                }
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[2 block]");
+				}
 				try
 				{
 					integrationInfo.IntegratedEntity.SetColumnValue("PaymentAmount", integrationInfo.IntegratedEntity.GetColumnValue("PrimaryPaymentAmount"));
 				}
 				catch (Exception e)
 				{
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[3 block]");
+				}
+
+				try
+				{
+					importTransportationPointCompany(integrationInfo);
+				}
+				catch(Exception e)
+				{
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[4 block]");
+				}
+				try
+				{
+					if (integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsContractId") != Guid.Empty)
+					{
+						var account = GetAccountByContract(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsContractId"), integrationInfo.UserConnection);
+						if (account != Guid.Empty)
+						{
+							integrationInfo.IntegratedEntity.SetColumnValue("AccountId", account);
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[5 block]");
 				}
 				try
 				{
 					integrationInfo.IntegratedEntity.UpdateInDB(false);
-				} catch(Exception e) {
-
 				}
-
-				try
+				catch (Exception e)
 				{
-                    if (integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsContractId") != Guid.Empty) {
-                        var account = GetAccountByContract(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsContractId"), integrationInfo.UserConnection);
-                        if (account != Guid.Empty)
-                        {
-                            integrationInfo.IntegratedEntity.SetColumnValue("AccountId", account);
-                            integrationInfo.IntegratedEntity.UpdateInDB(false);
-                        }
-                    }
-                } catch(Exception e)
-                {
-                }
-				
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[6 block]");
+				}
 			}
 		}
 
-		public string IfNullThanEmpty(string text) {
+		public string IfNullThanEmpty(string text)
+		{
 			return string.IsNullOrEmpty(text) ? string.Empty : text;
 		}
-		public static Guid GetGuidByValue(string schemaName, string value, UserConnection userConnetion, string columnValue = "Name", string primaryColumn = "Id") {
-			if(string.IsNullOrEmpty(value)) {
+		public static Guid GetGuidByValue(string schemaName, string value, UserConnection userConnetion, string columnValue = "Name", string primaryColumn = "Id")
+		{
+			if (string.IsNullOrEmpty(value))
+			{
 				return Guid.Empty;
 			}
 			var select = new Select(userConnetion)
@@ -1045,16 +1305,21 @@ namespace Terrasoft.TsConfiguration
 			return Guid.Empty;
 		}
 
-		public void ImportAddress(Guid orderId, UserConnection userConnection, Guid country, Guid region, Guid city, Guid tsCountry, string address, string zipCode, Guid addressType) {
+		public void ImportAddress(Guid orderId, UserConnection userConnection, Guid country, Guid region, Guid city, Guid tsCountry, string address, string zipCode, Guid addressType)
+		{
 			var orderAddressId = GetOrderAddres(orderId, userConnection);
-			if(orderAddressId == Guid.Empty) {
+			if (orderAddressId == Guid.Empty)
+			{
 				InsertOrderAddress(orderId, userConnection, country, tsCountry, city, addressType, region, zipCode, address);
-			} else {
+			}
+			else
+			{
 				UpdateOrderAddress(orderId, userConnection, country, tsCountry, city, addressType, region, zipCode, address);
 			}
 		}
 
-		public Guid GetOrderAddres(Guid orderId, UserConnection userConnetion) {
+		public Guid GetOrderAddres(Guid orderId, UserConnection userConnetion)
+		{
 			var select = new Select(userConnetion)
 						.Column("Id")
 						.From("TsOrderAddress").As("src")
@@ -1089,8 +1354,10 @@ namespace Terrasoft.TsConfiguration
 						.Set("Primary", Column.Parameter(true))
 						.Set("Zip", Column.Parameter(zip))
 						.Set("Address", Column.Parameter(address)) as Insert;
-			foreach(var column in columns) {
-				if(column.Value != Guid.Empty) {
+			foreach (var column in columns)
+			{
+				if (column.Value != Guid.Empty)
+				{
 					insert.Set(column.Key, Column.Parameter(column.Value));
 				}
 			}
@@ -1122,45 +1389,46 @@ namespace Terrasoft.TsConfiguration
 			update.Execute();
 		}
 
-        public Guid GetAccountFromContract(Guid id, UserConnection userConnection)
-        {
-            var select = new Select(userConnection)
-                                .Column("AccountId").As("Id")
-                                .From("Contract").As("c")
-                                .Where("Id").IsEqual(Column.Parameter(id)) as Select;
-            using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
-            {
-                using (IDataReader reader = select.ExecuteReader(dbExecutor))
-                {
-                    while (reader.Read())
-                    {
-                        return DBUtilities.GetColumnValue<Guid>(reader, "Id");
-                    }
-                }
-            }
-            return Guid.Empty;
-        }
+		public Guid GetAccountFromContract(Guid id, UserConnection userConnection)
+		{
+			var select = new Select(userConnection)
+								.Column("AccountId").As("Id")
+								.From("Contract").As("c")
+								.Where("Id").IsEqual(Column.Parameter(id)) as Select;
+			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
+			{
+				using (IDataReader reader = select.ExecuteReader(dbExecutor))
+				{
+					while (reader.Read())
+					{
+						return DBUtilities.GetColumnValue<Guid>(reader, "Id");
+					}
+				}
+			}
+			return Guid.Empty;
+		}
 
-        public double GetOrderItemSum(Guid orderId, UserConnection userConnection)
-        {
-            var select = new Select(userConnection)
-                                .Column(Func.Sum("TotalAmount")).As("amount")
-                                .From("OrderProduct")
-                                .Where("OrderId").IsEqual(Column.Parameter(orderId)) as Select;
-            using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
-            {
-                using (IDataReader reader = select.ExecuteReader(dbExecutor))
-                {
-                    while (reader.Read())
-                    {
-                        return DBUtilities.GetColumnValue<double>(reader, "amount");
-                    }
-                }
-            }
-            return 0;
-        }
+		public double GetOrderItemSum(Guid orderId, UserConnection userConnection)
+		{
+			var select = new Select(userConnection)
+								.Column(Func.Sum("TotalAmount")).As("amount")
+								.From("OrderProduct")
+								.Where("OrderId").IsEqual(Column.Parameter(orderId)) as Select;
+			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
+			{
+				using (IDataReader reader = select.ExecuteReader(dbExecutor))
+				{
+					while (reader.Read())
+					{
+						return DBUtilities.GetColumnValue<double>(reader, "amount");
+					}
+				}
+			}
+			return 0;
+		}
 
-		public double GetPaymentSum(Guid orderId, UserConnection userConnection) {
+		public double GetPaymentSum(Guid orderId, UserConnection userConnection)
+		{
 			var select = new Select(userConnection)
 								   .Column(Func.Sum("TsAmount")).As("amount")
 								   .From("TsPaymentInOrder").As("pio")
@@ -1180,24 +1448,24 @@ namespace Terrasoft.TsConfiguration
 		}
 
 		public Guid GetAccountByContract(Guid id, UserConnection userConnection)
-        {
-            var select = new Select(userConnection)
-                            .Column("AccountId")
-                            .From("Contract")
-                            .Where("Id").IsEqual(Column.Parameter(id)) as Select;
+		{
+			var select = new Select(userConnection)
+							.Column("AccountId")
+							.From("Contract")
+							.Where("Id").IsEqual(Column.Parameter(id)) as Select;
 
-            using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
-            {
-                using (IDataReader reader = select.ExecuteReader(dbExecutor))
-                {
-                    while (reader.Read())
-                    {
-                        return DBUtilities.GetColumnValue<Guid>(reader, "AccountId");
-                    }
-                }
-            }
-            return Guid.Empty;
-        }
+			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
+			{
+				using (IDataReader reader = select.ExecuteReader(dbExecutor))
+				{
+					while (reader.Read())
+					{
+						return DBUtilities.GetColumnValue<Guid>(reader, "AccountId");
+					}
+				}
+			}
+			return Guid.Empty;
+		}
 	}
 
 	[ImportHandlerAttribute("OrderItem")]
@@ -1212,7 +1480,8 @@ namespace Terrasoft.TsConfiguration
 		}
 		public override void AfterEntitySave(IntegrationInfo integrationInfo)
 		{
-			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
 				try
 				{
 					if (integrationInfo.Data.SelectToken("OrderItem.contextInfo.OrderItemContextInfo") != null)
@@ -1271,7 +1540,7 @@ namespace Terrasoft.TsConfiguration
 												.Set("TsClientInfo", Column.Parameter(clientData))
 												.Set("TsCode", Column.Parameter(detailCode));
 								var autoId = auto.Item2 != null ? auto.Item2.GetTypedColumnValue<Guid>(auto.Item1["Id"]) : Guid.Empty;
-								if(autoId != Guid.Empty)
+								if (autoId != Guid.Empty)
 								{
 									insert.Set("TsAutomobileId", Column.Parameter(autoId));
 								}
@@ -1279,16 +1548,21 @@ namespace Terrasoft.TsConfiguration
 							}
 						}
 					}
-				} catch(Exception e) {
-
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e, "OrderProductHandler.AfterEntitySave[1 block]");
 				}
 
-				try {
+				try
+				{
 					var totalAmount = integrationInfo.IntegratedEntity.GetTypedColumnValue<double>("TotalAmount");
 					integrationInfo.IntegratedEntity.SetColumnValue("PrimaryTotalAmount", totalAmount);
 					integrationInfo.IntegratedEntity.UpdateInDB(false);
-				} catch(Exception e) {
-					/*IntegrationLoger*/
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e, "OrderProductHandler.AfterEntitySave[2 block]");
 				}
 			}
 		}
@@ -1306,39 +1580,46 @@ namespace Terrasoft.TsConfiguration
 			base.Update(integrationInfo);
 			CreateProduct(integrationInfo);
 		}
-		public void CreateProduct(IntegrationInfo integrationInfo) {
-            var entity = integrationInfo.IntegratedEntity;
-            var articul = integrationInfo.Data["OrderItem"]["oem"].Value<string>();
+		public void CreateProduct(IntegrationInfo integrationInfo)
+		{
+			var entity = integrationInfo.IntegratedEntity;
+			var articul = integrationInfo.Data["OrderItem"]["oem"].Value<string>();
 			integrationInfo.IntegratedEntity = GetProductByArticuleOrCreateNew(integrationInfo.UserConnection, articul);
 			integrationInfo.IntegratedEntity.SetDefColumnValues();
 			Mapper.StartMappByConfig(integrationInfo, JName, IntegrationConfigurationManager.GetConfigItem(integrationInfo.UserConnection, "Product"));
 			try
 			{
 				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName);
-                var productId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
-                entity.SetColumnValue("ProductId", productId);
-                entity.UpdateInDB(false);
-            }
+				var productId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
+				entity.SetColumnValue("ProductId", productId);
+				entity.UpdateInDB(false);
+			}
 			catch (Exception e)
 			{
+				IntegrationLogger.Error(e, "OrderProductHandler.CreateProduct");
 			}
 		}
 
-		public Entity GetProductByArticuleOrCreateNew(UserConnection userConnection, string articule) {
+		public Entity GetProductByArticuleOrCreateNew(UserConnection userConnection, string articule)
+		{
 			var productId = GetProductIdByArticule(userConnection, articule);
-			if(productId == Guid.Empty) {
+			if (productId == Guid.Empty)
+			{
 				var schema = userConnection.EntitySchemaManager.GetInstanceByName("Product");
 				var entity = schema.CreateEntity(userConnection);
 				entity.SetDefColumnValues();
 				return entity;
-			} else {
+			}
+			else
+			{
 				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "Product");
 				esq.AddAllSchemaColumns();
 				return esq.GetEntity(userConnection, productId);
 			}
 		}
 
-		public Guid GetProductIdByArticule(UserConnection userConnection, string articule) {
+		public Guid GetProductIdByArticule(UserConnection userConnection, string articule)
+		{
 			var select = new Select(userConnection)
 						.Column("Id")
 						.From("Product")
@@ -1355,6 +1636,10 @@ namespace Terrasoft.TsConfiguration
 			}
 			return Guid.Empty;
 		}
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return false;
+		}
 	}
 
 	[ImportHandlerAttribute("Return")]
@@ -1367,6 +1652,10 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "TsReturn";
 			JName = "Return";
 		}
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return false;
+		}
 	}
 
 	[ImportHandlerAttribute("ReturnItem")]
@@ -1378,6 +1667,10 @@ namespace Terrasoft.TsConfiguration
 			Mapper = new MappingHelper();
 			EntityName = "TsReturnPosition";
 			JName = "ReturnItem";
+		}
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return false;
 		}
 	}
 
@@ -1392,123 +1685,34 @@ namespace Terrasoft.TsConfiguration
 			JName = "Shipment";
 		}
 
-		public override void AfterEntitySave(IntegrationInfo integrationInfo) {
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
 			//importTransportationPointCompany(integrationInfo);
 		}
 
-		public bool isCourierDeliveryMethod(IntegrationInfo integrationInfo) {
-			try {
+		public bool isCourierDeliveryMethod(IntegrationInfo integrationInfo)
+		{
+			try
+			{
 				var additionalInfo = integrationInfo.Data.GetJTokenValuePath<string>(JName + ".shipmentInfo.ShipmentInfo.additionalInfo");
-				if(!string.IsNullOrEmpty(additionalInfo)) {
+				if (!string.IsNullOrEmpty(additionalInfo))
+				{
 					var jObject = JObject.Parse(additionalInfo);
 					return jObject.GetJTokenValuePath<bool>("deliveryMethod.DeliveryMethod.isCourierDelivery");
 				}
 				return false;
-			} catch (Exception e) {
-				//TODo:
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, "TsShipmentHandler.isCourierDeliveryMethod");
 			}
 			return false;
 		}
-
-		private Guid GetTransportationIdAndCreateIfNotExist(int transId, string transName, UserConnection userConnection) {
-			try {
-				var select = new Select(userConnection)
-								.Column("Id").As("Id")
-								.From("TsShipmentPoint")
-								.Where("TsExternalId").IsEqual(Column.Parameter(transId)) as Select;
-				using(DBExecutor executor = select.UserConnection.EnsureDBConnection()) {
-					using(var reader = select.ExecuteReader(executor)) {
-						if(reader.Read()) {
-							return reader.GetColumnValue<Guid>("Id");
-						}
-					}
-				}
-
-				var resultId = Guid.NewGuid();
-				var insert = new Insert(userConnection)
-								.Into("TsShipmentPoint")
-								.Set("Id", Column.Parameter(resultId))
-								.Set("TsExternalId", Column.Parameter(transId))
-								.Set("Name", Column.Parameter(transName));
-				insert.Execute();
-				return resultId;
-			} catch(Exception e) {
-				//TODO:
-			}
-			return Guid.Empty;
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return false;
 		}
-		public void importTransportationPointCompany(IntegrationInfo integrationInfo) {
-			try {
-				var transportationId = integrationInfo.Data.GetJTokenValuePath<int>(JName + ".shipmentInfo.ShipmentInfo.transportationPointId");
-				var transportationName = integrationInfo.Data.GetJTokenValuePath<string>(JName + ".shipmentInfo.ShipmentInfo.transportationPointName");
-				var transportationCompanyId = integrationInfo.Data.GetJTokenValuePath<int>(JName + ".shipmentInfo.ShipmentInfo.transportationCompanyId");
-				var transportationCompanyName = integrationInfo.Data.GetJTokenValuePath<string>(JName + ".shipmentInfo.ShipmentInfo.transportationCompanyName");
-				var isCurier = isCourierDeliveryMethod(integrationInfo);
-				var shipmentId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
-				var shipmentPointId = GetTransportationIdAndCreateIfNotExist(transportationId, transportationName, integrationInfo.UserConnection);
-				var shipmentCompanyId = GetTransportationCompanyIdAndCreateIfNotExist(transportationCompanyId, transportationCompanyName, integrationInfo.UserConnection);
-				CreateOrUpdateShipmentPoint(shipmentPointId, shipmentCompanyId, isCurier, shipmentId, integrationInfo.UserConnection);
-			} catch (Exception e) {
-				//TODo:
-			}
-		}
-		public void CreateOrUpdateShipmentPoint(Guid shipmentPointId, Guid shipmentCompanyId, bool isCurier, Guid shipmentId, UserConnection userConnection) {
-			var existSelect = new Select(userConnection)
-						.Top(1)
-						.Column("Id")
-						.From("TsShipmentDelivery").As("src")
-						.Where("TsShipmentId").IsEqual(Column.Parameter(shipmentId)) as Select;
-			using (var dbExecutor = existSelect.UserConnection.EnsureDBConnection()) {
-				using (var reader = existSelect.ExecuteReader(dbExecutor)) {
-					if (reader.Read()) {
-						var shipmentDetailId = reader.GetColumnValue<Guid>("Id");
-						if (shipmentDetailId != Guid.Empty) {
-							var update = new Update(userConnection, "TsShipmentDelivery")
-										.Set("TsShipmentPointId", Column.Parameter(shipmentPointId))
-										.Set("TsTransportCompanyId", Column.Parameter(shipmentCompanyId))
-										.Set("TsCourierDelivery", Column.Parameter(isCurier))
-										.Where("Id").IsEqual(Column.Parameter(shipmentDetailId)) as Update;
-							return;
-						}
-					}
-				}
-			}
-
-			var insert = new Insert(userConnection)
-						.Into("TsShipmentDelivery")
-						.Set("TsShipmentPointId", Column.Parameter(shipmentPointId))
-						.Set("TsTransportCompanyId", Column.Parameter(shipmentCompanyId))
-						.Set("TsCourierDelivery", Column.Parameter(isCurier))
-						.Set("TsShipmentId", Column.Parameter(shipmentId)) as Insert;
-			insert.Execute();
-		}
-		private Guid GetTransportationCompanyIdAndCreateIfNotExist(int transId, string transName, UserConnection userConnection) {
-			try {
-				var select = new Select(userConnection)
-								.Column("Id").As("Id")
-								.From("TsTransportCompany")
-								.Where("TsExternalId").IsEqual(Column.Parameter(transId)) as Select;
-				using (DBExecutor executor = select.UserConnection.EnsureDBConnection()) {
-					using (var reader = select.ExecuteReader(executor)) {
-						if (reader.Read()) {
-							return reader.GetColumnValue<Guid>("Id");
-						}
-					}
-				}
-
-				var resultId = Guid.NewGuid();
-				var insert = new Insert(userConnection)
-								.Into("TsTransportCompany")
-								.Set("Id", Column.Parameter(resultId))
-								.Set("TsExternalId", Column.Parameter(transId))
-								.Set("Name", Column.Parameter(transName));
-				insert.Execute();
-				return resultId;
-			} catch (Exception e) {
-				//TODO:
-			}
-			return Guid.Empty;
-		}
+		
 	}
 
 	[ImportHandlerAttribute("ShipmentItem")]
@@ -1536,10 +1740,12 @@ namespace Terrasoft.TsConfiguration
 			UpdateProduct(integrationInfo);
 		}
 
-		public void UpdateProduct(IntegrationInfo integrationInfo) {
+		public void UpdateProduct(IntegrationInfo integrationInfo)
+		{
 			var eom = integrationInfo.Data["ShipmentItem"]["oem"].Value<string>();
 			var productId = GetProductIdByArticule(integrationInfo.UserConnection, eom);
-			if(productId != Guid.Empty) {
+			if (productId != Guid.Empty)
+			{
 				var unitName = integrationInfo.Data["ShipmentItem"]["unitName"].Value<string>();
 				updateProductUnitName(integrationInfo.UserConnection, productId, unitName);
 			}
@@ -1564,7 +1770,8 @@ namespace Terrasoft.TsConfiguration
 			return Guid.Empty;
 		}
 
-		public void updateProductUnitName(UserConnection userConnection, Guid productId, string unitName) {
+		public void updateProductUnitName(UserConnection userConnection, Guid productId, string unitName)
+		{
 			var unitId = OrderHandler.GetGuidByValue("Unit", unitName, userConnection, "ShortName");
 			if (unitId == Guid.Empty)
 				return;
@@ -1576,6 +1783,11 @@ namespace Terrasoft.TsConfiguration
 						.Set("UnitId", Column.Parameter(unitId))
 						.Where("ProductId").IsEqual(Column.Parameter(productId)) as Update;
 			updateOrderProduct.Execute();
+		}
+
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return false;
 		}
 	}
 
@@ -1623,7 +1835,7 @@ namespace Terrasoft.TsConfiguration
 		}
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
 		{
-			if(integrationInfo.Data == null)
+			if (integrationInfo.Data == null)
 			{
 				integrationInfo.Data = new JObject();
 			}
@@ -1632,37 +1844,48 @@ namespace Terrasoft.TsConfiguration
 
 		public override void AfterEntitySave(IntegrationInfo integrationInfo)
 		{
-			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
 				SetState(integrationInfo);
 				SetBussinesProtocol(integrationInfo);
 			}
 		}
-		public void SetState(IntegrationInfo integrationInfo) {
-			try {
+		public void SetState(IntegrationInfo integrationInfo)
+		{
+			try
+			{
 				var isActive = integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsActive");
 				if (isActive)
 				{
 					integrationInfo.IntegratedEntity.SetColumnValue("StateId", CsConstant.TsContractState.Signed);
 					integrationInfo.IntegratedEntity.UpdateInDB(false);
 				}
-			} catch(Exception e) {
-				//TODO: Add Logging
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, "ContractHandler.SetState");
 			}
 		}
-		public void SetBussinesProtocol(IntegrationInfo integrationInfo) {
-			try {
+		public void SetBussinesProtocol(IntegrationInfo integrationInfo)
+		{
+			try
+			{
 				var accountId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("AccountId");
-				if(accountId != Guid.Empty && integrationInfo.Action == CsConstant.IntegrationActionName.Create) {
+				if (accountId != Guid.Empty && integrationInfo.Action == CsConstant.IntegrationActionName.Create)
+				{
 					var isLegal = IsAccountLegal(accountId, integrationInfo.UserConnection);
 					integrationInfo.IntegratedEntity.SetColumnValue(isLegal ? "TsB2B" : "TsB2C", true);
 					integrationInfo.IntegratedEntity.UpdateInDB(false);
 				}
-			} catch(Exception e) {
-				//TODO: Add Logging
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, "ContractHandler.SetBussinesProtocol");
 			}
 		}
 
-		public bool IsAccountLegal(Guid accountId, UserConnection userConnection) {
+		public bool IsAccountLegal(Guid accountId, UserConnection userConnection)
+		{
 			var select = new Select(userConnection)
 							.Column("TsIsLawPerson").As("IsLegal")
 							.From("Account")
@@ -1695,6 +1918,8 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "TsContractDebt";
 			JName = "Debt";
 		}
+
+
 	}
 
 	[ImportHandlerAttribute("ManagerInfo")]
@@ -1731,18 +1956,23 @@ namespace Terrasoft.TsConfiguration
 			JName = "ManagerInfo";
 		}
 
-		public override bool IsExport(IntegrationInfo integrationInfo) {
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
 			return IsContactHaveSysAdminUnit(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.IntegratedEntity.UserConnection);
 		}
 
-		public bool IsContactHaveSysAdminUnit(Guid contactId, UserConnection userConnection) {
+		public bool IsContactHaveSysAdminUnit(Guid contactId, UserConnection userConnection)
+		{
 			var select = new Select(userConnection)
 						.Column(Func.Count("Id")).As("count")
 						.From("SysAdminUnit").As("sau")
 						.Where("sau", "ContactId").IsEqual(Column.Parameter(contactId)) as Select;
-			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection()) {
-				using (IDataReader reader = select.ExecuteReader(dbExecutor)) {
-					while (reader.Read()) {
+			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
+			{
+				using (IDataReader reader = select.ExecuteReader(dbExecutor))
+				{
+					while (reader.Read())
+					{
 						return DBUtilities.GetColumnValue<int>(reader, "count") > 0;
 					}
 				}
@@ -1756,7 +1986,8 @@ namespace Terrasoft.TsConfiguration
 	{
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
 		{
-			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
 				integrationInfo.Data["CounteragentContactInfo"]["positionFull"] = integrationInfo.Data["CounteragentContactInfo"]["position"];
 			}
 		}
@@ -1790,19 +2021,30 @@ namespace Terrasoft.TsConfiguration
 			JName = "CounteragentContactInfo";
 		}
 
-		public override bool IsExport(IntegrationInfo integrationInfo) {
-			var account = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("AccountId");
-			return IsAccountHaveOrderServiceId(account, integrationInfo.UserConnection);
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+
+			var isClient = integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsIsClient");
+			if (!isClient)
+			{
+				var account = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("AccountId");
+				return IsAccountHaveOrderServiceId(account, integrationInfo.UserConnection);
+			}
+			return true;
 		}
-		public bool IsAccountHaveOrderServiceId(Guid accountId, UserConnection userConnection) {
+		public bool IsAccountHaveOrderServiceId(Guid accountId, UserConnection userConnection)
+		{
 			var select = new Select(userConnection)
 						.Column(Func.Count("Id")).As("count")
 						.From("Account").As("a")
 						.Where("a", "Id").IsEqual(Column.Parameter(accountId))
 						.And("a", "TsOrderServiceId").IsNotEqual(Column.Const(0)) as Select;
-			using(DBExecutor executor = select.UserConnection.EnsureDBConnection()) {
-				using(var reader = select.ExecuteReader(executor)) {
-					if(reader.Read()) {
+			using (DBExecutor executor = select.UserConnection.EnsureDBConnection())
+			{
+				using (var reader = select.ExecuteReader(executor))
+				{
+					if (reader.Read())
+					{
 						return reader.GetColumnValue<int>("count") > 0;
 					}
 				}
@@ -1843,20 +2085,25 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "Account";
 			JName = "Counteragent";
 		}
-		public override bool IsExport(IntegrationInfo integrationInfo) {
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
 			return !isAccountExported(integrationInfo) && isAccountContracted(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
 		}
 
-		public bool isAccountContracted(Guid accountId, UserConnection userConnection) {
+		public bool isAccountContracted(Guid accountId, UserConnection userConnection)
+		{
 			var select = new Select(userConnection)
 						.Column(Func.Count("c", "Id")).As("count")
 						.From("Contract").As("c")
 						.Where("c", "AccountId").IsEqual(Column.Parameter(accountId))
 						.And("c", "TsActive").IsEqual(Column.Parameter(true)) as Select;
 
-			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection()) {
-				using (IDataReader reader = select.ExecuteReader(dbExecutor)) {
-					while (reader.Read()) {
+			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
+			{
+				using (IDataReader reader = select.ExecuteReader(dbExecutor))
+				{
+					while (reader.Read())
+					{
 						return DBUtilities.GetColumnValue<int>(reader, "count") > 0;
 					}
 				}
@@ -1864,7 +2111,8 @@ namespace Terrasoft.TsConfiguration
 			return false;
 		}
 
-		public bool isAccountExported(IntegrationInfo integrationInfo) {
+		public bool isAccountExported(IntegrationInfo integrationInfo)
+		{
 			return integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsDontIntegrate");
 		}
 
@@ -1893,16 +2141,18 @@ namespace Terrasoft.TsConfiguration
 
 	[ImportHandlerAttribute("")]
 	[ExportHandlerAttribute("AccountBillingInfo")]
-	public class AccountBillingInfoHandler: EntityHandler {
-		public AccountBillingInfoHandler() {
+	public class AccountBillingInfoHandler : EntityHandler
+	{
+		public AccountBillingInfoHandler()
+		{
 			Mapper = new MappingHelper();
 			EntityName = "AccountBillingInfo";
 			JName = "";
 		}
 	}
-	
 
-   [ImportHandlerAttribute("AccountAnniversary")]
+
+	[ImportHandlerAttribute("AccountAnniversary")]
 	[ExportHandlerAttribute("AccountAnniversary")]
 	public class AccountAnniversaryHandler : EntityHandler
 	{
@@ -1919,7 +2169,8 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "AccountAnniversary";
 			JName = "";
 		}
-		public override JObject ToJson(IntegrationInfo integrationInfo) {
+		public override JObject ToJson(IntegrationInfo integrationInfo)
+		{
 			base.ToJson(integrationInfo);
 			if (integrationInfo.Data.First != null && integrationInfo.Data.First.First != null)
 			{
@@ -1959,9 +2210,11 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "ContactAnniversary";
 			JName = "";
 		}
-		public override JObject ToJson(IntegrationInfo integrationInfo) {
+		public override JObject ToJson(IntegrationInfo integrationInfo)
+		{
 			base.ToJson(integrationInfo);
-			if(integrationInfo.Data.First != null && integrationInfo.Data.First.First != null) {
+			if (integrationInfo.Data.First != null && integrationInfo.Data.First.First != null)
+			{
 				integrationInfo.Data = (JObject)integrationInfo.Data.First.First;
 				return integrationInfo.Data;
 			}
@@ -1974,7 +2227,8 @@ namespace Terrasoft.TsConfiguration
 		}
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
 		{
-			if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
 				integrationInfo.Data["contactId"] = integrationInfo.ParentEntity.GetTypedColumnValue<string>("Id");
 			}
 		}

@@ -40,7 +40,7 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				//IntegrationLogger.Error("Method [GetSimpleTypeValue] catch exception: Message = {0}", e.Message);
+				IntegrationLogger.Error(e, "GetSimpleTypeValue");
 				throw;
 			}
 		}
@@ -61,7 +61,7 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				//IntegrationLogger.Error("Method [GetSimpleTypeValue] catch exception: Message = {0}", e.Message);
+				IntegrationLogger.Error(e, "GetSimpleTypeValue");
 				throw;
 			}
 		}
@@ -126,7 +126,7 @@ namespace Terrasoft.TsConfiguration
 				return new List<object>() { resultValue };
 			} catch(Exception e)
 			{
-				//TODO
+				IntegrationLogger.Error(e, "CreateColumnValues");
 				return new List<object>();
 			}
 		}
@@ -201,14 +201,14 @@ namespace Terrasoft.TsConfiguration
 					}
 					catch (Exception e)
 					{
-						//IntegrationLogger.Error("Method [] catch exception message = {0}", e.Message);
-						//throw;
+						IntegrationLogger.Error(e, string.Format("GetCompositeJObjects, {1} - {0}", item.GetTypedColumnValue<Guid>("Id"), entityName));
 					}
 				}
 				return jObjectsList;
 			}
 			catch (Exception e)
 			{
+				IntegrationLogger.Error(e, string.Format("GetCompositeJObjects {0} {1} {2} {3}", colValue, colName, entityName, handlerName));
 				return new List<JObject>();
 			}
 		}

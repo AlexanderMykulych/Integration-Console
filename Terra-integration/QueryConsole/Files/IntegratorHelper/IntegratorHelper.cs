@@ -22,7 +22,7 @@ namespace Terrasoft.TsConfiguration
 	public class IntegratorHelper
 	{
 
-				/// <summary>
+		/// <summary>
 		/// Конструктор
 		/// </summary>
 		/// <param name="requestMethod">Get, Put, Post</param>
@@ -38,12 +38,12 @@ namespace Terrasoft.TsConfiguration
 				return;
 			}
 			var requestId = Guid.NewGuid();
-			IntegrationLogger.PushRequest(logId, requestMethod, url, jsonText, requestId);
+			IntegrationLogger.PushRequest(requestMethod, url, jsonText, requestId);
 			ThreadPool.QueueUserWorkItem(((x) => MakeAsyncRequest(requestMethod, url, jsonText, callback, userConnection, logId, requestId, errorCallback, auth)));
 		}
-		 
 
-				/// <summary>
+
+		/// <summary>
 		/// Делает асинхронный запрос
 		/// </summary>
 		/// <param name="requestMethod"></param>
@@ -59,8 +59,7 @@ namespace Terrasoft.TsConfiguration
 			{
 				Console.WriteLine(url);
 				Console.WriteLine(jsonText);
-
-                var _request = WebRequest.Create(new Uri(url)) as HttpWebRequest;
+				var _request = WebRequest.Create(new Uri(url)) as HttpWebRequest;
 				_request.Method = requestMethod.ToString();
 				_request.ContentType = "application/json";
 				_request.Headers.Add("authorization", string.IsNullOrEmpty(auth) ? "Basic YnBtb25saW5lOmJwbW9ubGluZQ==" : auth);
@@ -84,7 +83,7 @@ namespace Terrasoft.TsConfiguration
 						if (callback != null)
 						{
 							string responceText = sr.ReadToEnd();
-							IntegrationLogger.GetResponse(logId, responceText);
+							IntegrationLogger.GetResponse(responceText);
 							callback(responceText, userConnection, requestId);
 						}
 					}
@@ -95,7 +94,8 @@ namespace Terrasoft.TsConfiguration
 					using (StreamReader sr = new StreamReader(response.GetResponseStream()))
 					{
 						string responceText = sr.ReadToEnd();
-						IntegrationLogger.ResponseError(logId, e, responceText, requestId, jsonText);
+						Console.WriteLine(responceText);
+						IntegrationLogger.ResponseError(e, responceText, requestId, jsonText);
 						if (errorCallback != null)
 						{
 							errorCallback(responceText, userConnection, requestId);
@@ -105,8 +105,9 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.BeforeRequestError(logId, e);
-				if (errorCallback != null) {
+				IntegrationLogger.BeforeRequestError(e);
+				if (errorCallback != null)
+				{
 					errorCallback(e.Message, userConnection, requestId);
 				}
 			}
@@ -145,6 +146,6 @@ namespace Terrasoft.TsConfiguration
 			public UserConnection UserConnection;
 			public string JsonData;
 		}
-		 
+
 	}
 }

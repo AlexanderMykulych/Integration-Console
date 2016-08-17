@@ -195,7 +195,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				catch (Exception e)
 				{
-					//IntegrationLogger.Error("Method [ReportEntity] class entity handler throw exception: entityName = {0} id = {1} message = {2}", integrationInfo.EntityName, integrationInfo.EntityIdentifier, e.Message);
+					IntegrationLogger.Error(e, "ExecuteHandlerMethod");
 				}
 			}
 		}

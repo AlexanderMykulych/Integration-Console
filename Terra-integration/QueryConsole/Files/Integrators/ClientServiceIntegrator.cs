@@ -52,7 +52,7 @@ namespace Terrasoft.TsConfiguration2
 					Insert(entity);
 					return true;
 				}
-				IntegrationLogger.StartTransaction(logId, new LogTransactionInfo()
+				IntegrationLogger.StartTransaction(new LogTransactionInfo()
 				{
 					RequesterName = CsConstant.PersonName.Bpm,
 					ResiverName = CsConstant.PersonName.ClientService,
@@ -69,7 +69,7 @@ namespace Terrasoft.TsConfiguration2
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.BeforeRequestError(logId, e);
+				IntegrationLogger.BeforeRequestError(e);
 				return true;
 			}
 		}
@@ -95,7 +95,7 @@ namespace Terrasoft.TsConfiguration2
 					Update(entity);
 					return true;
 				}
-				IntegrationLogger.StartTransaction(logId, new LogTransactionInfo()
+				IntegrationLogger.StartTransaction(new LogTransactionInfo()
 				{
 					RequesterName = CsConstant.PersonName.Bpm,
 					ResiverName = CsConstant.PersonName.ClientService,
@@ -111,7 +111,7 @@ namespace Terrasoft.TsConfiguration2
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.BeforeRequestError(logId, e);
+				IntegrationLogger.BeforeRequestError(e);
 				return true;
 			}
 		}
@@ -137,7 +137,7 @@ namespace Terrasoft.TsConfiguration2
 					return true;
 				}
 
-				IntegrationLogger.StartTransaction(logId, new LogTransactionInfo()
+				IntegrationLogger.StartTransaction(new LogTransactionInfo()
 				{
 					RequesterName = CsConstant.PersonName.Bpm,
 					ResiverName = CsConstant.PersonName.ClientService,
@@ -148,7 +148,7 @@ namespace Terrasoft.TsConfiguration2
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.BeforeRequestError(logId, e);
+				IntegrationLogger.BeforeRequestError(e);
 				return true;
 			}
 		}
