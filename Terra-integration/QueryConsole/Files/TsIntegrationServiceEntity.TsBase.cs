@@ -2134,7 +2134,7 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				//TODO: Add Logging
+				IntegrationLogger.Error(e, "CounteragentHandler");
 			}
 		}
 	}
