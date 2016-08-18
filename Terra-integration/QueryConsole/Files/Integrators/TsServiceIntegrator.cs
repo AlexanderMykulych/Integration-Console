@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
-using static Terrasoft.TsConfiguration.CsConstant.IntegratorSettings;
 
 namespace Terrasoft.TsConfiguration
 {
@@ -73,7 +72,7 @@ namespace Terrasoft.TsConfiguration
 				return Settings.IsDebugMode;
 			}
 		}
-		public DebugModeInfo DebugModeInfo
+		public CsConstant.IntegratorSettings.DebugModeInfo DebugModeInfo
 		{
 			get
 			{
@@ -120,12 +119,6 @@ namespace Terrasoft.TsConfiguration
 			if(!IsIntegratorActive) {
 				return;
 			}
-			IntegrationLogger.StartTransaction(new LogTransactionInfo() {
-				RequesterName = CsConstant.PersonName.Bpm,
-				ResiverName = ServiceName,
-				UserConnection = userConnection
-			});
-			info.LogId = IntegrationLogger.CurrentLogId;
 			if (IsDebugMode)
 			{
 				info.ResponseData = DebugModeInfo.GetDebugDataJson();
@@ -205,11 +198,13 @@ namespace Terrasoft.TsConfiguration
 				{
 					integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
 					integrationInfo.Handler = handler;
+					IntegrationLogger.StartTransaction(userConnection, CsConstant.PersonName.Bpm, ServiceName, entity.GetType().Name, handler.JName);
 					entityHelper.IntegrateEntity(integrationInfo);
 					if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
 					{
 						var json = integrationInfo.Result.Data.ToString();
 						var requestInfo = integrationInfo.Handler.GetRequestInfo(integrationInfo);
+						requestInfo.LogId = IntegrationLogger.CurrentLogId;
 						MakeRequest(requestInfo);
 					}
 				}

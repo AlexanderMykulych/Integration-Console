@@ -84,7 +84,8 @@ namespace Terrasoft.TsConfiguration {
 				CsConstant.DefaultBusEventFilters,
 				CsConstant.DefaultBusEventSorts
 			);
-
+			IntegrationLogger.StartTransaction(UserConnection, CsConstant.PersonName.Bpm, CsConstant.IntegratorSettings.Settings[this.GetType()].Name, "", "");
+			var logId = IntegrationLogger.CurrentLogId;
 			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y, requestId) => {
 				var responceObj = x.DeserializeJson();
 				var busEventNotifications = (JArray)responceObj["data"];
@@ -92,7 +93,7 @@ namespace Terrasoft.TsConfiguration {
 				if (busEventNotifications != null) {
 					OnBusEventNotificationsDataRecived(busEventNotifications, y);
 				}
-			});
+			}, logId);
 		}
 
 		public void IniciateLoadChanges() {
@@ -112,7 +113,7 @@ namespace Terrasoft.TsConfiguration {
 				id = x
 			}).SerializeToJson();
 
-			PushRequestWrapper(TRequstMethod.PUT, url, json, null);
+			PushRequestWrapper(TRequstMethod.PUT, url, json, null, IntegrationLogger.CurrentLogId);
 			ReadedNotificationIds.Clear();
 		}
 
@@ -146,7 +147,7 @@ namespace Terrasoft.TsConfiguration {
 					integrationInfo.Action = CsConstant.IntegrationActionName.Update;
 					_integrationEntityHelper.IntegrateEntity(integrationInfo);
 				}
-			});
+			}, IntegrationLogger.CurrentLogId);
 		}
 
 		/// <summary>
@@ -283,11 +284,11 @@ namespace Terrasoft.TsConfiguration {
 			var collection = param.Where(x => !string.IsNullOrEmpty(x));
 			return collection.Any() ? collection.Aggregate((cur, next) => cur + "&" + next) : "";
 		}
-		private void PushRequestWrapper(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback) {
+		private void PushRequestWrapper(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback, Guid logId) {
 			if (!_isIntegratorActive) {
 				return;
 			}
-			_integratorHelper.PushRequest(requestMethod, url, jsonText, callback, UserConnection, null, null, _auth);
+			_integratorHelper.PushRequest(requestMethod, url, jsonText, callback, UserConnection, logId, null, _auth);
 		}
 
 

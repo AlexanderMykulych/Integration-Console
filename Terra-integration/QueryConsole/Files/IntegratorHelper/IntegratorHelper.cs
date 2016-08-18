@@ -30,7 +30,7 @@ namespace Terrasoft.TsConfiguration
 		/// <param name="jsonText">Данные для отправки в формате json</param>
 		/// <param name="callback">callback - для обработки ответа</param>
 		/// <param name="userConnection"></param>
-		public void PushRequest(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback, UserConnection userConnection = null, Guid? logId = null,
+		public void PushRequest(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback, UserConnection userConnection, Guid logId,
 			 Action<string, UserConnection, Guid?> errorCallback = null, string auth = null)
 		{
 			if (string.IsNullOrEmpty(url))
@@ -58,7 +58,7 @@ namespace Terrasoft.TsConfiguration
 			try
 			{
 				Console.WriteLine(url);
-				Console.WriteLine(jsonText);
+				IntegrationLogger.SetCurentThreadLogId(logId.Value, userConnection);
 				var _request = WebRequest.Create(new Uri(url)) as HttpWebRequest;
 				_request.Method = requestMethod.ToString();
 				_request.ContentType = "application/json";

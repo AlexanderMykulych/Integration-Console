@@ -337,11 +337,10 @@ namespace Terrasoft.TsConfiguration
 					IntegrationLocker.Unlock(entity.SchemaName);
 				}
 				ExecuteMapMethodQueue();
-				IntegrationLogger.SuccessSave(jName);
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.AfterSaveError(e, entity.GetType().ToString());
+				IntegrationLogger.Error(e, string.Format("SaveEntity {0} - {1}", entity.GetType().ToString(), jName));
 			}
 		}
 

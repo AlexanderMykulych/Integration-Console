@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Terrasoft.Core;
 using Terrasoft.Core.DB;
-using static Terrasoft.TsConfiguration.CsConstant;
 
 namespace Terrasoft.TsConfiguration
 {
@@ -39,9 +38,15 @@ namespace Terrasoft.TsConfiguration
 				return newLogId;
 			}
 		}
-		public static void SetCurentThreadLogId(Guid Id)
+		public static TsLogger CurrentLogger {
+			get {
+				return _log.GetValue(CurrentLogId);
+			}
+		}
+		public static void SetCurentThreadLogId(Guid Id, UserConnection userConnection)
 		{
 			SetThreadLogId(Thread.CurrentThread.ManagedThreadId, Id);
+			CurrentLogger.userConnection = userConnection;
 		}
 
 		public static void BeforeRequestError(Exception e) {
@@ -55,13 +60,14 @@ namespace Terrasoft.TsConfiguration
 			logger.Error(string.Format("Error - text = {0} callStack = {1}", e.Message, e.StackTrace));
 		}
 
-		public static void StartTransaction(LogTransactionInfo info)
+		public static void StartTransaction(UserConnection userConnection, string requesterName, string reciverName, string bpmObjName, string serviceObjName)
 		{
 			var id = CurrentLogId;
+			SetCurentThreadLogId(id, userConnection);
 			var logger = _log.GetValue(id);
-			logger.info = info;
+			logger.userConnection = userConnection;
 			logger.Instance.Info("StartTransaction" + id.ToString());
-			logger.CreateTransaction(id);
+			logger.CreateTransaction(id, requesterName, reciverName, bpmObjName, serviceObjName);
 		}
 
 		public static void PushRequest(TRequstMethod requestMethod, string url, string jsonText, Guid requestId)
@@ -89,118 +95,147 @@ namespace Terrasoft.TsConfiguration
 			if (!requestId.HasValue)
 				return;
 			var logger = _log.GetValue(id);
-			//logger.Instance.Info(string.Format("ResponseError - id = {0} requestId={1}", id.Value, requestId));
 			logger.UpdateResponseError(id, requestId.Value, e.Message, e.StackTrace, text, requestJson);
-			//Console.WriteLine(string.Format("ResponseError - id = {0} requestId={1} message={2}", id.Value, requestId, text));
 		}
 
-		
-		
+		public static Dictionary<string, int> IncDict = new Dictionary<string, int>();
 
-		
-
-		public static void AfterSaveError(Exception e, string typeName)
-		{
-			//IntegrationConsole.EntityIntegratedError(typeName);
-			//var buff = Console.ForegroundColor;
-			//Console.ForegroundColor = ConsoleColor.Red;
-			//Console.WriteLine("Error: " + typeName);
-			//Console.ForegroundColor = buff;
-		}
-
-        public static Dictionary<string, int> IncDict = new Dictionary<string, int>();
-		public static void SuccessSave(string typeName) {
-			Console.Write("Save OK");
-			//IntegrationConsole.EntityIntegratedSuccess(typeName);
-			if (IncDict.ContainsKey(typeName))
-            {
-                //Console.WriteLine((++IncDict[typeName]).ToString() + ".Save: " + typeName);
-            } else
-            {
-                IncDict.Add(typeName, 0);
-                //Console.WriteLine((++IncDict[typeName]).ToString() + ".Save: " + typeName);
-            }
-		}
-
-		public static void MappingError(Exception e, MappingItem item, IntegrationInfo integrationInfo) {
-			////IntegrationConsole.AddMappingError();
+		public static void MappingError(Exception e, MappingItem item, CsConstant.IntegrationInfo integrationInfo) {
+			try {
+				CurrentLogger.userConnection = integrationInfo.UserConnection;
+				CurrentLogger.MappingError(CurrentLogId, e.ToString(), e.StackTrace, item.JSourcePath, item.TsSourcePath);
+			} catch(Exception e2) {
+				//TODO
+			}
 		}
 
 		public static void Error(Exception e, string additionalInfo = null)
 		{
-
+			try {
+				CurrentLogger.Error(CurrentLogId, e.ToString(), e.StackTrace, additionalInfo);
+			} catch (Exception e2) {
+				//TODO
+			}
 		}
 	}
 
 	public class TsLogger {
 		private global::Common.Logging.ILog _log;
-		public LogTransactionInfo info;
 		public global::Common.Logging.ILog Instance {
 			get {
 				return _log;
 			}
 		}
+		public UserConnection userConnection;
 		public TsLogger() {
 			_log = global::Common.Logging.LogManager.GetLogger("TscIntegration") ?? global::Common.Logging.LogManager.GetLogger("Common");
 		}
 
-		public void CreateTransaction(Guid id) {
-			//var insert = new Insert(info.UserConnection)
-			//			.Into("TsIntegrLog")
-			//			.Set("Id", Column.Parameter(id))
-			//			.Set("TsDate", Column.Parameter(DateTime.UtcNow))
-			//			.Set("TsResiver", Column.Parameter(info.ResiverName))
-			//			.Set("TsName", Column.Parameter(info.RequesterName)) as Insert;
-			//insert.Execute();
+		public void CreateTransaction(Guid id, string requesterName, string resiverName, string entityName, string serviceEntityName) {
+			try {
+				var textQuery = string.Format(@"
+					merge
+						TsIntegrLog il
+					using
+						(select '{0}' as Id) as src
+					on
+						il.Id = src.Id
+					when matched then
+						update
+							set
+								TsResiver = '{2}',
+								TsName = '{3}',
+								TsEntityName = '{4}',
+								TsServiceEntityName = '{5}'
+					when not matched then
+						insert (TsResiver, TsName, TsEntityName, TsServiceEntityName, Id)
+						values ('{2}', '{3}', '{4}', '{5}', '{0}');
+				", id, DateTime.UtcNow, resiverName, requesterName, entityName, serviceEntityName);
+				var query = new CustomQuery(userConnection, textQuery);
+				query.Execute();
+			} catch(Exception e) {
+				Instance.Error(e.ToString());
+			}
 		}
 
 		public void CreateRequest(Guid logId, string method, string url, Guid requestType, Guid requestId) {
-			//info.LastUrl = url;
-			//info.LastMethod = method;
-			//var insert = new Insert(info.UserConnection)
-			//			.Into("TsIntegrationRequest")
-			//			.Set("Id", Column.Parameter(requestId))
-			//			.Set("TsIntegrLogId", Column.Parameter(logId))
-			//			.Set("TsRequester", Column.Parameter(info.RequesterName))
-			//			.Set("TsResiver", Column.Parameter(info.ResiverName))
-			//			.Set("TsMethod", Column.Parameter(method))
-			//			.Set("TsUrl", Column.Parameter(url))
-			//			.Set("TsRequestTypeId", Column.Parameter(requestType))
-			//			.Set("TsStatusId", Column.Parameter(CsConstant.TsRequestStatus.Success)) as Insert;
-			//insert.Execute();
+			try {
+				var insert = new Insert(userConnection)
+							.Into("TsIntegrationRequest")
+							.Set("Id", Column.Parameter(requestId))
+							.Set("TsIntegrLogId", Column.Parameter(logId))
+							.Set("TsMethod", Column.Parameter(method))
+							.Set("TsUrl", Column.Parameter(url))
+							.Set("TsRequestTypeId", Column.Parameter(requestType))
+							.Set("TsStatusId", Column.Parameter(CsConstant.TsRequestStatus.Success)) as Insert;
+				insert.Execute();
+			} catch (Exception e) {
+				Instance.Error(e.ToString());
+			}
 		}
 
 		public void CreateResponse(Guid id, string text, Guid requestType)
 		{
-			//var insert = new Insert(info.UserConnection)
-			//			.Into("TsIntegrationRequest")
-			//			.Set("TsIntegrLogId", Column.Parameter(id))
-			//			.Set("TsRequester", Column.Parameter(info.ResiverName))
-			//			.Set("TsResiver", Column.Parameter(info.RequesterName))
-			//			.Set("TsMethod", Column.Parameter(info.LastMethod))
-			//			.Set("TsUrl", Column.Parameter(info.LastUrl))
-			//			.Set("TsRequestTypeId", Column.Parameter(requestType)) as Insert;
-			//insert.Execute();
+			try {
+				var insert = new Insert(userConnection)
+								.Into("TsIntegrationRequest")
+								.Set("TsIntegrLogId", Column.Parameter(id))
+								.Set("TsRequestTypeId", Column.Parameter(requestType)) as Insert;
+				insert.Execute();
+			} catch (Exception e) {
+				Instance.Error(e.ToString());
+			}
 		}
 
 		public void UpdateResponseError(Guid id, Guid requestId, string errorText, string callStack, string json, string requestJson) {
-			//var errorId = Guid.NewGuid();
-			//var insert = new Insert(info.UserConnection)
-			//			.Into("TsIntegrationError")
-			//			.Set("Id", Column.Parameter(errorId))
-			//			.Set("TsErrorText", Column.Parameter(errorText))
-			//			.Set("TsCallStack", Column.Parameter(callStack))
-			//			.Set("TsRequestJson", Column.Parameter(requestJson != null ? requestJson : string.Empty))
-			//			.Set("TsResponseJson", Column.Parameter(json)) as Insert;
-			//insert.Execute();
-			//var update = new Update(info.UserConnection, "TsIntegrationRequest")
-			//			.Set("TsErrorId", Column.Parameter(errorId))
-			//			.Set("TsStatusId", Column.Parameter(CsConstant.TsRequestStatus.Error))
-			//			.Where("Id").IsEqual(Column.Parameter(requestId)) as Update;
-			//update.Execute();
+			try {
+				var errorId = Guid.NewGuid();
+				var insert = new Insert(userConnection)
+							.Into("TsIntegrationError")
+							.Set("Id", Column.Parameter(errorId))
+							.Set("TsErrorText", Column.Parameter(errorText))
+							.Set("TsCallStack", Column.Parameter(callStack))
+							.Set("TsRequestJson", Column.Parameter(requestJson != null ? requestJson : string.Empty))
+							.Set("TsResponseJson", Column.Parameter(json)) as Insert;
+				insert.Execute();
+				var update = new Update(userConnection, "TsIntegrationRequest")
+							.Set("TsErrorId", Column.Parameter(errorId))
+							.Set("TsStatusId", Column.Parameter(CsConstant.TsRequestStatus.Error))
+							.Where("Id").IsEqual(Column.Parameter(requestId)) as Update;
+				update.Execute();
+			} catch (Exception e) {
+				Instance.Error(e.ToString());
+			}
 		}
 
+		public void MappingError(Guid logId, string errorMessage, string callStack, string serviceFieldName, string bpmFieldName) {
+			try {
+				var insert = new Insert(userConnection)
+							.Into("TsIntegrMappingError")
+							.Set("TsErrorMessage", Column.Parameter(errorMessage))
+							.Set("TsCallStack", Column.Parameter(callStack))
+							.Set("TsServiceFieldName", Column.Parameter(serviceFieldName))
+							.Set("TsBpmFieldName", Column.Parameter(bpmFieldName))
+							.Set("TsIntegrLogId", Column.Parameter(logId)) as Insert;
+				insert.Execute();
+			} catch (Exception e) {
+				Instance.Error(e.ToString());
+			}
+		}
 
+		public void Error(Guid logId, string errorMessage, string callStack, string additionalInfo) {
+			try {
+				var insert = new Insert(userConnection)
+							.Into("TsIntegrError")
+							.Set("TsErrorText", Column.Parameter(errorMessage))
+							.Set("TsCallStack", Column.Parameter(callStack))
+							.Set("TsAdditionalInfo", Column.Parameter(additionalInfo))
+							.Set("TsIntegrLogId", Column.Parameter(logId)) as Insert;
+				insert.Execute();
+			} catch (Exception e) {
+				Instance.Error(e.ToString());
+			}
+		}
 	}
 
 	public class LogTransactionInfo {

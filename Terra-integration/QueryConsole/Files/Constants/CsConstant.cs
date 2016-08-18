@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
 using Terrasoft.TsConfiguration;
@@ -304,32 +305,33 @@ namespace Terrasoft.TsConfiguration {
 				{
 					typeof(ClientServiceIntegrator),
 					new IntegratorSetting() {
-						Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==",
-						Name = "ClientService",
+						Auth = Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "ClientServiceAuth", "Basic YnBtb25saW5lOmJwbW9ubGluZQ=="),
+						Name = Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "ClientServiceName", "ClientService"),
 						BaseUrl = new Dictionary<TServiceObject, string>() {
-							//{ TServiceObject.Dict, "http://api.client-service.bus.stage2.auto3n.ru/v2/dict/AUTO3N" },
-							{ TServiceObject.Entity, "http://api.client-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
-							////{ TServiceObject.Dict, @"http://bus.stage2.auto3n.ru:8080/client-service/v2/dict/AUTO3N" },
-							//{ TServiceObject.Entity, "http://api.client-service.stage3.laximo.ru/v2/entity/AUTO3N" }
+							{ TServiceObject.Entity, Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "ClientServiceEntityUrl", "http://api.client-service.stage3.laximo.ru/v2/entity/AUTO3N") },
+							{ TServiceObject.Dict, Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "ClientServiceDictUrl", "http://api.client-service.stage3.laximo.ru/v2/dict/AUTO3N") }
 						},
-						IsIntegratorActive = true,
-						IsDebugMode = false
+						IsIntegratorActive = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "ClientServiceIsActive", false),
+						IsDebugMode = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "ClientServiceisDebugMode", false)
 					}
 				},
 				{
 					typeof(OrderServiceIntegrator),
 					new IntegratorSetting() {
-						Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==",
-						Name = "OrderService",
+						Auth = Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "OrderServiceAuth", "Basic YnBtb25saW5lOmJwbW9ubGluZQ=="),
+						Name = Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "OrderServiceName", "OrderService"),
 						BaseUrl = new Dictionary<TServiceObject, string>() {
-							//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
-							{ TServiceObject.Entity, " http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
-							//{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
-							//{ TServiceObject.Entity, @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N" }
-				
+							{ 
+					    		TServiceObject.Entity,
+								Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "OrderServiceEntityUrl", @"http://api.order-service.bus.stage2.auto3n.ru/v2/entity/AUTO3N") 
+							},
+							{ 
+					    		TServiceObject.Dict,
+								Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "OrderServiceDictUrl", @"http://api.order-service.bus.stage2.auto3n.ru/v2/dict/AUTO3N") 
+							}
 						},
-						IsIntegratorActive = true,
-						IsDebugMode = false,
+						IsIntegratorActive = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "OrderServiceIsActive", false),
+						IsDebugMode = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "OrderServiceIsDebugMode", false),
 						DebugModeInfo = new DebugModeInfo()
 						{
 							FilePath = @"../../Files/Debug/response.json"
@@ -339,18 +341,15 @@ namespace Terrasoft.TsConfiguration {
 				{
 					typeof(IntegrationServiceIntegrator),
 					new IntegratorIntegrationServiceSetting() {
-						Auth = "Basic YnBtb25saW5lOmJwbW9ubGluZQ==",
-						Name = "IntegrationService",
+						Auth = Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "IntegrationServiceAuth", "Basic YnBtb25saW5lOmJwbW9ubGluZQ=="),
+						Name = Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "IntegrationServiceName", "IntegrationService"),
 						BaseUrl = new Dictionary<TServiceObject, string>() {
-							//{ TServiceObject.Dict, "http://api.order-service.bus2.auto3n.ru/v2/dict/AUTO3N" },
-							//{ TServiceObject.Entity, "http://api.order-service.bus2.auto3n.ru/v2/entity/AUTO3N" }
-							//{ TServiceObject.Dict, @"http://api.order-service.stage2.laximo.ru//v2/entity/AUTO3N" },
-							{ TServiceObject.Entity, @"http://api.integration.bus.stage2.auto3n.ru/v2/entity" }
+							{ TServiceObject.Entity, Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "IntegrationServicePostUrl", @"http://api.integration.bus.stage2.auto3n.ru/v2/entity") }
 						},
-						PostboxId = 10004,
-						NotifyLimit = 50,
-                        IsIntegratorActive = true,
-						IsDebugMode = false
+						PostboxId = Terrasoft.Core.Configuration.SysSettings.GetValue<int>(UserConnection, "IntegrationServicePostId", 10004),
+						NotifyLimit = Terrasoft.Core.Configuration.SysSettings.GetValue<int>(UserConnection, "IntegrationServicePostLimit", 50),
+                        IsIntegratorActive = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "IntegrationServiceIsActive", false),
+						IsDebugMode = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "IntegrationServiceIsDebugMode", false),
 					}
 				}
 			};
@@ -368,19 +367,51 @@ namespace Terrasoft.TsConfiguration {
 				public int NotifyLimit;
 			}
 
-			public class DebugModeInfo
-			{
+			public class DebugModeInfo {
 				public string FilePath;
 
-				public string GetDebugDataJson()
-				{
-					using(var stream = new StreamReader(new FileStream(FilePath, FileMode.Open)))
-					{
+				public string GetDebugDataJson() {
+					using (var stream = new StreamReader(new FileStream(FilePath, FileMode.Open))) {
 						return stream.ReadToEnd();
 					}
 				}
 			}
 			#endregion
+		}
+
+		private static UserConnection _userConnection;
+		private static UserConnection UserConnection {
+			get {
+				if (_userConnection == null) {
+					_userConnection = (UserConnection)HttpContext.Current.Session["UserConnection"];
+					if (_userConnection == null) {
+						var appConnection = HttpContext.Current.Application["AppConnection"] as AppConnection;
+						var systemUserConnection = appConnection.SystemUserConnection;
+						var autoAuthorization = (bool)Terrasoft.Core.Configuration.SysSettings.GetValue(
+							systemUserConnection, "ClientSiteIntegrationAutoAuthorization");
+						if (autoAuthorization) {
+							string userName = (string)Terrasoft.Core.Configuration.SysSettings.GetValue(
+							systemUserConnection, "ClientSiteIntegrationUserName");
+							if (!string.IsNullOrEmpty(userName)) {
+								string userPassword = (string)Terrasoft.Core.Configuration.SysSettings.GetValue(
+								systemUserConnection, "ClientSiteIntegrationUserPassword");
+								string workspace = appConnection.SystemUserConnection.Workspace.Name;
+								_userConnection = new UserConnection(appConnection);
+								_userConnection.Initialize();
+								try {
+									_userConnection.Login(userName, userPassword, workspace, TimeZoneInfo.Utc);
+								} catch (Exception) {
+									_userConnection = null;
+								}
+							}
+						}
+					}
+				}
+				if (_userConnection == null) {
+					throw new ArgumentException("Invalid login or password");
+				}
+				return _userConnection;
+			}
 		}
 
 		public static class XmlManagerConstant {

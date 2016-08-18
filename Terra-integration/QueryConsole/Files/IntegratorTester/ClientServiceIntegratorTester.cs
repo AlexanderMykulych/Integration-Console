@@ -22,7 +22,7 @@ namespace Terrasoft.TsConfiguration
 		public override List<string> InitEntitiesName() {
 			return new List<string>() {
 				//"Account",
-				//"Contact",
+				"Contact",
 				//"TsAutoOwnerInfo",
 				//"TsAutomobile",
 				//"SysAdminUnit",
