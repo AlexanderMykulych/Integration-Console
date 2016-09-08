@@ -30,12 +30,15 @@ namespace Terrasoft.TsConfiguration
 		};
 		public static Dictionary<string, Func<object, object>> OverMacrosDictImport = new Dictionary<string, Func<object, object>>() {
 			{ "ConvertJson", x => ConvertStringToJson(x)},
-			{ "ConvertJsonArray", x => ConvertJsonToArray(x)}
+			{ "ConvertJsonArray", x => ConvertJsonToArray(x)},
+			{ "ToLdapName", x => LdapNameToSimpleName(x) }
 		};
 		public static Dictionary<string, Func<object, object>> OverMacrosDictExport = new Dictionary<string, Func<object, object>>() {
 			{ "ConvertJson", x => ConvertJsonToString(x)},
-			{ "ConvertJsonArray", x => ConvertArrayToJson(x)}
+			{ "ConvertJsonArray", x => ConvertArrayToJson(x)},
+			{ "ToLdapName", x => ToLdapName(x) }
 		};
+
 
 		public static object GetMacrosResultImport(string macrosName, object value, MacrosType type = MacrosType.Rule)
 		{
@@ -79,7 +82,23 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-				public static Func<object, object> DateTimeToYearInteger = (x) =>
+		public static Func<object, object> ToLdapName = (x) => {
+			var ldapName = CsConstant.IntegratorSettings.LdapDomainName;
+			if(!string.IsNullOrEmpty(ldapName)) {
+				return string.Format(@"{0}@{1}", x.ToString(), ldapName);
+			}
+			return x;
+		};
+		public static Func<object, object> LdapNameToSimpleName = (x) => {
+			if (x == null) {
+				return x;
+			}
+			var text = x.ToString();
+			var parts = text.Split(new char[] {'@'});
+			return parts.FirstOrDefault();
+		}; 
+
+		public static Func<object, object> DateTimeToYearInteger = (x) =>
 		{
 			if (x == null)
 				return null;

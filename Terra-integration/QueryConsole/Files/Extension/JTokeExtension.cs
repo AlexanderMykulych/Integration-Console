@@ -54,5 +54,17 @@ namespace Terrasoft.TsConfiguration {
 			}
 			return token.Value<T>();
 		}
+
+		public static bool IsJTokenPathHasValue(this JToken jToken, string path) {
+			var token = jToken.SelectToken(path);
+			return token != null && token.HasValues;
+		}
+
+		public static void RemoveByPath(this JToken jToken, string path) {
+			var token = jToken.SelectToken(path);
+			if(token != null) {
+				token.Parent.Remove();
+			}
+		}
 	}
 }

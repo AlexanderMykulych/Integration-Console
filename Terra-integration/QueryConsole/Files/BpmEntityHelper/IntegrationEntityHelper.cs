@@ -13,7 +13,7 @@ namespace Terrasoft.TsConfiguration
 {
 	public class IntegrationEntityHelper
 	{
-				private static List<Type> IntegrationEntityTypes { get; set; }
+		private static List<Type> IntegrationEntityTypes { get; set; }
 		private static Dictionary<Type, EntityHandler> EntityHandlers { get; set; }
 		 
 
@@ -39,7 +39,11 @@ namespace Terrasoft.TsConfiguration
 		/// <returns></returns>
 		public Type GetAttributeType(IntegrationInfo integrationInfo)
 		{
-			switch (integrationInfo.IntegrationType)
+			return GetAttributeType(integrationInfo.IntegrationType);
+		}
+		public Type GetAttributeType(CsConstant.TIntegrationType integrationType)
+		{
+			switch (integrationType)
 			{
 				case CsConstant.TIntegrationType.Import:
 					return typeof(ImportHandlerAttribute);
@@ -58,11 +62,16 @@ namespace Terrasoft.TsConfiguration
 		/// <returns></returns>
 		public List<Type> GetIntegrationTypes(IntegrationInfo integrationInfo)
 		{
+			return GetIntegrationTypes(integrationInfo.IntegrationType);
+		}
+
+		public List<Type> GetIntegrationTypes(CsConstant.TIntegrationType integrationType)
+		{
 			if (IntegrationEntityTypes != null && IntegrationEntityTypes.Any())
 			{
 				return IntegrationEntityTypes;
 			}
-			var attributeType = GetAttributeType(integrationInfo);
+			var attributeType = GetAttributeType(integrationType);
 			var assembly = typeof(IntegrationServiceIntegrator).Assembly;
 			return IntegrationEntityTypes = assembly.GetTypes().Where(x =>
 			{
@@ -104,20 +113,18 @@ namespace Terrasoft.TsConfiguration
 			}
 			return null;
 		}
-		private Object thisLock = new Object();
-		public List<EntityHandler> GetAllIntegrationHandler(IntegrationInfo integrationInfo) {
+
+		public List<EntityHandler> GetAllIntegrationHandler(string entityName, CsConstant.TIntegrationType integrationType) {
 			var result = new List<EntityHandler>();
 
-			var attributeType = GetAttributeType(integrationInfo);
-			var types = GetIntegrationTypes(integrationInfo);
-
-			var handlerName = integrationInfo.EntityName;
+			var attributeType = GetAttributeType(integrationType);
+			var types = GetIntegrationTypes(integrationType);
 			foreach (var type in types) {
 				var attributes = type.GetCustomAttributes(attributeType, true);
 
 				foreach (IntegrationHandlerAttribute attribute in attributes) {
 
-					if (attribute != null && attribute.EntityName == handlerName) {
+					if (attribute != null && attribute.EntityName == entityName) {
 						if (EntityHandlers.ContainsKey(type))
 						{
 							result.Add((EntityHandler)EntityHandlers[type]);

@@ -86,7 +86,7 @@ namespace Terrasoft.TsConfiguration {
 			);
 			IntegrationLogger.StartTransaction(UserConnection, CsConstant.PersonName.Bpm, CsConstant.IntegratorSettings.Settings[this.GetType()].Name, "", "");
 			var logId = IntegrationLogger.CurrentLogId;
-			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y, requestId) => {
+			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y) => {
 				var responceObj = x.DeserializeJson();
 				var busEventNotifications = (JArray)responceObj["data"];
 				//var total = (responceObj["total"] as JToken).Value<int>();
@@ -136,7 +136,7 @@ namespace Terrasoft.TsConfiguration {
 			int jId = data.Value<int>("id");
 			string url = string.Format("{0}/AUTO3N/{1}/{2}", _baseClientServiceUrl, jName, jId);
 
-			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y, requestId) => {
+			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y) => {
 				var responceObj = JObject.Parse(x);
 				var csData = responceObj[jName] as JObject;
 				var csVersion = csData.Value<int>("version");
@@ -284,7 +284,7 @@ namespace Terrasoft.TsConfiguration {
 			var collection = param.Where(x => !string.IsNullOrEmpty(x));
 			return collection.Any() ? collection.Aggregate((cur, next) => cur + "&" + next) : "";
 		}
-		private void PushRequestWrapper(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection, Guid?> callback, Guid logId) {
+		private void PushRequestWrapper(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection> callback, Guid logId) {
 			if (!_isIntegratorActive) {
 				return;
 			}

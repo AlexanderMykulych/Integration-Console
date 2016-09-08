@@ -1,14 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Terrasoft.Common;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
-using Terrasoft.TsConfiguration;
 
 namespace Terrasoft.TsConfiguration {
 	public static class CsConstant {
@@ -276,10 +277,10 @@ namespace Terrasoft.TsConfiguration {
 		}
 
 		public static class PersonName {
-			public const string Bpm = @"Bpm";
-			public const string ClientService = @"Client-Service";
-			public const string IntegrationService = @"Integration-Service";
-			public const string OrderService = @"Order-Service";
+			public const string Bpm = @"Bpm`online";
+			public const string ClientService = @"Client Service";
+			public const string IntegrationService = @"Integration Service";
+			public const string OrderService = @"Order Service";
 		}
 		public static class TsRequestStatus {
 			public static readonly Guid Success = new Guid("5a0d25f5-d718-45ab-b4e3-d615ef7e09c6");
@@ -293,7 +294,7 @@ namespace Terrasoft.TsConfiguration {
 			public static readonly Guid Signed = new Guid("1f703f42-f7e8-4e3f-9b54-2b85f62ea507");
 		}
 		public static class IntegratorSettings {
-
+			public static bool IsIntegrationAsync = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "IsIntegrationAsync", false);
 			public static Dictionary<TServiceObject, string> GetUrlsByServiceName(string serviceName) {
 				var serviceType = Settings.FirstOrDefault(x => x.Value.Name == serviceName);
 				if ((object)serviceType != null) {
@@ -308,8 +309,8 @@ namespace Terrasoft.TsConfiguration {
 						Auth = Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "ClientServiceAuth", "Basic YnBtb25saW5lOmJwbW9ubGluZQ=="),
 						Name = Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "ClientServiceName", "ClientService"),
 						BaseUrl = new Dictionary<TServiceObject, string>() {
-							{ TServiceObject.Entity, Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "ClientServiceEntityUrl", "http://api.client-service.stage3.laximo.ru/v2/entity/AUTO3N") },
-							{ TServiceObject.Dict, Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "ClientServiceDictUrl", "http://api.client-service.stage3.laximo.ru/v2/dict/AUTO3N") }
+							{ TServiceObject.Entity, Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "ClientServiceEntityUrl", @"http://api.client-service.stage3.laximo.ru/v2/entity/AUTO3N") },
+							{ TServiceObject.Dict, Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "ClientServiceDictUrl", @"http://api.client-service.stage3.laximo.ru/v2/dict/AUTO3N") }
 						},
 						IsIntegratorActive = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "ClientServiceIsActive", false),
 						IsDebugMode = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "ClientServiceisDebugMode", false)
@@ -353,6 +354,10 @@ namespace Terrasoft.TsConfiguration {
 					}
 				}
 			};
+
+			public static string MappingConfiguration = Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "IntegrationXmlConfigData", "<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+			public static string LdapDomainName = Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "DomainArmtek", "");
+
 			#region Class: Setting
 			public class IntegratorSetting {
 				public Dictionary<TServiceObject, string> BaseUrl;
@@ -378,25 +383,40 @@ namespace Terrasoft.TsConfiguration {
 			}
 			#endregion
 		}
-
+		private static AppConnection appConnection;
+		private static AppConnection AppConnection {
+			get {
+				if (appConnection == null) {
+					if(HttpContext.Current != null && HttpContext.Current.Application["AppConnection"] != null) {
+						appConnection = HttpContext.Current.Application["AppConnection"] as AppConnection;
+					} else {
+						appConnection = new AppConnection();
+						Initialize("Default");
+					}
+				}
+				return appConnection;
+			}
+		}
 		private static UserConnection _userConnection;
-		private static UserConnection UserConnection {
+		public static UserConnection UserConnection {
 			get {
 				if (_userConnection == null) {
-					_userConnection = (UserConnection)HttpContext.Current.Session["UserConnection"];
+					if(HttpContext.Current != null) {
+						_userConnection = (UserConnection)HttpContext.Current.Session["UserConnection"];
+					}
 					if (_userConnection == null) {
-						var appConnection = HttpContext.Current.Application["AppConnection"] as AppConnection;
-						var systemUserConnection = appConnection.SystemUserConnection;
-						var autoAuthorization = (bool)Terrasoft.Core.Configuration.SysSettings.GetValue(
-							systemUserConnection, "ClientSiteIntegrationAutoAuthorization");
+						var systemUserConnection = AppConnection.SystemUserConnection;
+						//var autoAuthorization = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(
+						//	systemUserConnection, "ClientSiteIntegrationAutoAuthorization", false);
+						var autoAuthorization = false;
 						if (autoAuthorization) {
 							string userName = (string)Terrasoft.Core.Configuration.SysSettings.GetValue(
 							systemUserConnection, "ClientSiteIntegrationUserName");
 							if (!string.IsNullOrEmpty(userName)) {
 								string userPassword = (string)Terrasoft.Core.Configuration.SysSettings.GetValue(
 								systemUserConnection, "ClientSiteIntegrationUserPassword");
-								string workspace = appConnection.SystemUserConnection.Workspace.Name;
-								_userConnection = new UserConnection(appConnection);
+								string workspace = AppConnection.SystemUserConnection.Workspace.Name;
+								_userConnection = new UserConnection(AppConnection);
 								_userConnection.Initialize();
 								try {
 									_userConnection.Login(userName, userPassword, workspace, TimeZoneInfo.Utc);
@@ -404,6 +424,8 @@ namespace Terrasoft.TsConfiguration {
 									_userConnection = null;
 								}
 							}
+						} else {
+							_userConnection = systemUserConnection;
 						}
 					}
 				}
@@ -413,7 +435,23 @@ namespace Terrasoft.TsConfiguration {
 				return _userConnection;
 			}
 		}
-
+		private static void Initialize(string workspaceName) {
+			AppConfigurationSectionGroup appConfigurationSectionGroup = GetAppSettings();
+			var resources = (Terrasoft.Common.ResourceConfigurationSectionGroup)appConfigurationSectionGroup.SectionGroups["resources"];
+			GeneralResourceStorage.Initialize(resources);
+			var appSettings = (AppConfigurationSectionGroup)appConfigurationSectionGroup;
+			string appDirectory = Path.GetDirectoryName(typeof(IntegratorSettings).Assembly.Location);
+			appSettings.Initialize(appDirectory, Path.Combine(appDirectory, "App_Data"), Path.Combine(appDirectory, "Resources"),
+				appDirectory);
+			AppConnection.Initialize(appSettings);
+			AppConnection.InitializeWorkspace(workspaceName);
+		}
+		private static AppConfigurationSectionGroup GetAppSettings() {
+			var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+			var appSettings = (AppConfigurationSectionGroup)configuration.SectionGroups["terrasoft"];
+			appSettings.RootConfiguration = configuration;
+			return appSettings;
+		}
 		public static class XmlManagerConstant {
 			public static readonly string XmlConfigRootNodeName = @"MapingConfiguration";
 			public static readonly string XmlConfigEntityConfigNodeName = @"integrationHandlerConfig";

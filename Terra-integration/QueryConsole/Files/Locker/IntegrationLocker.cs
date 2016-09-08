@@ -10,16 +10,17 @@ namespace Terrasoft.TsConfiguration
 	public static class IntegrationLocker
 	{
 		private static Dictionary<string, LockerInfo> LockerInfo = new Dictionary<string, LockerInfo>();
-		private static int CurrentId
-		{
-			get
-			{
-				return Thread.CurrentThread.ManagedThreadId;
+		private static bool isLocckerActive {
+			get {
+				return CsConstant.IntegratorSettings.IsIntegrationAsync;
 			}
 		}
 		public static void Lock(string schemaName, Guid id)
 		{
-			var key = GetKey(schemaName);
+			if (!isLocckerActive) {
+				return;
+			}
+			var key = GetKey(schemaName, id);
 			if (!LockerInfo.ContainsKey(key))
 			{
 				LockerInfo.Add(key, new LockerInfo()
@@ -29,9 +30,12 @@ namespace Terrasoft.TsConfiguration
 				});
 			}
 		}
-		public static void Unlock(string schemaName)
+		public static void Unlock(string schemaName, Guid id)
 		{
-			var key = GetKey(schemaName);
+			if (!isLocckerActive) {
+				return;
+			}
+			var key = GetKey(schemaName, id);
 			if (LockerInfo.ContainsKey(key))
 			{
 				LockerInfo.Remove(key);
@@ -40,20 +44,23 @@ namespace Terrasoft.TsConfiguration
 
 		public static bool CheckWithUnlock(string schemaName, Guid id)
 		{
+			if(!isLocckerActive) {
+				return true;
+			}
 			if(!CheckUnLock(schemaName, id))
 			{
-				Unlock(schemaName);
+				Unlock(schemaName, id);
 			}
 			return CheckUnLock(schemaName, id);
 		}
 		public static bool CheckUnLock(string schemaName, Guid id)
 		{
-			return !LockerInfo.ContainsKey(GetKey(schemaName));
+			return !isLocckerActive || !LockerInfo.ContainsKey(GetKey(schemaName, id));
 		}
 
-		private static string GetKey(string schemaName)
+		private static string GetKey(string schemaName, Guid id)
 		{
-			return string.Format("{0}_{1}", CurrentId.ToString(), schemaName);
+			return string.Format("{0}_{1}", id.ToString(), schemaName);
 		}
 	}
 

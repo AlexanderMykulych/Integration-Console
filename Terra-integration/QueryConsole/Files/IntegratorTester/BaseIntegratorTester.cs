@@ -42,12 +42,12 @@ namespace Terrasoft.TsConfiguration
 			var esq = new EntitySchemaQuery(UserConnection.EntitySchemaManager, name);
 			esq.RowCount = 1;
 			esq.AddAllSchemaColumns();
-			var dateColumn = esq.AddColumn("CreatedOn");
-			dateColumn.OrderByDesc();
+			//var dateColumn = esq.AddColumn("CreatedOn");
+			//dateColumn.OrderByDesc();
 			//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Name", "Наша компания"));
 			///*esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("a37*/d31d9-4b81-4c40-925c-1b1d658e926d")));
 			//if(name == "Contact") {
-			//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("3aa33fe9-1685-4ad5-8a3e-d5f8aabc280d")));
+			//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("4da18e0b-3f81-4327-9d80-da12ee0b1fba")));
 			//}
 			if (name == "ContactCareer") {
 				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("6D20D35D-82B9-4CFD-9D18-670003D79AB7")));

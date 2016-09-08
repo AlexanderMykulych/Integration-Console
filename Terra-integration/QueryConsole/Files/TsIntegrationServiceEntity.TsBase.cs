@@ -38,7 +38,12 @@ namespace Terrasoft.TsConfiguration
 			{
 				if (string.IsNullOrEmpty(_ServiceName))
 				{
-					_ServiceName = IntegrationConfigurationManager.IntegrationPathConfig.Paths.FirstOrDefault(x => x.Name == SettingName).ServiceName;
+					var handlerSetting = IntegrationConfigurationManager.IntegrationPathConfig.Paths.FirstOrDefault(x => x.Name == SettingName);
+					if(handlerSetting != null) {
+						_ServiceName = handlerSetting.ServiceName;
+					} else {
+						IntegrationLogger.CurrentLogger.Instance.Error(string.Format("Problem with ({0}-{1}-{2}-{3}) handler setting", JName, EntityName, HandlerName, this.GetType().Name));
+					}
 				}
 				return _ServiceName;
 			}
@@ -192,6 +197,9 @@ namespace Terrasoft.TsConfiguration
 					ExceptionMessage = e.Message
 				};
 			}
+			finally {
+				IntegrationLocker.Unlock(integrationInfo.IntegratedEntity.SchemaName, integrationInfo.IntegratedEntity.PrimaryColumnValue);
+			}
 		}
 
 		public virtual JObject ToJson(IntegrationInfo integrationInfo)
@@ -257,6 +265,30 @@ namespace Terrasoft.TsConfiguration
 			Mapper = new MappingHelper();
 			EntityName = "Account";
 			JName = "CompanyProfile";
+		}
+
+		public override JObject ToJson(IntegrationInfo integrationInfo) {
+			var result = base.ToJson(integrationInfo);
+
+			try {
+				if (!result.IsJTokenPathHasValue("CompanyProfile.taxRegistrationNumber")) {
+					result.RemoveByPath("CompanyProfile.taxRegistrationNumberName");
+					result.RemoveByPath("CompanyProfile.taxRegistrationNumber");
+				}
+			}
+			catch(Exception e) {
+				IntegrationLogger.Error(e);
+			}
+
+			try {
+			if (!result.IsJTokenPathHasValue("CompanyProfile.companyRegistrationNumber")) {
+				result.RemoveByPath("CompanyProfile.companyRegistrationNumberName");
+				result.RemoveByPath("CompanyProfile.companyRegistrationNumber");
+			}
+			} catch(Exception e) {
+				IntegrationLogger.Error(e);
+			}
+			return result;
 		}
 	}
 
@@ -340,6 +372,22 @@ namespace Terrasoft.TsConfiguration
 			{
 				EntityName = integrationInfo.IntegratedEntity.GetType().Name;
 				handlerName = EntityName;
+			}
+		}
+		public override void ProcessResponse(IntegrationInfo integrationInfo) {
+			base.ProcessResponse(integrationInfo);
+			if(EntityName == "TsAutoTechService" || EntityName == "TsAutoOwnerInfo") {
+				var desEntityName = EntityName == "TsAutoTechService" ? "TsAutoTechHistory" : "TsAutoOwnerHistory";
+				var autoId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsAutomobileId");
+				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, desEntityName);
+				esq.AddAllSchemaColumns();
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "TsAutomobile", autoId));
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "TsExternalId", 0));
+				var entities = esq.GetEntityCollection(integrationInfo.UserConnection);
+				var integrator = new ClientServiceIntegrator(integrationInfo.UserConnection);
+				foreach (var entity in entities) {
+					integrator.IntegrateBpmEntity(entity);
+				}
 			}
 		}
 	}
@@ -508,7 +556,6 @@ namespace Terrasoft.TsConfiguration
 	public class SysAdminUnitHandler : EntityHandler
 	{
 		public ServiceUrlMaker UrlMaker;
-
 		public override string HandlerName
 		{
 			get
@@ -581,7 +628,8 @@ namespace Terrasoft.TsConfiguration
 				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "Contact");
 				esq.AddAllSchemaColumns();
 				var entity = esq.GetEntity(userConnection, contactId);
-				entity.Save(false);
+				var integrator = new ClientServiceIntegrator(userConnection);
+				integrator.IntegrateBpmEntity(entity);
 			}
 		}
 	}
@@ -664,7 +712,17 @@ namespace Terrasoft.TsConfiguration
 				return JName;
 			}
 		}
-
+		public override void ProcessResponse(IntegrationInfo integrationInfo) {
+			base.ProcessResponse(integrationInfo);
+			try {
+				if(integrationInfo.Action == CsConstant.IntegrationActionName.Create) {
+					var integrator = new ClientServiceIntegrator(integrationInfo.UserConnection);
+					integrator.IntegrateBpmEntity(integrationInfo.IntegratedEntity);
+				}
+			} catch(Exception e) {
+				IntegrationLogger.Error(e, "VehiclePassportHandler - ProcessResponse");
+			}
+		}
 	}
 
 	[ImportHandlerAttribute("ContactInfo")]
@@ -1582,13 +1640,13 @@ namespace Terrasoft.TsConfiguration
 		}
 		public void CreateProduct(IntegrationInfo integrationInfo)
 		{
-			var entity = integrationInfo.IntegratedEntity;
-			var articul = integrationInfo.Data["OrderItem"]["oem"].Value<string>();
-			integrationInfo.IntegratedEntity = GetProductByArticuleOrCreateNew(integrationInfo.UserConnection, articul);
-			integrationInfo.IntegratedEntity.SetDefColumnValues();
-			Mapper.StartMappByConfig(integrationInfo, JName, IntegrationConfigurationManager.GetConfigItem(integrationInfo.UserConnection, "Product"));
-			try
-			{
+			try {
+				var entity = integrationInfo.IntegratedEntity;
+				var articul = integrationInfo.Data["OrderItem"]["oem"].Value<string>();
+				var brand = integrationInfo.Data["OrderItem"]["brand"].Value<string>();
+				integrationInfo.IntegratedEntity = GetProductByArticuleOrCreateNew(integrationInfo.UserConnection, articul, brand);
+				integrationInfo.IntegratedEntity.SetDefColumnValues();
+				Mapper.StartMappByConfig(integrationInfo, JName, IntegrationConfigurationManager.GetConfigItem(integrationInfo.UserConnection, "Product"));
 				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName);
 				var productId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
 				entity.SetColumnValue("ProductId", productId);
@@ -1600,22 +1658,12 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		public Entity GetProductByArticuleOrCreateNew(UserConnection userConnection, string articule)
+		public Entity GetProductByArticuleOrCreateNew(UserConnection userConnection, string articule, string brand)
 		{
-			var productId = GetProductIdByArticule(userConnection, articule);
-			if (productId == Guid.Empty)
-			{
-				var schema = userConnection.EntitySchemaManager.GetInstanceByName("Product");
-				var entity = schema.CreateEntity(userConnection);
-				entity.SetDefColumnValues();
-				return entity;
-			}
-			else
-			{
-				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "Product");
-				esq.AddAllSchemaColumns();
-				return esq.GetEntity(userConnection, productId);
-			}
+			var productId = ProductEntityHelper.GetOrCreateProductByBrandAndOem(userConnection, brand, articule);
+			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "Product");
+			esq.AddAllSchemaColumns();
+			return esq.GetEntity(userConnection, productId);
 		}
 
 		public Guid GetProductIdByArticule(UserConnection userConnection, string articule)
@@ -1729,7 +1777,6 @@ namespace Terrasoft.TsConfiguration
 		public override void Create(IntegrationInfo integrationInfo)
 		{
 			base.Create(integrationInfo);
-
 			UpdateProduct(integrationInfo);
 		}
 
@@ -1742,12 +1789,24 @@ namespace Terrasoft.TsConfiguration
 
 		public void UpdateProduct(IntegrationInfo integrationInfo)
 		{
-			var eom = integrationInfo.Data["ShipmentItem"]["oem"].Value<string>();
-			var productId = GetProductIdByArticule(integrationInfo.UserConnection, eom);
-			if (productId != Guid.Empty)
-			{
+			try {
+				var eom = integrationInfo.Data["ShipmentItem"]["oem"].Value<string>();
+				var brand = integrationInfo.Data["ShipmentItem"]["brand"].Value<string>();
 				var unitName = integrationInfo.Data["ShipmentItem"]["unitName"].Value<string>();
-				updateProductUnitName(integrationInfo.UserConnection, productId, unitName);
+				var productId = ProductEntityHelper.GetOrCreateProductByBrandAndOem(integrationInfo.UserConnection, brand, eom,
+								command => {
+									if(command is Insert) {
+										var insert = (Insert)command;
+										insert.Set("unitName", Column.Parameter(unitName));
+									} else if (command is Update) {
+										var update = (Insert)command;
+										update.Set("unitName", Column.Parameter(unitName));
+									}
+								});
+				integrationInfo.IntegratedEntity.SetColumnValue("TsProduct", productId);
+				integrationInfo.IntegratedEntity.UpdateInDB(false);
+			} catch(Exception e) {
+				IntegrationLogger.Error(e);
 			}
 		}
 
@@ -2148,6 +2207,14 @@ namespace Terrasoft.TsConfiguration
 			Mapper = new MappingHelper();
 			EntityName = "AccountBillingInfo";
 			JName = "";
+		}
+		public override JObject ToJson(IntegrationInfo integrationInfo) {
+			base.ToJson(integrationInfo);
+			if (integrationInfo.Data.First != null && integrationInfo.Data.First.First != null) {
+				integrationInfo.Data = (JObject)integrationInfo.Data.First.First;
+				return integrationInfo.Data;
+			}
+			return null;
 		}
 	}
 

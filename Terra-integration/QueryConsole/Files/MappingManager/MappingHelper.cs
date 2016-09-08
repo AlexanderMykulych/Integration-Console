@@ -305,10 +305,6 @@ namespace Terrasoft.TsConfiguration
 			{
 				UserConnection = entity.UserConnection;
 				bool result = false;
-				if (onResponse)
-				{
-					IntegrationLocker.Lock(entity.SchemaName, entity.PrimaryColumnValue);
-				}
 				if (IsInsertToDB)
 				{
 					switch (entity.StoringState)
@@ -331,10 +327,6 @@ namespace Terrasoft.TsConfiguration
 				else
 				{
 					result = entity.Save(false);
-				}
-				if (onResponse)
-				{
-					IntegrationLocker.Unlock(entity.SchemaName);
 				}
 				ExecuteMapMethodQueue();
 			}

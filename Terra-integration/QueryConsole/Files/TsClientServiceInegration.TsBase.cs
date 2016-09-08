@@ -14,11 +14,6 @@ using System.Xml;
 using System.Reflection;
 using System.Threading;
 using System.Web.Configuration;
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//При использовании в системе раскоментировать
-//using TsConfigurationManager = System.Web.Configuration.WebConfigurationManager;
-//При использовании в системе закоментировать
-using TsConfigurationManager = System.Configuration.ConfigurationManager;
 
 
 namespace Terrasoft.TsConfiguration
@@ -26,6 +21,7 @@ namespace Terrasoft.TsConfiguration
 	using System.Configuration;
 	using System.Collections;
 	using System.Threading.Tasks;
+	using System.Web;
 
 	public static class ExtensionHelper {
 				/// <summary>
@@ -67,21 +63,54 @@ namespace Terrasoft.TsConfiguration
 	}
 
 	public static class IntegrationConfigurationManager {
-		
-				private static List<string> _columnNames;
-		
+		private static List<string> _columnNames;
 		private static string _xmlData;
 		private static XmlDocument _xDocument;
 		private static MappingItem _defaultItem;
 		private static Dictionary<string, string> _prerenderConfigDict;
 		private static IntegrationPathConfig _pathConfig;
-		 
-
+		private static System.Configuration.Configuration config;
+		public static System.Configuration.Configuration Config {
+			get {
+				if (HttpContext.Current != null) {
+					config =
+						System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(HttpRuntime.AppDomainAppVirtualPath);
+				} else {
+					config =
+						ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+				}
+				return config;
+			}
+		}
+		private static string xmlConfigurationLocation;
+		public static string XmlConfigurationLocation {
+			get {
+				var keyValue = Config.AppSettings.Settings["XmlConfigurationLocation"];
+				if(keyValue != null) {
+					xmlConfigurationLocation = keyValue.Value; 
+				} else {
+					xmlConfigurationLocation = "db";
+				}
+				return xmlConfigurationLocation;
+			}
+		}
+		private static string xmlConfigurationFilePath;
+		public static string XmlConfigurationFilePath {
+			get {
+				var keyValue = Config.AppSettings.Settings["XmlConfigurationFilePath"];
+				if(keyValue != null) {
+					xmlConfigurationFilePath = keyValue.Value;
+				} else {
+					xmlConfigurationFilePath = "IntegrationConfig.xml";
+				}
+				return xmlConfigurationFilePath;
+			}
+		}
 		public static IntegrationPathConfig IntegrationPathConfig {
 			get {
 				if (_pathConfig == null) {
 					if(_xDocument == null) {
-						return null;
+						_xDocument = GetConfigXmlDocument(CsConstant.UserConnection);
 					}
 					var node = _xDocument[CsConstant.XmlManagerConstant.XmlConfigRootNodeName][CsConstant.XmlManagerConstant.XmlConfigEntityConfigNodeName];
 					_pathConfig = new IntegrationPathConfig();
@@ -106,18 +135,17 @@ namespace Terrasoft.TsConfiguration
 		/// <returns></returns>
 		private static XmlDocument GetConfigXmlDocument(UserConnection userConnection) {
 			try {
-				if(_xDocument != null)
+				if(_xDocument != null) {
 					return _xDocument;
+				}
 
-				string confLocation = TsConfigurationManager.AppSettings["XmlConfigurationLocation"] ?? "db";
-				if(confLocation == "db") {
+				if (XmlConfigurationLocation == "db") {
 					if(string.IsNullOrEmpty(_xmlData)) {
-						_xmlData = Terrasoft.Core.Configuration.SysSettings.GetValue(userConnection, CsConstant.SysSettingsCode.ConfigurationData, "<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+						_xmlData = CsConstant.IntegratorSettings.MappingConfiguration;
 					}
-				} else if(confLocation == "file") {
+				} else if (XmlConfigurationLocation == "file") {
 					if(string.IsNullOrEmpty(_xmlData)) {
-						string confPath = TsConfigurationManager.AppSettings["XmlConfigurationFilePath"] ?? "IntegrationConfig.xml";
-						using(var stream = new StreamReader(confPath)) {
+						using (var stream = new StreamReader(XmlConfigurationFilePath)) {
 							_xmlData = stream.ReadToEnd();
 						}
 					}

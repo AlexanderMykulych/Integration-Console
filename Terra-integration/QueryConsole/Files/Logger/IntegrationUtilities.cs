@@ -46,7 +46,6 @@ namespace Terrasoft.TsConfiguration
 		public static void SetCurentThreadLogId(Guid Id, UserConnection userConnection)
 		{
 			SetThreadLogId(Thread.CurrentThread.ManagedThreadId, Id);
-			CurrentLogger.userConnection = userConnection;
 		}
 
 		public static void BeforeRequestError(Exception e) {
@@ -60,23 +59,22 @@ namespace Terrasoft.TsConfiguration
 			logger.Error(string.Format("Error - text = {0} callStack = {1}", e.Message, e.StackTrace));
 		}
 
-		public static void StartTransaction(UserConnection userConnection, string requesterName, string reciverName, string bpmObjName, string serviceObjName)
+		public static void StartTransaction(UserConnection userConnection, string requesterName, string reciverName, string bpmObjName, string serviceObjName, string additionalInfo = "")
 		{
-			var id = CurrentLogId;
+			var id = Guid.NewGuid();
 			SetCurentThreadLogId(id, userConnection);
 			var logger = _log.GetValue(id);
-			logger.userConnection = userConnection;
 			logger.Instance.Info("StartTransaction" + id.ToString());
-			logger.CreateTransaction(id, requesterName, reciverName, bpmObjName, serviceObjName);
+			logger.CreateTransaction(id, requesterName, reciverName, bpmObjName, serviceObjName, additionalInfo);
 		}
 
-		public static void PushRequest(TRequstMethod requestMethod, string url, string jsonText, Guid requestId)
+		public static Guid PushRequest(TRequstMethod requestMethod, string url, string jsonText, string additionalInfo = "")
 		{
 			var id = CurrentLogId;
 			var logger = _log.GetValue(id);
 			var requestType = CsConstant.TsRequestType.Push;
 			logger.Instance.Info(string.Format("PushRequest - id = {0} method={1} requestType={4}\nurl={2}\njson={3}", id, requestMethod, url, jsonText, requestType));
-			logger.CreateRequest(id, requestMethod.ToString(), url, requestType, requestId);
+			return logger.CreateRequest(id, requestMethod.ToString(), url, requestType, additionalInfo);
 		}
 
 
@@ -89,20 +87,17 @@ namespace Terrasoft.TsConfiguration
 			logger.CreateResponse(id, text, requestType);
 		}
 
-		public static void ResponseError(Exception e, string text, Guid? requestId, string requestJson)
+		public static void ResponseError(Exception e, string text, string requestJson, Guid requestId)
 		{
 			var id = CurrentLogId;
-			if (!requestId.HasValue)
-				return;
 			var logger = _log.GetValue(id);
-			logger.UpdateResponseError(id, requestId.Value, e.Message, e.StackTrace, text, requestJson);
+			logger.UpdateResponseError(id, e.Message, e.StackTrace, text, requestJson, requestId);
 		}
 
 		public static Dictionary<string, int> IncDict = new Dictionary<string, int>();
 
 		public static void MappingError(Exception e, MappingItem item, CsConstant.IntegrationInfo integrationInfo) {
 			try {
-				CurrentLogger.userConnection = integrationInfo.UserConnection;
 				CurrentLogger.MappingError(CurrentLogId, e.ToString(), e.StackTrace, item.JSourcePath, item.TsSourcePath);
 			} catch(Exception e2) {
 				//TODO
@@ -126,12 +121,16 @@ namespace Terrasoft.TsConfiguration
 				return _log;
 			}
 		}
-		public UserConnection userConnection;
+		public UserConnection userConnection {
+			get {
+				return CsConstant.UserConnection;
+			}
+		}
 		public TsLogger() {
 			_log = global::Common.Logging.LogManager.GetLogger("TscIntegration") ?? global::Common.Logging.LogManager.GetLogger("Common");
 		}
 
-		public void CreateTransaction(Guid id, string requesterName, string resiverName, string entityName, string serviceEntityName) {
+		public void CreateTransaction(Guid id, string requesterName, string resiverName, string entityName, string serviceEntityName, string additionalInfo="") {
 			try {
 				var textQuery = string.Format(@"
 					merge
@@ -146,11 +145,12 @@ namespace Terrasoft.TsConfiguration
 								TsResiver = '{2}',
 								TsName = '{3}',
 								TsEntityName = '{4}',
-								TsServiceEntityName = '{5}'
+								TsServiceEntityName = '{5}',
+								TsAdditionalInfo = '{6}'
 					when not matched then
-						insert (TsResiver, TsName, TsEntityName, TsServiceEntityName, Id)
-						values ('{2}', '{3}', '{4}', '{5}', '{0}');
-				", id, DateTime.UtcNow, resiverName, requesterName, entityName, serviceEntityName);
+						insert (TsResiver, TsName, TsEntityName, TsServiceEntityName, TsAdditionalInfo, Id)
+						values ('{2}', '{3}', '{4}', '{5}', '{6}', '{0}');
+				", id, DateTime.UtcNow, resiverName, requesterName, entityName, serviceEntityName, additionalInfo);
 				var query = new CustomQuery(userConnection, textQuery);
 				query.Execute();
 			} catch(Exception e) {
@@ -158,19 +158,23 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		public void CreateRequest(Guid logId, string method, string url, Guid requestType, Guid requestId) {
+		public Guid CreateRequest(Guid logId, string method, string url, Guid requestType, string additionalInfo = "") {
 			try {
+				var resultId = Guid.NewGuid();
 				var insert = new Insert(userConnection)
 							.Into("TsIntegrationRequest")
-							.Set("Id", Column.Parameter(requestId))
+							.Set("Id", Column.Parameter(resultId))
 							.Set("TsIntegrLogId", Column.Parameter(logId))
 							.Set("TsMethod", Column.Parameter(method))
 							.Set("TsUrl", Column.Parameter(url))
 							.Set("TsRequestTypeId", Column.Parameter(requestType))
+							.Set("TsAdditionalInfo", Column.Parameter(additionalInfo))
 							.Set("TsStatusId", Column.Parameter(CsConstant.TsRequestStatus.Success)) as Insert;
 				insert.Execute();
+				return resultId;
 			} catch (Exception e) {
 				Instance.Error(e.ToString());
+				return Guid.Empty;
 			}
 		}
 
@@ -187,9 +191,10 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
-		public void UpdateResponseError(Guid id, Guid requestId, string errorText, string callStack, string json, string requestJson) {
+		public void UpdateResponseError(Guid id, string errorText, string callStack, string json, string requestJson, Guid requestId) {
 			try {
 				var errorId = Guid.NewGuid();
+				errorText = string.Format("[{0}] {1}", Thread.CurrentThread.ManagedThreadId, errorText ?? "");
 				var insert = new Insert(userConnection)
 							.Into("TsIntegrationError")
 							.Set("Id", Column.Parameter(errorId))
@@ -210,12 +215,13 @@ namespace Terrasoft.TsConfiguration
 
 		public void MappingError(Guid logId, string errorMessage, string callStack, string serviceFieldName, string bpmFieldName) {
 			try {
+				errorMessage = string.Format("[{0}] {1}", Thread.CurrentThread.ManagedThreadId, errorMessage ?? "");
 				var insert = new Insert(userConnection)
 							.Into("TsIntegrMappingError")
-							.Set("TsErrorMessage", Column.Parameter(errorMessage))
-							.Set("TsCallStack", Column.Parameter(callStack))
-							.Set("TsServiceFieldName", Column.Parameter(serviceFieldName))
-							.Set("TsBpmFieldName", Column.Parameter(bpmFieldName))
+							.Set("TsErrorMessage", Column.Parameter(errorMessage ?? ""))
+							.Set("TsCallStack", Column.Parameter(callStack ?? ""))
+							.Set("TsServiceFieldName", Column.Parameter(serviceFieldName ?? ""))
+							.Set("TsBpmFieldName", Column.Parameter(bpmFieldName ?? ""))
 							.Set("TsIntegrLogId", Column.Parameter(logId)) as Insert;
 				insert.Execute();
 			} catch (Exception e) {
@@ -225,10 +231,11 @@ namespace Terrasoft.TsConfiguration
 
 		public void Error(Guid logId, string errorMessage, string callStack, string additionalInfo) {
 			try {
+				additionalInfo = string.Format("[{0}] {1}", Thread.CurrentThread.ManagedThreadId, additionalInfo ?? "");
 				var insert = new Insert(userConnection)
 							.Into("TsIntegrError")
-							.Set("TsErrorText", Column.Parameter(errorMessage))
-							.Set("TsCallStack", Column.Parameter(callStack))
+							.Set("TsErrorText", Column.Parameter(errorMessage ?? ""))
+							.Set("TsCallStack", Column.Parameter(callStack ?? ""))
 							.Set("TsAdditionalInfo", Column.Parameter(additionalInfo))
 							.Set("TsIntegrLogId", Column.Parameter(logId)) as Insert;
 				insert.Execute();

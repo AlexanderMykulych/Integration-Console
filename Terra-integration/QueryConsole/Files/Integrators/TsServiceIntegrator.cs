@@ -126,13 +126,14 @@ namespace Terrasoft.TsConfiguration
 			}
 			else
 			{
-				integratorHelper.PushRequest(info.Method, info.FullUrl, info.RequestJson, (x, y, requestId) =>
+				integratorHelper.PushRequest(info.Method, info.FullUrl, info.RequestJson, (x, y) =>
 				{
 					info.ResponseData = x;
 					OnGetResponse(info);
 				}, userConnection, info.LogId,
-				(x, y, requestId) =>
+				(x, y) =>
 				{
+					IntegrationLocker.Unlock(info.Entity.SchemaName, info.Entity.PrimaryColumnValue);
 					if (info.AfterIntegrate != null)
 					{
 						info.AfterIntegrate();
@@ -153,7 +154,6 @@ namespace Terrasoft.TsConfiguration
 						IEnumerable<JObject> resultObjects;
 						if (string.IsNullOrEmpty(info.ServiceObjectId))
 						{
-							//IntegrationConsole.SetCurrentResponseSucces(responseJObj["total"].Value<int>(), responseJObj["skip"].Value<int>(), responseJObj["limit"].Value<int>());
 							var objArray = responseJObj["data"] as JArray;
 							resultObjects = objArray.Select(x => x as JObject);
 						}
@@ -179,6 +179,7 @@ namespace Terrasoft.TsConfiguration
 					var integrationInfo = CsConstant.IntegrationInfo.CreateForResponse(userConnection, info.Entity);
 					integrationInfo.StrData = responseJObj.ToString();
 					integrationInfo.Handler = info.Handler;
+					integrationInfo.Action = info.Method == TRequstMethod.POST ? CsConstant.IntegrationActionName.Create : CsConstant.IntegrationActionName.Update;
 					entityHelper.IntegrateEntity(integrationInfo);
 					Console.WriteLine("Ok");
 				break;
@@ -187,30 +188,45 @@ namespace Terrasoft.TsConfiguration
 		}
 
 		public virtual void IntegrateBpmEntity(Entity entity, EntityHandler defHandler = null) {
-			if(!IsIntegratorActive) {
-				return;
-			}
-			if (IntegrationLocker.CheckUnLock(entity.SchemaName, entity.PrimaryColumnValue))
-			{
-				var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
-				var handlers = defHandler == null ? entityHelper.GetAllIntegrationHandler(integrationInfo) : new List<EntityHandler>() { defHandler };
-				foreach (var handler in handlers)
-				{
-					integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
-					integrationInfo.Handler = handler;
-					IntegrationLogger.StartTransaction(userConnection, CsConstant.PersonName.Bpm, ServiceName, entity.GetType().Name, handler.JName);
-					entityHelper.IntegrateEntity(integrationInfo);
-					if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
-					{
-						var json = integrationInfo.Result.Data.ToString();
-						var requestInfo = integrationInfo.Handler.GetRequestInfo(integrationInfo);
-						requestInfo.LogId = IntegrationLogger.CurrentLogId;
-						MakeRequest(requestInfo);
-					}
-				}
-			}
+			IntegrateBpmEntity(entity.PrimaryColumnValue, entity.SchemaName, defHandler);
 		}
 
+		public virtual void IntegrateBpmEntity(Guid entityId, string schemaName, EntityHandler defHandler = null) {
+			if (!IsIntegratorActive) {
+				return;
+			}
+			try {
+				if (IntegrationLocker.CheckUnLock(schemaName, entityId)) {
+					var primaryColumnValue = entityId;
+					EntitySchema entitySchema = userConnection.EntitySchemaManager.GetInstanceByName(schemaName);
+					var entity = entitySchema.CreateEntity(userConnection);
+					if (entity.FetchFromDB(primaryColumnValue, false)) {
+						IntegrationLocker.Lock(entity.SchemaName, entity.PrimaryColumnValue);
+						CsConstant.IntegrationInfo integrationInfo = null;
+						var handlers = defHandler == null ? entityHelper.GetAllIntegrationHandler(entity.SchemaName, CsConstant.TIntegrationType.Export) : new List<EntityHandler>() { defHandler };
+						foreach (var handler in handlers) {
+							IntegrationLogger.StartTransaction(userConnection, CsConstant.PersonName.Bpm, handler.ServiceName, entity.GetType().Name, handler.JName, string.Format("{0} - {1}", entity.PrimaryColumnValue, entity.PrimaryDisplayColumnValue));
+							try {
+								integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
+								integrationInfo.Handler = handler;
+								entityHelper.IntegrateEntity(integrationInfo);
+								if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success) {
+									var json = integrationInfo.Result.Data.ToString();
+									var requestInfo = integrationInfo.Handler.GetRequestInfo(integrationInfo);
+									requestInfo.LogId = IntegrationLogger.CurrentLogId;
+									MakeRequest(requestInfo);
+								}
+							} catch (Exception e) {
+								IntegrationLogger.Error(e);
+							}
+						}
+					}
+				}
+			} catch (Exception e) {
+				IntegrationLogger.StartTransaction(userConnection, CsConstant.PersonName.Bpm, "None", schemaName, "None");
+				IntegrationLogger.Error(e);
+			}
+		}
 		public virtual void IntegrateServiceEntity(JObject serviceEntity, string serviceObjectName) {
 			if (!IsIntegratorActive) {
 				return;

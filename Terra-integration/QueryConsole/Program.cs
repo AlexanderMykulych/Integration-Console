@@ -23,7 +23,6 @@ namespace QueryConsole
 		}
 		public static void Main(string[] args) {
 			try {
-				var date = Convert.ToDateTime("2016-08-11T06:58:59.673+0000");
 				//var consoleApp = new TerrasoftConsoleClass("A.Mykulych");
 				var consoleApp = new TerrasoftConsoleClass("Default");
 				try {
@@ -45,10 +44,10 @@ namespace QueryConsole
 				//var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
 				//	//{"ManagerInfo", 500, 0, 1},
 				//	//{"CounteragentContactInfo", 500, 0, 1},
-				//	//{"Counteragent", 500, 0, 1},
+				//	{"Counteragent", 500, 0, 1},
 				//	//{"Contract", 500, 0, 1},
-				//	//{"Order", 500, 0, 1},
-				//	{"Shipment", 5, 0, 1},
+				//	{"Order", 500, 0, 1},
+				//	//{"Shipment", 5, 0, 1},
 				//	//{"Payment", 500, 0, 1},
 				//	//{"Return", 500, 0, 1},
 				//};

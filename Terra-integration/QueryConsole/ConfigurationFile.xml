@@ -67,11 +67,11 @@
   <configItem JName="CompanyProfile" TsName="Account">
     <!--<mappingItem JSourcePath = "mainContactInfo" TsSourcePath="PrimaryContactId" TsDestinationName="Contact" MapType="#CompositObject" JSourceName="ContactInfo" MapExecuteType = "#AfterEntitySave" HandlerName="ContactInfo" EFieldRequier="1"/>-->
     <mappingItem ConstValue="ContactInfo" JSourcePath="mainContactInfo.ContactInfo.name" MapType="#Const"/>
-    <mappingItem JSourcePath="mainContactInfo.ContactInfo.emailAllowed" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="DoNotUseEmail" TsSourcePath="PrimaryContactId"/>
+    <!--<mappingItem JSourcePath="mainContactInfo.ContactInfo.emailAllowed" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="DoNotUseEmail" TsSourcePath="PrimaryContactId"/>
     <mappingItem JSourcePath="mainContactInfo.ContactInfo.phoneAllowed" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="DoNotUseCall" TsSourcePath="PrimaryContactId"/>
     <mappingItem JSourcePath="mainContactInfo.ContactInfo.faxAllowed" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="DoNotUseFax" TsSourcePath="PrimaryContactId"/>
     <mappingItem JSourcePath="mainContactInfo.ContactInfo.smsAllowed" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="DoNotUseSms" TsSourcePath="PrimaryContactId"/>
-    <mappingItem JSourcePath="mainContactInfo.ContactInfo.mailAllowed" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="DoNotUseMail" TsSourcePath="PrimaryContactId"/>
+    <mappingItem JSourcePath="mainContactInfo.ContactInfo.mailAllowed" MapType="#StringToDictionaryGuid" TsDestinationName="Contact" TsDestinationPath="Id" TsDestinationResPath="DoNotUseMail" TsSourcePath="PrimaryContactId"/>-->
     <mappingItem JSourceName="ContactRecord" JSourcePath="mainContactInfo.ContactInfo.records" MapType="#ArrayOfCompositObject" TsDestinationName="AccountCommunication" TsDestinationPath="Account" TsSourcePath="Id" HandlerName="ContactRecordAccount" DeleteBeforeExport="#true"/>
     <mappingItem JSourceName="AddressInfo" JSourcePath="mainContactInfo.ContactInfo.addresses" MapType="#ArrayOfCompositObject" TsDestinationName="AccountAddress" TsDestinationPath="Account" TsSourcePath="Id" HandlerName="AddressInfoAccount" DeleteBeforeExport="#true"/>
     <mappingItem IgnoreError="#false" JSourceName="CompanyProfile" JSourcePath="parentCompany" MapType="#RefToGuid" TsDestinationName="Account" TsSourcePath="ParentId"/>
@@ -330,9 +330,9 @@
   </configItem>
   <configItem JName="AddressInfo" TsName="ContactAddress">
     <mappingItem JSourcePath="name" MapType="#StringToDictionaryGuid" TsDestinationName="AddressType" TsDestinationResPath="Name" TsSourcePath="AddressTypeId"/>
-    <mappingItem JSourcePath="country" MapType="#StringToDictionaryGuid" TsDestinationName="Country" TsDestinationResPath="Name" TsSourcePath="CountryId"/>
-    <mappingItem JSourcePath="region" MapType="#StringToDictionaryGuid" TsDestinationName="Region" TsDestinationResPath="Name" TsSourcePath="RegionId"/>
-    <mappingItem JSourcePath="settlement" MapType="#StringToDictionaryGuid" TsDestinationName="City" TsDestinationResPath="Name" TsSourcePath="CityId"/>
+    <mappingItem JSourcePath="country" MapType="#StringToDictionaryGuid" TsDestinationName="Country" TsDestinationResPath="Name" TsSourcePath="CountryId" CreateIfNotExist="#true"/>
+    <mappingItem JSourcePath="region" MapType="#StringToDictionaryGuid" TsDestinationName="Region" TsDestinationResPath="Name" TsSourcePath="RegionId" CreateIfNotExist="#true"/>
+    <mappingItem JSourcePath="settlement" MapType="#StringToDictionaryGuid" TsDestinationName="City" TsDestinationResPath="Name" TsSourcePath="CityId" CreateIfNotExist="#true"/>
     <mappingItem JSourcePath="address" TsSourcePath="Address"/>
     <mappingItem JSourcePath="main" TsSourcePath="Primary"/>
     <mappingItem JSourcePath="zipCode" TsSourcePath="Zip"/>
@@ -342,9 +342,9 @@
   </configItem>
   <configItem JName="AddressInfoAccount" TsName="AddressInfoAccount">
     <mappingItem JSourcePath="name" MapType="#StringToDictionaryGuid" TsDestinationName="AddressType" TsDestinationResPath="Name" TsSourcePath="AddressTypeId"/>
-    <mappingItem JSourcePath="country" MapType="#StringToDictionaryGuid" TsDestinationName="Country" TsDestinationResPath="Name" TsSourcePath="CountryId"/>
-    <mappingItem JSourcePath="region" MapType="#StringToDictionaryGuid" TsDestinationName="Region" TsDestinationResPath="Name" TsSourcePath="RegionId"/>
-    <mappingItem JSourcePath="settlement" MapType="#StringToDictionaryGuid" TsDestinationName="City" TsDestinationResPath="Name" TsSourcePath="CityId"/>
+    <mappingItem JSourcePath="country" MapType="#StringToDictionaryGuid" TsDestinationName="Country" TsDestinationResPath="Name" TsSourcePath="CountryId" CreateIfNotExist="#true"/>
+    <mappingItem JSourcePath="region" MapType="#StringToDictionaryGuid" TsDestinationName="Region" TsDestinationResPath="Name" TsSourcePath="RegionId" CreateIfNotExist="#true"/>
+    <mappingItem JSourcePath="settlement" MapType="#StringToDictionaryGuid" TsDestinationName="City" TsDestinationResPath="Name" TsSourcePath="CityId" CreateIfNotExist="#true"/>
     <mappingItem JSourcePath="address" TsSourcePath="Address"/>
     <mappingItem JSourcePath="main" TsSourcePath="Primary"/>
     <mappingItem JSourcePath="zipCode" TsSourcePath="Zip"/>
@@ -418,9 +418,10 @@
   </configItem>
   <configItem JName="Manager" TsName="Manager">
     <!--<mappingItem JSourcePath = "chief" MapType="#RefToGuid" TsSourcePath="TsContactId" TsDestinationName="Contact" JSourceName="CompanyProfile"/>-->
-    <mappingItem JSourceName="ManagerGroup" JSourcePath="group" MapType="#RefToGuid" TsDestinationName="SysUserInRole" TsDestinationPath="SysUser" TsExternalIdPath="SysRole.TsExternalId" TsSourcePath="Id"/>
-    <mappingItem JSourceName="PersonProfile" JSourcePath="person" MapType="#RefToGuid" TsDestinationName="Contact" TsSourcePath="ContactId"/>
-    <mappingItem JSourceName="CompanyProfile" JSourcePath="company" MapType="#RefToGuid" TsDestinationName="Contact" TsExternalIdPath="Account.TsExternalId" TsSourcePath="ContactId"/>
+    <mappingItem JSourcePath="group" TsSourcePath="Id" JSourceName="ManagerGroup" MapType="#ArrayOfReference" TsDestinationName="SysUserInRole" TsDestinationPath="SysUser" TsDestinationResPath="SysRole.TsExternalId"/>
+		<!--<mappingItem JSourcePath = "localMarkets" TsSourcePath = "Id" TsDestinationPath = "TsAccount" TsDestinationName = "TsAccountMarketHistory" MapType = "#ArrayOfReference" JSourceName = "Market" MapExecuteType = "#AfterEntitySave" MapIntegrationType="#Export" TsDestinationResPath="TsLrsAccount.TsLocalMarket.TsOwnerAgentId"/>-->
+		<mappingItem JSourcePath="person" JSourceName="PersonProfile" MapType="#RefToGuid" TsDestinationName="Contact" TsSourcePath="ContactId"/>
+    <mappingItem JSourcePath="company" JSourceName="CompanyProfile" MapType="#RefToGuid" TsDestinationName="Contact" TsExternalIdPath="Account.TsExternalId" TsSourcePath="ContactId"/>
     <mappingItem JSourcePath="id" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalId"/>
     <mappingItem JSourcePath="version" MapIntegrationType="#Import" SaveOnResponse="#true" TsSourcePath="TsExternalVersion"/>
     <!--<mappingItem JSourcePath = "ownerCompanyId" MapType="#RefToGuid" TsSourcePath="ContactId" TsDestinationName="Contact" JSourceName="PersonProfile"/>-->
@@ -618,7 +619,7 @@
     <!--<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.country" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>
 		<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.region" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>
 		<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.place" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>-->
-    <mappingItem JSourcePath="shipmentInfo.ShipmentInfo.district" MapType="#StringToDictionaryGuid" TsSourcePath="TsDistrictId" TsDestinationName="TsCounty"/>
+    <mappingItem JSourcePath="shipmentInfo.ShipmentInfo.district" MapType="#StringToDictionaryGuid" TsSourcePath="TsDistrictId" TsDestinationName="TsCounty" CreateIfNotExist="#true"/>
     <!--<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.street" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>
 		<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.building" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>
 		<mappingItem JSourcePath="shipmentInfo.ShipmentInfo.appartament" MapType="#RefToGuid" TsSourcePath="DeliveryType" TsDestinationName="DeliveryType"/>-->
@@ -713,7 +714,7 @@
   </configItem>
   <configItem JName="ShipmentItem" TsName="TsShipmentPosition">
     <mappingItem JSourcePath="shipment" MapType="#RefToGuid" TsSourcePath="TsShipmentId" TsDestinationName="TsShipment" JSourceName="Shipment"/>
-    <mappingItem JSourcePath="orderItem" MapType="#RefToGuid" TsSourcePath="TsProductId" TsDestinationName="OrderProduct" TsDestinationPath="Product" JSourceName="OrderItem"/>
+    <mappingItem JSourcePath="orderItem" MapType="#RefToGuid" TsSourcePath="TsOrderProductId" TsDestinationName="OrderProduct" TsDestinationPath="Id" JSourceName="OrderItem"/>
     <mappingItem JSourcePath="name" TsSourcePath="TsName"/>
     <mappingItem JSourcePath="units" TsSourcePath="TsQuantity"/>
     <mappingItem JSourcePath="unitName" TsSourcePath="TsPacking"/>
@@ -745,7 +746,7 @@
     <mappingItem JSourcePath="tillDate" TsSourcePath="EndDate" MacrosName="DateWithouTime"/>
     <mappingItem JSourcePath="priceGroupId" MapType="#StringToDictionaryGuid" TsSourcePath="TsPriceTypeId" TsDestinationName="TsPriceType" TsDestinationPath="Id" TsDestinationResPath="TsExternalId"/>
     <mappingItem JSourcePath="personalDiscount" TsSourcePath="TsManualDiscount"/>
-    <mappingItem JSourcePath="agentId" TsSourcePath="AccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Id" TsDestinationResPath="TsSpAccount.TsServicePostId" MapIntegrationType="#Export" SerializeIfZero="#false"/>
+    <mappingItem JSourcePath="agentId" TsSourcePath="TsSpAccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Id" TsDestinationResPath="TsServicePostId" MapIntegrationType="#Export" SerializeIfZero="#false"/>
     <mappingItem JSourcePath="active" TsSourcePath="TsActive"/>
     <mappingItem JSourcePath="creditLimit" TsSourcePath="TsCreditLimit"/>
     <mappingItem JSourcePath="normalDebtPeriodDays" TsSourcePath="TsDelayPeriod"/>
@@ -812,10 +813,10 @@
     <!--<mappingItem JSourcePath="region" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactAddress" TsDetailPath ="Contact" TsDetailResPath="Region" TsTag="stringtoguid" MapExecuteType="#AfterEntitySave" TsDestinationName="Region" TsDestinationPath="Id" TsDestinationResPath="Name"/>-->
     <!--<mappingItem JSourcePath="country" MapType="#ToFirstInDetail" TsSourcePath="Id" TsDetailName="ContactAddress" TsDetailPath ="Contact" TsDetailResPath="Country" TsTag="stringtoguid" MapExecuteType="#AfterEntitySave" TsDestinationName="Country" TsDestinationPath="Id" TsDestinationResPath="Name"/>-->
     <mappingItem JSourcePath="externalId" TsSourcePath="Id" MapIntegrationType="#Export"/>
-    <mappingItem JSourcePath="login" MapType="#StringToDictionaryGuid" TsDestinationName="SysAdminUnit" TsSourcePath="Id" TsDestinationPath="Contact" TsDestinationResPath="Name"/>
+    <mappingItem JSourcePath="login" MapType="#StringToDictionaryGuid" TsDestinationName="SysAdminUnit" TsSourcePath="Id" TsDestinationPath="Contact" TsDestinationResPath="Name" OverRuleMacros="ToLdapName"/>
     <mappingItem JSourcePath="position" MapType="#StringToDictionaryGuid" TsDestinationName="Job" TsSourcePath="JobId"/>
     <!--<mappingItem JSourcePath="email" TsSourcePath="Dear"/>-->
-    <!--<mappingItem JSourcePath="office" TsSourcePath="TsSpAccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Name"/>-->
+    <mappingItem JSourcePath="office" TsSourcePath="TsSpAccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Id"/>
     <!--<mappingItem JSourcePath="address" TsSourcePath="TsSpAccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Address"/>-->
     <mappingItem JSourcePath="department" TsSourcePath="TsLocalMarketId" MapType="#StringToDictionaryGuid" TsDestinationName="TsLocSalMarket" TsDestinationResPath="TsName"/>
     <mappingItem JSourcePath="company" TsSourcePath="AccountId" MapType="#StringToDictionaryGuid" TsDestinationName="Account" TsDestinationPath="Id" TsDestinationResPath="Name"/>
@@ -843,7 +844,7 @@
     <!--<mappingItem JSourcePath="externalId" MapType="#StringToDictionaryGuid" TsDestinationName="ContactType" TsSourcePath="TypeId"/>-->
     <!--<mappingItem JSourcePath="login" MapType="#StringToDictionaryGuid" TsDestinationName="ContactSalutationType" TsSourcePath="SalutationTypeId"/>-->
     <mappingItem JSourcePath="additionalInfo" TsSourcePath="TsAdditionalInfo"/>
-    <mappingItem JSourcePath="counteragent" MapType="#RefToGuid" TsDestinationName="Account" TsSourcePath="AccountId" TsExternalIdPath="TsOrderServiceId" JSourceName="Counteragent"/>
+    <mappingItem JSourcePath="counteragent" MapType="#RefToGuid" TsDestinationName="Account" TsSourcePath="AccountId" TsExternalIdPath="TsOrderServiceId" JSourceName="Counteragent" Wait="#true"/>
     <mappingItem JSourcePath="position" MapType="#StringToDictionaryGuid" TsDestinationName="Job" TsSourcePath="JobId"/>
     <!--<mappingItem JSourcePath="positionFull" TsSourcePath="JobTitle"/>-->
     <!--<mappingItem JSourcePath="email" TsSourcePath="Dear"/>-->
