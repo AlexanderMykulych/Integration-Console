@@ -3,7 +3,6 @@ using System.Configuration;
 using System.IO;
 using System.Reflection;
 using Terrasoft.Common;
-using Terrasoft.TsConfiguration;
 using Terrasoft.Core;
 using Terrasoft.Core.DB;
 using Terrasoft.Core.Entities;
@@ -11,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using Terrasoft.Core.Factories;
+using Terrasoft.TsConfiguration;
 
 namespace QueryConsole
 {
@@ -52,7 +52,9 @@ namespace QueryConsole
 				//	//{"Return", 500, 0, 1},
 				//};
 				//testerManager.Run();
-				testers[1].ImportAllBpmEntity();
+				//testers[1].ImportAllBpmEntity();
+				var integrator = new IntegrationServiceIntegrator(consoleApp.SystemUserConnection);
+				integrator.GetBusEventNotification();
 				while (true) {
 				}
 			} catch (ReflectionTypeLoadException e1) {

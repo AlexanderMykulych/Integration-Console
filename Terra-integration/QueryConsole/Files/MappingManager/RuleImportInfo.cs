@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core.Entities;
-using Terrasoft.TsConfiguration;
 
 namespace Terrasoft.TsConfiguration
 {

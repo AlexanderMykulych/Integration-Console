@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Terrasoft.Common;
 using Terrasoft.Core;
 using Terrasoft.Core.Entities;
-using Terrasoft.TsConfiguration;
 using Terrasoft.Core.DB;
 using System.Data;
 

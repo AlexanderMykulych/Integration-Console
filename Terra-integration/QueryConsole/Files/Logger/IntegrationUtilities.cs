@@ -33,9 +33,7 @@ namespace Terrasoft.TsConfiguration
 				{
 					return ThreadLogIds[threadId];
 				}
-				var newLogId = Guid.NewGuid();
-				SetThreadLogId(threadId, newLogId);
-				return newLogId;
+				return Guid.Empty;
 			}
 		}
 		public static TsLogger CurrentLogger {
@@ -61,37 +59,64 @@ namespace Terrasoft.TsConfiguration
 
 		public static void StartTransaction(UserConnection userConnection, string requesterName, string reciverName, string bpmObjName, string serviceObjName, string additionalInfo = "")
 		{
-			var id = Guid.NewGuid();
-			SetCurentThreadLogId(id, userConnection);
-			var logger = _log.GetValue(id);
-			logger.Instance.Info("StartTransaction" + id.ToString());
-			logger.CreateTransaction(id, requesterName, reciverName, bpmObjName, serviceObjName, additionalInfo);
+			try {
+				var id = Guid.NewGuid();
+				SetCurentThreadLogId(id, userConnection);
+				var logger = _log.GetValue(id);
+				logger.Instance.Info("StartTransaction " + id.ToString());
+				logger.CreateTransaction(id, requesterName, reciverName, bpmObjName, serviceObjName, additionalInfo);
+			} catch(Exception e2) {
+				CurrentLogger.Instance.Error(e2.ToString());
+			}
 		}
 
 		public static Guid PushRequest(TRequstMethod requestMethod, string url, string jsonText, string additionalInfo = "")
 		{
-			var id = CurrentLogId;
-			var logger = _log.GetValue(id);
-			var requestType = CsConstant.TsRequestType.Push;
-			logger.Instance.Info(string.Format("PushRequest - id = {0} method={1} requestType={4}\nurl={2}\njson={3}", id, requestMethod, url, jsonText, requestType));
-			return logger.CreateRequest(id, requestMethod.ToString(), url, requestType, additionalInfo);
+			try {
+				var id = CurrentLogId;
+				var logger = _log.GetValue(id);
+				var requestType = CsConstant.TsRequestType.Push;
+				logger.Instance.Info(string.Format("PushRequest - id = {0} method={1} requestType={4}\nurl={2}\njson={3}", id, requestMethod, url, jsonText, requestType));
+				return logger.CreateRequest(id, requestMethod.ToString(), url, requestType, additionalInfo);
+			} catch(Exception e2) {
+				CurrentLogger.Instance.Error(e2.ToString());
+				return Guid.Empty;
+			}
 		}
 
 
 		public static void GetResponse(string text)
 		{
-			var id = CurrentLogId;
-			var logger = _log.GetValue(id);
-			var requestType = CsConstant.TsRequestType.GetResponse;
-			logger.Instance.Info(string.Format("GetResponse - id = {0} requestType={2}\ntext={1}", id, text, requestType));
-			logger.CreateResponse(id, text, requestType);
+			try {
+				var id = CurrentLogId;
+				var logger = _log.GetValue(id);
+				var requestType = CsConstant.TsRequestType.GetResponse;
+				CurrentLogger.Instance.Info(string.Format("GetResponse - id = {0} requestType={2}\ntext={1}", id, text, requestType));
+				CurrentLogger.CreateResponse(id, text, requestType);
+			} catch(Exception e2) {
+				CurrentLogger.Instance.Error(e2.ToString());
+			}
 		}
 
 		public static void ResponseError(Exception e, string text, string requestJson, Guid requestId)
 		{
-			var id = CurrentLogId;
-			var logger = _log.GetValue(id);
-			logger.UpdateResponseError(id, e.Message, e.StackTrace, text, requestJson, requestId);
+			try {
+				CurrentLogger.UpdateResponseError(CurrentLogId, e.Message, e.StackTrace, text, requestJson, requestId);
+				CurrentLogger.Instance.ErrorFormat("error: {0}\ntext: {1}\njson: {2}\nid: {3}", e.ToString(), text, requestJson, requestId);
+			} catch(Exception e2) {
+				CurrentLogger.Instance.Error(e2.ToString());
+			}
+		}
+
+		public static void ResponseErrorWithStartTransaction(UserConnection userConnection, Exception e, string text, string requestJson, Guid requestId, string requesterName, string reciverName, string bpmObjName, string serviceObjName, string transAddInfo = "") {
+			try {
+				if (CurrentLogId == Guid.Empty) {
+					StartTransaction(userConnection, requesterName, reciverName, bpmObjName, serviceObjName, transAddInfo);
+				}
+				ResponseError(e, text, requestJson, requestId);
+			} catch (Exception e2) {
+				CurrentLogger.Instance.Error(e2.ToString());
+			}
 		}
 
 		public static Dictionary<string, int> IncDict = new Dictionary<string, int>();
@@ -99,8 +124,20 @@ namespace Terrasoft.TsConfiguration
 		public static void MappingError(Exception e, MappingItem item, CsConstant.IntegrationInfo integrationInfo) {
 			try {
 				CurrentLogger.MappingError(CurrentLogId, e.ToString(), e.StackTrace, item.JSourcePath, item.TsSourcePath);
+				CurrentLogger.Instance.ErrorFormat("logid:{0} exception:{1} stack:{2} serviceFieldPath:{3} bpmFieldPath:{4}", CurrentLogId, e.ToString(), e.StackTrace, item.JSourcePath, item.TsSourcePath);
 			} catch(Exception e2) {
-				//TODO
+				CurrentLogger.Instance.Error(e2.ToString());
+			}
+		}
+
+		public static void MappingErrorWithStartTransaction(UserConnection userConnection, Exception e, MappingItem item, CsConstant.IntegrationInfo integrationInfo, string requesterName, string reciverName, string bpmObjName, string serviceObjName, string transAddInfo = "") {
+			try {
+				if (CurrentLogId == Guid.Empty) {
+					StartTransaction(userConnection, requesterName, reciverName, bpmObjName, serviceObjName, transAddInfo);
+				}
+				MappingError(e, item, integrationInfo);
+			} catch (Exception e2) {
+				CurrentLogger.Instance.Error(e2.ToString());
 			}
 		}
 
@@ -108,8 +145,20 @@ namespace Terrasoft.TsConfiguration
 		{
 			try {
 				CurrentLogger.Error(CurrentLogId, e.ToString(), e.StackTrace, additionalInfo);
+				CurrentLogger.Instance.ErrorFormat("logid:{0} exception:{1} stack:{2} additionalInfo:{3}", CurrentLogId, e.ToString(), e.StackTrace, additionalInfo);
 			} catch (Exception e2) {
-				//TODO
+				CurrentLogger.Instance.Error(e2.ToString());
+			}
+		}
+
+		public static void ErrorWithStartTransaction(UserConnection userConnection, Exception e, string requesterName, string reciverName, string bpmObjName, string serviceObjName, string transAddInfo = "", string errorAddInfo = null) {
+			try {
+				if(CurrentLogId == Guid.Empty) {
+					StartTransaction(userConnection, requesterName, reciverName, bpmObjName, serviceObjName, transAddInfo);
+				}
+				Error(e, errorAddInfo);
+			} catch(Exception e2) {
+				CurrentLogger.Instance.Error(e2.ToString());
 			}
 		}
 	}
@@ -181,6 +230,9 @@ namespace Terrasoft.TsConfiguration
 		public void CreateResponse(Guid id, string text, Guid requestType)
 		{
 			try {
+				if(id == Guid.Empty) {
+					return;
+				}
 				var insert = new Insert(userConnection)
 								.Into("TsIntegrationRequest")
 								.Set("TsIntegrLogId", Column.Parameter(id))
@@ -193,6 +245,9 @@ namespace Terrasoft.TsConfiguration
 
 		public void UpdateResponseError(Guid id, string errorText, string callStack, string json, string requestJson, Guid requestId) {
 			try {
+				if(id == Guid.Empty) {
+					return;
+				}
 				var errorId = Guid.NewGuid();
 				errorText = string.Format("[{0}] {1}", Thread.CurrentThread.ManagedThreadId, errorText ?? "");
 				var insert = new Insert(userConnection)
@@ -215,6 +270,9 @@ namespace Terrasoft.TsConfiguration
 
 		public void MappingError(Guid logId, string errorMessage, string callStack, string serviceFieldName, string bpmFieldName) {
 			try {
+				if(logId == Guid.Empty) {
+					return;
+				}
 				errorMessage = string.Format("[{0}] {1}", Thread.CurrentThread.ManagedThreadId, errorMessage ?? "");
 				var insert = new Insert(userConnection)
 							.Into("TsIntegrMappingError")
@@ -231,6 +289,9 @@ namespace Terrasoft.TsConfiguration
 
 		public void Error(Guid logId, string errorMessage, string callStack, string additionalInfo) {
 			try {
+				if (logId == Guid.Empty) {
+					return;
+				}
 				additionalInfo = string.Format("[{0}] {1}", Thread.CurrentThread.ManagedThreadId, additionalInfo ?? "");
 				var insert = new Insert(userConnection)
 							.Into("TsIntegrError")

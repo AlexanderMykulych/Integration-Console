@@ -101,9 +101,9 @@
       <HintPath>bin\Debug\MailBee.NET.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build" />
-    <Reference Include="Newtonsoft.Json, Version=4.0.4.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
@@ -129,6 +129,7 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -197,7 +198,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Files\BpmEntityHelper\AccountEntityHelper.cs" />
     <Compile Include="Files\BpmEntityHelper\IntegrationEntityHelper.cs" />
+    <Compile Include="Files\BpmEntityHelper\ProductEntityHelper.cs" />
     <Compile Include="Files\BpmIntegrator\CsReference.cs" />
     <Compile Include="Files\BpmIntegrator\CsReferenceProperty.cs" />
     <Compile Include="Files\BpmIntegrator\IIntegrationEntityHandler.cs" />
@@ -215,7 +218,6 @@
     <Compile Include="Files\Extension\JTokeExtension.cs" />
     <Compile Include="Files\Extension\ObjectExstension.cs" />
     <Compile Include="Files\IntegratorHelper\IntegratorHelper.cs" />
-    <Compile Include="Files\Integrators\ClientServiceIntegrator.cs" />
     <Compile Include="Files\Integrators\IntegrationServiceIntegrator.cs" />
     <Compile Include="Files\Integrators\NewClientServiceIntegrator.cs" />
     <Compile Include="Files\Integrators\OrderServiceIntegrator.cs" />
@@ -223,6 +225,7 @@
     <Compile Include="Files\IntegratorTester\ClientServiceIntegratorTester.cs" />
     <Compile Include="Files\IntegratorTester\OrderServiceIntegratorTester.cs" />
     <Compile Include="Files\IntegratorTester\TesterManager.cs" />
+    <Compile Include="Files\Locker\IntegrationLocker.cs" />
     <Compile Include="Files\Logger\IntegrationUtilities.cs" />
     <Compile Include="Files\MappingManager\IMapRule.cs" />
     <Compile Include="Files\MappingManager\JsonHelper.cs" />
@@ -243,15 +246,16 @@
     <Compile Include="Files\MappingManager\RuleInfo.cs" />
     <Compile Include="Files\MappingManager\RulesFactory.cs" />
     <Compile Include="Files\MappingManager\TsMacrosHelper.cs" />
+    <Compile Include="Files\Queue\DefaultIntegrationQueue.cs" />
+    <Compile Include="Files\Queue\IIntegrationQueue.cs" />
     <Compile Include="Files\Signal\SignalGenerator.cs" />
     <Compile Include="Files\Signal\SignalHandler.cs" />
     <Compile Include="Files\Signal\SignalProcessor.cs" />
     <Compile Include="Files\UrlMaker\ServiceUrlMaker.cs" />
     <Compile Include="Files\Integrators\TsServiceIntegrator.cs" />
     <Compile Include="Files\TsClientServiceInegration.TsBase.cs" />
-    <Compile Include="Files\TsClientServiceInegrationSchema.TsBase.cs" />
     <Compile Include="Files\TsIntegrationServiceEntity.TsBase.cs" />
-    <Compile Include="Files\TsIntegrationServiceEntitySchema.TsBase.cs" />
+    <Compile Include="Files\WCFService\TsAuto3nService.cs" />
     <Compile Include="Files\XmlManager\DynamicXmlParser.cs" />
     <Compile Include="Files\XmlManager\IntegrationPath.cs" />
     <Compile Include="Files\XmlManager\IntegrationPathConfig.cs" />
@@ -262,6 +266,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Files\responseIntegrationService.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

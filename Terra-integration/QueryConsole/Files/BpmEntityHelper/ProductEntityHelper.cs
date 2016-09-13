@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Terrasoft.Common;
 using Terrasoft.Core;
 using Terrasoft.Core.DB;
-using Terrasoft.TsConfiguration;
 
 namespace Terrasoft.TsConfiguration {
 	public static class ProductEntityHelper {

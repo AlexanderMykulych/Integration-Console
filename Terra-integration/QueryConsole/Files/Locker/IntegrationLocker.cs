@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,10 @@ namespace Terrasoft.TsConfiguration
 {
 	public static class IntegrationLocker
 	{
-		private static Dictionary<string, LockerInfo> LockerInfo = new Dictionary<string, LockerInfo>();
+		private static ConcurrentDictionary<string, LockerInfo> LockerInfo = new ConcurrentDictionary<string, LockerInfo>();
 		private static bool isLocckerActive {
 			get {
-				return CsConstant.IntegratorSettings.IsIntegrationAsync;
+				return CsConstant.IntegratorSettings.isLockerActive;
 			}
 		}
 		public static void Lock(string schemaName, Guid id)
@@ -23,7 +24,7 @@ namespace Terrasoft.TsConfiguration
 			var key = GetKey(schemaName, id);
 			if (!LockerInfo.ContainsKey(key))
 			{
-				LockerInfo.Add(key, new LockerInfo()
+				LockerInfo.TryAdd(key, new LockerInfo()
 				{
 					Identifier = id,
 					SchemaName = schemaName
@@ -38,7 +39,8 @@ namespace Terrasoft.TsConfiguration
 			var key = GetKey(schemaName, id);
 			if (LockerInfo.ContainsKey(key))
 			{
-				LockerInfo.Remove(key);
+				LockerInfo removeItem = null;
+				LockerInfo.TryRemove(key, out removeItem);
 			}
 		}
 
@@ -60,7 +62,7 @@ namespace Terrasoft.TsConfiguration
 
 		private static string GetKey(string schemaName, Guid id)
 		{
-			return string.Format("{0}_{1}", id.ToString(), schemaName);
+			return string.Format("{0}_{1}_{2}", id.ToString(), schemaName, Thread.CurrentThread.ManagedThreadId);
 		}
 	}
 

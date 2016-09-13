@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core.Entities;
-using Terrasoft.TsConfiguration;
 using Terrasoft.Core.DB;
 using System.Data;
 using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terrasoft.Core;
-using Terrasoft.TsConfiguration;
 using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;
 
 namespace Terrasoft.TsConfiguration {
@@ -80,20 +79,30 @@ namespace Terrasoft.TsConfiguration {
 				withData == true ? TIntegratorRequest.BusEventNotificationData : TIntegratorRequest.BusEventNotification,
 				TRequstMethod.GET,
 				"0",
-				"1",//_notifyLimit.ToString(),
+				_notifyLimit.ToString(),
 				CsConstant.DefaultBusEventFilters,
 				CsConstant.DefaultBusEventSorts
 			);
 			IntegrationLogger.StartTransaction(UserConnection, CsConstant.PersonName.Bpm, CsConstant.IntegratorSettings.Settings[this.GetType()].Name, "", "");
 			var logId = IntegrationLogger.CurrentLogId;
-			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y) => {
-				var responceObj = x.DeserializeJson();
+			if(Settings.IsDebugMode) {
+				var json = Settings.DebugModeInfo.GetDebugDataJson();
+				var responceObj = json.DeserializeJson();
 				var busEventNotifications = (JArray)responceObj["data"];
 				//var total = (responceObj["total"] as JToken).Value<int>();
 				if (busEventNotifications != null) {
-					OnBusEventNotificationsDataRecived(busEventNotifications, y);
+					OnBusEventNotificationsDataRecived(busEventNotifications, UserConnection);
 				}
-			}, logId);
+			} else {
+				PushRequestWrapper(TRequstMethod.GET, url, "", (x, y) => {
+					var responceObj = x.DeserializeJson();
+					var busEventNotifications = (JArray)responceObj["data"];
+					//var total = (responceObj["total"] as JToken).Value<int>();
+					if (busEventNotifications != null) {
+						OnBusEventNotificationsDataRecived(busEventNotifications, y);
+					}
+				}, logId);
+			}
 		}
 
 		public void IniciateLoadChanges() {
@@ -130,24 +139,23 @@ namespace Terrasoft.TsConfiguration {
 		/// </summary>
 		/// <param name="integrationInfo"></param>
 		public void CreatedOnEntityExist(IntegrationInfo integrationInfo) {
-			string jName = integrationInfo.EntityName;
-			var data = integrationInfo.Data[jName];
-			int version = data.Value<int>("version");
-			int jId = data.Value<int>("id");
-			string url = string.Format("{0}/AUTO3N/{1}/{2}", _baseClientServiceUrl, jName, jId);
-
-			PushRequestWrapper(TRequstMethod.GET, url, "", (x, y) => {
-				var responceObj = JObject.Parse(x);
-				var csData = responceObj[jName] as JObject;
-				var csVersion = csData.Value<int>("version");
-				if (csVersion >= version)
-				{
-					integrationInfo.Data = responceObj;
-					integrationInfo.EntityName = jName;
-					integrationInfo.Action = CsConstant.IntegrationActionName.Update;
-					_integrationEntityHelper.IntegrateEntity(integrationInfo);
-				}
-			}, IntegrationLogger.CurrentLogId);
+			//string jName = integrationInfo.EntityName;
+			//var data = integrationInfo.Data[jName];
+			//int version = data.Value<int>("version");
+			//int jId = data.Value<int>("id");
+			//string url = string.Format("{0}/AUTO3N/{1}/{2}", _baseClientServiceUrl, jName, jId);
+			//integrationInfo.EntityName = jName;
+			integrationInfo.Action = CsConstant.IntegrationActionName.Update;
+			_integrationEntityHelper.IntegrateEntity(integrationInfo);
+			//PushRequestWrapper(TRequstMethod.GET, url, "", (x, y) => {
+			//	var responceObj = JObject.Parse(x);
+			//	var csData = responceObj[jName] as JObject;
+			//	var csVersion = csData.Value<int>("version");
+			//	if (csVersion >= version)
+			//	{
+					
+			//	}
+			//}, IntegrationLogger.CurrentLogId);
 		}
 
 		/// <summary>
@@ -254,7 +262,7 @@ namespace Terrasoft.TsConfiguration {
 
 			if (filters != null && filters.Any()) {
 				foreach (var filter in filters) {
-					filtersStr += string.Format("filter[{0}]={1}&", filter.Key, filter.Value);
+					filtersStr += string.Format("q[{0}]={1}&", filter.Key, filter.Value);
 				}
 				filtersStr = filtersStr.Remove(filtersStr.Length - 1);
 			}

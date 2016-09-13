@@ -225,9 +225,8 @@ namespace Terrasoft.TsConfiguration {
 			{"isRead", "false"}
 		};
 		public static Dictionary<string, string> DefaultBusEventSorts = new Dictionary<string, string>() {
-			{"createdAt", "desc"}
+			{"createdAt", Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, "IntegrationServiceSortDirection", "asc") }
 		};
-
 
 		public static class IntegrationEventName {
 			public const string BusEventNotify = @"BusEventNotification";
@@ -281,6 +280,7 @@ namespace Terrasoft.TsConfiguration {
 			public const string ClientService = @"Client Service";
 			public const string IntegrationService = @"Integration Service";
 			public const string OrderService = @"Order Service";
+			public const string Unknown = @"Unknown";
 		}
 		public static class TsRequestStatus {
 			public static readonly Guid Success = new Guid("5a0d25f5-d718-45ab-b4e3-d615ef7e09c6");
@@ -295,6 +295,7 @@ namespace Terrasoft.TsConfiguration {
 		}
 		public static class IntegratorSettings {
 			public static bool IsIntegrationAsync = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "IsIntegrationAsync", false);
+			public static bool isLockerActive = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "IsLockerActive", true);
 			public static Dictionary<TServiceObject, string> GetUrlsByServiceName(string serviceName) {
 				var serviceType = Settings.FirstOrDefault(x => x.Value.Name == serviceName);
 				if ((object)serviceType != null) {
@@ -351,6 +352,13 @@ namespace Terrasoft.TsConfiguration {
 						NotifyLimit = Terrasoft.Core.Configuration.SysSettings.GetValue<int>(UserConnection, "IntegrationServicePostLimit", 50),
                         IsIntegratorActive = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "IntegrationServiceIsActive", false),
 						IsDebugMode = Terrasoft.Core.Configuration.SysSettings.GetValue<bool>(UserConnection, "IntegrationServiceIsDebugMode", false),
+						//IsDebugMode = true,
+						DebugModeInfo = new DebugModeInfo()
+						{
+							FilePath = @"../../Files/responseIntegrationService.json",
+							DebugInfoSourceType = "syssetting",
+							SysSettingsCode = "IntegrationDebugInfo"
+						}
 					}
 				}
 			};
@@ -373,12 +381,25 @@ namespace Terrasoft.TsConfiguration {
 			}
 
 			public class DebugModeInfo {
+				public string SysSettingsCode = @"IntegrationDebugInfo";
 				public string FilePath;
-
+				public string DebugInfoSourceType;
 				public string GetDebugDataJson() {
+					if(string.IsNullOrEmpty(DebugInfoSourceType) || DebugInfoSourceType == "file") {
+						return GetFromFile();
+					} else if(DebugInfoSourceType == "syssetting") {
+						return GetFromSettings();
+					}
+					return "";
+				}
+				public string GetFromFile() {
 					using (var stream = new StreamReader(new FileStream(FilePath, FileMode.Open))) {
 						return stream.ReadToEnd();
 					}
+				}
+
+				public string GetFromSettings() {
+					return Terrasoft.Core.Configuration.SysSettings.GetValue<string>(UserConnection, SysSettingsCode, "");
 				}
 			}
 			#endregion

@@ -69,26 +69,10 @@ namespace Terrasoft.TsConfiguration
 		private static MappingItem _defaultItem;
 		private static Dictionary<string, string> _prerenderConfigDict;
 		private static IntegrationPathConfig _pathConfig;
-		private static System.Configuration.Configuration config;
-		public static System.Configuration.Configuration Config {
-			get {
-				if (HttpContext.Current != null) {
-					config =
-						System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(HttpRuntime.AppDomainAppVirtualPath);
-				} else {
-					config =
-						ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-				}
-				return config;
-			}
-		}
 		private static string xmlConfigurationLocation;
 		public static string XmlConfigurationLocation {
 			get {
-				var keyValue = Config.AppSettings.Settings["XmlConfigurationLocation"];
-				if(keyValue != null) {
-					xmlConfigurationLocation = keyValue.Value; 
-				} else {
+				if(string.IsNullOrEmpty(xmlConfigurationLocation)) {
 					xmlConfigurationLocation = "db";
 				}
 				return xmlConfigurationLocation;
@@ -97,11 +81,8 @@ namespace Terrasoft.TsConfiguration
 		private static string xmlConfigurationFilePath;
 		public static string XmlConfigurationFilePath {
 			get {
-				var keyValue = Config.AppSettings.Settings["XmlConfigurationFilePath"];
-				if(keyValue != null) {
-					xmlConfigurationFilePath = keyValue.Value;
-				} else {
-					xmlConfigurationFilePath = "IntegrationConfig.xml";
+				if(string.IsNullOrEmpty(xmlConfigurationFilePath)) {
+					xmlConfigurationFilePath = "../../ConfigurationFile.xml";
 				}
 				return xmlConfigurationFilePath;
 			}

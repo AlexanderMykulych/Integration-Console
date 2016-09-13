@@ -1,0 +1,27 @@
+﻿{
+  "total": 1,
+  "skip": 0,
+  "limit": 100,
+  "data": [
+	{
+      "BusEventNotification": {
+        "id": "57d185cecf6b9cda628b516d",
+        "event": "Object",
+        "partyCode": "TESTPARTY",
+        "system": "OrderService",
+        "createdAt": "2016-09-08T15:37:50.188+0000",
+        "loggedAt": "2016-09-08T15:37:50.195+0000",
+        "action": "update",
+        "ownerAgentId": 1100,
+        "userId": null,
+        "objectGuid": "c3d26f9f-c222-4d00-9190-ded182505a47",
+        "objectId": 6201,
+        "objectType": "Counteragent",
+        "objectVersion": 5,
+        "realmCode": "AUTO3N",
+        "isRead": false,
+        "isProcessed": false,
+        "data": null
+      }
+    } ]
+}

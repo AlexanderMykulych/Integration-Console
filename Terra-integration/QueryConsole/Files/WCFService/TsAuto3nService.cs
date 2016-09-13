@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Activation;
+using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Terrasoft.Core;
 
 namespace Terrasoft.TsConfiguration {
+
 	[ServiceContract]
-	public interface IAuto3nService
-	{
-		bool NotifyChange();
-	}
-	public class TsAuto3nService: IAuto3nService {
+	[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
+	public class TsAuto3nService {
 		private UserConnection _userConnection;
 		private UserConnection UserConnection {
 			get {
@@ -48,13 +48,18 @@ namespace Terrasoft.TsConfiguration {
 				return _userConnection;
 			}
 		}
+
+		[OperationContract]
+		[WebInvoke(Method = "POST", UriTemplate = "NotifyChange", BodyStyle = WebMessageBodyStyle.Wrapped,
+			RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
 		public bool NotifyChange() {
 			try {
+				IntegrationLogger.StartTransaction(UserConnection, CsConstant.PersonName.Unknown, CsConstant.PersonName.Bpm, "None", "None", "TsAuto3nService - NotifyChange triggered");
 				var integrator = new IntegrationServiceIntegrator(UserConnection);
 				integrator.IniciateLoadChanges();
 				return true;
 			} catch(Exception e) {
-				//TsEntityLogger.Error("AUTO3N Service Error, NotifyChange: {0}", e.ToString());
+				IntegrationLogger.ErrorWithStartTransaction(UserConnection, e, CsConstant.PersonName.Unknown, CsConstant.PersonName.Bpm, "None", "None", "TsAuto3nService - NotifyChange triggered error");
 				return false;
 			}
 		}
