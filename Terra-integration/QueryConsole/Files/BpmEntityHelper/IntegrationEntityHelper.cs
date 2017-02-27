@@ -14,15 +14,11 @@ namespace Terrasoft.TsConfiguration
 	{
 		private static List<Type> IntegrationEntityTypes { get; set; }
 		private static Dictionary<Type, EntityHandler> EntityHandlers { get; set; }
-		 
-
-				public IntegrationEntityHelper()
+		public IntegrationEntityHelper()
 		{
 			EntityHandlers = new Dictionary<Type, EntityHandler>();
 		}
-		 
-
-				/// <summary>
+		/// <summary>
 		/// Експортирует или импортирует объекты в зависимости от настроек
 		/// </summary>
 		/// <param name="integrationInfo">Настройки интеграции</param>
@@ -30,7 +26,6 @@ namespace Terrasoft.TsConfiguration
 		{
 			ExecuteHandlerMethod(integrationInfo, GetIntegrationHandler(integrationInfo));
 		}
-
 		/// <summary>
 		/// В зависимости от типа интеграции возвращает соответсвенный атрибут
 		/// </summary>
@@ -53,7 +48,6 @@ namespace Terrasoft.TsConfiguration
 					return typeof(ExportHandlerAttribute);
 			}
 		}
-
 		/// <summary>
 		/// Возвращает все классы помеченые атрибутами интеграции которые розмещены в пространстве имен Terrasoft.Configuration
 		/// </summary>
@@ -63,7 +57,6 @@ namespace Terrasoft.TsConfiguration
 		{
 			return GetIntegrationTypes(integrationInfo.IntegrationType);
 		}
-
 		public List<Type> GetIntegrationTypes(CsConstant.TIntegrationType integrationType)
 		{
 			if (IntegrationEntityTypes != null && IntegrationEntityTypes.Any())
@@ -78,13 +71,12 @@ namespace Terrasoft.TsConfiguration
 				return attributes != null && attributes.Length > 0;
 			}).ToList();
 		}
-
 		/// <summary>
 		/// Возвращает объект который отвечает за интеграцию конкретной сущности
 		/// </summary>
 		/// <param name="integrationInfo">Настройки интеграции</param>
 		/// <returns></returns>
-		public IIntegrationEntityHandler GetIntegrationHandler(IntegrationInfo integrationInfo) {
+		public EntityHandler GetIntegrationHandler(IntegrationInfo integrationInfo) {
 			var attributeType = GetAttributeType(integrationInfo);
 			var types = GetIntegrationTypes(integrationInfo);
 			if (integrationInfo.Handler != null) {
@@ -112,10 +104,8 @@ namespace Terrasoft.TsConfiguration
 			}
 			return null;
 		}
-
 		public List<EntityHandler> GetAllIntegrationHandler(string entityName, CsConstant.TIntegrationType integrationType) {
 			var result = new List<EntityHandler>();
-
 			var attributeType = GetAttributeType(integrationType);
 			var types = GetIntegrationTypes(integrationType);
 			foreach (var type in types) {
@@ -139,77 +129,97 @@ namespace Terrasoft.TsConfiguration
 			}
 			return result;
 		}
-
 		/// <summary>
 		/// В зависимости от настройки интеграции, выполняет соответсвенный метод объкта, который отвечает за интеграцию конкретной сущности
 		/// </summary>
 		/// <param name="integrationInfo">Настройки интеграции</param>
 		/// <param name="handler">объект, который отвечает за интеграцию конкретной сущности</param>
-		public void ExecuteHandlerMethod(IntegrationInfo integrationInfo, IIntegrationEntityHandler handler)
+		public void ExecuteHandlerMethod(IntegrationInfo integrationInfo, EntityHandler handler)
 		{
-			if(integrationInfo.Handler == null && handler is EntityHandler) {
-				integrationInfo.Handler = (EntityHandler)handler;
+			if(integrationInfo.Handler == null) {
+				integrationInfo.Handler = handler;
 			}
 			if (handler != null)
 			{
+				//Id - для уникальной блокировки интеграции. Блокируем по Id, EntityName, ServiceName и JName
+				string serviceObjId = "0";
+				string entityName = "";
+				string jName = "";
+				if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Export || (integrationInfo.IntegrationType == CsConstant.TIntegrationType.ExportResponseProcess && integrationInfo.IntegratedEntity != null)) {
+					serviceObjId = integrationInfo.IntegratedEntity.GetExternalIdValue(handler.ExternalIdPath).ToString();
+					if(serviceObjId == "0") {
+						serviceObjId = integrationInfo.IntegratedEntity.PrimaryColumnValue.ToString();
+					}
+				} else {
+					serviceObjId = integrationInfo.Data.GetJTokenValuePath<string>(handler.JName + ".id");
+				}
+				if(handler.IsEmbeddedObject) {
+					entityName = handler.ParentObjectTsName;
+					jName = handler.ParentObjectJName;
+				} else {
+					entityName = handler.EntityName;
+					jName = handler.JName;
+				}
 				try
 				{
-					if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Export)
-					{
-						if(handler.IsExport(integrationInfo)) {
-							var result = new CsConstant.IntegrationResult(CsConstant.IntegrationResult.TResultType.Success, handler.ToJson(integrationInfo));
-							integrationInfo.Result = result;
-						}
-						return;
-					} else if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.ExportResponseProcess)
-					{
-						handler.ProcessResponse(integrationInfo);
-						return;
-					}
-					if (integrationInfo.Action == CsConstant.IntegrationActionName.Create)
-					{
-						if (!handler.IsEntityAlreadyExist(integrationInfo))
+					LockerHelper.DoWithEntityLock(serviceObjId, entityName, () => {
+						//Export
+						if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Export)
 						{
-							handler.Create(integrationInfo);
-						}
-						else
-						{
-							var result = new CsConstant.IntegrationResult(CsConstant.IntegrationResult.TResultException.OnCreateEntityExist);
-							integrationInfo.Result = result;
+							if(handler.IsExport(integrationInfo)) {
+								var result = new CsConstant.IntegrationResult(CsConstant.IntegrationResult.TResultType.Success, handler.ToJson(integrationInfo));
+								integrationInfo.Result = result;
+							}
 							return;
 						}
-					}
-					else if (integrationInfo.Action == CsConstant.IntegrationActionName.Update)
-					{
-						if (handler.IsEntityAlreadyExist(integrationInfo))
+						//Export on Response
+						if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.ExportResponseProcess)
 						{
-							handler.Update(integrationInfo);
+							integrationInfo.Action = CsConstant.IntegrationActionName.UpdateFromResponse;
+							handler.ProcessResponse(integrationInfo);
+							return;
+						}
+						//Import
+						if (integrationInfo.Action == CsConstant.IntegrationActionName.Create)
+						{
+							if (!handler.IsEntityAlreadyExist(integrationInfo))
+							{
+								handler.Create(integrationInfo);
+							}
+							else
+							{
+								integrationInfo.Action = CsConstant.IntegrationActionName.Update;
+								handler.Update(integrationInfo);
+								return;
+							}
+						}
+						else if (integrationInfo.Action == CsConstant.IntegrationActionName.Update)
+						{
+							if (handler.IsEntityAlreadyExist(integrationInfo))
+							{
+								handler.Update(integrationInfo);
+							}
+							else
+							{
+								integrationInfo.Action = CsConstant.IntegrationActionName.Create;
+								handler.Create(integrationInfo);
+							}
+						}
+						else if (integrationInfo.Action == CsConstant.IntegrationActionName.Delete)
+						{
+							handler.Delete(integrationInfo);
 						}
 						else
 						{
-							handler.Create(integrationInfo);
+							handler.Unknown(integrationInfo);
 						}
-					}
-					else if (integrationInfo.Action == CsConstant.IntegrationActionName.Delete)
-					{
-						handler.Delete(integrationInfo);
-					}
-					else
-					{
-						handler.Unknown(integrationInfo);
-					}
+					}, IntegrationLogger.SimpleLoggerErrorAction, string.Format("{0}_{1}", handler.ServiceName, jName));
 				}
 				catch (Exception e)
 				{
-					IntegrationLogger.Error(e, "ExecuteHandlerMethod");
+					IntegrationLogger.Error(e);
 				}
 			}
-		}
-		 
-
-		public static bool isEntityAlreadyIntegrated(Entity entity)
-		{
-			return entity.IsColumnValueLoaded("TsExternalId") && entity.GetTypedColumnValue<int>("TsExternalId") != 0;
 		}
 	}
 }

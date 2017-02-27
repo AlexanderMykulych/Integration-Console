@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CC32C5A7-1637-4304-B92A-BB125422B14B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BuildedFileTester</RootNamespace>
+    <AssemblyName>BuildedFileTester</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net1213">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Common.Logging.Log4Net1213.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v10.2.Core">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.Charts.v10.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.CodeParser.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.CodeParser.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.Data.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v10.2.Core">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.PivotGrid.v10.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v10.2.Core">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.RichEdit.v10.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.Utils.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraBars.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraCharts.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v10.2.Extensions">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraCharts.v10.2.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraEditors.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraNavBar.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraNavBar.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraPivotGrid.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraPivotGrid.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraPrinting.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraReports.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v10.2.Extensions">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraReports.v10.2.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraRichEdit.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraRichEdit.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraTreeList.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraVerticalGrid.v10.2">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DevExpress.XtraVerticalGrid.v10.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\DotNetOpenAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net.Util.PatternStringConverters">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\log4net.Util.PatternStringConverters.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Microsoft.Data.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=eff946befc32edfc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpSvn">
+      <HintPath>..\packages\SharpSvn.1.8-x86.1.8016.3866.130\lib\net40\SharpSvn.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpSvn.UI">
+      <HintPath>..\packages\SharpSvn.1.8-x86.1.8016.3866.130\lib\net40\SharpSvn.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.Common">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\SuperSocket.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.SocketBase">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\SuperSocket.SocketBase.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.SocketEngine">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\SuperSocket.SocketEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Terrasoft.Common">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.Packages">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Core.Packages.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.Scheduler">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Core.Scheduler.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.ServiceModelContract">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Core.ServiceModelContract.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.DB.MSSql">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.DB.MSSql.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.DB.Oracle">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.DB.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.FlashPolicyService">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Messaging.FlashPolicyService.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Mobile">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Mobile.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Redis">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Reports">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Reports.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Store.WebAdapters">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Store.WebAdapters.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.UI.WebControls">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.UI.WebControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Web.Common">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.WebApp.Loader">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\bin\Terrasoft.WebApp.Loader.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Temp\namespace_QueryConsole.cs" />
+    <Compile Include="Temp\namespace_QueryConsole.Files.cs" />
+    <Compile Include="Temp\namespace_QueryConsole.Files.Queue.cs" />
+    <Compile Include="Temp\namespace_QueryConsole.Files.Signal.cs" />
+    <Compile Include="Temp\namespace_Terrasoft.TempConfiguration.cs" />
+    <Compile Include="Temp\namespace_Terrasoft.TsConfiguration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

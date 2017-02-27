@@ -73,7 +73,7 @@ namespace Terrasoft.TsConfiguration
 		public static string XmlConfigurationLocation {
 			get {
 				if(string.IsNullOrEmpty(xmlConfigurationLocation)) {
-					xmlConfigurationLocation = "db";
+					xmlConfigurationLocation = CsConstant.IsDebugMode ? "file" : "db";
 				}
 				return xmlConfigurationLocation;
 			}

@@ -19,7 +19,6 @@ namespace Terrasoft.TsConfiguration
 			this.entityName = entityName;
 		}
 	}
-
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Method, AllowMultiple=true)]
 	public class ImportHandlerAttribute : IntegrationHandlerAttribute
 	{
@@ -28,7 +27,6 @@ namespace Terrasoft.TsConfiguration
 		{
 		}
 	}
-
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
 	public class ExportHandlerAttribute : IntegrationHandlerAttribute
 	{

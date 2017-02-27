@@ -38,6 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -101,12 +102,22 @@
       <HintPath>bin\Debug\MailBee.NET.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Exchange.WebServices">
+      <HintPath>..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Exchange.WebServices.Auth">
+      <HintPath>..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.Auth.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="NodaTime, Version=1.3.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NodaTime.1.3.2\lib\net35-Client\NodaTime.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Quartz">
       <HintPath>..\..\..\WebApp\Armtek\Terrasoft.WebApp\bin\Quartz.dll</HintPath>
@@ -141,6 +152,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Terrasoft.Configuration, Version=7.7.0.2881, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Dev\Armtek_T\C#\A.Mykulych\Terrasoft.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Terrasoft.Core, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Core.dll</HintPath>
@@ -152,9 +167,6 @@
     <Reference Include="Terrasoft.Core.Scheduler, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Core.Scheduler.dll</HintPath>
-    </Reference>
-    <Reference Include="Terrasoft.Core.ServiceModelContract">
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Core.ServiceModelContract.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.DB.MSSql, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -198,12 +210,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Files\AdvancedSearch\AdvancedSearchInfo.cs" />
     <Compile Include="Files\BpmEntityHelper\AccountEntityHelper.cs" />
+    <Compile Include="Files\BpmEntityHelper\AddressHelper.cs" />
+    <Compile Include="Files\BpmEntityHelper\ContactEntityHelper.cs" />
+    <Compile Include="Files\BpmEntityHelper\EntityHelper.cs" />
     <Compile Include="Files\BpmEntityHelper\IntegrationEntityHelper.cs" />
+    <Compile Include="Files\BpmEntityHelper\PhoneFormatHelper.cs" />
     <Compile Include="Files\BpmEntityHelper\ProductEntityHelper.cs" />
     <Compile Include="Files\BpmIntegrator\CsReference.cs" />
     <Compile Include="Files\BpmIntegrator\CsReferenceProperty.cs" />
-    <Compile Include="Files\BpmIntegrator\IIntegrationEntityHandler.cs" />
     <Compile Include="Files\BpmIntegrator\IntegrationHandlerAttribute.cs" />
     <Compile Include="Files\ConsoleManager\ConsoleInfo.cs" />
     <Compile Include="Files\ConsoleManager\ConsoleManager.cs" />
@@ -215,18 +231,42 @@
     <Compile Include="Files\ConsoleManager\TableRowNameAttribute.cs" />
     <Compile Include="Files\ConsoleManager\Trio.cs" />
     <Compile Include="Files\Constants\CsConstant.cs" />
+    <Compile Include="Files\BpmEntityHelper\DbExecutorHelper.cs" />
     <Compile Include="Files\Extension\JTokeExtension.cs" />
     <Compile Include="Files\Extension\ObjectExstension.cs" />
+    <Compile Include="Files\IntegratorHelper\DependentEntityLoader.cs" />
     <Compile Include="Files\IntegratorHelper\IntegratorHelper.cs" />
+    <Compile Include="Files\Integrators\DeliveryServiceIntegrator.cs" />
+    <Compile Include="Files\Integrators\DeliveryServices\Area\DeliveryServiceAreaProvider.cs" />
+    <Compile Include="Files\Integrators\DeliveryServices\Country\DeliveryServiceCountryProvider.cs" />
+    <Compile Include="Files\Integrators\DeliveryServices\DeliveryServiceEntityProvider.cs" />
+    <Compile Include="Files\Integrators\DeliveryServices\DeliveryServiceLookupProvider.cs" />
+    <Compile Include="Files\Integrators\DeliveryServices\DeliveryServiceServiceProvider.cs" />
+    <Compile Include="Files\Integrators\DeliveryServices\ParseAddress\DeliveryServiceAddressProvider.cs" />
+    <Compile Include="Files\Integrators\DeliveryServices\Region\DeliveryServiceRegionProvider.cs" />
+    <Compile Include="Files\Integrators\DeliveryServices\Settlement\DeliveryServiceSettlementProvider.cs" />
+    <Compile Include="Files\Integrators\DeliveryServices\Street\DeliveryServiceStreetProvider.cs" />
     <Compile Include="Files\Integrators\IntegrationServiceIntegrator.cs" />
+    <Compile Include="Files\Integrators\IntegratorBuilder.cs" />
     <Compile Include="Files\Integrators\NewClientServiceIntegrator.cs" />
     <Compile Include="Files\Integrators\OrderServiceIntegrator.cs" />
     <Compile Include="Files\IntegratorTester\BaseIntegratorTester.cs" />
     <Compile Include="Files\IntegratorTester\ClientServiceIntegratorTester.cs" />
     <Compile Include="Files\IntegratorTester\OrderServiceIntegratorTester.cs" />
+    <Compile Include="Files\IntegratorTester\PrimaryImport\ImportServiceObject.cs" />
     <Compile Include="Files\IntegratorTester\TesterManager.cs" />
     <Compile Include="Files\Locker\IntegrationLocker.cs" />
-    <Compile Include="Files\Logger\IntegrationUtilities.cs" />
+    <Compile Include="Files\Locker\LockerHelper.cs" />
+    <Compile Include="Files\Logger\IntegrationLogger.cs" />
+    <Compile Include="Files\Logger\LoggerHelper.cs" />
+    <Compile Include="Files\Logger\LoggerInfo\BaseLoggerInfo.cs" />
+    <Compile Include="Files\Logger\LoggerInfo\LoggerInfo.cs" />
+    <Compile Include="Files\Logger\LoggerInfo\MappingErrorLoggerInfo.cs" />
+    <Compile Include="Files\Logger\LoggerInfo\RequestErrorLoggerInfo.cs" />
+    <Compile Include="Files\Logger\LoggerState.cs" />
+    <Compile Include="Files\Logger\LoggerInfo\RequestLoggerInfo.cs" />
+    <Compile Include="Files\Logger\LoggerInfo\ResponseLoggerInfo.cs" />
+    <Compile Include="Files\Logger\TsLogger.cs" />
     <Compile Include="Files\MappingManager\IMapRule.cs" />
     <Compile Include="Files\MappingManager\JsonHelper.cs" />
     <Compile Include="Files\MappingManager\MappingHelper.cs" />
@@ -246,6 +286,12 @@
     <Compile Include="Files\MappingManager\RuleInfo.cs" />
     <Compile Include="Files\MappingManager\RulesFactory.cs" />
     <Compile Include="Files\MappingManager\TsMacrosHelper.cs" />
+    <Compile Include="Files\PrimaryExport\PrimaryExportParam.cs" />
+    <Compile Include="Files\PrimaryExport\PrimaryExportProvider.cs" />
+    <Compile Include="Files\PrimaryExport\PrimaryExportScenario.cs" />
+    <Compile Include="Files\PrimaryImport\PrimaryImportParam.cs" />
+    <Compile Include="Files\PrimaryImport\PrimaryImportProvider.cs" />
+    <Compile Include="Files\PrimaryImport\PrimaryImportScenario.cs" />
     <Compile Include="Files\Queue\DefaultIntegrationQueue.cs" />
     <Compile Include="Files\Queue\IIntegrationQueue.cs" />
     <Compile Include="Files\Signal\SignalGenerator.cs" />
@@ -259,14 +305,20 @@
     <Compile Include="Files\XmlManager\DynamicXmlParser.cs" />
     <Compile Include="Files\XmlManager\IntegrationPath.cs" />
     <Compile Include="Files\XmlManager\IntegrationPathConfig.cs" />
+    <Compile Include="IntegrationJson\JsonFilterProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TempFile\TsBotService.cs" />
+    <Compile Include="TempFile\UsrEquipmentHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Files\responseClientServiceCompanyProfile.json" />
     <None Include="Files\responseIntegrationService.json" />
+    <None Include="IntegrationJson\ClientService.json" />
+    <None Include="IntegrationJson\IntegrationServiceAgent.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +337,8 @@
     <Content Include="ConfigurationFile.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Files\responseOrderService.json" />
+    <Content Include="Files\export.txt" />
     <Content Include="Files\TextFile1.txt" />
     <Content Include="IntegrationJson\CompanyProfile.txt" />
     <Content Include="IntegrationJson\PersonProfile.txt" />

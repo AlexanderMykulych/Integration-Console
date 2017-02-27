@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terrasoft.Core.DB;
 
 namespace Terrasoft.TsConfiguration
 {
@@ -15,7 +16,29 @@ namespace Terrasoft.TsConfiguration
 		}
 		public override void Import(RuleImportInfo info)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				if (info.json != null && info.json is JArray)
+				{
+					var jArray = (JArray) info.json;
+					Action integrateRelatedEntity = () =>
+					{
+						foreach (JToken jArrayItem in jArray)
+						{
+							JObject jObj = jArrayItem as JObject;
+							var externalId = jObj.SelectToken("#ref.id").Value<int>();
+							var type = jObj.SelectToken("#ref.type").Value<string>();
+							DependentEntityLoader.LoadDependenEntity(type, externalId, info.userConnection, null,
+								IntegrationLogger.SimpleLoggerErrorAction);
+						}
+					};
+					info.AfterEntitySave = integrateRelatedEntity;
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
 		}
 		public override void Export(RuleExportInfo info)
 		{

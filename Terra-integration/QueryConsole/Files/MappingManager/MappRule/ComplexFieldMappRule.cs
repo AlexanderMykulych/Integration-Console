@@ -19,12 +19,22 @@ namespace Terrasoft.TsConfiguration
 			if (info.json != null)
 			{
 				var newValue = JsonEntityHelper.GetSimpleTypeValue(info.json);
-				if (newValue != null)
+				if (newValue != null && (info.json.Type != JTokenType.String || newValue.ToString() != ""))
 				{
 					resultId = JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1).FirstOrDefault();
-					if (info.config.CreateIfNotExist && (resultId == null || (resultId is Guid && (Guid)resultId == Guid.Empty)))
+					if (info.config.CreateIfNotExist && (resultId == null || (resultId is string && (string)resultId == string.Empty) || (resultId is Guid && (Guid)resultId == Guid.Empty)))
 					{
-						resultId = JsonEntityHelper.CreateColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1).FirstOrDefault();
+						Dictionary<string, string> defaultColumn = null;
+						if(!string.IsNullOrEmpty(info.config.TsTag)) {
+							defaultColumn = JsonEntityHelper.ParsToDictionary(info.config.TsTag, '|', ',');
+							foreach(var columnKey in defaultColumn.Keys.ToList()) {
+								string value = defaultColumn[columnKey];
+								if (value.StartsWith("$")) {
+									defaultColumn[columnKey] = GetAdvancedSelectTokenValue(info.json, value.Substring(1));
+								}
+							}
+						}
+						resultId = JsonEntityHelper.CreateColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1, "CreateOn", Common.OrderDirection.Descending, defaultColumn).FirstOrDefault();
 					}
 				}
 			}
@@ -39,6 +49,18 @@ namespace Terrasoft.TsConfiguration
 				resultObject = JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationPath, sourceValue, info.config.TsDestinationResPath).FirstOrDefault();
 			}
 			info.json = resultObject != null ? JToken.FromObject(resultObject) : null;
+		}
+		public string GetAdvancedSelectTokenValue(JToken jToken, string path) {
+			if (path.StartsWith(".-") && jToken.Parent != null) {
+				return GetAdvancedSelectTokenValue(jToken.Parent, path.Substring(2));
+			}
+			if (jToken != null) {
+				var resultToken = jToken.SelectToken(path);
+				if(resultToken != null) {
+					return resultToken.Value<string>();
+				}
+			}
+			return string.Empty;
 		}
 	}
 }

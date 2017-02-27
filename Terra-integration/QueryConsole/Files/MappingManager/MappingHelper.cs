@@ -137,7 +137,12 @@ namespace Terrasoft.TsConfiguration
 					}
 					catch (Exception e)
 					{
-						IntegrationLogger.MappingError(e, item, integrationInfo);
+						IntegrationLogger.Info(new MappingErrorLoggerInfo()
+						{
+							Exception = e,
+							Item = item,
+							IntegrationInfo = integrationInfo
+						});
 						if (!item.IgnoreError)
 						{
 							throw;
@@ -193,7 +198,7 @@ namespace Terrasoft.TsConfiguration
 				}
 			}
 		}
-
+		
 		public void MapColumn(MappingItem mapItem, ref JToken jToken, IntegrationInfo integrationInfo)
 		{
 			try
@@ -225,6 +230,11 @@ namespace Terrasoft.TsConfiguration
 							if (mapItem.MapExecuteType == TMapExecuteType.BeforeEntitySave)
 							{
 								executedMethod();
+								var importRuleInfo = ruleInfo as RuleImportInfo;
+								if (importRuleInfo.AfterEntitySave != null)
+								{
+									MethodQueue.Enqueue(importRuleInfo.AfterEntitySave);
+								}
 							}
 							else
 							{
@@ -250,13 +260,18 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.MappingError(e, mapItem, integrationInfo);
+				IntegrationLogger.Info(new MappingErrorLoggerInfo()
+				{
+					Exception = e,
+					Item = mapItem,
+					IntegrationInfo = integrationInfo
+				});
 			}
 		}
 
 		public void ExecuteOverRuleMacros(MappingItem mapItem, ref JToken jToken, IntegrationInfo integrationInfo)
 		{
-			if (mapItem.OverRuleMacros.IsNullOrEmpty() || jToken == null)
+			if (mapItem.OverRuleMacros.IsNullOrEmpty() || (!mapItem.AllowNullToOverMacros && jToken == null))
 			{
 				return;
 			}
@@ -264,10 +279,10 @@ namespace Terrasoft.TsConfiguration
 			{
 				case TIntegrationType.ExportResponseProcess:
 				case TIntegrationType.Import:
-					jToken = TsMacrosHelper.GetMacrosResultImport(mapItem.OverRuleMacros, jToken.Value<JArray>(), MacrosType.OverRule) as JToken;
+					jToken = TsMacrosHelper.GetMacrosResultImport(mapItem.OverRuleMacros, jToken, MacrosType.OverRule, integrationInfo) as JToken;
 					break;
 				case TIntegrationType.Export:
-					jToken = JToken.FromObject(TsMacrosHelper.GetMacrosResultExport(mapItem.OverRuleMacros, jToken, MacrosType.OverRule));
+					jToken = JToken.FromObject(TsMacrosHelper.GetMacrosResultExport(mapItem.OverRuleMacros, jToken, MacrosType.OverRule, integrationInfo));
 					break;
 			}
 		}
@@ -283,7 +298,7 @@ namespace Terrasoft.TsConfiguration
 				return false;
 			}
 			var select = new Select(UserConnection)
-							.Column(Func.Count(CsConstant.ServiceColumnInBpm.Identifier)).As("Count")
+							.Column(Func.Count(Column.Const(1))).As("Count")
 							.From(entityName)
 							.Where(externalIdPath).IsEqual(Column.Parameter(externalId)) as Select;
 			using (DBExecutor dbExecutor = UserConnection.EnsureDBConnection())
@@ -299,12 +314,11 @@ namespace Terrasoft.TsConfiguration
 			return false;
 		}
 
-		public void SaveEntity(Entity entity, string jName, bool onResponse = false)
+		public void SaveEntity(Entity entity, string jName, string ServiceName, bool onResponse = false)
 		{
 			try
 			{
 				UserConnection = entity.UserConnection;
-				bool result = false;
 				if (IsInsertToDB)
 				{
 					switch (entity.StoringState)
@@ -312,27 +326,33 @@ namespace Terrasoft.TsConfiguration
 						case StoringObjectState.New:
 							if (entity.PrimaryColumnValue == Guid.Empty)
 							{
-								result = entity.Save(false);
+								entity.Save(false);
 							}
 							else
 							{
-								result = entity.InsertToDB(false, false);
+								entity.InsertToDB(false, false);
 							}
 							break;
 						case StoringObjectState.Changed:
-							result = entity.UpdateInDB(false);
+							entity.UpdateInDB(false);
 							break;
 					}
 				}
 				else
 				{
-					result = entity.Save(false);
+					try
+					{
+						entity.Save(false);
+					} catch(Exception e)
+					{
+						IntegrationLogger.Error(e, string.Format("{0} {1} {2} {3}", entity.GetType().ToString(), jName, ServiceName, onResponse));
+					}
 				}
 				ExecuteMapMethodQueue();
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.Error(e, string.Format("SaveEntity {0} - {1}", entity.GetType().ToString(), jName));
+				IntegrationLogger.Error(e, string.Format("{0} {1} {2} {3}", entity.GetType().ToString(), jName, ServiceName, onResponse));
 			}
 		}
 
@@ -342,7 +362,7 @@ namespace Terrasoft.TsConfiguration
 		}
 		 
 
-				private string PrepareColumn(string columnName, bool withId = false)
+		private string PrepareColumn(string columnName, bool withId = false)
 		{
 			var endWithId = columnName.EndsWith("Id");
 			return withId ? (endWithId ? columnName : columnName + "Id") : (endWithId ? columnName.Substring(0, columnName.Length - 2) : columnName);

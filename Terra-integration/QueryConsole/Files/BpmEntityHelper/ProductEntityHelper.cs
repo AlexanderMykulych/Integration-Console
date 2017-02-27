@@ -29,6 +29,7 @@ namespace Terrasoft.TsConfiguration {
 								insertOrUpdateAction(update);
 								update.Execute();
 							}
+							return resultId;
 						}
 					}
 				}
@@ -37,6 +38,7 @@ namespace Terrasoft.TsConfiguration {
 								.Into("Product")
 								.Set("Id", Column.Parameter(resultId))
 								.Set("Code", oemParam)
+								.Set("Name", Column.Parameter(string.Format("{0} {1}", brand, oem)))
 								.Set("TsTradeMarkName", brandParam);
 				if (insertOrUpdateAction != null) {
 					insertOrUpdateAction(insert);

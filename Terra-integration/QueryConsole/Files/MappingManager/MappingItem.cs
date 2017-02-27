@@ -9,7 +9,7 @@ namespace Terrasoft.TsConfiguration
 	public class MappingItem
 	{
 
-				public string TsSourcePath { get; set; }
+		public string TsSourcePath { get; set; }
 		public string TsSourceName { get; set; }
 
 		public string JSourceName { get; set; }
@@ -40,6 +40,7 @@ namespace Terrasoft.TsConfiguration
 		public string HandlerName { get; set; }
 
 		public bool DeleteBeforeExport { get; set; }
+		public string BeforeDeleteMacros { get; set; }
 
 		public string MacrosName { get; set; }
 
@@ -61,16 +62,16 @@ namespace Terrasoft.TsConfiguration
 		public string OverRuleMacros { get; set; }
 		public string Selector { get; set; }
 
-
 		public bool CreateIfNotExist { get; set; }
+		public bool AllowNullToOverMacros { get; set; }
+		public bool IsAllowEmptyResult { get; set; }
 
-				public MappingItem()
+		public bool LoadDependentEntity { get; set; }
+		public MappingItem()
 		{
 
 		}
-		 
-
-				public override string ToString()
+		public override string ToString()
 		{
 			return string.Format("MappingItem: Path = {0} DecPath = {1} EntityName = {2} Type = {3} JObjType = {4}", TsSourcePath ?? "null", TsDestinationPath ?? "null", TsSourceName ?? "null", MapType.ToString() ?? "null", JSourceName ?? "null");
 		}

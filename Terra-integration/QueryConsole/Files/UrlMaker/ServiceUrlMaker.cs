@@ -13,16 +13,16 @@ namespace Terrasoft.TsConfiguration
 		{
 			this.baseUrls = baseUrls;
 		}
-		public virtual string Make(TServiceObject type, string objectName, string objectId, string filters, TRequstMethod method, string limit, string skip)
+		public virtual string Make(TServiceObject type, string objectName, string objectId, string filters, TRequstMethod method, string limit, string skip, string sort = null, string sortDirect = "asc")
 		{
-			return MakeUrl(baseUrls[type], objectName, objectId, filters, method, limit, skip);
+			return MakeUrl(baseUrls[type], objectName, objectId, filters, method, limit, skip, sort, sortDirect);
 		}
 		public virtual string Make(ServiceRequestInfo info)
 		{
-			return Make(info.Type, info.ServiceObjectName, info.ServiceObjectId, info.Filters, info.Method, info.Limit, info.Skip);
+			return Make(info.Type, info.ServiceObjectName, info.ServiceObjectId, info.Filters, info.Method, info.Limit, info.Skip, info.SortField, info.SortDirection);
 		}
 
-		public static string MakeUrl(string baseUrl, string objectName, string objectId, string filters, TRequstMethod method, string limit, string skip) {
+		public static string MakeUrl(string baseUrl, string objectName, string objectId, string filters, TRequstMethod method, string limit, string skip, string sort = null, string sortDirect = "asc") {
 			string resultUrl = baseUrl;
 			resultUrl += "/" + objectName;
 			if (!string.IsNullOrEmpty(objectId) && objectId != "0") {
@@ -30,14 +30,19 @@ namespace Terrasoft.TsConfiguration
 				return resultUrl;
 			}
 			//resultUrl += "?sort[createdAt]=desc";
+			if (!string.IsNullOrEmpty(filters)) {
+				resultUrl += "?" + filters;
+			}
 			if (!string.IsNullOrEmpty(limit)) {
 				resultUrl += (resultUrl.IndexOf("?") > -1 ? "&" : "?") + "limit=" + limit;
 			}
-			if (!string.IsNullOrEmpty(skip) && int.Parse(skip) > 0) {
+			if (!string.IsNullOrEmpty(skip) && int.Parse(skip) > 0)
+			{
 				resultUrl += (resultUrl.IndexOf("?") > -1 ? "&" : "?") + "skip=" + skip;
 			}
-			if (!string.IsNullOrEmpty(filters)) {
-				resultUrl += "?" + filters;
+			if (!string.IsNullOrEmpty(sort))
+			{
+				resultUrl += (resultUrl.IndexOf("?") > -1 ? "&" : "?") + "sort[" + sort + "]=" + sortDirect;
 			}
 			return resultUrl;
 		}

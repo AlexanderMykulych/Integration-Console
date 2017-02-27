@@ -10,65 +10,57 @@ namespace Terrasoft.TsConfiguration
 {
 	public static class IntegrationLocker
 	{
-		private static ConcurrentDictionary<string, LockerInfo> LockerInfo = new ConcurrentDictionary<string, LockerInfo>();
+		public static ConcurrentDictionary<string, bool> LockerInfo = new ConcurrentDictionary<string, bool>();
 		private static bool isLocckerActive {
 			get {
 				return CsConstant.IntegratorSettings.isLockerActive;
 			}
 		}
-		public static void Lock(string schemaName, Guid id)
+		public static void Lock(object schemaName, object id, string keyMixin = null)
 		{
 			if (!isLocckerActive) {
 				return;
 			}
-			var key = GetKey(schemaName, id);
+			var key = GetKey(schemaName, id, keyMixin);
+			IntegrationLogger.Info(string.Format("Lock => Schema Name: {0} Id: {1} key: {2}", schemaName, id, key));
 			if (!LockerInfo.ContainsKey(key))
 			{
-				LockerInfo.TryAdd(key, new LockerInfo()
-				{
-					Identifier = id,
-					SchemaName = schemaName
-				});
+				LockerInfo.TryAdd(key, true);
 			}
 		}
-		public static void Unlock(string schemaName, Guid id)
+		public static void Unlock(object schemaName, object id, string keyValue = null)
 		{
 			if (!isLocckerActive) {
 				return;
 			}
-			var key = GetKey(schemaName, id);
+			var key = GetKey(schemaName, id, keyValue);
+			IntegrationLogger.Info(string.Format("Unlock => Schema Name: {0} Id: {1} key: {2}", schemaName, id, key));
 			if (LockerInfo.ContainsKey(key))
 			{
-				LockerInfo removeItem = null;
+				bool removeItem;
 				LockerInfo.TryRemove(key, out removeItem);
 			}
 		}
 
-		public static bool CheckWithUnlock(string schemaName, Guid id)
+		public static bool CheckWithUnlock(object schemaName, object id, string keyValue = null)
 		{
 			if(!isLocckerActive) {
 				return true;
 			}
-			if(!CheckUnLock(schemaName, id))
+			if(!CheckUnLock(schemaName, id, keyValue))
 			{
 				Unlock(schemaName, id);
 			}
 			return CheckUnLock(schemaName, id);
 		}
-		public static bool CheckUnLock(string schemaName, Guid id)
+		public static bool CheckUnLock(object schemaName, object id, string keyValue = null)
 		{
-			return !isLocckerActive || !LockerInfo.ContainsKey(GetKey(schemaName, id));
+			return !isLocckerActive || !LockerInfo.ContainsKey(GetKey(schemaName, id, keyValue));
 		}
 
-		private static string GetKey(string schemaName, Guid id)
+		private static string GetKey(object schemaName, object id, string keyValue)
 		{
-			return string.Format("{0}_{1}_{2}", id.ToString(), schemaName, Thread.CurrentThread.ManagedThreadId);
+			return string.Format("{0}_{1}_{2}_{3}", id, schemaName, Thread.CurrentThread.ManagedThreadId, keyValue ?? "!");
 		}
-	}
-
-	public class LockerInfo
-	{
-		public string SchemaName;
-		public Guid Identifier;
 	}
 }

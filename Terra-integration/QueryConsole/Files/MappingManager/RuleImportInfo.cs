@@ -10,5 +10,9 @@ namespace Terrasoft.TsConfiguration
 {
 	public class RuleImportInfo: RuleInfo
 	{
+		/// <summary>
+		/// Выполняется после сохранения объекта
+		/// </summary>
+		public Action AfterEntitySave;
 	}
 }

@@ -29,18 +29,21 @@ namespace Terrasoft.TsConfiguration
 		/// <param name="jsonText">Данные для отправки в формате json</param>
 		/// <param name="callback">callback - для обработки ответа</param>
 		/// <param name="userConnection"></param>
-		public void PushRequest(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection> callback, UserConnection userConnection, Guid logId,
-			 Action<string, UserConnection> errorCallback = null, string auth = null)
+		public void PushRequest(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection> callback, UserConnection userConnection, 
+			 Action<string, UserConnection> errorCallback = null, string auth = null, bool isAsync = true)
 		{
 			if (string.IsNullOrEmpty(url))
 			{
 				return;
 			}
-			if(CsConstant.IntegratorSettings.IsIntegrationAsync) {
-				ThreadPool.QueueUserWorkItem(((x) => MakeAsyncRequest(requestMethod, url, jsonText, callback, userConnection, logId, errorCallback, auth)));
-			} else {
-				MakeAsyncRequest(requestMethod, url, jsonText, callback, userConnection, logId, errorCallback, auth);
-			}
+			Console.WriteLine(url);
+			IntegrationLogger.Info(new RequestLoggerInfo()
+			{
+				RequestMethod = requestMethod,
+				Url = url,
+				JsonText = jsonText
+			});
+			MakeAsyncRequest(requestMethod, url, jsonText, callback, userConnection, errorCallback, auth);
 		}
 
 
@@ -53,14 +56,11 @@ namespace Terrasoft.TsConfiguration
 		/// <param name="callback"></param>
 		/// <param name="userConnection"></param>
 		private static void MakeAsyncRequest(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection> callback,
-			 UserConnection userConnection = null, Guid? logId = null,
+			 UserConnection userConnection = null,
 			 Action<string, UserConnection> errorCallback = null, string auth = null)
 		{
 			try
 			{
-				Console.WriteLine(url);
-				IntegrationLogger.SetCurentThreadLogId(logId.Value, userConnection);
-				var requestId = IntegrationLogger.PushRequest(requestMethod, url, jsonText);
 				var _request = WebRequest.Create(new Uri(url)) as HttpWebRequest;
 				_request.Method = requestMethod.ToString();
 				_request.ContentType = "application/json";
@@ -85,7 +85,10 @@ namespace Terrasoft.TsConfiguration
 						if (callback != null)
 						{
 							string responceText = sr.ReadToEnd();
-							IntegrationLogger.GetResponse(responceText);
+							IntegrationLogger.Info(new ResponseLoggerInfo()
+							{
+								ResponseText = responceText
+							});
 							callback(responceText, userConnection);
 						}
 					}
@@ -97,7 +100,12 @@ namespace Terrasoft.TsConfiguration
 					{
 						string responceText = sr.ReadToEnd();
 						Console.WriteLine(responceText);
-						IntegrationLogger.ResponseError(e, responceText, jsonText, requestId);
+						IntegrationLogger.Info(new RequestErrorLoggerInfo()
+						{
+							Exception = e,
+							ResponseText = responceText,
+							ResponseJson = jsonText
+						});
 						if (errorCallback != null)
 						{
 							errorCallback(responceText, userConnection);
@@ -107,7 +115,11 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.BeforeRequestError(e);
+				IntegrationLogger.Info(new RequestErrorLoggerInfo()
+				{
+					Exception = e,
+					ResponseText = "Ошибка в формировании запроса"
+				});
 				if (errorCallback != null)
 				{
 					errorCallback(e.Message, userConnection);

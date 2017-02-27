@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D80E71E9-67C8-453A-9DE9-E0EA85F52972}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IntegrationUnitTest</RootNamespace>
+    <AssemblyName>IntegrationUnitTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="Terrasoft.Common">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.Entities.Services">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.Entities.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.Packages">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.Packages.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.RabbitQueue">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.RabbitQueue.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.Scheduler">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.Scheduler.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.ScriptEngine">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.ScriptEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.ServiceModelContract">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.ServiceModelContract.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.DB.MSSql">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.DB.MSSql.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.DB.Oracle">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.DB.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.GoogleServerConnector">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.GoogleServerConnector.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.GoogleServices">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.GoogleServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.Common">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Messaging.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.MicrosoftWSService">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Messaging.MicrosoftWSService.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.SuperWSService">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Messaging.SuperWSService.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Mobile">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Mobile.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Nui">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Nui.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Nui.ServiceModel">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Nui.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Performance.Profiler">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Performance.Profiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Redis">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Reports">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Reports.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Social">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Social.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Store.WebAdapters">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Store.WebAdapters.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Svn">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Svn.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Sync">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Sync.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.UI.WebControls">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.UI.WebControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Web.Common">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.WebApp">
+      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.WebApp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="Entities\AccountEntityTest.cs" />
+    <Compile Include="Entities\BaseEntityTest.cs" />
+    <Compile Include="Entities\JArray.cs" />
+    <Compile Include="EntityDbTester.cs" />
+    <Compile Include="IEntities\IEntityTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QueryConsole\QueryConsole.csproj">
+      <Project>{bb4e58d7-fce2-454b-8850-7f3ff12cdb2c}</Project>
+      <Name>QueryConsole</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="JsonFiles\Account.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

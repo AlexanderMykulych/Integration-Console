@@ -46,9 +46,9 @@ namespace Terrasoft.TsConfiguration {
 			return jToken;
 		}
 
-		public static T GetJTokenValuePath<T>(this JToken jToken, string path, CsConstant.TIntegrationType type = CsConstant.TIntegrationType.Import, T defValue = default(T)) {
+		public static T GetJTokenValuePath<T>(this JToken jToken, string path, T defValue = default(T)) {
 			var token = jToken.SelectToken(path);
-			if(token == null)
+			if(token == null || string.IsNullOrEmpty(jToken.SelectToken(path).Value<string>()))
 			{
 				return defValue;
 			}
@@ -57,7 +57,7 @@ namespace Terrasoft.TsConfiguration {
 
 		public static bool IsJTokenPathHasValue(this JToken jToken, string path) {
 			var token = jToken.SelectToken(path);
-			return token != null && token.HasValues;
+			return token != null && !string.IsNullOrEmpty(token.Value<string>());
 		}
 
 		public static void RemoveByPath(this JToken jToken, string path) {

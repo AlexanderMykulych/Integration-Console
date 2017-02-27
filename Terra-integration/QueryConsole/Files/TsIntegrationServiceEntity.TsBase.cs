@@ -11,83 +11,91 @@ using IntegrationInfo = Terrasoft.TsConfiguration.CsConstant.IntegrationInfo;
 
 namespace Terrasoft.TsConfiguration
 {
-	public abstract class EntityHandler : IIntegrationEntityHandler
+	public abstract class EntityHandler
 	{
 		public MappingHelper Mapper;
 		public string EntityName;
 		public string JName;
-
-		public virtual string HandlerName
-		{
-			get
-			{
+		public virtual string HandlerName {
+			get {
 				return EntityName;
 			}
 		}
-		public virtual string SettingName
-		{
-			get
-			{
+		public virtual string SettingName {
+			get {
 				return JName;
 			}
 		}
 		private string _ServiceName;
-		public virtual string ServiceName
-		{
-			get
-			{
+		public virtual string ServiceName {
+			get {
 				if (string.IsNullOrEmpty(_ServiceName))
 				{
 					var handlerSetting = IntegrationConfigurationManager.IntegrationPathConfig.Paths.FirstOrDefault(x => x.Name == SettingName);
-					if(handlerSetting != null) {
+					if (handlerSetting != null)
+					{
 						_ServiceName = handlerSetting.ServiceName;
-					} else {
+					}
+					else
+					{
 						IntegrationLogger.CurrentLogger.Instance.Error(string.Format("Problem with ({0}-{1}-{2}-{3}) handler setting", JName, EntityName, HandlerName, this.GetType().Name));
 					}
 				}
 				return _ServiceName;
 			}
 		}
-
-		public virtual TServiceObject ServiceObjectType
-		{
-			get
-			{
+		public virtual TServiceObject ServiceObjectType {
+			get {
 				return TServiceObject.Entity;
 			}
 		}
-
-		public virtual string Filters
-		{
-			get
-			{
-				return null;
-			}
-		}
-
-		public virtual string ExternalIdPath
-		{
-			get
-			{
+		public virtual string ExternalIdPath {
+			get {
 				return CsConstant.ServiceColumnInBpm.Identifier;
 			}
 		}
-		public virtual string ExternalVersionPath
-		{
-			get
-			{
+		public virtual string ExternalVersionPath {
+			get {
 				return CsConstant.ServiceColumnInBpm.Version;
 			}
 		}
-
-		public virtual bool IsJsonWithHeader
-		{
-			get
-			{
+		public virtual bool IsJsonWithHeader {
+			get {
 				return true;
 			}
 		}
+		public virtual bool IsEmbeddedObject {
+			get {
+				return false;
+			}
+		}
 
+		public virtual string ParentObjectJName {
+			get {
+				return string.Empty;
+			}
+		}
+		public virtual string ParentObjectTsName {
+			get {
+				return string.Empty;
+			}
+		}
+		/// <summary>
+		/// Признак разширеного поиска
+		/// </summary>
+		public virtual bool IsAdvancedSearch {
+			get {
+				return false;
+			}
+		}
+		/// <summary>
+		/// Информация о розширеном поиске
+		/// </summary>
+		public virtual AdvancedSearchInfo AdvancedSearchInfo {
+			get {
+				return null;
+			}
+		}
 		public virtual void Create(IntegrationInfo integrationInfo)
 		{
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
@@ -100,7 +108,7 @@ namespace Terrasoft.TsConfiguration
 			AfterMapping(integrationInfo);
 			try
 			{
-				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName);
+				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName, ServiceName);
 				integrationInfo.Result = new CsConstant.IntegrationResult()
 				{
 					Type = CsConstant.IntegrationResult.TResultType.Success
@@ -119,15 +127,12 @@ namespace Terrasoft.TsConfiguration
 		public virtual void BeforeMapping(IntegrationInfo integrationInfo)
 		{
 		}
-
 		public virtual void AfterMapping(IntegrationInfo integrationInfo)
 		{
 		}
-
 		public virtual void AfterEntitySave(IntegrationInfo integrationInfo)
 		{
 		}
-
 		public virtual void Update(IntegrationInfo integrationInfo)
 		{
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
@@ -136,30 +141,28 @@ namespace Terrasoft.TsConfiguration
 			if (entity != null)
 			{
 				integrationInfo.IntegratedEntity = entity;
-				BeforeMapping(integrationInfo);
-				Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection));
-				AfterMapping(integrationInfo);
-				Mapper.SaveEntity(entity, JName);
-				AfterEntitySave(integrationInfo);
+				if (IsVersionHigger(integrationInfo))
+				{
+					BeforeMapping(integrationInfo);
+					Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection));
+					AfterMapping(integrationInfo);
+					Mapper.SaveEntity(entity, JName, ServiceName);
+					AfterEntitySave(integrationInfo);
+				}
 			}
 			else
 			{
 				throw new Exception(string.Format("Can not create entity {0}", EntityName));
 			}
 		}
-
 		public virtual void Delete(IntegrationInfo integrationInfo)
 		{
-			//var entity = Mapper.GetEntityByExternalId(EntityName, integrationInfo.Data[JName].Value<int>("id"));
-			//entity.SetColumnValue("TsDeleteInIntegrate", true);
-			//Mapper.SaveEntity(entity);
+			throw new NotImplementedException();
 		}
-
 		public virtual void Unknown(IntegrationInfo integrationInfo)
 		{
 			Update(integrationInfo);
 		}
-
 		public virtual bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
@@ -170,24 +173,63 @@ namespace Terrasoft.TsConfiguration
 			{
 				externalId = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath);
 			}
-			return Mapper.CheckIsExist(EntityName, integrationInfo.Data[JName].Value<int>("id"), integrationInfo.TsExternalIdPath, externalId);
+			bool result = Mapper.CheckIsExist(EntityName, integrationInfo.Data[JName].Value<int>("id"), integrationInfo.TsExternalIdPath, externalId);
+			if (!result && IsAdvancedSearch)
+			{
+				result = IsEntityAlreadyExistAdvanced(integrationInfo);
+			}
+			return result;
 		}
-
+		public virtual bool IsEntityAlreadyExistAdvanced(IntegrationInfo integrationInfo)
+		{
+			integrationInfo.TsExternalIdPath = ExternalIdPath;
+			integrationInfo.TsExternalVersionPath = ExternalVersionPath;
+			if(integrationInfo.IntegratedEntity != null)
+			{
+				return true;
+			}
+			if(AdvancedSearchInfo == null)
+			{
+				return false;
+			}
+			Guid resultId = AdvancedSearchInfo.Search(integrationInfo.UserConnection,
+					procedure => AddParameterToSearchProcedure(integrationInfo, procedure), IntegrationLogger.SimpleLoggerErrorAction);
+			if(resultId == Guid.Empty)
+			{
+				return false;
+			}
+			var entityEsq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
+			entityEsq.AddAllSchemaColumns();
+			integrationInfo.IntegratedEntity = entityEsq.GetEntity(integrationInfo.UserConnection, resultId);
+			return true;
+		}
+		public virtual void AddParameterToSearchProcedure(IntegrationInfo integrationInfo, StoredProcedure searchProcedure)
+		{
+			return;
+		}
 		public virtual void ProcessResponse(IntegrationInfo integrationInfo)
 		{
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
 			integrationInfo.TsExternalVersionPath = ExternalVersionPath;
-			integrationInfo.Data = Mapper.GetJObject(integrationInfo.StrData);
+			if (!string.IsNullOrEmpty(integrationInfo.StrData))
+			{
+				integrationInfo.Data = Mapper.GetJObject(integrationInfo.StrData);
+			}
+			if (integrationInfo.IntegratedEntity == null)
+			{
+				integrationInfo.IntegratedEntity = GetEntityByExternalId(integrationInfo);
+			}
 			BeforeMapping(integrationInfo);
 			Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection));
 			AfterMapping(integrationInfo);
 			try
 			{
-				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName, true);
+				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName, ServiceName, true);
 				integrationInfo.Result = new CsConstant.IntegrationResult()
 				{
 					Type = CsConstant.IntegrationResult.TResultType.Success
 				};
+				CheckDuplicateByExternalId(integrationInfo);
 			}
 			catch (Exception e)
 			{
@@ -196,12 +238,9 @@ namespace Terrasoft.TsConfiguration
 					Type = CsConstant.IntegrationResult.TResultType.Exception,
 					ExceptionMessage = e.Message
 				};
-			}
-			finally {
-				IntegrationLocker.Unlock(integrationInfo.IntegratedEntity.SchemaName, integrationInfo.IntegratedEntity.PrimaryColumnValue);
+				IntegrationLogger.Error(e, integrationInfo.ToString());
 			}
 		}
-
 		public virtual JObject ToJson(IntegrationInfo integrationInfo)
 		{
 			integrationInfo.TsExternalIdPath = ExternalIdPath;
@@ -211,38 +250,42 @@ namespace Terrasoft.TsConfiguration
 			AfterMapping(integrationInfo);
 			return integrationInfo.Data;
 		}
-
 		public virtual List<MappingItem> GetMapConfig(UserConnection userConnection)
 		{
 			return IntegrationConfigurationManager.GetConfigItem(userConnection, HandlerName);
 		}
-
 		public virtual Entity GetEntityByExternalId(CsConstant.IntegrationInfo integrationInfo)
 		{
-			string externalIdPath = integrationInfo.TsExternalIdPath;
-			var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
-			esq.AddAllSchemaColumns();
-			esq.RowCount = 1;
-			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")));
-			return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
+			if (IsAdvancedSearch && integrationInfo.IntegratedEntity != null)
+			{
+				return integrationInfo.IntegratedEntity;
+			}
+			else
+			{
+				string externalIdPath = integrationInfo.TsExternalIdPath;
+				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
+				esq.AddAllSchemaColumns();
+				esq.RowCount = 1;
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")));
+				return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
+			}
 		}
-
 		public virtual bool IsExport(CsConstant.IntegrationInfo integrationInfo)
 		{
 			return true;
 		}
-
 		public virtual ServiceRequestInfo GetRequestInfo(CsConstant.IntegrationInfo integrationInfo)
 		{
+			var id = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath);
 			var requestInfo = new ServiceRequestInfo()
 			{
-				ServiceObjectId = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath).ToString(),
+				ServiceObjectId = id.ToString(),
 				ServiceObjectName = JName,
 				Type = ServiceObjectType,
 				RequestJson = integrationInfo.Result.Data.ToString(),
 				Entity = integrationInfo.IntegratedEntity
 			};
-			if (IsEntityAlreadyExist(integrationInfo))
+			if (id > 0)
 			{
 				requestInfo.Method = TRequstMethod.PUT;
 			}
@@ -254,41 +297,280 @@ namespace Terrasoft.TsConfiguration
 			requestInfo.Handler = this;
 			return requestInfo;
 		}
+		public virtual void CheckDuplicateByExternalId(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.Create && integrationInfo.IntegrationType == CsConstant.TIntegrationType.ExportResponseProcess && integrationInfo.IntegratedEntity != null)
+				{
+					int externalId = GetExternalIdValue(integrationInfo);
+					var primaryColumnName = integrationInfo.IntegratedEntity.Schema.GetPrimaryColumnName();
+					if (externalId == 0)
+					{
+						return;
+					}
+					if (EntityHelper.IsExistDuplicateByExternalId(integrationInfo.UserConnection, EntityName, ExternalIdPath, externalId, IntegrationLogger.SimpleLoggerErrorAction))
+					{
+						EntityHelper.ClearDuplicateExternalIdByIds(
+							integrationInfo.UserConnection,
+							EntityName,
+							primaryColumnName,
+							ExternalIdPath,
+							externalId,
+							integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>(primaryColumnName),
+							IntegrationLogger.SimpleLoggerErrorAction
+						);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, integrationInfo.ToString());
+			}
+		}
+		public virtual int GetExternalIdValue(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.Data != null)
+			{
+				var idToken = integrationInfo.Data.SelectToken(JName + ".id");
+				if (idToken != null)
+				{
+					return idToken.Value<int>();
+				}
+			}
+			return 0;
+		}
+		public virtual bool IsVersionHigger(IntegrationInfo integrationInfo)
+		{
+			int serviceVersion = 0, bpmVersion = 0;
+			if (integrationInfo.IntegratedEntity != null &&
+				integrationInfo.IntegratedEntity.IsColumnValueLoaded(ExternalVersionPath))
+			{
+				bpmVersion = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalVersionPath);
+			}
+			if (integrationInfo.Data != null)
+			{
+				serviceVersion = integrationInfo.Data.SelectToken(JName + ".version").Value<int>();
+			}
+			return serviceVersion > bpmVersion;
+		}
 	}
 
 	[ImportHandlerAttribute("CompanyProfile")]
 	[ExportHandlerAttribute("Account")]
 	public class AccountHandler : EntityHandler
 	{
+		private AdvancedSearchInfo _advancedSearchInfo;
+		
+
 		public AccountHandler()
 		{
 			Mapper = new MappingHelper();
 			EntityName = "Account";
 			JName = "CompanyProfile";
+			_advancedSearchInfo = new AdvancedSearchInfo()
+			{
+				StoredProcedureName = CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2c
+			};
 		}
-
-		public override JObject ToJson(IntegrationInfo integrationInfo) {
+		public override bool IsAdvancedSearch {
+			get {
+				return true;
+			}
+		}
+		public override AdvancedSearchInfo AdvancedSearchInfo {
+			get {
+				return _advancedSearchInfo;
+			}
+		}
+		public override JObject ToJson(IntegrationInfo integrationInfo)
+		{
 			var result = base.ToJson(integrationInfo);
 
-			try {
-				if (!result.IsJTokenPathHasValue("CompanyProfile.taxRegistrationNumber")) {
+			try
+			{
+				if (!result.IsJTokenPathHasValue("CompanyProfile.taxRegistrationNumber"))
+				{
 					result.RemoveByPath("CompanyProfile.taxRegistrationNumberName");
 					result.RemoveByPath("CompanyProfile.taxRegistrationNumber");
 				}
 			}
-			catch(Exception e) {
+			catch (Exception e)
+			{
 				IntegrationLogger.Error(e);
 			}
 
-			try {
-			if (!result.IsJTokenPathHasValue("CompanyProfile.companyRegistrationNumber")) {
-				result.RemoveByPath("CompanyProfile.companyRegistrationNumberName");
-				result.RemoveByPath("CompanyProfile.companyRegistrationNumber");
+			try
+			{
+				if (!result.IsJTokenPathHasValue("CompanyProfile.companyRegistrationNumber"))
+				{
+					result.RemoveByPath("CompanyProfile.companyRegistrationNumberName");
+					result.RemoveByPath("CompanyProfile.companyRegistrationNumber");
+				}
 			}
-			} catch(Exception e) {
+			catch (Exception e)
+			{
 				IntegrationLogger.Error(e);
 			}
 			return result;
+		}
+		public override void BeforeMapping(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+				{
+					integrationInfo.IntegratedEntity.ClearAllAddressField();
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+		}
+
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			//AccountEntityHelper.ClearAccountPrimaryCommunication(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, IntegrationLogger.SimpleLoggerErrorAction);
+			AccountEntityHelper.ResaveAccountPrimaryAddress(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, integrationInfo.IntegratedEntity.PrimaryColumnValue, IntegrationLogger.SimpleLoggerErrorAction);
+			//http://tscore-task/browse/SKT-4696
+			AccountEntityHelper.SynchronizeCommunication(integrationInfo.UserConnection, integrationInfo.IntegratedEntity.PrimaryColumnValue, IntegrationLogger.SimpleLoggerErrorAction);
+		}
+
+		public override void AddParameterToSearchProcedure(IntegrationInfo integrationInfo, StoredProcedure searchProcedure)
+		{
+			if (integrationInfo.Data != null)
+			{
+				if (AdvancedSearchInfo.StoredProcedureName == CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2c)
+				{
+					var emailPhones = GetEmailPhones(integrationInfo.Data);
+					searchProcedure
+						.WithParameter("Emails", emailPhones.Item1 ?? string.Empty)
+						.WithParameter("Phones", emailPhones.Item2 ?? string.Empty);
+				} else if (AdvancedSearchInfo.StoredProcedureName == CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2b)
+				{
+					var innAndKpp = GetInnAndKpp(integrationInfo.Data);
+					searchProcedure
+						.WithParameter("Inn", innAndKpp.Item1 ?? string.Empty)
+						.WithParameter("Kpp", innAndKpp.Item2 ?? string.Empty);
+				}
+			}
+			
+		}
+		/// <summary>
+		/// Возвращает ИНН и КПП из json-строки
+		/// </summary>
+		/// <param name="data">JObject</param>
+		/// <returns>Кортеж с ИНН и КПП</returns>
+		private Tuple<string, string> GetInnAndKpp(JObject data)
+		{
+			var inn = string.Empty;
+			var kpp = string.Empty;
+			try
+			{
+				var innToken = data.SelectToken(JName + ".taxRegistrationNumber");
+				var kppToken = data.SelectToken(JName + ".companyRegistrationNumber");
+				if(innToken != null)
+				{
+					inn = innToken.Value<string>();
+				}
+				if(kppToken != null)
+				{
+					kpp = kppToken.Value<string>();
+				}
+			} catch(Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+			return new Tuple<string, string>(inn, kpp);
+		}
+		/// <summary>
+		/// Возвращает телефоны и мейлы из json-строки
+		/// </summary>
+		/// <param name="data">JObject</param>
+		/// <returns>Кортеж с мейлами и телефонами</returns>
+		private Tuple<string, string> GetEmailPhones(JObject data)
+		{
+			var emails = string.Empty;
+			var phone = string.Empty;
+			try
+			{
+				var communicationToken = data.SelectToken(JName + ".mainContactInfo.ContactInfo.records");
+				if (communicationToken != null && communicationToken is JArray)
+				{
+					var communicationJArray = (JArray)communicationToken;
+					emails = string.Join(",", communicationJArray
+						.Where(x =>
+						{
+							var mailIdToken = x.SelectToken("ContactRecord.type.#ref.id");
+							return mailIdToken != null && mailIdToken.Value<int>() == 1;
+						})
+						.Select(x => x.SelectToken("ContactRecord.value").Value<string>()));
+					phone = string.Join(",", communicationJArray
+						.Where(x =>
+						{
+							var mailIdToken = x.SelectToken("ContactRecord.type.#ref.id");
+							return mailIdToken != null && mailIdToken.Value<int>() == 2;
+						})
+						.SelectMany(x => PhoneFormatHelper.ToAllFormats(x.SelectToken("ContactRecord.value").Value<string>())));
+				}
+			} catch(Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+			return new Tuple<string, string>(emails, phone);
+		}
+		/// <summary>
+		/// Разширеный поиск существующего контрагента
+		/// </summary>
+		/// <param name="integrationInfo">Информация о интеграции</param>
+		/// <returns></returns>
+		public override bool IsEntityAlreadyExistAdvanced(IntegrationInfo integrationInfo)
+		{
+			SetStoredProcedureNameByAccountInfo(integrationInfo);
+			return base.IsEntityAlreadyExistAdvanced(integrationInfo);
+		}
+		/// <summary>
+		/// В зависимости от бизнес-протокола контрагента устанавливает процедуру поиска
+		/// </summary>
+		/// <param name="integrationInfo">Информация о интеграции</param>
+		private void SetStoredProcedureNameByAccountInfo(IntegrationInfo integrationInfo)
+		{
+			var jObj = integrationInfo.Data;
+			if(jObj != null)
+			{
+				var isB2b = jObj.SelectToken(JName + ".b2b").Value<bool>();
+				var isB2c = jObj.SelectToken(JName + ".b2c").Value<bool>();
+				if (isB2b)
+				{
+					_advancedSearchInfo.StoredProcedureName = CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2b;
+					return;
+				} else if(isB2c)
+				{
+					_advancedSearchInfo.StoredProcedureName = CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2c;
+					return;
+				} else
+				{
+					var isB2s = jObj.SelectToken(JName + ".b2s").Value<bool>();
+					if(isB2s)
+					{
+						var innToken = jObj.SelectToken(JName + ".taxRegistrationNumber");
+						var kppToken = jObj.SelectToken(JName + ".companyRegistrationNumber");
+						if(innToken == null || kppToken == null || string.IsNullOrEmpty(innToken.Value<string>()) || string.IsNullOrEmpty(kppToken.Value<string>()))
+						{
+							var firstEmailToken = jObj.SelectToken(JName + ".mainContactInfo.ContactInfo.records[?(@.ContactRecord.type.#ref.id == 1)][last()]");
+							_advancedSearchInfo.StoredProcedureName = firstEmailToken != null ?
+								CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2c :
+								CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2b;
+						} else
+						{
+							_advancedSearchInfo.StoredProcedureName = CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2b;
+						}
+					}
+				}
+			}
+			_advancedSearchInfo.StoredProcedureName = string.Empty;
 		}
 	}
 
@@ -296,19 +578,94 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("Contact")]
 	public class ContactHandler : EntityHandler
 	{
+		private AdvancedSearchInfo _advancedSearchInfo;
+
 		public ContactHandler()
 		{
 			Mapper = new MappingHelper();
 			EntityName = "Contact";
 			JName = "PersonProfile";
+			_advancedSearchInfo = new AdvancedSearchInfo()
+			{
+				StoredProcedureName = CsConstant.EntityConst.ContactConst.ContactSearchStoredProcedure
+			};
 		}
 
-		//public override void BeforeMapping(IntegrationInfo integrationInfo)
-		//{
-		//	if(integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import) {
-		//		DeleteAllCommunication
-		//	}
-		//}
+		public override void BeforeMapping(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import && integrationInfo.Action == CsConstant.IntegrationActionName.Update)
+			{
+				//http://tscore-task/browse/SKT-3478. Зачищаем чтобы синхронизация с деталью "Средства связи" не отработала
+				integrationInfo.IntegratedEntity.ClearAllAddressField();
+			}
+		}
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			ContactEntityHelper.ResaveContactBirthday(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, IntegrationLogger.SimpleLoggerErrorAction);
+			//ContactEntityHelper.ClearContactPrimaryCommunication(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, IntegrationLogger.SimpleLoggerErrorAction);
+			ContactEntityHelper.ResaveContactPrimaryAddress(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, integrationInfo.IntegratedEntity.PrimaryColumnValue, IntegrationLogger.SimpleLoggerErrorAction);
+			//http://tscore-task/browse/SKT-4696
+			ContactEntityHelper.SynchronizeCommunication(integrationInfo.UserConnection, integrationInfo.IntegratedEntity.PrimaryColumnValue, IntegrationLogger.SimpleLoggerErrorAction);
+		}
+		public override bool IsAdvancedSearch {
+			get {
+				return true;
+			}
+		}
+		public override AdvancedSearchInfo AdvancedSearchInfo {
+			get {
+				return _advancedSearchInfo;
+			}
+		}
+		public override void AddParameterToSearchProcedure(IntegrationInfo integrationInfo, StoredProcedure searchProcedure)
+		{
+			try {
+				Tuple<string, string> emailPhoneTuple = new Tuple<string, string>(string.Empty, string.Empty);
+				if (integrationInfo != null && integrationInfo.Data != null)
+				{
+					emailPhoneTuple = GetEmailAndPhones(JName, integrationInfo.Data);
+				}
+				searchProcedure
+					.WithParameter("Emails", emailPhoneTuple.Item1 ?? string.Empty)
+					.WithParameter("Phones", emailPhoneTuple.Item2 ?? string.Empty);
+			} catch(Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+		}
+		public static Tuple<string, string> GetEmailAndPhones(string jName, JObject jObj)
+		{
+			string emails = String.Empty;
+			string phones = String.Empty;
+			try
+			{
+				var communication = jObj.SelectToken(jName + ".contact.ContactInfo.records");
+				if (communication != null && communication is JArray)
+				{
+					var jArrayCommunication = (JArray)communication;
+					if (jArrayCommunication.Count() > 0)
+					{
+						emails = string.Join(",", jArrayCommunication.Where(x =>
+						{
+							var emailToken = x.SelectToken("ContactRecord.type.#ref.id");
+							return emailToken != null && emailToken.Value<int>() == 1;
+						})
+						.Select(x => x.SelectToken("ContactRecord.value").Value<string>()));
+						phones = string.Join(",", jArrayCommunication.Where(x =>
+						{
+							var emailToken = x.SelectToken("ContactRecord.type.#ref.id");
+							return emailToken != null && emailToken.Value<int>() == 2;
+						})
+						.Select(x => x.SelectToken("ContactRecord.value").Value<string>()));
+					}
+				}
+			} catch(Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+			return new Tuple<string, string>(emails, phones);
+		}
 	}
 
 	[ImportHandlerAttribute("VehicleRelationship")]
@@ -325,10 +682,8 @@ namespace Terrasoft.TsConfiguration
 			JName = "VehicleRelationship";
 		}
 		string handlerName = "TsAutoOwnerInfo";
-		public override string HandlerName
-		{
-			get
-			{
+		public override string HandlerName {
+			get {
 				return handlerName;
 			}
 		}
@@ -336,34 +691,25 @@ namespace Terrasoft.TsConfiguration
 		{
 			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
 			{
-				var typeId = integrationInfo.Data[JName]["type"]["#ref"]["id"].Value<int>();
-				EntityName = GetEntityNameByTypeId(typeId);
-				Mapper.UserConnection = integrationInfo.UserConnection;
+				var typeToken = integrationInfo.Data.SelectToken(JName + ".type.#ref.id");
+				var activeToken = integrationInfo.Data.SelectToken(JName + ".active");
+				if (typeToken != null && activeToken != null)
+				{
+					EntityName = GetEntityNameByTypeId(typeToken.Value<int>(), activeToken.Value<bool>());
+					Mapper.UserConnection = integrationInfo.UserConnection;
+				}
 			}
 			return base.IsEntityAlreadyExist(integrationInfo);
 		}
-
-		public string GetEntityNameByTypeId(int typeId)
+		public string GetEntityNameByTypeId(int typeId, bool active)
 		{
-			switch (typeId)
+			if (typeId != 4)
 			{
-				case 1:
-				case 2:
-					handlerName = "TsAutoOwnerInfo";
-					return "TsAutoOwnerInfo";
-				case 3:
-				case 4:
-					handlerName = "TsAutoOwnerHistory";
-					return "TsAutoOwnerHistory";
-				case 5:
-					handlerName = "TsAutoTechHistory";
-					return "TsAutoTechHistory";
-				case 6:
-					handlerName = "TsAutoTechService";
-					return "TsAutoTechService";
-				default:
-					return "TsAutoTechService";
+				handlerName = active ? "TsAutoOwnerInfo" : "TsAutoOwnerHistory";
+				return handlerName;
 			}
+			handlerName = active ? "TsAutoTechService" : "TsAutoTechHistory";
+			return handlerName;
 		}
 
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
@@ -374,9 +720,11 @@ namespace Terrasoft.TsConfiguration
 				handlerName = EntityName;
 			}
 		}
-		public override void ProcessResponse(IntegrationInfo integrationInfo) {
+		public override void ProcessResponse(IntegrationInfo integrationInfo)
+		{
 			base.ProcessResponse(integrationInfo);
-			if(EntityName == "TsAutoTechService" || EntityName == "TsAutoOwnerInfo") {
+			if (EntityName == "TsAutoTechService" || EntityName == "TsAutoOwnerInfo")
+			{
 				var desEntityName = EntityName == "TsAutoTechService" ? "TsAutoTechHistory" : "TsAutoOwnerHistory";
 				var autoId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsAutomobileId");
 				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, desEntityName);
@@ -385,10 +733,42 @@ namespace Terrasoft.TsConfiguration
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "TsExternalId", 0));
 				var entities = esq.GetEntityCollection(integrationInfo.UserConnection);
 				var integrator = new ClientServiceIntegrator(integrationInfo.UserConnection);
-				foreach (var entity in entities) {
+				foreach (var entity in entities)
+				{
 					integrator.IntegrateBpmEntity(entity);
 				}
 			}
+		}
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return false;
+		}
+		public void SyncAutomobileOwners(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				if (EntityName != "TsAutoOwnerInfo")
+				{
+					return;
+				}
+				var automobileId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("TsAutomobileId");
+				if (automobileId != Guid.Empty)
+				{
+					var storedProcedure = new StoredProcedure(integrationInfo.UserConnection, "tsp_Integration_SynchronizeAutomobileOwners")
+						.WithParameter(Column.Parameter(automobileId)) as StoredProcedure;
+					storedProcedure.PackageName = integrationInfo.UserConnection.DBEngine.SystemPackageName;
+					storedProcedure.Execute();
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.SimpleLoggerErrorAction(e);
+			}
+		}
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			SyncAutomobileOwners(integrationInfo);
 		}
 	}
 
@@ -408,16 +788,29 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("NotificationProfileContact")]
 	public class TsContactNotificationsHandler : EntityHandler
 	{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "PersonProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Contact";
+			}
+		}
 		public TsContactNotificationsHandler()
 		{
 			Mapper = new MappingHelper();
 			EntityName = "TsContactNotifications";
 			JName = "NotificationProfile";
 		}
-		public override string SettingName
-		{
-			get
-			{
+		public override string SettingName {
+			get {
 				return "NotificationProfileContact";
 			}
 		}
@@ -474,26 +867,43 @@ namespace Terrasoft.TsConfiguration
 			}
 			return base.IsEntityAlreadyExist(integrationInfo);
 		}
+
+		public override bool IsVersionHigger(IntegrationInfo integrationInfo)
+		{
+			return true;
+		}
 	}
 
 	[ImportHandlerAttribute("NotificationProfileAccount")]
 	[ExportHandlerAttribute("NotificationProfileAccount")]
 	public class TsAccountNotificationHandler : EntityHandler
 	{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "CompanyProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Account";
+			}
+		}
 		public TsAccountNotificationHandler()
 		{
 			Mapper = new MappingHelper();
 			EntityName = "TsAccountNotification";
 			JName = "NotificationProfile";
 		}
-		public override string SettingName
-		{
-			get
-			{
+		public override string SettingName {
+			get {
 				return "NotificationProfileAccount";
 			}
 		}
-
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
 		{
 			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
@@ -546,9 +956,12 @@ namespace Terrasoft.TsConfiguration
 			}
 			return base.IsEntityAlreadyExist(integrationInfo);
 		}
+
+		public override bool IsVersionHigger(IntegrationInfo integrationInfo)
+		{
+			return true;
+		}
 	}
-
-
 
 	[ImportHandlerAttribute("Manager")]
 	[ImportHandlerAttribute("ManagerGroup")]
@@ -556,10 +969,8 @@ namespace Terrasoft.TsConfiguration
 	public class SysAdminUnitHandler : EntityHandler
 	{
 		public ServiceUrlMaker UrlMaker;
-		public override string HandlerName
-		{
-			get
-			{
+		public override string HandlerName {
+			get {
 				return JName;
 			}
 		}
@@ -574,7 +985,17 @@ namespace Terrasoft.TsConfiguration
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
 		{
 			base.BeforeMapping(integrationInfo);
-			if (string.IsNullOrEmpty(JName))
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
+				if (JName == "Manager")
+				{
+					integrationInfo.IntegratedEntity.SetColumnValue("SysAdminUnitTypeValue", CsConstant.TSysAdminUnitType.User);
+				}
+				else
+				{
+					integrationInfo.IntegratedEntity.SetColumnValue("SysAdminUnitTypeValue", CsConstant.TSysAdminUnitType.Unit);
+				}
+			} else
 			{
 				var typeIndex = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("SysAdminUnitTypeValue");
 				if (typeIndex < 4)
@@ -586,23 +1007,17 @@ namespace Terrasoft.TsConfiguration
 					JName = "Manager";
 				}
 			}
-			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
-			{
-				if (JName == "Manager")
-				{
-					integrationInfo.IntegratedEntity.SetColumnValue("SysAdminUnitTypeValue", CsConstant.TSysAdminUnitType.User);
-				}
-				else
-				{
-					integrationInfo.IntegratedEntity.SetColumnValue("SysAdminUnitTypeValue", CsConstant.TSysAdminUnitType.Unit);
-				}
-			}
 		}
 
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
 			Mapper.UserConnection = integrationInfo.UserConnection;
-			return Mapper.CheckIsExist("SysAdminUnit", integrationInfo.Data[JName].Value<int>("id"), "TsExternalId", integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("TsExternalId"));
+			int externalId = 0;
+			if (integrationInfo.IntegratedEntity != null)
+			{
+				externalId = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("TsExternalId");
+			}
+			return Mapper.CheckIsExist("SysAdminUnit", integrationInfo.Data[JName].Value<int>("id"), "TsExternalId", externalId);
 		}
 
 		public override void ProcessResponse(IntegrationInfo integrationInfo)
@@ -625,11 +1040,20 @@ namespace Terrasoft.TsConfiguration
 		{
 			if (contactId != Guid.Empty)
 			{
-				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "Contact");
-				esq.AddAllSchemaColumns();
-				var entity = esq.GetEntity(userConnection, contactId);
 				var integrator = new ClientServiceIntegrator(userConnection);
-				integrator.IntegrateBpmEntity(entity);
+				integrator.IntegrateBpmEntity(contactId, "Contact");
+			}
+		}
+
+		public override bool IsVersionHigger(IntegrationInfo integrationInfo)
+		{
+			return true;
+		}
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			if (integrationInfo.IntegratedEntity != null && JName == "Manager" && integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("SysAdminUnitTypeValue") == (int)CsConstant.TSysAdminUnitType.User) {
+				ResaveContact(integrationInfo.IntegratedEntity.PrimaryColumnValue, integrationInfo.UserConnection);
 			}
 		}
 	}
@@ -638,6 +1062,21 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("TsAccountManagerGroup")]
 	public class TsAccountManagerGroupHandler : EntityHandler
 	{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "CompanyProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Account";
+			}
+		}
 		public TsAccountManagerGroupHandler()
 		{
 			Mapper = new MappingHelper();
@@ -675,16 +1114,43 @@ namespace Terrasoft.TsConfiguration
 			integratePassport(integrationInfo);
 		}
 
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			try
+			{
+				if (integrationInfo != null && integrationInfo.IntegratedEntity != null && integrationInfo.Data != null)
+				{
+					var automobile = integrationInfo.IntegratedEntity;
+					var name = automobile.GetTypedColumnValue<string>("TsName");
+					if (string.IsNullOrEmpty(name))
+					{
+						var mark = integrationInfo.Data.SelectToken("VehicleProfile.manufacturerName").Value<string>();
+						var model = integrationInfo.Data.SelectToken("VehicleProfile.modelName").Value<string>();
+						automobile.SetColumnValue("TsName", string.Concat(mark, " ", model));
+						automobile.UpdateInDB(false);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+		}
+
 		public void integratePassport(IntegrationInfo integrationInfo)
 		{
 			var automobileId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
 			if (automobileId != Guid.Empty)
 			{
 				var helper = new ClientServiceIntegrator(integrationInfo.UserConnection);
-				helper.IntegrateBpmEntity(integrationInfo.IntegratedEntity, new VehiclePassportHandler());
+				helper.IntegrateBpmEntity(integrationInfo.IntegratedEntity, new VehiclePassportHandler(), false);
 			}
 		}
-		//public override 
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return false;
+		}
 	}
 
 	[ImportHandlerAttribute("VehiclePassport")]
@@ -698,30 +1164,45 @@ namespace Terrasoft.TsConfiguration
 			JName = "VehiclePassport";
 		}
 
-		public override string ExternalIdPath
-		{
-			get
-			{
+		public override string ExternalIdPath {
+			get {
 				return "TsPassportExternalId";
 			}
 		}
-		public override string HandlerName
-		{
-			get
-			{
+		public override string HandlerName {
+			get {
 				return JName;
 			}
 		}
-		public override void ProcessResponse(IntegrationInfo integrationInfo) {
+		public override void ProcessResponse(IntegrationInfo integrationInfo)
+		{
 			base.ProcessResponse(integrationInfo);
-			try {
-				if(integrationInfo.Action == CsConstant.IntegrationActionName.Create) {
+			try
+			{
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.Create)
+				{
 					var integrator = new ClientServiceIntegrator(integrationInfo.UserConnection);
-					integrator.IntegrateBpmEntity(integrationInfo.IntegratedEntity);
+					integrator.IntegrateBpmEntity(integrationInfo.IntegratedEntity, new TsAutomobileHandler(), false);
 				}
-			} catch(Exception e) {
+			}
+			catch (Exception e)
+			{
 				IntegrationLogger.Error(e, "VehiclePassportHandler - ProcessResponse");
 			}
+		}
+		public override bool IsVersionHigger(IntegrationInfo integrationInfo)
+		{
+			return true;
+		}
+		public override bool IsExport(IntegrationInfo integrationInfo)
+		{
+			return false;
+		}
+
+		public override void Create(IntegrationInfo integrationInfo)
+		{
+			//Не создаем паспорт если еще нету автомоболя к которому можно его привязать
+			return;
 		}
 	}
 
@@ -729,6 +1210,21 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("ContactInfo")]
 	public class ContactInfoHandler : EntityHandler
 	{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "PersonProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Contact";
+			}
+		}
 		public ContactInfoHandler()
 		{
 			Mapper = new MappingHelper();
@@ -736,19 +1232,32 @@ namespace Terrasoft.TsConfiguration
 			JName = "ContactInfo";
 		}
 
-		public override string HandlerName
-		{
-			get
-			{
+		public override string HandlerName {
+			get {
 				return JName;
 			}
 		}
 	}
 
-	[ImportHandlerAttribute("AddressInfo")]
+	[ImportHandlerAttribute("ContactAddress")]
 	[ExportHandlerAttribute("ContactAddress")]
 	public class AddressInfoHandler : EntityHandler
 	{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "PersonProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Contact";
+			}
+		}
 		public AddressInfoHandler()
 		{
 			Mapper = new MappingHelper();
@@ -756,11 +1265,9 @@ namespace Terrasoft.TsConfiguration
 			JName = "AddressInfo";
 		}
 
-		public override string HandlerName
-		{
-			get
-			{
-				return JName;
+		public override string HandlerName {
+			get {
+				return "ContactAddress";
 			}
 		}
 
@@ -787,10 +1294,19 @@ namespace Terrasoft.TsConfiguration
 				columnExt.OrderByDesc();
 				esq.RowCount = 1;
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
-				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
-				};
+				EntitySchemaQueryFilterCollection group;
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.UpdateFromResponse)
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.And) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+					};
+				} else
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
+					};
+				}
 				esq.Filters.Add(group);
 				return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
 			}
@@ -807,21 +1323,72 @@ namespace Terrasoft.TsConfiguration
 				columnExt.OrderByDesc();
 				esq.RowCount = 1;
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
-				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
-				};
+				EntitySchemaQueryFilterCollection group;
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.UpdateFromResponse)
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.And) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+					};
+				}
+				else
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
+					};
+				}
 				esq.Filters.Add(group);
 				return esq.GetEntityCollection(integrationInfo.UserConnection).Count > 0;
 			}
 			return base.IsEntityAlreadyExist(integrationInfo);
 		}
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
+				UpdateAddressFromDeliveryService(integrationInfo);
+			}
+		}
+		public void UpdateAddressFromDeliveryService(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				AddressHelper.UpdateAddressFromDeliveryService(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, IntegrationLogger.SimpleLoggerErrorAction);
+				ContactEntityHelper.ResaveContactPrimaryAddress(integrationInfo.UserConnection, integrationInfo.ParentEntity, integrationInfo.ParentEntity.PrimaryColumnValue, IntegrationLogger.SimpleLoggerErrorAction);
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+		}
+
+		public override bool IsVersionHigger(IntegrationInfo integrationInfo)
+		{
+			return true;
+		}
 	}
+
 
 	[ImportHandlerAttribute("AddressInfoAccount")]
 	[ExportHandlerAttribute("AddressInfoAccount")]
 	public class AddressInfoAccountHandler : EntityHandler
 	{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "CompanyProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Account";
+			}
+		}
 		public AddressInfoAccountHandler()
 		{
 			Mapper = new MappingHelper();
@@ -829,10 +1396,8 @@ namespace Terrasoft.TsConfiguration
 			JName = "AddressInfo";
 		}
 
-		public override string HandlerName
-		{
-			get
-			{
+		public override string HandlerName {
+			get {
 				return "AddressInfoAccount";
 			}
 		}
@@ -848,16 +1413,110 @@ namespace Terrasoft.TsConfiguration
 			}
 		}
 
+		public override Entity GetEntityByExternalId(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.ParentEntity != null)
+			{
+				integrationInfo.Data[JName]["parentAccountId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+				string externalIdPath = integrationInfo.TsExternalIdPath;
+				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
+				esq.AddAllSchemaColumns();
+				var columnExt = esq.AddColumn("TsExternalId");
+				columnExt.OrderByDesc();
+				esq.RowCount = 1;
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Account.TsExternalId", integrationInfo.Data[JName].Value<int>("parentAccountId")));
+				EntitySchemaQueryFilterCollection group;
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.UpdateFromResponse)
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.And) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+					};
+				} else
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
+					};
+				}
+				esq.Filters.Add(group);
+				return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
+			}
+			return base.GetEntityByExternalId(integrationInfo);
+		}
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
-			return false;
+			if (integrationInfo.ParentEntity != null)
+			{
+				integrationInfo.Data[JName]["parentAccountId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
+				var columnExt = esq.AddColumn("TsExternalId");
+				columnExt.OrderByDesc();
+				esq.RowCount = 1;
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Account.TsExternalId", integrationInfo.Data[JName].Value<int>("parentAccountId")));
+				EntitySchemaQueryFilterCollection group;
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.UpdateFromResponse)
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.And) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, ExternalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+					};
+				}
+				else
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, ExternalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, ExternalIdPath, 0)
+					};
+				}
+				esq.Filters.Add(group);
+				return esq.GetEntityCollection(integrationInfo.UserConnection).Count > 0;
+			}
+			return base.IsEntityAlreadyExist(integrationInfo);
+		}
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
+				UpdateAddressFromDeliveryService(integrationInfo);
+				AccountEntityHelper.ResaveAccountPrimaryAddress(integrationInfo.UserConnection, integrationInfo.ParentEntity, integrationInfo.ParentEntity.PrimaryColumnValue, IntegrationLogger.SimpleLoggerErrorAction);
+			}
+		}
+		public void UpdateAddressFromDeliveryService(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				AddressHelper.UpdateAddressFromDeliveryService(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, IntegrationLogger.SimpleLoggerErrorAction);
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+		}
+		public override bool IsVersionHigger(IntegrationInfo integrationInfo)
+		{
+			return true;
 		}
 	}
 
-	[ImportHandlerAttribute("ContactRecord")]
+	[ImportHandlerAttribute("ContactCommunication")]
 	[ExportHandlerAttribute("ContactCommunication")]
 	public class ContactRecordHandler : EntityHandler
 	{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "PersonProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Contact";
+			}
+		}
 		public ContactRecordHandler()
 		{
 			Mapper = new MappingHelper();
@@ -865,13 +1524,18 @@ namespace Terrasoft.TsConfiguration
 			JName = "ContactRecord";
 		}
 
-		public override string HandlerName
-		{
-			get
-			{
-				return JName;
+		public override string HandlerName {
+			get {
+				return "ContactCommunication";
 			}
 		}
+
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			ContactEntityHelper.ClearContactPrimaryCommunication(integrationInfo.UserConnection, integrationInfo.ParentEntity, IntegrationLogger.SimpleLoggerErrorAction);
+		}
+
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
 		{
 			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
@@ -879,6 +1543,14 @@ namespace Terrasoft.TsConfiguration
 				if (integrationInfo.ParentEntity != null)
 				{
 					integrationInfo.Data[JName]["parentContactId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+				}
+				try
+				{
+					integrationInfo.Data[JName]["useInContact"] = JToken.FromObject(true);
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e);
 				}
 			}
 		}
@@ -895,10 +1567,19 @@ namespace Terrasoft.TsConfiguration
 				columnExt.OrderByDesc();
 				esq.RowCount = 1;
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
-				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
-				};
+				EntitySchemaQueryFilterCollection group;
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.UpdateFromResponse)
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id"))
+					};
+				} else
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
+					};
+				}
 				esq.Filters.Add(group);
 				return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
 			}
@@ -915,14 +1596,29 @@ namespace Terrasoft.TsConfiguration
 				columnExt.OrderByDesc();
 				esq.RowCount = 1;
 				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Contact.TsExternalId", integrationInfo.Data[JName].Value<int>("parentContactId")));
-				var group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
-					esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
-				};
+				EntitySchemaQueryFilterCollection group;
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.UpdateFromResponse)
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id"))
+					};
+				}
+				else
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
+					};
+				}
 				esq.Filters.Add(group);
 				return esq.GetEntityCollection(integrationInfo.UserConnection).Count > 0;
 			}
 			return base.IsEntityAlreadyExist(integrationInfo);
+		}
+
+		public override bool IsVersionHigger(IntegrationInfo integrationInfo)
+		{
+			return true;
 		}
 	}
 
@@ -930,6 +1626,21 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("ContactRecordAccount")]
 	public class AccountCommunicationHandler : EntityHandler
 	{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "CompanyProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Account";
+			}
+		}
 		public AccountCommunicationHandler()
 		{
 			Mapper = new MappingHelper();
@@ -937,10 +1648,8 @@ namespace Terrasoft.TsConfiguration
 			JName = "ContactRecord";
 		}
 
-		public override string HandlerName
-		{
-			get
-			{
+		public override string HandlerName {
+			get {
 				return EntityName;
 			}
 		}
@@ -952,11 +1661,87 @@ namespace Terrasoft.TsConfiguration
 				{
 					integrationInfo.Data[JName]["parentAccountId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
 				}
+				try
+				{
+					integrationInfo.Data[JName]["useInAccount"] = JToken.FromObject(true);
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e);
+				}
 			}
+		}
+		public override Entity GetEntityByExternalId(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.ParentEntity != null)
+			{
+				integrationInfo.Data[JName]["parentAccountId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+				string externalIdPath = integrationInfo.TsExternalIdPath;
+				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
+				esq.AddAllSchemaColumns();
+				var columnExt = esq.AddColumn("TsExternalId");
+				columnExt.OrderByDesc();
+				esq.RowCount = 1;
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Account.TsExternalId", integrationInfo.Data[JName].Value<int>("parentAccountId")));
+				EntitySchemaQueryFilterCollection group;
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.UpdateFromResponse)
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.And) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id"))
+					};
+				}
+				else
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
+					};
+				}
+				esq.Filters.Add(group);
+				return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
+			}
+			return base.GetEntityByExternalId(integrationInfo);
 		}
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
-			return false;
+			if (integrationInfo.ParentEntity != null)
+			{
+				integrationInfo.Data[JName]["parentAccountId"] = JToken.Parse(integrationInfo.ParentEntity.GetTypedColumnValue<int>("TsExternalId").ToString());
+				string externalIdPath = ExternalIdPath;
+				var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
+				var columnExt = esq.AddColumn("TsExternalId");
+				columnExt.OrderByDesc();
+				esq.RowCount = 1;
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Account.TsExternalId", integrationInfo.Data[JName].Value<int>("parentAccountId")));
+				EntitySchemaQueryFilterCollection group;
+				if (integrationInfo.Action == CsConstant.IntegrationActionName.UpdateFromResponse)
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.And) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id"))
+					};
+				}
+				else
+				{
+					group = new EntitySchemaQueryFilterCollection(esq, LogicalOperationStrict.Or) {
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data[JName].Value<int>("id")),
+						esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, 0)
+					};
+				}
+				esq.Filters.Add(group);
+				return esq.GetEntityCollection(integrationInfo.UserConnection).Count > 0;
+			}
+			return base.IsEntityAlreadyExist(integrationInfo);
+		}
+
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			AccountEntityHelper.ClearAccountPrimaryCommunication(integrationInfo.UserConnection, integrationInfo.ParentEntity, IntegrationLogger.SimpleLoggerErrorAction);
+		}
+
+		public override bool IsVersionHigger(IntegrationInfo integrationInfo)
+		{
+			return true;
 		}
 	}
 
@@ -1117,7 +1902,7 @@ namespace Terrasoft.TsConfiguration
 			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
 			{
 				var name = integrationInfo.Data[JName]["createdByUser"].Value<string>();
-				if (name.ToLower() == "shop")
+				if (name != null && name.ToLower() == "shop")
 				{
 					integrationInfo.Data[JName]["createdByUser"] = "Supervisor";
 				}
@@ -1147,13 +1932,13 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.Error(e, "importTransportationPointCompany");
+				IntegrationLogger.Error(e, "importTransportationPointCompany " + integrationInfo.ToString());
 				throw;
 			}
 		}
 		private Guid GetTransportationIdAndCreateIfNotExist(int transId, string transName, UserConnection userConnection)
 		{
-			if(transId == 0 || string.IsNullOrEmpty(transName))
+			if (transId == 0 || string.IsNullOrEmpty(transName))
 			{
 				return Guid.Empty;
 			}
@@ -1185,14 +1970,14 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.Error(e, "GetTransportationIdAndCreateIfNotExist");
+				IntegrationLogger.Error(e, string.Format("{0} {1} {2}", "GetTransportationIdAndCreateIfNotExist", transId, transName));
 			}
 			return Guid.Empty;
 		}
 
 		private Guid GetTransportationCompanyIdAndCreateIfNotExist(int transId, string transName, UserConnection userConnection)
 		{
-			if(transId == 0 || string.IsNullOrEmpty(transName))
+			if (transId == 0 || string.IsNullOrEmpty(transName))
 			{
 				return Guid.Empty;
 			}
@@ -1224,7 +2009,7 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.Error(e, "TsShipmentHandler.GetTransportationCompanyIdAndCreateIfNotExist");
+				IntegrationLogger.Error(e, string.Format("{0} {1} {2}", "TsShipmentHandler.GetTransportationCompanyIdAndCreateIfNotExist", transId, transName));
 			}
 			return Guid.Empty;
 		}
@@ -1242,7 +2027,7 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.Error(e, "TsShipmentHandler.isCourierDeliveryMethod");
+				IntegrationLogger.Error(e, "OrderHandler.isCourierDeliveryMethod " + integrationInfo.ToString());
 			}
 			return false;
 		}
@@ -1269,20 +2054,24 @@ namespace Terrasoft.TsConfiguration
 						var appartament = integrationInfo.Data["Order"]["shipmentInfo"]["ShipmentInfo"]["appartament"].Value<string>();
 						var zipCode = integrationInfo.Data["Order"]["shipmentInfo"]["ShipmentInfo"]["zipCode"].Value<string>();
 						var address = integrationInfo.Data["Order"]["shipmentInfo"]["ShipmentInfo"]["address"].Value<string>();
-						address = string.Format("{0}, {1}, {2}, {3}", street, building, appartament, address);
+						//http://tscore-task/browse/SKT-3911
+						//address = string.Format("{0}, {1}, {2}, {3}", street, building, appartament, address);
 						ImportAddress(id, integrationInfo.UserConnection,
-								GetGuidByValue("Country", country, userConnection),
-								GetGuidByValue("Region", region, userConnection),
-								GetGuidByValue("City", place, userConnection),
-								GetGuidByValue("TsCounty", district, userConnection),
+								GetGuidByValue("Country", country, userConnection, true),
+								GetGuidByValue("Region", region, userConnection, true),
+								GetGuidByValue("City", place, userConnection, true),
+								GetGuidByValue("TsCounty", district, userConnection, true),
 								IfNullThanEmpty(address),
 								IfNullThanEmpty(zipCode),
-								CsConstant.TsAddressType.Delivery);
+								CsConstant.TsAddressType.Delivery,
+								IfNullThanEmpty(street),
+								IfNullThanEmpty(appartament),
+								IfNullThanEmpty(building));
 					}
 				}
 				catch (Exception e)
 				{
-					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[1 block]");
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[1 block] " + integrationInfo.ToString());
 				}
 				try
 				{
@@ -1291,7 +2080,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				catch (Exception e)
 				{
-					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[2 block]");
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[2 block] " + integrationInfo.ToString());
 				}
 				try
 				{
@@ -1299,16 +2088,16 @@ namespace Terrasoft.TsConfiguration
 				}
 				catch (Exception e)
 				{
-					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[3 block]");
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[3 block] " + integrationInfo.ToString());
 				}
 
 				try
 				{
 					importTransportationPointCompany(integrationInfo);
 				}
-				catch(Exception e)
+				catch (Exception e)
 				{
-					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[4 block]");
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[4 block] " + integrationInfo.ToString());
 				}
 				try
 				{
@@ -1323,7 +2112,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				catch (Exception e)
 				{
-					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[5 block]");
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[5 block] " + integrationInfo.ToString());
 				}
 				try
 				{
@@ -1331,7 +2120,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				catch (Exception e)
 				{
-					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[6 block]");
+					IntegrationLogger.Error(e, "OrderHandler.AfterEntitySave[6 block] " + integrationInfo.ToString());
 				}
 			}
 		}
@@ -1340,7 +2129,7 @@ namespace Terrasoft.TsConfiguration
 		{
 			return string.IsNullOrEmpty(text) ? string.Empty : text;
 		}
-		public static Guid GetGuidByValue(string schemaName, string value, UserConnection userConnetion, string columnValue = "Name", string primaryColumn = "Id")
+		public static Guid GetGuidByValue(string schemaName, string value, UserConnection userConnetion, bool createIfNotExist = false, string columnValue = "Name", string primaryColumn = "Id")
 		{
 			if (string.IsNullOrEmpty(value))
 			{
@@ -1354,25 +2143,43 @@ namespace Terrasoft.TsConfiguration
 			{
 				using (IDataReader reader = select.ExecuteReader(dbExecutor))
 				{
-					while (reader.Read())
+					if (reader.Read())
 					{
 						return DBUtilities.GetColumnValue<Guid>(reader, "Id");
 					}
 				}
 			}
+			if (createIfNotExist)
+			{
+				var resultId = Guid.NewGuid();
+				var insert = new Insert(userConnetion)
+									.Into(schemaName)
+									.Set(columnValue, Column.Parameter(value))
+									.Set(primaryColumn, Column.Parameter(resultId)) as Insert;
+				insert.Execute();
+				return resultId;
+			}
 			return Guid.Empty;
 		}
 
-		public void ImportAddress(Guid orderId, UserConnection userConnection, Guid country, Guid region, Guid city, Guid tsCountry, string address, string zipCode, Guid addressType)
+		public void ImportAddress(Guid orderId, UserConnection userConnection, Guid country, Guid region, Guid city, Guid tsCountry, string address, string zipCode, Guid addressType, string street, string apartment, string house)
 		{
-			var orderAddressId = GetOrderAddres(orderId, userConnection);
-			if (orderAddressId == Guid.Empty)
+			try
 			{
-				InsertOrderAddress(orderId, userConnection, country, tsCountry, city, addressType, region, zipCode, address);
+				var orderAddressId = GetOrderAddres(orderId, userConnection);
+				if (orderAddressId == Guid.Empty)
+				{
+					InsertOrderAddress(orderId, userConnection, country, tsCountry, city, addressType, region, zipCode, address, street, apartment, house);
+				}
+				else
+				{
+					UpdateOrderAddress(orderId, userConnection, country, tsCountry, city, addressType, region, zipCode, address, street, apartment, house);
+				}
 			}
-			else
+			catch (Exception e)
 			{
-				UpdateOrderAddress(orderId, userConnection, country, tsCountry, city, addressType, region, zipCode, address);
+				IntegrationLogger.Error(e, string.Format("orderId {0}, country {1}, region {2}, city {3}, tsCountry {4}, address {5}, zipCode {6}, addressType {7}", orderId, country, region, city, tsCountry, address, zipCode, addressType));
+				throw;
 			}
 		}
 
@@ -1395,36 +2202,40 @@ namespace Terrasoft.TsConfiguration
 			return Guid.Empty;
 		}
 
-		public Guid InsertOrderAddress(Guid orderId, UserConnection userConnection, Guid countryId, Guid tsCountryId, Guid cityId, Guid addressTypeId, Guid regionId, string zip, string address)
+		public Guid InsertOrderAddress(Guid orderId, UserConnection userConnection, Guid countryId, Guid tsCountryId, Guid cityId, Guid addressTypeId, Guid regionId, string zip, string address, string street, string apartment, string house)
 		{
 			var addressId = Guid.NewGuid();
-			var columns = new Dictionary<string, Guid>() {
+			var columnsGuid = new Dictionary<string, Guid>() {
 				{ "TsOrderId", orderId },
 				{ "TsCountyId", tsCountryId },
 				{ "CityId", cityId },
 				{ "RegionId", regionId },
 				{ "CountryId", countryId },
 				{ "AddressTypeId", addressTypeId }
+			};
+			var columnsString = new Dictionary<string, string>() {
+				{ "Zip", zip },
+				{ "TsStreet", street },
+				{ "TsAppartment", apartment },
+				{ "TsHouse", house },
+				{ "Address", address }
 			};
 			var insert = new Insert(userConnection)
 						.Into("TsOrderAddress")
 						.Set("Id", Column.Parameter(addressId))
-						.Set("Primary", Column.Parameter(true))
-						.Set("Zip", Column.Parameter(zip))
-						.Set("Address", Column.Parameter(address)) as Insert;
-			foreach (var column in columns)
-			{
-				if (column.Value != Guid.Empty)
-				{
-					insert.Set(column.Key, Column.Parameter(column.Value));
-				}
-			}
+						.Set("Primary", Column.Parameter(true)) as Insert;
+			columnsGuid
+					.Where(x => x.Value != Guid.Empty)
+					.ForEach(x => insert.Set(x.Key, Column.Parameter(x.Value)));
+			columnsString
+					.Select(x => x.Value == null ? new KeyValuePair<string, string>(x.Key, "") : x)
+					.ForEach(x => insert.Set(x.Key, Column.Parameter(x.Value)));
 			insert.Execute();
 			return addressId;
 		}
-		public void UpdateOrderAddress(Guid orderId, UserConnection userConnection, Guid countryId, Guid tsCountryId, Guid cityId, Guid addressTypeId, Guid regionId, string zip, string address)
+		public void UpdateOrderAddress(Guid orderId, UserConnection userConnection, Guid countryId, Guid tsCountryId, Guid cityId, Guid addressTypeId, Guid regionId, string zip, string address, string street, string apartment, string house)
 		{
-			var columns = new Dictionary<string, Guid>() {
+			var columnsGuid = new Dictionary<string, Guid>() {
 				{ "TsOrderId", orderId },
 				{ "TsCountyId", tsCountryId },
 				{ "CityId", cityId },
@@ -1432,18 +2243,30 @@ namespace Terrasoft.TsConfiguration
 				{ "CountryId", countryId },
 				{ "AddressTypeId", addressTypeId }
 			};
+			var columnsString = new Dictionary<string, string>() {
+				{ "Zip", zip },
+				{ "TsStreet", street },
+				{ "TsAppartment", apartment },
+				{ "TsHouse", house },
+				{ "Address", address }
+			};
 			var update = new Update(userConnection, "TsOrderAddress")
 						.Set("Primary", Column.Parameter(true))
-						.Set("Zip", Column.Parameter(zip))
-						.Set("Address", Column.Parameter(address))
-						.Where("TsOrderId").IsEqual(Column.Parameter(orderId)) as Update;
-			foreach (var column in columns)
-			{
-				if (column.Value != Guid.Empty)
-				{
-					update.Set(column.Key, Column.Parameter(column.Value));
-				}
-			}
+						.Where("Id").In(new Select(userConnection)
+										.Top(1)
+										.Column("a", "Id")
+										.From("TsOrderAddress").As("a")
+										.Where("a", "TsOrderId").IsEqual(Column.Parameter(orderId))
+										.OrderByDesc("a", "CreatedOn") as Select) as Update;
+			columnsGuid
+					.Where(x => x.Value != Guid.Empty)
+					.ForEach(x => update.Set(x.Key, Column.Parameter(x.Value)));
+			columnsGuid
+					.Where(x => x.Value == Guid.Empty)
+					.ForEach(x => update.Set(x.Key, Column.Const(null)));
+			columnsString
+					.Select(x => x.Value == null ? new KeyValuePair<string, string>(x.Key, "") : x)
+					.ForEach(x => update.Set(x.Key, Column.Parameter(x.Value)));
 			update.Execute();
 		}
 
@@ -1609,7 +2432,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				catch (Exception e)
 				{
-					IntegrationLogger.Error(e, "OrderProductHandler.AfterEntitySave[1 block]");
+					IntegrationLogger.Error(e, "OrderProductHandler.AfterEntitySave[1 block] " + integrationInfo.ToString());
 				}
 
 				try
@@ -1620,7 +2443,7 @@ namespace Terrasoft.TsConfiguration
 				}
 				catch (Exception e)
 				{
-					IntegrationLogger.Error(e, "OrderProductHandler.AfterEntitySave[2 block]");
+					IntegrationLogger.Error(e, "OrderProductHandler.AfterEntitySave[2 block] " + integrationInfo.ToString());
 				}
 			}
 		}
@@ -1628,7 +2451,6 @@ namespace Terrasoft.TsConfiguration
 		public override void Create(IntegrationInfo integrationInfo)
 		{
 			base.Create(integrationInfo);
-
 			CreateProduct(integrationInfo);
 		}
 
@@ -1640,21 +2462,22 @@ namespace Terrasoft.TsConfiguration
 		}
 		public void CreateProduct(IntegrationInfo integrationInfo)
 		{
-			try {
+			try
+			{
 				var entity = integrationInfo.IntegratedEntity;
 				var articul = integrationInfo.Data["OrderItem"]["oem"].Value<string>();
 				var brand = integrationInfo.Data["OrderItem"]["brand"].Value<string>();
 				integrationInfo.IntegratedEntity = GetProductByArticuleOrCreateNew(integrationInfo.UserConnection, articul, brand);
 				integrationInfo.IntegratedEntity.SetDefColumnValues();
 				Mapper.StartMappByConfig(integrationInfo, JName, IntegrationConfigurationManager.GetConfigItem(integrationInfo.UserConnection, "Product"));
-				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName);
+				Mapper.SaveEntity(integrationInfo.IntegratedEntity, JName, ServiceName);
 				var productId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
 				entity.SetColumnValue("ProductId", productId);
 				entity.UpdateInDB(false);
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.Error(e, "OrderProductHandler.CreateProduct");
+				IntegrationLogger.Error(e, "OrderProductHandler.CreateProduct " + integrationInfo.ToString());
 			}
 		}
 
@@ -1732,35 +2555,10 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "TsShipment";
 			JName = "Shipment";
 		}
-
-		public override void AfterEntitySave(IntegrationInfo integrationInfo)
-		{
-			//importTransportationPointCompany(integrationInfo);
-		}
-
-		public bool isCourierDeliveryMethod(IntegrationInfo integrationInfo)
-		{
-			try
-			{
-				var additionalInfo = integrationInfo.Data.GetJTokenValuePath<string>(JName + ".shipmentInfo.ShipmentInfo.additionalInfo");
-				if (!string.IsNullOrEmpty(additionalInfo))
-				{
-					var jObject = JObject.Parse(additionalInfo);
-					return jObject.GetJTokenValuePath<bool>("deliveryMethod.DeliveryMethod.isCourierDelivery");
-				}
-				return false;
-			}
-			catch (Exception e)
-			{
-				IntegrationLogger.Error(e, "TsShipmentHandler.isCourierDeliveryMethod");
-			}
-			return false;
-		}
 		public override bool IsExport(IntegrationInfo integrationInfo)
 		{
 			return false;
 		}
-		
 	}
 
 	[ImportHandlerAttribute("ShipmentItem")]
@@ -1789,24 +2587,36 @@ namespace Terrasoft.TsConfiguration
 
 		public void UpdateProduct(IntegrationInfo integrationInfo)
 		{
-			try {
+			try
+			{
 				var eom = integrationInfo.Data["ShipmentItem"]["oem"].Value<string>();
 				var brand = integrationInfo.Data["ShipmentItem"]["brand"].Value<string>();
 				var unitName = integrationInfo.Data["ShipmentItem"]["unitName"].Value<string>();
 				var productId = ProductEntityHelper.GetOrCreateProductByBrandAndOem(integrationInfo.UserConnection, brand, eom,
-								command => {
-									if(command is Insert) {
+								command =>
+								{
+									var unitId = JsonEntityHelper.GetColumnValues(integrationInfo.UserConnection, "Unit", "ShortName", unitName, "Id", 1).FirstOrDefault();
+									if (unitId == null)
+									{
+										return;
+									}
+									if (command is Insert)
+									{
 										var insert = (Insert)command;
-										insert.Set("unitName", Column.Parameter(unitName));
-									} else if (command is Update) {
-										var update = (Insert)command;
-										update.Set("unitName", Column.Parameter(unitName));
+										insert.Set("UnitId", Column.Parameter(unitId));
+									}
+									else if (command is Update)
+									{
+										var update = (Update)command;
+										update.Set("UnitId", Column.Parameter(unitId));
 									}
 								});
-				integrationInfo.IntegratedEntity.SetColumnValue("TsProduct", productId);
+				integrationInfo.IntegratedEntity.SetColumnValue("TsProductId", productId);
 				integrationInfo.IntegratedEntity.UpdateInDB(false);
-			} catch(Exception e) {
-				IntegrationLogger.Error(e);
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, "UpdateProduct " + integrationInfo.ToString());
 			}
 		}
 
@@ -1831,7 +2641,7 @@ namespace Terrasoft.TsConfiguration
 
 		public void updateProductUnitName(UserConnection userConnection, Guid productId, string unitName)
 		{
-			var unitId = OrderHandler.GetGuidByValue("Unit", unitName, userConnection, "ShortName");
+			var unitId = OrderHandler.GetGuidByValue("Unit", unitName, userConnection, false, "ShortName");
 			if (unitId == Guid.Empty)
 				return;
 			var update = new Update(userConnection, "Product")
@@ -1854,10 +2664,13 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("Contract")]
 	public class ContractBalanceHandler : EntityHandler
 	{
-		public override string HandlerName
-		{
-			get
-			{
+		public override string ExternalIdPath {
+			get {
+				return "TsContractBalanceId";
+			}
+		}
+		public override string HandlerName {
+			get {
 				return JName;
 			}
 		}
@@ -1867,18 +2680,64 @@ namespace Terrasoft.TsConfiguration
 			EntityName = "Contract";
 			JName = "ContractBalance";
 		}
-		public override void BeforeMapping(IntegrationInfo integrationInfo)
-		{
-			integrationInfo.Data["id"] = integrationInfo.Data["ContractBalance"]["contract"]["#ref"]["id"];
-		}
 		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
 		{
-			integrationInfo.Data["ContractBalance"]["id"] = integrationInfo.Data["ContractBalance"]["contract"]["#ref"]["id"];
-			return base.IsEntityAlreadyExist(integrationInfo);
+			try
+			{
+				Mapper.UserConnection = integrationInfo.UserConnection;
+				integrationInfo.TsExternalIdPath = ExternalIdPath;
+				integrationInfo.TsExternalVersionPath = ExternalVersionPath;
+				JToken externalIdToken = integrationInfo.Data.SelectToken("ContractBalance.contract.#ref.id");
+				if (externalIdToken == null)
+				{
+					return false;
+				}
+				int externalId = 0;
+				if (integrationInfo.IntegratedEntity != null)
+				{
+					externalId = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath);
+				}
+				return Mapper.CheckIsExist(EntityName, externalIdToken.Value<int>(), "TsExternalId", externalId);
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, integrationInfo.ToString());
+			}
+			return false;
 		}
 		public override bool IsExport(IntegrationInfo integrationInfo)
 		{
 			return false;
+		}
+		public override Entity GetEntityByExternalId(IntegrationInfo integrationInfo)
+		{
+			string externalIdPath = "TsExternalId";
+			var esq = new EntitySchemaQuery(integrationInfo.UserConnection.EntitySchemaManager, EntityName);
+			esq.AddAllSchemaColumns();
+			esq.RowCount = 1;
+			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, externalIdPath, integrationInfo.Data.SelectToken("ContractBalance.contract.#ref.id").Value<int>()));
+			return esq.GetEntityCollection(integrationInfo.UserConnection).FirstOrDefault();
+		}
+		public override void Create(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				integrationInfo.TsExternalIdPath = ExternalIdPath;
+				integrationInfo.TsExternalVersionPath = ExternalVersionPath;
+				var entitySchema = integrationInfo.UserConnection.EntitySchemaManager.GetInstanceByName(EntityName);
+				integrationInfo.IntegratedEntity = entitySchema.CreateEntity(integrationInfo.UserConnection);
+				integrationInfo.IntegratedEntity.SetDefColumnValues();
+				BeforeMapping(integrationInfo);
+				Mapper.StartMappByConfig(integrationInfo, JName, GetMapConfig(integrationInfo.UserConnection), IsJsonWithHeader);
+				AfterMapping(integrationInfo);
+			} catch(Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+		}
+		public override bool IsVersionHigger(IntegrationInfo integrationInfo)
+		{
+			return true;
 		}
 	}
 
@@ -1898,7 +2757,6 @@ namespace Terrasoft.TsConfiguration
 			{
 				integrationInfo.Data = new JObject();
 			}
-			integrationInfo.Data["id"] = integrationInfo.Data["contract.#ref.id"];
 		}
 
 		public override void AfterEntitySave(IntegrationInfo integrationInfo)
@@ -1922,7 +2780,7 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.Error(e, "ContractHandler.SetState");
+				IntegrationLogger.Error(e, "ContractHandler.SetState " + integrationInfo.ToString());
 			}
 		}
 		public void SetBussinesProtocol(IntegrationInfo integrationInfo)
@@ -1939,19 +2797,19 @@ namespace Terrasoft.TsConfiguration
 			}
 			catch (Exception e)
 			{
-				IntegrationLogger.Error(e, "ContractHandler.SetBussinesProtocol");
+				IntegrationLogger.Error(e, "ContractHandler.SetBussinesProtocol " + integrationInfo.ToString());
 			}
 		}
 
 		public bool IsAccountLegal(Guid accountId, UserConnection userConnection)
 		{
-			var select = new Select(userConnection)
+			var acountLegalSelect = new Select(userConnection)
 							.Column("TsIsLawPerson").As("IsLegal")
 							.From("Account")
 							.Where("Id").IsEqual(Column.Parameter(accountId)) as Select;
-			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
+			using (DBExecutor dbExecutor = acountLegalSelect.UserConnection.EnsureDBConnection())
 			{
-				using (IDataReader reader = select.ExecuteReader(dbExecutor))
+				using (IDataReader reader = acountLegalSelect.ExecuteReader(dbExecutor))
 				{
 					while (reader.Read())
 					{
@@ -1959,11 +2817,25 @@ namespace Terrasoft.TsConfiguration
 					}
 				}
 			}
-			throw new Exception("IsAccountLegal throw exception: No account with id = " + accountId.ToString());
+			throw new Exception("IsAccountLegal throw Exception: No account with id = " + accountId.ToString());
 		}
 		public override bool IsExport(IntegrationInfo integrationInfo)
 		{
-			return integrationInfo.IntegratedEntity != null && integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("StateId") == CsConstant.TsContractState.Signed;
+			return integrationInfo.IntegratedEntity != null && integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("StateId") == CsConstant.TsContractState.Vising && !IsAlreadyExported(integrationInfo);
+		}
+		/// <summary>
+		/// Возвращает проинтегрирован ли договор
+		/// </summary>
+		/// <param name="integrationInfo">Информация о интеграции</param>
+		/// <returns>Признак проинтегрированости</returns>
+		public bool IsAlreadyExported(IntegrationInfo integrationInfo)
+		{
+			if(integrationInfo.IntegratedEntity != null)
+			{
+				var externalId = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath);
+				return externalId > 0;
+			}
+			return false;
 		}
 	}
 
@@ -1985,25 +2857,19 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("Contact")]
 	public class ManagerInfoHandler : EntityHandler
 	{
-		public override string HandlerName
-		{
-			get
-			{
+		public override string HandlerName {
+			get {
 				return JName;
 			}
 		}
-		public override string ExternalIdPath
-		{
-			get
-			{
+		public override string ExternalIdPath {
+			get {
 				return CsConstant.ServiceColumnInBpm.IdentifierManagerInfo;
 			}
 		}
 
-		public override string ExternalVersionPath
-		{
-			get
-			{
+		public override string ExternalVersionPath {
+			get {
 				return CsConstant.ServiceColumnInBpm.VersionManagerInfo;
 			}
 		}
@@ -2043,6 +2909,8 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("Contact")]
 	public class CounteragentContactInfoHandler : EntityHandler
 	{
+		private AdvancedSearchInfo _advancedSearchInfo;
+
 		public override void BeforeMapping(IntegrationInfo integrationInfo)
 		{
 			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
@@ -2050,34 +2918,42 @@ namespace Terrasoft.TsConfiguration
 				integrationInfo.Data["CounteragentContactInfo"]["positionFull"] = integrationInfo.Data["CounteragentContactInfo"]["position"];
 			}
 		}
-		public override string HandlerName
-		{
-			get
-			{
+		public override string HandlerName {
+			get {
 				return JName;
 			}
 		}
-		public override string ExternalIdPath
-		{
-			get
-			{
+		public override string ExternalIdPath {
+			get {
 				return CsConstant.ServiceColumnInBpm.IdentifierOrder;
 			}
 		}
 
-		public override string ExternalVersionPath
-		{
-			get
-			{
+		public override string ExternalVersionPath {
+			get {
 				return CsConstant.ServiceColumnInBpm.VersionOrder;
 			}
 		}
-
+		public override bool IsAdvancedSearch {
+			get {
+				return true;
+			}
+		}
+		public override AdvancedSearchInfo AdvancedSearchInfo {
+			get {
+				return _advancedSearchInfo;
+			}
+		}
+		public bool isFindedAdvanced;
 		public CounteragentContactInfoHandler()
 		{
 			Mapper = new MappingHelper();
 			EntityName = "Contact";
 			JName = "CounteragentContactInfo";
+			_advancedSearchInfo = new AdvancedSearchInfo()
+			{
+				StoredProcedureName = "tsp_Integration_AdvancedSearch_Contact"
+			};
 		}
 
 		public override bool IsExport(IntegrationInfo integrationInfo)
@@ -2086,18 +2962,25 @@ namespace Terrasoft.TsConfiguration
 			var isClient = integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsIsClient");
 			if (!isClient)
 			{
+				var contactId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
 				var account = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("AccountId");
-				return IsAccountHaveOrderServiceId(account, integrationInfo.UserConnection);
+				return IsAccountHaveOrderServiceId(account, contactId, integrationInfo.UserConnection);
 			}
 			return true;
 		}
-		public bool IsAccountHaveOrderServiceId(Guid accountId, UserConnection userConnection)
+		public bool IsAccountHaveOrderServiceId(Guid accountId, Guid contactId, UserConnection userConnection)
 		{
 			var select = new Select(userConnection)
-						.Column(Func.Count("Id")).As("count")
-						.From("Account").As("a")
-						.Where("a", "Id").IsEqual(Column.Parameter(accountId))
-						.And("a", "TsOrderServiceId").IsNotEqual(Column.Const(0)) as Select;
+				.Column(Func.Count("Id")).As("count")
+				.From("Account").As("a")
+				.Where().OpenBlock("a", "PrimaryContactId").IsEqual(Column.Parameter(contactId)) as Select;
+			if (accountId != Guid.Empty)
+			{
+				select.Or("a", "Id").IsEqual(Column.Parameter(accountId));
+			}
+			select
+				.CloseBlock()
+				.And("a", "TsOrderServiceId").IsNotEqual(Column.Const(0));
 			using (DBExecutor executor = select.UserConnection.EnsureDBConnection())
 			{
 				using (var reader = select.ExecuteReader(executor))
@@ -2110,43 +2993,303 @@ namespace Terrasoft.TsConfiguration
 			}
 			return false;
 		}
+		public void UpdateAddressFromDeliveryService(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				ContactEntityHelper.UpdateAddressFromDeliveryService(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, IntegrationLogger.SimpleLoggerErrorAction);
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+		}
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import && integrationInfo.Data != null)
+			{
+				if (!string.IsNullOrEmpty(integrationInfo.Data.SelectToken(JName + ".address").Value<string>()))
+				{
+					UpdateAddressFromDeliveryService(integrationInfo);
+					UpdateLastAddressType(integrationInfo, IsAccountLegal(integrationInfo));
+				}
+			}
+			ContactEntityHelper.ResaveContactPrimaryAddress(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, integrationInfo.IntegratedEntity.PrimaryColumnValue, IntegrationLogger.SimpleLoggerErrorAction);
+			//ContactEntityHelper.ClearContactPrimaryCommunication(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, IntegrationLogger.SimpleLoggerErrorAction);
+			//http://tscore-task/browse/SKT-4696
+			ContactEntityHelper.SynchronizeCommunication(integrationInfo.UserConnection, integrationInfo.IntegratedEntity.PrimaryColumnValue, IntegrationLogger.SimpleLoggerErrorAction);
+			ReintegrateContactPersonProfile(integrationInfo);
+			CreateContactCareer(integrationInfo);
+		}
+
+		private void CreateContactCareer(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo == null || integrationInfo.IntegratedEntity == null)
+			{
+				return;
+			}
+			try
+			{
+				var contactEntity = integrationInfo.IntegratedEntity;
+				var accountId = contactEntity.GetTypedColumnValue<Guid>("AccountId");
+				if (accountId != Guid.Empty)
+				{
+					var createCareerIfNeedSp = new StoredProcedure(integrationInfo.UserConnection,
+								"tsp_IntegrationHandler_CreateContactCareer")
+							.WithParameter("contactId", contactEntity.PrimaryColumnValue)
+							.WithParameter("accountId", accountId)
+							.WithOutputParameter("resultId", integrationInfo.UserConnection.DataValueTypeManager.GetInstanceByName("Guid"))
+							.WithOutputParameter("changedIds", integrationInfo.UserConnection.DataValueTypeManager.GetInstanceByName("Text"))
+						as StoredProcedure;
+					createCareerIfNeedSp.PackageName = integrationInfo.UserConnection.DBEngine.SystemPackageName;
+					createCareerIfNeedSp.Execute();
+					var resultId = createCareerIfNeedSp.Parameters.GetByName("resultId").Value as Guid?;
+					var changedIds = createCareerIfNeedSp.Parameters.GetByName("changedIds").Value as String;
+					var integrator = new ClientServiceIntegrator(integrationInfo.UserConnection);
+					if (resultId.HasValue)
+					{
+						if(!CheckIsAccountIntegrateInClientService(integrationInfo.UserConnection, accountId))
+						{
+							integrator.IntegrateBpmEntity(accountId, "Account", new AccountHandler());
+						}
+						integrator.IntegrateBpmEntity(resultId.Value, "ContactCareer");
+					}
+					if (!string.IsNullOrEmpty(changedIds))
+					{
+						changedIds
+							.Split(new char[] { ',' })
+							.Select(x =>
+							{
+								Guid uId;
+								Guid.TryParse(x, out uId);
+								return uId;
+							})
+							.Where(x => x != Guid.Empty)
+							.ForEach(careerId =>
+							{
+								integrator.IntegrateBpmEntity(careerId, "ContactCareer");
+							});
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+		}
+		public bool CheckIsAccountIntegrateInClientService(UserConnection userConnection, Guid accountId)
+		{
+			try
+			{
+				if (accountId != Guid.Empty)
+				{
+					var select = new Select(userConnection)
+							.Column(Func.Count("Id")).As("count")
+							.From("Account")
+							.Where("Id").IsEqual(Column.Parameter(accountId))
+							.And("TsExternalId").IsGreater(Column.Const(0)) as Select;
+					var count = select.ExecuteScalar<int>();
+					return count > 0;
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+			return false;
+		}
+		private void ReintegrateContactPersonProfile(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				var integrator = new ClientServiceIntegrator(integrationInfo.UserConnection);
+				integrator.IntegrateBpmEntity(integrationInfo.IntegratedEntity, new ContactHandler());
+				if(isFindedAdvanced)
+				{
+					//!!!KOSTYL
+					IntegrationLocker.Unlock("Contact", integrationInfo.IntegratedEntity.GetTypedColumnValue<int>("TsOrderServiceId"),
+					"OrderService_CounteragentContactInfo");
+					integrator.IntegrateBpmEntity(integrationInfo.IntegratedEntity, new CounteragentContactInfoHandler());
+					//!!!KOSTYL
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, integrationInfo.ToString());
+			}
+		}
+		public virtual bool? IsAccountLegal(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				if (integrationInfo.IntegratedEntity != null && integrationInfo.IntegratedEntity.IsColumnValueLoaded("AccountId"))
+				{
+					var accountId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("AccountId");
+					if (accountId != Guid.Empty)
+					{
+						var select = new Select(integrationInfo.UserConnection)
+										.Top(1)
+										.Column("TsIsLawPerson")
+										.From("Account")
+										.Where("Id").IsEqual(Column.Parameter(accountId)) as Select;
+						using (var dbExecutor = select.UserConnection.EnsureDBConnection())
+						{
+							using (var reader = select.ExecuteReader(dbExecutor))
+							{
+								if (reader.Read())
+								{
+									return reader.GetColumnValue<bool>("TsIsLawPerson");
+								}
+							}
+						}
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, integrationInfo.ToString());
+			}
+			return null;
+		}
+		public virtual void UpdateLastAddressType(IntegrationInfo integrationInfo, bool? isAccountLegal)
+		{
+			if (!isAccountLegal.HasValue)
+			{
+				return;
+			}
+			try
+			{
+				var contactId = integrationInfo.IntegratedEntity.PrimaryColumnValue;
+				if (contactId != Guid.Empty)
+				{
+					QueryColumnExpression addressTypeId = isAccountLegal.Value ? Column.Parameter(CsConstant.EntityConst.AddressType.Work) : Column.Parameter(CsConstant.EntityConst.AddressType.Delivery);
+					var addressTypeUpdate = new Update(integrationInfo.UserConnection, "ContactAddress")
+									.Set("AddressTypeId", addressTypeId)
+									.Where("Id").IsEqual(new Select(integrationInfo.UserConnection)
+															.Top(1)
+															.Column("ca", "Id")
+															.From("ContactAddress").As("ca")
+															.Where("ca", "ContactId").IsEqual(Column.Parameter(contactId))
+															.OrderByDesc("ca", "CreatedOn") as Select
+									) as Update;
+					addressTypeUpdate.Execute();
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, integrationInfo.ToString());
+			}
+		}
+		public override void AddParameterToSearchProcedure(IntegrationInfo integrationInfo, StoredProcedure searchProcedure)
+		{
+			try
+			{
+				Tuple<string, string> emailPhoneTuple = new Tuple<string, string>(string.Empty, string.Empty);
+				if (integrationInfo != null && integrationInfo.Data != null)
+				{
+					emailPhoneTuple = GetEmailAndPhones(integrationInfo.Data);
+				}
+				searchProcedure
+					.WithParameter("Emails", emailPhoneTuple.Item1 ?? string.Empty)
+					.WithParameter("Phones", emailPhoneTuple.Item2 ?? string.Empty)
+					.WithParameter("ExternalIdPath", ExternalIdPath);
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+		}
+		public Tuple<string, string> GetEmailAndPhones(JObject jObj)
+		{
+			string emails = String.Empty;
+			var phones = new List<string>();
+			var emailToken = jObj.SelectToken(JName + ".email");
+			if(emailToken != null)
+			{
+				emails = emailToken.Value<string>();
+			}
+			var phonesPath = new List<string>()
+			{
+				"mobilePhone",
+				"primaryPhone",
+				"workPhone"
+			};
+			phonesPath.ForEach(x =>
+			{
+				var phoneToken = jObj.SelectToken(JName + "." + x);
+				if (phoneToken != null)
+				{
+					phones.AddRange(PhoneFormatHelper.ToAllFormats(phoneToken.Value<string>()));
+				}
+			});
+			return new Tuple<string, string>(emails, string.Join(",", phones));
+		}
+
+		public override bool IsEntityAlreadyExistAdvanced(IntegrationInfo integrationInfo)
+		{
+			var result = base.IsEntityAlreadyExistAdvanced(integrationInfo);
+			isFindedAdvanced = result;
+			return result;
+		}
+		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
+		{
+			isFindedAdvanced = false;
+			return base.IsEntityAlreadyExist(integrationInfo);
+		}
 	}
 
 	[ImportHandlerAttribute("Counteragent")]
 	[ExportHandlerAttribute("Account")]
 	public class CounteragentHandler : EntityHandler
 	{
-		public override string HandlerName
-		{
-			get
-			{
+		private AdvancedSearchInfo _advancedSearchInfo;
+
+		public override string HandlerName {
+			get {
 				return JName;
 			}
 		}
-		public override string ExternalIdPath
-		{
-			get
-			{
+		public override string ExternalIdPath {
+			get {
 				return CsConstant.ServiceColumnInBpm.IdentifierOrder;
 			}
 		}
 
-		public override string ExternalVersionPath
-		{
-			get
-			{
+		public override string ExternalVersionPath {
+			get {
 				return CsConstant.ServiceColumnInBpm.VersionOrder;
 			}
 		}
+		public override bool IsAdvancedSearch {
+			get {
+				return true;
+			}
+		}
+		public override AdvancedSearchInfo AdvancedSearchInfo {
+			get {
+				return _advancedSearchInfo;
+			}
+		}
+		public bool isFindedAdvanced;
+
+		public bool? isAccountHasOsId = null;
 		public CounteragentHandler()
 		{
 			Mapper = new MappingHelper();
 			EntityName = "Account";
 			JName = "Counteragent";
+			_advancedSearchInfo = new AdvancedSearchInfo()
+			{
+				StoredProcedureName = CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2c
+			};
 		}
 		public override bool IsExport(IntegrationInfo integrationInfo)
 		{
-			return !isAccountExported(integrationInfo) && isAccountContracted(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
+			return
+				integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalIdPath) > 0
+				||
+				!isAccountExported(integrationInfo) && isAccountContracted(integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id"), integrationInfo.UserConnection);
 		}
 
 		public bool isAccountContracted(Guid accountId, UserConnection userConnection)
@@ -2156,7 +3299,6 @@ namespace Terrasoft.TsConfiguration
 						.From("Contract").As("c")
 						.Where("c", "AccountId").IsEqual(Column.Parameter(accountId))
 						.And("c", "TsActive").IsEqual(Column.Parameter(true)) as Select;
-
 			using (DBExecutor dbExecutor = select.UserConnection.EnsureDBConnection())
 			{
 				using (IDataReader reader = select.ExecuteReader(dbExecutor))
@@ -2175,10 +3317,72 @@ namespace Terrasoft.TsConfiguration
 			return integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsDontIntegrate");
 		}
 
+		public override void Update(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.IntegratedEntity != null && integrationInfo.IntegratedEntity.IsColumnValueLoaded(ExternalVersionPath))
+			{
+				var id = integrationInfo.IntegratedEntity.GetTypedColumnValue<int>(ExternalVersionPath);
+				isAccountHasOsId = id > 0;
+			};
+			base.Update(integrationInfo);
+		}
+
 		public override void AfterEntitySave(IntegrationInfo integrationInfo)
 		{
 			base.AfterEntitySave(integrationInfo);
 			SetBussinesProtocol(integrationInfo);
+			UpdateAddressFromDeliveryService(integrationInfo);
+			CreateContact(integrationInfo);
+			AccountEntityHelper.ResaveAccountPrimaryAddress(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, integrationInfo.IntegratedEntity.PrimaryColumnValue, IntegrationLogger.SimpleLoggerErrorAction);
+			//AccountEntityHelper.ClearAccountPrimaryCommunication(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, IntegrationLogger.SimpleLoggerErrorAction);
+			//http://tscore-task/browse/SKT-4696
+			AccountEntityHelper.SynchronizeCommunication(integrationInfo.UserConnection, integrationInfo.IntegratedEntity.PrimaryColumnValue, IntegrationLogger.SimpleLoggerErrorAction);
+			ReintegrateAccountCompanyProfile(integrationInfo);
+			if(isFindedAdvanced)
+			{
+				ReintegrateAccountContacts(integrationInfo);
+			}
+		}
+
+		private void ReintegrateAccountCompanyProfile(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				var integrator = new ClientServiceIntegrator(integrationInfo.UserConnection);
+				integrator.IntegrateBpmEntity(integrationInfo.IntegratedEntity, new AccountHandler());
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e, integrationInfo.ToString());
+			}
+		}
+
+		public void UpdateAddressFromDeliveryService(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import && integrationInfo.Data != null)
+				{
+					if (!string.IsNullOrEmpty(integrationInfo.Data.SelectToken(JName + ".address").Value<string>()))
+					{
+						AccountEntityHelper.UpdateAddressFromDeliveryService(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, IntegrationLogger.SimpleLoggerErrorAction, esq =>
+						{
+							esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "AddressType", CsConstant.EntityConst.AddressType.Legal));
+						});
+					}
+					if (!string.IsNullOrEmpty(integrationInfo.Data.SelectToken(JName + ".locationAddress").Value<string>()))
+					{
+						AccountEntityHelper.UpdateAddressFromDeliveryService(integrationInfo.UserConnection, integrationInfo.IntegratedEntity, IntegrationLogger.SimpleLoggerErrorAction, esq =>
+						{
+							esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "AddressType", CsConstant.EntityConst.AddressType.Fact));
+						});
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
 		}
 		public void SetBussinesProtocol(IntegrationInfo integrationInfo)
 		{
@@ -2196,25 +3400,304 @@ namespace Terrasoft.TsConfiguration
 				IntegrationLogger.Error(e, "CounteragentHandler");
 			}
 		}
+
+		public void CreateContact(IntegrationInfo integrationInfo)
+		{
+			if ((integrationInfo.Action == CsConstant.IntegrationActionName.Create || (isAccountHasOsId.HasValue && !isAccountHasOsId.Value)) && integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
+				try
+				{
+					var isB2c = integrationInfo.IntegratedEntity.GetTypedColumnValue<bool>("TsB2C");
+					if (isB2c)
+					{
+						AdvancedSearchInfo.StoredProcedureName = CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2c;
+						if(!ContactEntityHelper.FindContactByAccount(integrationInfo.IntegratedEntity, integrationInfo.UserConnection, (x) => AddParameterToSearchProcedure(integrationInfo, x), IntegrationLogger.SimpleLoggerErrorAction)) {
+							ContactEntityHelper.CreateContactByAccount(integrationInfo.IntegratedEntity, integrationInfo.UserConnection, true, true, IntegrationLogger.SimpleLoggerErrorAction);
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e);
+				}
+			}
+		}
+
+		public override JObject ToJson(IntegrationInfo integrationInfo)
+		{
+			var result = base.ToJson(integrationInfo);
+
+			try
+			{
+				if (!result.IsJTokenPathHasValue("Counteragent.taxRegistrationNumber"))
+				{
+					result.RemoveByPath("Counteragent.taxRegistrationNumberName");
+					result.RemoveByPath("Counteragent.taxRegistrationNumber");
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+
+			try
+			{
+				if (!result.IsJTokenPathHasValue("Counteragent.companyRegistrationNumber"))
+				{
+					result.RemoveByPath("Counteragent.companyRegistrationNumberName");
+					result.RemoveByPath("Counteragent.companyRegistrationNumber");
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+			return result;
+		}
+
+		public override void ProcessResponse(IntegrationInfo integrationInfo)
+		{
+			base.ProcessResponse(integrationInfo);
+			//Если контрагент только законтрактован то отправляем его в client service. Это происходит единожды
+			ReintegrateContactsAndSelf(integrationInfo);
+		}
+		/// <summary>
+		/// http://tscore-task/browse/SKT-4216
+		/// Если у Counteragent не заполнено поле основной контакт, то инициируем переотправку всех контактов контрагента.
+		/// Если у даного Контрагента будет заполнено поле "Основной контакт", то инициируем переотправку Контрагента в OrderService
+		/// Гарантируется, что в рамках этой переотправки интеграция рекурсивно не начнет переотпраку, еще раз, по даному контрагенту
+		/// </summary>
+		/// <param name="integrationInfo">Информация о текущей транзакции интеграции</param>
+		public void ReintegrateContactsAndSelf(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.Action == CsConstant.IntegrationActionName.Create || isMainContactEmpty(integrationInfo))
+			{
+				var externalId = integrationInfo.IntegratedEntity.GetExternalIdValue(ExternalIdPath);
+				//Добавляем новую блокировку которая не позволит переотпраку несколько раз
+				LockerHelper.DoWithEntityLock(externalId, "Account", () =>
+				{
+					if (ReintegrateAccountContacts(integrationInfo))
+					{
+						try
+						{
+							//Снимаем блокировку перед переотправкой контрагента
+							if (!IntegrationLocker.CheckUnLock("Account", externalId, "OrderService_Counteragent"))
+							{
+								IntegrationLocker.Unlock("Account", externalId, "OrderService_Counteragent");
+							}
+							var integrator = new ClientServiceIntegrator(integrationInfo.UserConnection);
+							integrator.IntegrateBpmEntity(integrationInfo.IntegratedEntity, new CounteragentHandler(), false);
+						}
+						catch (Exception e)
+						{
+							IntegrationLogger.Error(e);
+						}
+					}
+				}, IntegrationLogger.SimpleLoggerErrorAction, "OrderService_Counteragent_ReintegrateSelf");
+			}
+		}
+		/// <summary>
+		/// Переотправляем контактов в ордерсервис
+		/// </summary>
+		/// <param name="integrationInfo"></param>
+		/// <returns>Возвращает был ли отправлен </returns>
+		public bool ReintegrateAccountContacts(IntegrationInfo integrationInfo)
+		{
+			try
+			{
+				var id = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("Id");
+				//Контакты из детали "Контакты" контрагента
+				var accountContacts = ContactEntityHelper.GetAccountContacts(id, integrationInfo.UserConnection, IntegrationLogger.SimpleLoggerErrorAction);
+				//Основной контакт
+				var primaryContactId = integrationInfo.IntegratedEntity.GetTypedColumnValue<Guid>("PrimaryContactId");
+				if (primaryContactId != Guid.Empty)
+				{
+					accountContacts.Add(primaryContactId);
+				}
+				var integrator = new ClientServiceIntegrator(integrationInfo.UserConnection);
+				foreach (var contactId in accountContacts)
+				{
+					integrator.IntegrateBpmEntity(contactId, "Contact", new CounteragentContactInfoHandler());
+				}
+				return primaryContactId != Guid.Empty;
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+			return false;
+		}
+		private bool isMainContactEmpty(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.Data != null)
+			{
+				JToken mainContactToken = integrationInfo.Data.SelectToken(JName + ".mainContact.#ref.id");
+				if (mainContactToken != null)
+				{
+					var mainContact = mainContactToken.Value<int>();
+					if (mainContact > 0)
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		public override void AddParameterToSearchProcedure(IntegrationInfo integrationInfo, StoredProcedure searchProcedure)
+		{
+			if (integrationInfo.Data != null)
+			{
+				if (AdvancedSearchInfo.StoredProcedureName == CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2c)
+				{
+					var emailPhones = GetEmailPhones(integrationInfo.Data);
+					searchProcedure
+						.WithParameter("Emails", emailPhones.Item1 ?? string.Empty)
+						.WithParameter("Phones", emailPhones.Item2 ?? string.Empty)
+						.WithParameter("ExternalIdPath", ExternalIdPath);
+				} else if(AdvancedSearchInfo.StoredProcedureName == CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2b)
+				{
+					var innAndKpp = GetInnAndKpp(integrationInfo.Data);
+					searchProcedure
+						.WithParameter("Inn", innAndKpp.Item1 ?? string.Empty)
+						.WithParameter("Kpp", innAndKpp.Item2 ?? string.Empty)
+						.WithParameter("ExternalIdPath", ExternalIdPath);
+				}
+			}
+			
+		}
+
+		private Tuple<string, string> GetEmailPhones(JObject data)
+		{
+			var emails = string.Empty;
+			var phone = string.Empty;
+			try
+			{
+				if (data != null)
+				{
+					var emailToken = data.SelectToken(JName + ".email");
+					if (emailToken != null)
+					{
+						emails = emailToken.Value<string>();
+					}
+					var phoneToken = data.SelectToken(JName + ".phone");
+					if (phoneToken != null)
+					{
+						phone = string.Join(",", PhoneFormatHelper.ToAllFormats(phoneToken.Value<string>()));
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+			return new Tuple<string, string>(emails, phone);
+		}
+		public override bool IsEntityAlreadyExistAdvanced(IntegrationInfo integrationInfo)
+		{
+			SetStoredProcedureNameByAccountInfo(integrationInfo);
+			var result = base.IsEntityAlreadyExistAdvanced(integrationInfo);
+			isFindedAdvanced = result;
+			return result;
+		}
+		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
+		{
+			isFindedAdvanced = false;
+			return base.IsEntityAlreadyExist(integrationInfo);
+		}
+		private Tuple<string, string> GetInnAndKpp(JObject data)
+		{
+			var inn = string.Empty;
+			var kpp = string.Empty;
+			try
+			{
+				var innToken = data.SelectToken(JName + ".taxRegistrationNumber");
+				var kppToken = data.SelectToken(JName + ".companyRegistrationNumber");
+				if (innToken != null)
+				{
+					inn = innToken.Value<string>();
+				}
+				if (kppToken != null)
+				{
+					kpp = kppToken.Value<string>();
+				}
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
+			return new Tuple<string, string>(inn, kpp);
+		}
+		private void SetStoredProcedureNameByAccountInfo(IntegrationInfo integrationInfo)
+		{
+			var jObj = integrationInfo.Data;
+			if (jObj != null)
+			{
+				var isB2b = jObj.SelectToken(JName + ".legalEntity").Value<bool>();
+				if (isB2b)
+				{
+					_advancedSearchInfo.StoredProcedureName = CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2b;
+					return;
+				}
+				else
+				{
+					_advancedSearchInfo.StoredProcedureName = CsConstant.EntityConst.AccountConst.AccountSearchStoredProcedureB2c;
+					return;
+				}
+			}
+			_advancedSearchInfo.StoredProcedureName = string.Empty;
+		}
 	}
 
-	[ImportHandlerAttribute("")]
+	[ImportHandlerAttribute("AccountBillingInfo")]
 	[ExportHandlerAttribute("AccountBillingInfo")]
 	public class AccountBillingInfoHandler : EntityHandler
 	{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "CompanyProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Account";
+			}
+		}
+		public override bool IsJsonWithHeader {
+			get {
+				return false;
+			}
+		}
 		public AccountBillingInfoHandler()
 		{
 			Mapper = new MappingHelper();
 			EntityName = "AccountBillingInfo";
 			JName = "";
 		}
-		public override JObject ToJson(IntegrationInfo integrationInfo) {
+		public override JObject ToJson(IntegrationInfo integrationInfo)
+		{
 			base.ToJson(integrationInfo);
-			if (integrationInfo.Data.First != null && integrationInfo.Data.First.First != null) {
+			if (integrationInfo.Data.First != null && integrationInfo.Data.First.First != null)
+			{
 				integrationInfo.Data = (JObject)integrationInfo.Data.First.First;
 				return integrationInfo.Data;
 			}
 			return null;
+		}
+		public override bool IsEntityAlreadyExist(IntegrationInfo integrationInfo)
+		{
+			return false;
+		}
+		public override void BeforeMapping(IntegrationInfo integrationInfo)
+		{
+			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
+			{
+				integrationInfo.Data["accountId"] = integrationInfo.ParentEntity.GetTypedColumnValue<string>("Id");
+			}
 		}
 	}
 
@@ -2223,10 +3706,23 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("AccountAnniversary")]
 	public class AccountAnniversaryHandler : EntityHandler
 	{
-		public override bool IsJsonWithHeader
-		{
-			get
-			{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "CompanyProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Account";
+			}
+		}
+		public override bool IsJsonWithHeader {
+			get {
 				return false;
 			}
 		}
@@ -2264,10 +3760,23 @@ namespace Terrasoft.TsConfiguration
 	[ExportHandlerAttribute("ContactAnniversary")]
 	public class ContactAnniversaryHandler : EntityHandler
 	{
-		public override bool IsJsonWithHeader
-		{
-			get
-			{
+		public override bool IsEmbeddedObject {
+			get {
+				return true;
+			}
+		}
+		public override string ParentObjectJName {
+			get {
+				return "PersonProfile";
+			}
+		}
+		public override string ParentObjectTsName {
+			get {
+				return "Contact";
+			}
+		}
+		public override bool IsJsonWithHeader {
+			get {
 				return false;
 			}
 		}
@@ -2297,6 +3806,23 @@ namespace Terrasoft.TsConfiguration
 			if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Import)
 			{
 				integrationInfo.Data["contactId"] = integrationInfo.ParentEntity.GetTypedColumnValue<string>("Id");
+			}
+		}
+
+		public override void AfterEntitySave(IntegrationInfo integrationInfo)
+		{
+			base.AfterEntitySave(integrationInfo);
+
+		}
+
+		public override void AfterMapping(IntegrationInfo integrationInfo)
+		{
+			base.AfterMapping(integrationInfo);
+			if (integrationInfo.ParentEntity != null)
+			{
+				var date = integrationInfo.IntegratedEntity.GetTypedColumnValue<DateTime>("Date");
+				integrationInfo.ParentEntity.SetColumnValue("BirthDate", date);
+				integrationInfo.ParentEntity.UpdateInDB(false);
 			}
 		}
 	}

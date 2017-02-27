@@ -19,6 +19,10 @@ namespace Terrasoft.TsConfiguration
 		{
 			try
 			{
+				if(jToken is JValue)
+				{
+					return ((JValue)jToken).Value;
+				}
 				switch (jToken.Type)
 				{
 					case JTokenType.String:
@@ -340,5 +344,7 @@ namespace Terrasoft.TsConfiguration
 			}
 			return result;
 		}
+
+		
 	}
 }

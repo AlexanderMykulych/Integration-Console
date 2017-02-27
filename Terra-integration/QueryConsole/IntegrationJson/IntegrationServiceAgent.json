@@ -1,0 +1,6544 @@
+﻿{
+  "total": 173,
+  "skip": 0,
+  "limit": 173,
+  "data": [
+    {
+      "Agent": {
+        "id": 1168,
+        "guid": "55c036d8-27ca-412a-8b17-71df19fa7d5d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Джедип-Авто",
+        "path": "[1303][1100][1168]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1169,
+        "guid": "4d9e231b-2fd4-47eb-be76-752691875955",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Доминант Авто",
+        "path": "[1303][1100][1169]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1170,
+        "guid": "4f33f41d-6d0c-4b8a-b722-06672ed4ca9c",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Дунфан",
+        "path": "[1303][1100][1170]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1130,
+        "guid": "35f42f0e-b474-4f96-ae55-86eb2b7b006d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "КМК Гласс",
+        "path": "[1303][1100][1130]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1131,
+        "guid": "6e0475d3-56de-4e0f-a5a1-3f6d6e00158f",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Маслова Е.Д. ИП",
+        "path": "[1303][1100][1131]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1132,
+        "guid": "10c7ce68-1704-4c61-8523-3933ee153784",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Смирнов ИП",
+        "path": "[1303][1100][1132]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1133,
+        "guid": "100a3f6d-a659-484e-bf8d-6330f36a2292",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Соловьева Н.Э. ИП",
+        "path": "[1303][1100][1133]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1134,
+        "guid": "b80e6d84-0834-41fd-bd96-1a0eecfb653b",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Фролов С.А. ИП",
+        "path": "[1303][1100][1134]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1135,
+        "guid": "f1aabbda-c2a6-4606-afc7-d8a780f399d7",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "24ZAP",
+        "path": "[1303][1100][1135]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1136,
+        "guid": "89d75b66-2c10-4ad9-bfad-c27723887779",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "4ТОЧКИ",
+        "path": "[1303][1100][1136]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1137,
+        "guid": "6d7c86fd-5f6f-46da-9acc-769ef4748bfa",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ABS-Auto",
+        "path": "[1303][1100][1137]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1138,
+        "guid": "90ade02a-f9f0-4645-8d58-bafe7ed0565e",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ALLTYRES.RU",
+        "path": "[1303][1100][1138]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1139,
+        "guid": "f1a05faa-747c-4533-869c-d50fb2bb882a",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ALVA Ситроен Отрадное",
+        "path": "[1303][1100][1139]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1140,
+        "guid": "e942e4cc-30de-4c66-9996-03b217e60354",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "AUTO_Z",
+        "path": "[1303][1100][1140]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1141,
+        "guid": "5193ade4-acaa-4883-ad02-b9a108b3079d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Ford Север",
+        "path": "[1303][1100][1141]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1142,
+        "guid": "6347c276-22eb-4132-a2a5-7e5b348d37cb",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "JACLUB",
+        "path": "[1303][1100][1142]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1143,
+        "guid": "adc710d6-fa86-42f8-b6c4-4c4f433d8dce",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "NEXT-AUTO",
+        "path": "[1303][1100][1143]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1144,
+        "guid": "2b4ab2e7-48d2-44d9-938b-67d44e82e3c6",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "VAG Север",
+        "path": "[1303][1100][1144]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1145,
+        "guid": "104187c4-e00d-4e39-9e55-a57015277c11",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "VFparts",
+        "path": "[1303][1100][1145]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1146,
+        "guid": "642a9c14-cee7-4f9c-b6dd-b3a14c771d41",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Volvo77",
+        "path": "[1303][1100][1146]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1148,
+        "guid": "94d8bae3-efab-42c7-8f14-86cd16a75295",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "АВТО РТ",
+        "path": "[1303][1100][1148]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1149,
+        "guid": "61b0dd5e-23fd-4efe-9538-0aca5e03d847",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Авто-ВИА",
+        "path": "[1303][1100][1149]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1151,
+        "guid": "225fefaf-961d-47e3-9055-7fdf4cdb6758",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Автоклондайк",
+        "path": "[1303][1100][1151]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1152,
+        "guid": "1a02028c-ff26-491b-8037-75dabf046836",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Автомир Центр GM",
+        "path": "[1303][1100][1152]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1153,
+        "guid": "826a7e2b-6b3e-4967-aa4f-83ec3679a0d8",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Автопартс-Север",
+        "path": "[1303][1100][1153]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1154,
+        "guid": "6f8a981b-5174-40b0-8a3f-c6511649daa9",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Автоскай Академи",
+        "path": "[1303][1100][1154]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1155,
+        "guid": "7638ec80-98cc-460b-84c8-f65a673e5887",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "АвтоСпар",
+        "path": "[1303][1100][1155]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1157,
+        "guid": "b4450f9e-2bb8-4179-9be7-786e4f39792a",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Азия моторс",
+        "path": "[1303][1100][1157]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1158,
+        "guid": "396b80cb-f84b-4c97-8630-6a1af5b2fabd",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Азия Партс",
+        "path": "[1303][1100][1158]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1160,
+        "guid": "cf17e5af-d5e9-4694-a651-60e8267736ef",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Альянс Спэйр Партс ООО",
+        "path": "[1303][1100][1160]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1161,
+        "guid": "5ade68b5-24ab-4cb9-9302-bd1269f75b89",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Аркона Воронеж",
+        "path": "[1303][1100][1161]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1162,
+        "guid": "58faa6b4-6388-4a5f-aeb4-27fce908146a",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "АРМ-Сервис",
+        "path": "[1303][1100][1162]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1163,
+        "guid": "d9963159-eb9b-4285-91f9-f8529296a3a4",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Вольтаж",
+        "path": "[1303][1100][1163]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1164,
+        "guid": "0bcb302f-f250-4bcb-a7ee-b5cd9dd261ee",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Восход-К Авто ООО",
+        "path": "[1303][1100][1164]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1165,
+        "guid": "6c77f923-6dac-4d6d-b5eb-27589361db0c",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Далес",
+        "path": "[1303][1100][1165]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1166,
+        "guid": "e0cdcc64-5ae7-4295-a556-844dbc30e65d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Дармина",
+        "path": "[1303][1100][1166]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1167,
+        "guid": "188d2b92-cd68-4358-97c5-fdd6b6f06841",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Два Авто",
+        "path": "[1303][1100][1167]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1171,
+        "guid": "b2bd4c62-b483-446f-97c7-e721f97af586",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ИНКАР АВТО",
+        "path": "[1303][1100][1171]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1172,
+        "guid": "965ef265-9ed6-42ab-9d03-4c128808b25b",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Интер-Авто (Castrol)",
+        "path": "[1303][1100][1172]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1173,
+        "guid": "70f91851-75b5-4ff5-a482-7864df95eee7",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ИСТОЧНИК БЭТТЭРИС",
+        "path": "[1303][1100][1173]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1174,
+        "guid": "b1f238f7-7898-4217-8a7b-13128cc1b318",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "КАРГЛАСС",
+        "path": "[1303][1100][1174]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1175,
+        "guid": "4115990e-cec8-4327-a582-8bdc4af0f8e8",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Колесо Фортуны",
+        "path": "[1303][1100][1175]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1176,
+        "guid": "62044908-185e-4d24-9c75-754dc7f88609",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "КРАГА",
+        "path": "[1303][1100][1176]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1177,
+        "guid": "836982ce-2555-45e5-85e6-e1ce0fbb04e2",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Ли-Арт",
+        "path": "[1303][1100][1177]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1178,
+        "guid": "85d6470b-7d0b-4515-aca1-9146654fb85e",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Маркет ООО",
+        "path": "[1303][1100][1178]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1179,
+        "guid": "cb7ee983-6980-4dc1-9cf4-ceefe3fa6b2f",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Машума",
+        "path": "[1303][1100][1179]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1181,
+        "guid": "998e1d8d-07c9-47de-91e2-82a4c4ad5d46",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Москворечье",
+        "path": "[1303][1100][1181]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1182,
+        "guid": "e079c911-0962-4812-b342-5b71cf548912",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "МС Груп",
+        "path": "[1303][1100][1182]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1185,
+        "guid": "de402dc8-d69c-4e96-8f6c-773cd641b834",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "НИКА МОТОРС Холдинг (Тойота центр-Отрадное)",
+        "path": "[1303][1100][1185]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1186,
+        "guid": "a2aba478-d9e4-4bdc-93ef-ae630ddb9e35",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Ойл Трейд Компани ЗАО",
+        "path": "[1303][1100][1186]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1187,
+        "guid": "f830509f-673f-4f72-9a95-9542ea87a1af",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ОНИКС",
+        "path": "[1303][1100][1187]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1188,
+        "guid": "acae45b7-3304-4d16-b88f-0220be8f39fa",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Основной поставщик",
+        "path": "[1303][1100][1188]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1189,
+        "guid": "d11e17a1-617b-4ee6-952b-75c7c943ec33",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Парктроники.ком",
+        "path": "[1303][1100][1189]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1190,
+        "guid": "f8b2fd79-0ccf-4d30-a319-3d25d91895c8",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Пеликан-Авто ООО",
+        "path": "[1303][1100][1190]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1191,
+        "guid": "8f7d66ac-3298-4812-8b02-acaab0b39120",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Питер Плюс",
+        "path": "[1303][1100][1191]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1192,
+        "guid": "aa4db705-79c4-4493-94eb-5fb29a0feaa4",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "РБР АВТО",
+        "path": "[1303][1100][1192]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1193,
+        "guid": "3ef026de-8620-46c3-91a7-0d2adedfa76d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "РВВ-АВТО",
+        "path": "[1303][1100][1193]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1194,
+        "guid": "3fa8ff40-e733-4fd6-9992-b55e6987ec95",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "РМС-АВТО",
+        "path": "[1303][1100][1194]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1196,
+        "guid": "d6dd65ca-4555-4bb2-b4a6-69295420c29c",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "РОЛЬФ, Филиал \"Диамант\"",
+        "path": "[1303][1100][1196]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1197,
+        "guid": "b5229ada-4d3f-4d0b-8ded-fa7de4be571f",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "РУСЬ ТРЕЙД",
+        "path": "[1303][1100][1197]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1198,
+        "guid": "b45764d8-d59b-4ac8-a382-4e17f188406e",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "СЕРВЕРК",
+        "path": "[1303][1100][1198]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1199,
+        "guid": "23c2f98d-5cdc-4635-bf07-d64c03ad84ab",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Символ7",
+        "path": "[1303][1100][1199]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1201,
+        "guid": "3d98de4a-b737-407b-91d7-240262267015",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Спейс Сервис ООО",
+        "path": "[1303][1100][1201]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1147,
+        "guid": "e414192e-4886-4ea4-87c5-1da379ceb9db",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "АВВ-Авто 000",
+        "path": "[1303][1100][1147]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1150,
+        "guid": "808cfdc4-f4ba-4429-ae1e-636ef0e4d26c",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Авто-Евро ЗАО",
+        "path": "[1303][1100][1150]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1180,
+        "guid": "6811a245-63f3-4b75-b292-330cb20b551e",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Металлопродукция",
+        "path": "[1303][1100][1180]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1195,
+        "guid": "d0d4546c-5a1e-467b-92c6-4ea98eabb6c6",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Роcско",
+        "path": "[1303][1100][1195]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1156,
+        "guid": "f865f14e-3788-4efc-ac6a-949793d2d27e",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Автоэксперт (шины и диски)",
+        "path": "[1303][1100][1156]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1200,
+        "guid": "d0903b80-3d7f-449a-887a-5b657a97608a",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Скил ۠Трейд",
+        "path": "[1303][1100][1200]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1202,
+        "guid": "ea34a59e-bcb5-48b4-b976-a8071d87d13e",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Тест ООО",
+        "path": "[1303][1100][1202]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1204,
+        "guid": "3fe2afb6-c7c1-466d-9282-f1af641c300d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Трейдтап",
+        "path": "[1303][1100][1204]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1205,
+        "guid": "1928b0e4-da72-4fa5-a9a4-f9e74cc0af42",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ТРИ-АВС",
+        "path": "[1303][1100][1205]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1206,
+        "guid": "0341a6d5-d5de-44c2-9c28-e9816d687fe1",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ФаворитОйл",
+        "path": "[1303][1100][1206]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1159,
+        "guid": "a4bbfb26-c669-4960-9f7f-0e17b27aed61",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "АРМ-АВТО ООО (быв. АЛЬКОР)",
+        "path": "[1303][1100][1159]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1207,
+        "guid": "32f7ef60-37bc-44ba-8b5f-c41e1e2a2947",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Форвард",
+        "path": "[1303][1100][1207]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1209,
+        "guid": "5633ee3f-d1d6-485c-bffc-2ae47e796005",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Экзист",
+        "path": "[1303][1100][1209]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1211,
+        "guid": "5f4166ff-c614-400d-89ae-4b22d85f0be5",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Юником",
+        "path": "[1303][1100][1211]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1212,
+        "guid": "7b320fd0-6afa-450f-84f5-75da4e2d2eae",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ЮС Импекс",
+        "path": "[1303][1100][1212]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1214,
+        "guid": "1ec5abe3-5aca-4b82-9624-24df140f115f",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "НЕМАН",
+        "path": "[1303][1100][1214]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1203,
+        "guid": "20921c61-0643-4c12-833a-3df20b3e0212",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Технабор А-1",
+        "path": "[1303][1100][1203]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1210,
+        "guid": "149aaa40-336f-4401-9a12-4a2cee46a2f5",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Экспресс Авто",
+        "path": "[1303][1100][1210]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1216,
+        "guid": "046cfcb8-f78f-4c8a-83e3-2b143a1184f1",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Турбоопт",
+        "path": "[1303][1100][1216]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1218,
+        "guid": "f585c28d-75c0-4ba4-918a-24c27415461f",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Логист Авто",
+        "path": "[1303][1100][1106][1218]",
+        "level": 3,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1106
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1220,
+        "guid": "b17ba526-f010-4c53-902b-75d46a83fdeb",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Авто Прогноз",
+        "path": "[1303][1100][1220]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1222,
+        "guid": "1d8a05f6-0538-4ae0-84c6-ee3a367821ff",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "LRTOP",
+        "path": "[1303][1100][1222]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1228,
+        "guid": "8161ecd3-7101-442b-abba-541267c97185",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Токус",
+        "path": "[1303][1100][1228]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1230,
+        "guid": "b94cb826-8c38-4055-8a05-913779cdf893",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Автомир(Дмитровка)",
+        "path": "[1303][1100][1230]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1232,
+        "guid": "04cb592b-2a37-410e-a070-cd2fa78a0f00",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Пандора",
+        "path": "[1303][1100][1232]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1237,
+        "guid": "95777854-7daf-499c-81bc-a8bf89691b68",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Капот.РУ",
+        "path": "[1303][1100][1237]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1286,
+        "guid": "56450946-6f02-4cad-b102-035087427189",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Шате-М",
+        "path": "[1303][1100][1286]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1240,
+        "guid": "1a74454a-8313-4702-b5bc-d5a612803b85",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Ликви Моли",
+        "path": "[1303][1100][1240]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1242,
+        "guid": "5661baf0-c27a-4ca5-b5c5-2920cfd79935",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Армтек Минск",
+        "path": "[1303][1100][1242]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1244,
+        "guid": "4d3dea3f-da12-4b18-a9f9-9ec997498cfd",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Армтек Доставка",
+        "path": "[1303][1100][1244]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1246,
+        "guid": "5452e759-29d9-41de-91a6-cff662342205",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Академия",
+        "path": "[1303][1100][1246]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1248,
+        "guid": "8a26d9e4-7cec-4859-aaec-6b3e7ee59d86",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мерседес Алтуфьево",
+        "path": "[1303][1100][1248]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1250,
+        "guid": "9c0bae03-3afd-4613-9921-7271872d3ad1",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мерседес ЦС",
+        "path": "[1303][1100][1250]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1252,
+        "guid": "69f020f4-2c2a-409f-81f2-d81a9ec22dfa",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "МГС",
+        "path": "[1303][1100][1252]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1254,
+        "guid": "86c72d76-6341-44b8-a684-68782d219832",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Каргласс",
+        "path": "[1303][1100][1254]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1262,
+        "guid": "a1e089f9-4c27-451d-8483-e3c50aa33817",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Ombra",
+        "path": "[1303][1100][1262]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1264,
+        "guid": "ad4a7254-8c3c-48eb-8b89-7b2eaffa99c0",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мастак",
+        "path": "[1303][1100][1264]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1266,
+        "guid": "28c9fc7a-d947-4834-b8b2-07c29439396a",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "БР Турбо",
+        "path": "[1303][1100][1266]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1268,
+        "guid": "c9328cbe-8670-4e7b-93f3-1a14a19b5b73",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мише-Рус",
+        "path": "[1303][1100][1268]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1270,
+        "guid": "40754770-0d31-438f-a95e-15eba9780ae5",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Оллаутопарт",
+        "path": "[1303][1100][1270]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1272,
+        "guid": "2921463a-ddb7-4da4-829d-6c5731a1cd2c",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "РУФ",
+        "path": "[1303][1100][1272]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1274,
+        "guid": "2b9e0d12-add1-430e-832a-48708cf84562",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Pandora",
+        "path": "[1303][1100][1274]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1238,
+        "guid": "68ce40a0-26d0-4b86-b212-761c2d2ea9ef",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Термал",
+        "path": "[1303][1100][1106][1238]",
+        "level": 3,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1106
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1276,
+        "guid": "70679fc1-a978-4fb0-b3d1-3e2afd11f08b",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Альянс",
+        "path": "[1303][1100][1276]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1278,
+        "guid": "2d51e59e-37ff-4055-9ba5-44d5f8d2d446",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ЭйчБи Трейдинг",
+        "path": "[1303][1100][1278]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1280,
+        "guid": "e02c0acf-d127-4ae3-92d1-5672ffd24a11",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Нижбел",
+        "path": "[1303][1100][1280]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1282,
+        "guid": "a9d59b14-29a2-44f8-b94b-4b81ea9e440d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Торсион",
+        "path": "[1303][1100][1282]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1284,
+        "guid": "f56866f2-2df3-4088-9c27-e5d1aff6a557",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Моторлайн",
+        "path": "[1303][1100][1284]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1288,
+        "guid": "06f759b6-4975-48b2-b7b6-2690c9ef61bd",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Шате-М Минск",
+        "path": "[1303][1100][1288]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1290,
+        "guid": "234bbfbd-6e88-4f5d-af65-a6b175f75fe8",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Автоброня",
+        "path": "[1303][1100][1290]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1292,
+        "guid": "418ecf57-5fbd-4205-9483-5c833cbe395c",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Вемас",
+        "path": "[1303][1100][1292]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1294,
+        "guid": "deceeb66-fb36-446a-866e-a95f785907a6",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Иксора",
+        "path": "[1303][1100][1294]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1296,
+        "guid": "36201c0a-42f9-4693-995b-a7526f5359ae",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Билайт",
+        "path": "[1303][1100][1296]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1298,
+        "guid": "c5b426cb-d7ab-4cb0-9884-3845d308eeb7",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Автовектор",
+        "path": "[1303][1100][1298]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1300,
+        "guid": "10c1c9bb-5c9d-471f-883a-cfc65820a1f4",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Партком",
+        "path": "[1303][1100][1300]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1302,
+        "guid": "f3868b75-a3f5-466e-bf74-b2928a0ab877",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Автоклондайк Доставка",
+        "path": "[1303][1100][1302]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1234,
+        "guid": "a981257a-e6d2-4751-8659-6c1756885a2c",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "StreetStorm",
+        "path": "[1303][1100][1234]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1309,
+        "guid": "78079deb-83f0-4edc-bf0e-a92d69d5ca88",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Крокус (Армтек-Брянск)",
+        "path": "[1303][1305][1309]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1305
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1313,
+        "guid": "7842d887-5e92-4bea-af8a-456814ac4994",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Белов А.С.",
+        "path": "[1303][1305][1313]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1305
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1224,
+        "guid": "ea88066c-6c85-469d-8552-ceb7bd0cc591",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Фаворит",
+        "path": "[1303][1100][1106][1224]",
+        "level": 3,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1106
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1321,
+        "guid": "12460437-99d8-4bc3-9cce-7164cdde9c31",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "МаксМоторс",
+        "path": "[1303][1100][1321]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1325,
+        "guid": "80fec9d8-b085-4d1b-bd4e-f889c8bb9188",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Имвито-Дилижанс",
+        "path": "[1303][1100][1325]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1323,
+        "guid": "a235f86d-5f63-45ba-956a-a59d7331cc48",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Надир-ТоргСила",
+        "path": "[1303][1100][1323]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1331,
+        "guid": "356ca668-ce7e-4ac7-a163-7b075a8f337f",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Шины",
+        "path": "[1303][1100][1331]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1333,
+        "guid": "9d390fd2-776b-4d60-8a86-1c642f395aa2",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Streetstorm поставка",
+        "path": "[1303][1100][1333]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1335,
+        "guid": "c279e4dc-caaa-4781-ad8d-d299c5dc2967",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Contigo поставка",
+        "path": "[1303][1100][1335]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1337,
+        "guid": "af7547d3-3e34-4f27-948f-3f9c9136a04a",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Техас",
+        "path": "[1303][1100][1337]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1208,
+        "guid": "002616c9-473f-43e5-839b-fc00bd722d3d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Форум-Авто",
+        "path": "[1303][1100][1208]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1339,
+        "guid": "865ccc86-4859-4bf3-9b9a-31a66b6cc953",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Авто Фактор Про",
+        "path": "[1303][1100][1339]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1341,
+        "guid": "1f7e428d-ecab-420b-8b93-90bbd83f5fef",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "РусПолКар",
+        "path": "[1303][1100][1341]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1343,
+        "guid": "cf3cfc32-b56a-4fa8-94ce-8ad8710717af",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ЮРГЕНТ",
+        "path": "[1303][1100][1343]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1347,
+        "guid": "745c1edd-6a87-4da7-b85c-507cafaa299f",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "ГС-Авто",
+        "path": "[1303][1100][1347]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1349,
+        "guid": "798af1f4-6da5-42eb-bb7b-b08d4110761b",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "АвтоJP",
+        "path": "[1303][1100][1349]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1351,
+        "guid": "1e1ba7d7-e4ae-4eaf-b382-3067e0ca594d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Автобат",
+        "path": "[1303][1100][1351]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1353,
+        "guid": "eaf860cb-368b-422d-b2f7-161e7a9321c1",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "АвтоСП",
+        "path": "[1303][1100][1353]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 1,
+              "name": "is_external",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1106,
+        "guid": "f7f842f9-1922-4e41-ad78-2657c5b883d2",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мытищи центр продаж",
+        "path": "[1303][1100][1106]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1104,
+        "guid": "87287db8-2b1b-4404-9c44-bd081128857a",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мытищи сервис пост 86",
+        "path": "[1303][1100][1104]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1256,
+        "guid": "bbf256f5-283c-4744-be9e-0711b436c95d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мытищи СП ЧасПик",
+        "path": "[1303][1100][1256]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1258,
+        "guid": "e5cf1ce3-7a67-4b3c-aeed-97871400249b",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мытищи СП Руставели",
+        "path": "[1303][1100][1258]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1260,
+        "guid": "997f3800-7402-4fd9-9873-b8bc6b944e63",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мытищи СП Ярославское66",
+        "path": "[1303][1100][1260]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1307,
+        "guid": "77f1091f-5b51-4ab5-af99-33bb77eaa04b",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Брянск Мичурина",
+        "path": "[1303][1305][1307]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1305
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1311,
+        "guid": "887811cd-2879-4149-aa21-21e9fcbd241a",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Брянск Линия",
+        "path": "[1303][1305][1311]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1305
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1315,
+        "guid": "0b539eff-4763-48aa-a420-678529fd5820",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мытищи СП Изумруд",
+        "path": "[1303][1100][1315]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1317,
+        "guid": "5ef4468b-499a-45ed-945e-4492799af46f",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Брянск Фрунзе",
+        "path": "[1303][1305][1317]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1305
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1327,
+        "guid": "b0018878-d7c6-45d1-83a7-733f803bf4c9",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мытищи СП Варшавское 68",
+        "path": "[1303][1100][1327]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1329,
+        "guid": "aadd0f14-5d64-4dd3-bb4d-9a4a5467e85b",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мытищи СП Перловский",
+        "path": "[1303][1100][1329]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10001,
+        "guid": "ec1c329f-e960-423f-9fb3-d2acaccd2b02",
+        "realmCode": "AUTO3N",
+        "version": 2,
+        "createdAt": "2016-05-30T08:49:25.015+0000",
+        "createdByUser": "stepanchikov.a",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": "2016-05-31T13:15:14.179+0000",
+        "changedByUser": "stepanchikov.a",
+        "changedByPartyCode": "WEB-PRAG",
+        "name": "Мытищи СП Ашан",
+        "path": "[1303][1100][10001]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10002,
+        "guid": "1c15c999-edfb-4117-b087-f081e6d40e2b",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-06-06T09:21:59.479+0000",
+        "createdByUser": "rylovv",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Internet магазин",
+        "path": "[1303][1100][10002]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10004,
+        "guid": "182332cb-02f8-49b4-8aa4-aa16d449f9b3",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-06-21T12:02:04.104+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Екатеринбург КДС",
+        "path": "[1303][10003][10004]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 10003
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10005,
+        "guid": "857202eb-f51d-4fee-bd67-e48fdbfd1ef0",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-06-21T12:02:45.331+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Екатеринбург СП Фронтовых бригад",
+        "path": "[1303][10003][10005]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 10003
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10007,
+        "guid": "13a58cb2-b6e6-44fb-a4ee-c933b055b964",
+        "realmCode": "AUTO3N",
+        "version": 2,
+        "createdAt": "2016-06-30T12:26:04.605+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": "2016-07-11T09:44:26.677+0000",
+        "changedByUser": "yushkop",
+        "changedByPartyCode": "WEB-PRAG",
+        "name": "Новосибирск 1 КДС",
+        "path": "[1303][10006][10007]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 10006
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10008,
+        "guid": "155f97e6-a753-4103-82fe-b79e8f6b919e",
+        "realmCode": "AUTO3N",
+        "version": 2,
+        "createdAt": "2016-06-30T12:26:46.631+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": "2016-07-11T09:44:31.896+0000",
+        "changedByUser": "yushkop",
+        "changedByPartyCode": "WEB-PRAG",
+        "name": "Новосибирск 1 СП Толмачевская",
+        "path": "[1303][10006][10008]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 10006
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10010,
+        "guid": "aa14bc0e-10f1-4c1b-90c0-88c8ca94a74f",
+        "realmCode": "AUTO3N",
+        "version": 2,
+        "createdAt": "2016-07-04T17:07:11.848+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": "2016-07-11T09:43:14.175+0000",
+        "changedByUser": "yushkop",
+        "changedByPartyCode": "WEB-PRAG",
+        "name": "Самара 1 КДС",
+        "path": "[1303][10009][10010]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 10009
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10011,
+        "guid": "aa4f2d03-b76d-4b35-bffc-bda13867efe1",
+        "realmCode": "AUTO3N",
+        "version": 2,
+        "createdAt": "2016-07-04T17:12:35.531+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": "2016-07-11T09:43:33.034+0000",
+        "changedByUser": "yushkop",
+        "changedByPartyCode": "WEB-PRAG",
+        "name": "Самара 1 СП Смышляевка",
+        "path": "[1303][10009][10011]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 10009
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10013,
+        "guid": "cdd3cc03-4594-4fe2-952e-b6349c751cec",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-07-05T13:29:13.864+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Нижний Новгород КДС",
+        "path": "[1303][10012][10013]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 10012
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10014,
+        "guid": "ae595a4d-86dd-46c7-97da-213bf7973c8d",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-07-05T13:30:31.317+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Нижний Новгород СП Чаадаева",
+        "path": "[1303][10012][10014]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 10012
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10016,
+        "guid": "c5e98de6-9d5a-4b29-8e6d-c789adef8526",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-07-07T05:34:04.603+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Ростов на Дону КДС",
+        "path": "[1303][10015][10016]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 10015
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10017,
+        "guid": "1a6fbddf-2d21-4383-af56-ef36eb9147ea",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-07-07T05:44:32.016+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Ростов на Дону СП Аксайский",
+        "path": "[1303][10015][10017]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 10015
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10003,
+        "guid": "0539b420-f1c8-41bc-8a7c-3b9c193a967a",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-06-21T11:57:47.606+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Агентство Екатеринбург",
+        "path": "[1303][10003]",
+        "level": 1,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 10001,
+              "name": "is_local_market",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1303
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10006,
+        "guid": "bde2d70b-a982-4455-aed1-7a3ad8631c2a",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-06-29T16:40:53.429+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Агентство Новосибирск",
+        "path": "[1303][10006]",
+        "level": 1,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 10001,
+              "name": "is_local_market",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1303
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10009,
+        "guid": "6cfa7348-5521-41e9-bf82-a233fa9bf0d8",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-07-04T15:38:55.275+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Агентство Самара",
+        "path": "[1303][10009]",
+        "level": 1,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 10001,
+              "name": "is_local_market",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1303
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10012,
+        "guid": "e06dcb50-e764-4e3d-b48c-7b3ae954dce9",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-07-05T13:28:22.526+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Агентство Нижний Новгород",
+        "path": "[1303][10012]",
+        "level": 1,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 10001,
+              "name": "is_local_market",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1303
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10015,
+        "guid": "4cf971e9-af46-4f76-bc2a-c170ba99abcf",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-07-07T05:32:42.975+0000",
+        "createdByUser": "yushkop",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Агентство Ростов на Дону",
+        "path": "[1303][10015]",
+        "level": 1,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 10001,
+              "name": "is_local_market",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1303
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1100,
+        "guid": "ea8a1ace-4060-4505-9bc8-ccd4321b9591",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Агентство Мытищи",
+        "path": "[1303][1100]",
+        "level": 1,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 10001,
+              "name": "is_local_market",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1303
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1305,
+        "guid": "f43d983a-3b2a-45c0-bbbc-3d1e2f271f2e",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Агентство Брянск",
+        "path": "[1303][1305]",
+        "level": 1,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 10001,
+              "name": "is_local_market",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1303
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 10018,
+        "guid": "29f455d4-61c7-4d88-96bc-643b4da18e40",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-09-05T13:26:38.057+0000",
+        "createdByUser": "stepanchikov.a",
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мытищи СП Гринвуд",
+        "path": "[1303][1100][10018]",
+        "level": 2,
+        "agentTags": [
+          {
+            "AgentTag": {
+              "id": 2,
+              "name": "is_shipment_point",
+              "realmCode": "AUTO3N"
+            }
+          }
+        ],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1345,
+        "guid": "87938bb3-18b1-4b60-93ce-368ced419439",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Fenix",
+        "path": "[1303][1100][1345]",
+        "level": 2,
+        "agentTags": [],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1102,
+        "guid": "98a4826f-0b9a-4e64-b830-7810d9d19310",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Мытищи КДС",
+        "path": "[1303][1100][1102]",
+        "level": 2,
+        "agentTags": [],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1100
+          }
+        }
+      }
+    },
+    {
+      "Agent": {
+        "id": 1303,
+        "guid": "5da8dbbf-4927-48b2-916c-e6b096ef370f",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "AUTO3N - Россия",
+        "path": "[1303]",
+        "level": 0,
+        "agentTags": [],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": null
+      }
+    },
+    {
+      "Agent": {
+        "id": 1319,
+        "guid": "8241d1c1-2365-44a2-b9da-8db065379e21",
+        "realmCode": "AUTO3N",
+        "version": 1,
+        "createdAt": "2016-05-24T03:00:44.934+0000",
+        "createdByUser": null,
+        "createdByPartyCode": "WEB-PRAG",
+        "changedAt": null,
+        "changedByUser": null,
+        "changedByPartyCode": null,
+        "name": "Брянск КДС",
+        "path": "[1303][1305][1319]",
+        "level": 2,
+        "agentTags": [],
+        "company": {
+          "#ref": {
+            "type": "Company",
+            "id": 1003
+          }
+        },
+        "parentAgent": {
+          "#ref": {
+            "type": "Agent",
+            "id": 1305
+          }
+        }
+      }
+    }
+  ]
+}

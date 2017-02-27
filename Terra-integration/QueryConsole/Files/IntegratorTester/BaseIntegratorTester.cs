@@ -29,6 +29,7 @@ namespace Terrasoft.TsConfiguration
 				ClonsoleGreen(entityName + " Start:");
 				try {
 					var collection = GetEntitiesBySchemaNames(entityName, false);
+					Console.WriteLine("Count: " + collection.Count);
 					foreach(var entity in collection) {
 						ImportBpmEntity(entity);
 					}
@@ -45,9 +46,9 @@ namespace Terrasoft.TsConfiguration
 			//var dateColumn = esq.AddColumn("CreatedOn");
 			//dateColumn.OrderByDesc();
 			//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Name", "Наша компания"));
-			///*esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("a37*/d31d9-4b81-4c40-925c-1b1d658e926d")));
+			esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("b936770a-4f38-4ea3-9735-4df6c03808f0")));
 			//if(name == "Contact") {
-			//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("4da18e0b-3f81-4327-9d80-da12ee0b1fba")));
+			//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("c4d4eb57-75a3-4698-9134-57a9fb4d10c1")));
 			//}
 			if (name == "ContactCareer") {
 				//esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Equal, "Id", new Guid("6D20D35D-82B9-4CFD-9D18-670003D79AB7")));

@@ -1,0 +1,709 @@
+﻿{
+  "total": 9,
+  "skip": 0,
+  "limit": 9,
+  "data": [
+    {
+      "Market": {
+        "id": 9,
+        "changedAt": null,
+        "changedByParty": null,
+        "changedByUser": null,
+        "createdAt": "2016-10-05T13:53:53.802+0000",
+        "createdByParty": "BPMONLINE",
+        "createdByUser": "bpmonline",
+        "guid": "d74472a7-36ac-4748-b3cf-9555d9c9545f",
+        "ownerAgentId": 1303,
+        "version": 1,
+        "additionalInfo": {
+          "auto": {
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0,
+            "capacity": 0,
+            "salesPerCapita": 0
+          },
+          "cargo": {
+            "salesPerCapita": 0,
+            "capacity": 0,
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0
+          }
+        },
+        "addressPatterns": {
+          "type": null
+        },
+        "baseAddress": null,
+        "baseArea": null,
+        "baseCountry": null,
+        "baseSettlement": null,
+        "capacity": 0,
+        "currencyId": null,
+        "name": "Воронеж ЛРС",
+        "population": 0,
+        "salesDivision": "Дивизион сбыта №10",
+        "salesPerCapita": 0,
+        "type": null
+      }
+    },
+    {
+      "Market": {
+        "id": 8,
+        "changedAt": null,
+        "changedByParty": null,
+        "changedByUser": null,
+        "createdAt": "2016-10-05T11:41:36.033+0000",
+        "createdByParty": "BPMONLINE",
+        "createdByUser": "bpmonline",
+        "guid": "553cdce1-ff3e-4ca9-9b3e-5ca791d81bda",
+        "ownerAgentId": 1303,
+        "version": 1,
+        "additionalInfo": {
+          "auto": {
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0,
+            "capacity": 0,
+            "salesPerCapita": 0
+          },
+          "cargo": {
+            "salesPerCapita": 0,
+            "capacity": 0,
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0
+          }
+        },
+        "addressPatterns": {
+          "type": null
+        },
+        "baseAddress": null,
+        "baseArea": null,
+        "baseCountry": null,
+        "baseSettlement": null,
+        "capacity": 0,
+        "currencyId": null,
+        "name": "Тест_ЛРС",
+        "population": 0,
+        "salesDivision": "Дивизион сбыта №10",
+        "salesPerCapita": 0,
+        "type": null
+      }
+    },
+    {
+      "Market": {
+        "id": 7,
+        "changedAt": null,
+        "changedByParty": null,
+        "changedByUser": null,
+        "createdAt": "2016-09-30T07:07:16.293+0000",
+        "createdByParty": "BPMONLINE",
+        "createdByUser": "bpmonline",
+        "guid": "44c923c2-20fd-44d2-a5bf-313b08624baf",
+        "ownerAgentId": 1303,
+        "version": 1,
+        "additionalInfo": {
+          "auto": {
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0,
+            "capacity": 0,
+            "salesPerCapita": 0
+          },
+          "cargo": {
+            "salesPerCapita": 0,
+            "capacity": 0,
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0
+          }
+        },
+        "addressPatterns": {
+          "type": null
+        },
+        "baseAddress": null,
+        "baseArea": null,
+        "baseCountry": null,
+        "baseSettlement": null,
+        "capacity": 0,
+        "currencyId": null,
+        "name": "Тест_автоподстановки",
+        "population": 0,
+        "salesDivision": "Дивизион сбыта №10",
+        "salesPerCapita": 0,
+        "type": null
+      }
+    },
+    {
+      "Market": {
+        "id": 6,
+        "changedAt": "2016-09-28T10:55:42.435+0000",
+        "changedByParty": "BPMONLINE",
+        "changedByUser": "bpmonline",
+        "createdAt": "2016-09-28T10:54:40.285+0000",
+        "createdByParty": "BPMONLINE",
+        "createdByUser": "bpmonline",
+        "guid": "bdf6fb7d-ed2c-4b5e-8ed2-1ff556657a5c",
+        "ownerAgentId": 1303,
+        "version": 2,
+        "additionalInfo": {
+          "auto": {
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0,
+            "capacity": 0,
+            "salesPerCapita": 0
+          },
+          "cargo": {
+            "salesPerCapita": 0,
+            "capacity": 0,
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 1303,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0
+          }
+        },
+        "addressPatterns": {
+          "type": null
+        },
+        "baseAddress": null,
+        "baseArea": null,
+        "baseCountry": null,
+        "baseSettlement": null,
+        "capacity": 0,
+        "currencyId": null,
+        "name": "Волга",
+        "population": 0,
+        "salesDivision": "Дивизион сбыта №1",
+        "salesPerCapita": 0,
+        "type": null
+      }
+    },
+    {
+      "Market": {
+        "id": 5,
+        "changedAt": null,
+        "changedByParty": null,
+        "changedByUser": null,
+        "createdAt": "2016-09-28T08:59:42.077+0000",
+        "createdByParty": "BPMONLINE",
+        "createdByUser": "bpmonline",
+        "guid": "d61c0754-1f9f-4322-8fc0-18b2ca79923d",
+        "ownerAgentId": 1303,
+        "version": 1,
+        "additionalInfo": {
+          "auto": {
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0,
+            "capacity": 0,
+            "salesPerCapita": 0
+          },
+          "cargo": {
+            "salesPerCapita": 0,
+            "capacity": 0,
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0
+          }
+        },
+        "addressPatterns": {
+          "type": null
+        },
+        "baseAddress": null,
+        "baseArea": null,
+        "baseCountry": null,
+        "baseSettlement": null,
+        "capacity": 0,
+        "currencyId": null,
+        "name": "Новосибирск",
+        "population": 0,
+        "salesDivision": "Дивизион сбыта №10",
+        "salesPerCapita": 0,
+        "type": null
+      }
+    },
+    {
+      "Market": {
+        "id": 4,
+        "changedAt": null,
+        "changedByParty": null,
+        "changedByUser": null,
+        "createdAt": "2016-09-28T08:57:10.267+0000",
+        "createdByParty": "BPMONLINE",
+        "createdByUser": "bpmonline",
+        "guid": "dcb611f8-3106-48dc-ac16-11338e525184",
+        "ownerAgentId": 1303,
+        "version": 1,
+        "additionalInfo": {
+          "auto": {
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0,
+            "capacity": 0,
+            "salesPerCapita": 0
+          },
+          "cargo": {
+            "salesPerCapita": 0,
+            "capacity": 0,
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0
+          }
+        },
+        "addressPatterns": {
+          "type": null
+        },
+        "baseAddress": null,
+        "baseArea": null,
+        "baseCountry": null,
+        "baseSettlement": null,
+        "capacity": 0,
+        "currencyId": null,
+        "name": "Воронеж",
+        "population": 0,
+        "salesDivision": null,
+        "salesPerCapita": 0,
+        "type": null
+      }
+    },
+    {
+      "Market": {
+        "id": 3,
+        "changedAt": null,
+        "changedByParty": null,
+        "changedByUser": null,
+        "createdAt": "2016-09-28T08:53:06.244+0000",
+        "createdByParty": "BPMONLINE",
+        "createdByUser": "bpmonline",
+        "guid": "87f2ca57-50a5-4d00-b2bf-dcd1a09fdf98",
+        "ownerAgentId": 1303,
+        "version": 1,
+        "additionalInfo": {
+          "auto": {
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0,
+            "capacity": 0,
+            "salesPerCapita": 0
+          },
+          "cargo": {
+            "salesPerCapita": 0,
+            "capacity": 0,
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0
+          }
+        },
+        "addressPatterns": {
+          "type": null
+        },
+        "baseAddress": null,
+        "baseArea": null,
+        "baseCountry": null,
+        "baseSettlement": null,
+        "capacity": 0,
+        "currencyId": null,
+        "name": "ЛРС Питер",
+        "population": 0,
+        "salesDivision": "Дивизион сбыта №10",
+        "salesPerCapita": 0,
+        "type": null
+      }
+    },
+    {
+      "Market": {
+        "id": 2,
+        "changedAt": null,
+        "changedByParty": null,
+        "changedByUser": null,
+        "createdAt": "2016-09-27T13:38:15.030+0000",
+        "createdByParty": "BPMONLINE",
+        "createdByUser": "bpmonline",
+        "guid": "ad8bd6b7-775a-4e1e-a3f4-2fe136c96bdc",
+        "ownerAgentId": 1303,
+        "version": 1,
+        "additionalInfo": {
+          "auto": {
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0,
+            "capacity": 0,
+            "salesPerCapita": 0
+          },
+          "cargo": {
+            "salesPerCapita": 0,
+            "capacity": 0,
+            "profileCompleteness": null,
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 0,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0
+          }
+        },
+        "addressPatterns": {
+          "type": null
+        },
+        "baseAddress": null,
+        "baseArea": null,
+        "baseCountry": null,
+        "baseSettlement": null,
+        "capacity": 0,
+        "currencyId": null,
+        "name": "Проверка",
+        "population": 0,
+        "salesDivision": "Дивизион сбыта №1",
+        "salesPerCapita": 0,
+        "type": null
+      }
+    },
+    {
+      "Market": {
+        "id": 1,
+        "changedAt": null,
+        "changedByParty": null,
+        "changedByUser": null,
+        "createdAt": "2016-09-20T13:57:37.946+0000",
+        "createdByParty": "BPMONLINE",
+        "createdByUser": "bpmonline",
+        "guid": "f6e81a8b-2f13-4a29-a682-79f73ad8146d",
+        "ownerAgentId": 1303,
+        "version": 1,
+        "additionalInfo": {
+          "auto": {
+            "profileCompleteness": "Контрагент",
+            "vehicleServiceCostYear": 2222,
+            "vehiclePerCapita": 2.02,
+            "selfVehicleCount": 222222,
+            "vehicleTotal": 4444,
+            "salesForecats": {
+              "value": 80.05
+            },
+            "marketShare": 5,
+            "serviceDepots": 5,
+            "involvedServiceDepots": 2,
+            "shopsCount": 4,
+            "potentialPersonPerServiceDepot": 7000,
+            "potentialPersonPerShop": 2000,
+            "potentialVehiclePerServiceDepot": 2002,
+            "potentialVehiclePerShop": 1580,
+            "personPerServiceDepot": 1,
+            "personPerShop": 2,
+            "vehiclePerServiceDepot": 3,
+            "vehiclePerShop": 4,
+            "capacity": 58.05,
+            "salesPerCapita": 57777.8
+          },
+          "cargo": {
+            "salesPerCapita": 0,
+            "capacity": 0,
+            "profileCompleteness": "Контрагент",
+            "vehicleServiceCostYear": 0,
+            "vehiclePerCapita": 0,
+            "selfVehicleCount": 0,
+            "vehicleTotal": 0,
+            "salesForecats": {
+              "value": 0
+            },
+            "marketShare": 0,
+            "serviceDepots": 0,
+            "involvedServiceDepots": 0,
+            "shopsCount": 0,
+            "potentialPersonPerServiceDepot": 0,
+            "potentialPersonPerShop": 0,
+            "potentialVehiclePerServiceDepot": 0,
+            "potentialVehiclePerShop": 1303,
+            "personPerServiceDepot": 0,
+            "personPerShop": 0,
+            "vehiclePerServiceDepot": 0,
+            "vehiclePerShop": 0
+          }
+        },
+        "addressPatterns": {
+          "type": "Московская область"
+        },
+        "baseAddress": null,
+        "baseArea": "Московская область",
+        "baseCountry": null,
+        "baseSettlement": "Москва",
+        "capacity": 58.05,
+        "currencyId": null,
+        "name": "Москва",
+        "population": 22222222,
+        "salesDivision": "Дивизион сбыта №4",
+        "salesPerCapita": 57777.8,
+        "type": null
+      }
+    }
+  ]
+}

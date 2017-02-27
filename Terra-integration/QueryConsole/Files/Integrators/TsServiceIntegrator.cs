@@ -11,13 +11,14 @@ namespace Terrasoft.TsConfiguration
 {
 		public interface IServiceIntegrator {
 		void GetRequest(ServiceRequestInfo info);
-		void IntegrateBpmEntity(Entity entity, EntityHandler handler = null);
+		void IntegrateBpmEntity(Entity entity, EntityHandler handler = null, bool withLock = true);
 	}
 	 
 
 	public enum TServiceObject {
 		Entity,
-		Dict
+		Dict,
+		Service
 	}
 
 	public class ServiceRequestInfo {
@@ -35,12 +36,26 @@ namespace Terrasoft.TsConfiguration
 		public string Skip;
 		public Action AfterIntegrate;
 		public EntityHandler Handler;
-		
+		public bool UpdateIfExist = true;
+		public Action<int, int> ProgressAction;
+		public int IntegrateCount = 0;
+		public int TotalCount = 0;
+		public bool ReupdateUrl = false;
+		public string SortField = null;
+		public string SortDirection = "asc";
 		public static ServiceRequestInfo CreateForExportInBpm(string serviceObjectName, TServiceObject type = TServiceObject.Entity) {
 			return new ServiceRequestInfo() {
 				ServiceObjectName = serviceObjectName,
 				Type = type
 			};
+		}
+
+		public void SetProgress(int progressed, int allCount)
+		{
+			if(ProgressAction != null)
+			{
+				ProgressAction(progressed, allCount);
+			}
 		}
 	}
 
@@ -109,8 +124,13 @@ namespace Terrasoft.TsConfiguration
 				return;
 			}
 			info.Method = TRequstMethod.GET;
-			info.FullUrl = info.FullUrl ?? UrlMaker.Make(info);
-			//IntegrationConsole.SetCurrentRequestUrl(info.FullUrl);
+			if (info.ReupdateUrl)
+			{
+				info.FullUrl = UrlMaker.Make(info);
+			} else
+			{
+				info.FullUrl = info.FullUrl ?? UrlMaker.Make(info);
+			}
 			MakeRequest(info);
 		}
 
@@ -130,10 +150,9 @@ namespace Terrasoft.TsConfiguration
 				{
 					info.ResponseData = x;
 					OnGetResponse(info);
-				}, userConnection, info.LogId,
+				}, userConnection,
 				(x, y) =>
 				{
-					IntegrationLocker.Unlock(info.Entity.SchemaName, info.Entity.PrimaryColumnValue);
 					if (info.AfterIntegrate != null)
 					{
 						info.AfterIntegrate();
@@ -152,9 +171,10 @@ namespace Terrasoft.TsConfiguration
 				case TRequstMethod.GET:
 					try {
 						IEnumerable<JObject> resultObjects;
-						if (string.IsNullOrEmpty(info.ServiceObjectId))
+						if (string.IsNullOrEmpty(info.ServiceObjectId) || info.ServiceObjectId == "0")
 						{
 							var objArray = responseJObj["data"] as JArray;
+							info.TotalCount = responseJObj.Value<int>("total");
 							resultObjects = objArray.Select(x => x as JObject);
 						}
 						else
@@ -162,10 +182,18 @@ namespace Terrasoft.TsConfiguration
 							resultObjects = new List<JObject>() {
 								responseJObj
 							};
+							info.TotalCount = 1;
 						}
 						foreach (var jObj in resultObjects)
 						{
-							IntegrateServiceEntity(jObj, info.ServiceObjectName);
+							try
+							{
+								IntegrateServiceEntity(jObj, info.ServiceObjectName, info.UpdateIfExist);
+								info.SetProgress(++info.IntegrateCount, info.TotalCount);
+							} catch(Exception e)
+							{
+								Terrasoft.Configuration.TsEntityLogger.MethodInfoError("OnGetResponse - foreach", e.ToString(), jObj.ToString());
+							}
 						}
 					} catch(Exception e) {
 						IntegrationLogger.Error(e, "OnGetResponse");
@@ -187,47 +215,59 @@ namespace Terrasoft.TsConfiguration
 			
 		}
 
-		public virtual void IntegrateBpmEntity(Entity entity, EntityHandler defHandler = null) {
-			IntegrateBpmEntity(entity.PrimaryColumnValue, entity.SchemaName, defHandler);
+		public virtual void IntegrateBpmEntity(Entity entity, EntityHandler defHandler = null, bool withLock = true) {
+			IntegrateBpmEntity(entity.PrimaryColumnValue, entity.SchemaName, defHandler, withLock);
 		}
 
-		public virtual void IntegrateBpmEntity(Guid entityId, string schemaName, EntityHandler defHandler = null) {
+		public virtual void IntegrateBpmEntity(Guid entityId, string schemaName, EntityHandler defHandler = null, bool withLock = true) {
 			if (!IsIntegratorActive) {
 				return;
 			}
 			try {
-				if (IntegrationLocker.CheckUnLock(schemaName, entityId)) {
-					var primaryColumnValue = entityId;
-					EntitySchema entitySchema = userConnection.EntitySchemaManager.GetInstanceByName(schemaName);
-					var entity = entitySchema.CreateEntity(userConnection);
-					if (entity.FetchFromDB(primaryColumnValue, false)) {
-						IntegrationLocker.Lock(entity.SchemaName, entity.PrimaryColumnValue);
-						CsConstant.IntegrationInfo integrationInfo = null;
-						var handlers = defHandler == null ? entityHelper.GetAllIntegrationHandler(entity.SchemaName, CsConstant.TIntegrationType.Export) : new List<EntityHandler>() { defHandler };
-						foreach (var handler in handlers) {
-							IntegrationLogger.StartTransaction(userConnection, CsConstant.PersonName.Bpm, handler.ServiceName, entity.GetType().Name, handler.JName, string.Format("{0} - {1}", entity.PrimaryColumnValue, entity.PrimaryDisplayColumnValue));
-							try {
-								integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
+				LockerHelper.DoWithEntityLock(entityId, schemaName, () => {
+					Entity entity = PrepareEntity(userConnection, schemaName, entityId);
+					if(entity == null) {
+						return;
+					}
+					var handlers = defHandler == null ? entityHelper.GetAllIntegrationHandler(entity.SchemaName, CsConstant.TIntegrationType.Export) : new List<EntityHandler>() { defHandler };
+					foreach (var handler in handlers) {
+						var logInfo = new LoggerInfo()
+						{
+							UserConnection = userConnection,
+							RequesterName = CsConstant.PersonName.Bpm,
+							ReciverName = handler.ServiceName,
+							ServiceObjName = handler.JName,
+							BpmObjName = entity.GetType().Name,
+							AdditionalInfo = string.Format("{0} - {1}", entity.PrimaryColumnValue, entity.PrimaryDisplayColumnValue)
+						};
+						LoggerHelper.DoInTransaction(logInfo, () =>
+						{
+							try
+							{
+								var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
 								integrationInfo.Handler = handler;
 								entityHelper.IntegrateEntity(integrationInfo);
-								if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success) {
+								if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Success)
+								{
 									var json = integrationInfo.Result.Data.ToString();
 									var requestInfo = integrationInfo.Handler.GetRequestInfo(integrationInfo);
-									requestInfo.LogId = IntegrationLogger.CurrentLogId;
+									requestInfo.LogId = IntegrationLogger.CurrentTransLogId;
 									MakeRequest(requestInfo);
 								}
-							} catch (Exception e) {
+							}
+							catch (Exception e)
+							{
 								IntegrationLogger.Error(e);
 							}
-						}
+						});
 					}
-				}
+				}, IntegrationLogger.SimpleLoggerErrorAction, null, withLock);
 			} catch (Exception e) {
-				IntegrationLogger.StartTransaction(userConnection, CsConstant.PersonName.Bpm, "None", schemaName, "None");
 				IntegrationLogger.Error(e);
 			}
 		}
-		public virtual void IntegrateServiceEntity(JObject serviceEntity, string serviceObjectName) {
+
+		public virtual void IntegrateServiceEntity(JObject serviceEntity, string serviceObjectName, bool updateExists = true) {
 			if (!IsIntegratorActive) {
 				return;
 			}
@@ -235,12 +275,23 @@ namespace Terrasoft.TsConfiguration
 			entityHelper.IntegrateEntity(integrationInfo);
 			if (integrationInfo.Result != null && integrationInfo.Result.Type == CsConstant.IntegrationResult.TResultType.Exception)
 			{
-				if (integrationInfo.Result.Exception == CsConstant.IntegrationResult.TResultException.OnCreateEntityExist)
+				if (integrationInfo.Result.Exception == CsConstant.IntegrationResult.TResultException.OnCreateEntityExist && updateExists)
 				{
 					integrationInfo = CsConstant.IntegrationInfo.CreateForImport(userConnection, CsConstant.IntegrationActionName.Update, serviceObjectName, serviceEntity);
 					entityHelper.IntegrateEntity(integrationInfo);
 				}
 			}
+		}
+
+		private Entity PrepareEntity(UserConnection userConnection, string schemaName, Guid entityId) {
+			EntitySchema entitySchema = userConnection.EntitySchemaManager.GetInstanceByName(schemaName);
+			if(entitySchema != null) {
+				Entity entity = entitySchema.CreateEntity(userConnection);
+				if (entity.FetchFromDB(entityId, false)) {
+					return entity;
+				}
+			}
+			return null;
 		}
 	}
 }

@@ -11,6 +11,15 @@ using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using Terrasoft.Core.Factories;
 using Terrasoft.TsConfiguration;
+using NodaTime.TimeZones;
+using NodaTime;
+using System.Linq;
+using QueryConsole.Files.IntegratorTester.PrimaryImport;
+using QueryConsole.IntegrationJson;
+using Terrasoft.Configuration;
+using BaseIntegratorTester = Terrasoft.TsConfiguration.BaseIntegratorTester;
+using IntegrationServiceIntegrator = Terrasoft.TsConfiguration.IntegrationServiceIntegrator;
+using OrderServiceIntegratorTester = Terrasoft.TsConfiguration.OrderServiceIntegratorTester;
 
 namespace QueryConsole
 {
@@ -22,8 +31,9 @@ namespace QueryConsole
 			//ClassFactory.Get<Terrasoft.Configuration.Passport.OrderPassportHelper>();
 		}
 		public static void Main(string[] args) {
-			try {
-				//var consoleApp = new TerrasoftConsoleClass("A.Mykulych");
+			try
+			{
+				
 				var consoleApp = new TerrasoftConsoleClass("Default");
 				try {
 					consoleApp.Run();
@@ -37,24 +47,46 @@ namespace QueryConsole
 				Console.WriteLine("Press any button to start integrate");
 				Console.ReadKey();
 				Console.WriteLine("Start");
+				//CsConstant.IsDebugMode = true;
 				var testers = new List<BaseIntegratorTester>() {
 					new OrderServiceIntegratorTester(consoleApp.SystemUserConnection),
 					new ClientServiceIntegratorTester(consoleApp.SystemUserConnection)
 				};
+				double val = 190165.26;
+				var val2 = (float)val;
+				Console.WriteLine(val2);
 				//var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
-				//	//{"ManagerInfo", 500, 0, 1},
-				//	//{"CounteragentContactInfo", 500, 0, 1},
+				//	{"ManagerInfo", 500, 0, 1},
+				//	{"CounteragentContactInfo", 500, 0, 1},
 				//	{"Counteragent", 500, 0, 1},
-				//	//{"Contract", 500, 0, 1},
+				//	{"Contract", 500, 0, 1},
 				//	{"Order", 500, 0, 1},
-				//	//{"Shipment", 5, 0, 1},
-				//	//{"Payment", 500, 0, 1},
-				//	//{"Return", 500, 0, 1},
+				//	{"Shipment", 5, 0, 1},
+				//	{"Payment", 500, 0, 1},
+				//	{"Return", 500, 0, 1},
 				//};
 				//testerManager.Run();
 				//testers[1].ImportAllBpmEntity();
-				var integrator = new IntegrationServiceIntegrator(consoleApp.SystemUserConnection);
-				integrator.GetBusEventNotification();
+				//var integrator = new IntegrationServiceIntegrator(consoleApp.SystemUserConnection);
+				//integrator.IniciateLoadChanges();
+				//var regionProvider = new DeliveryServiceRegionProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>());
+				//var cityProvider = new DeliveryServiceSettlementProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>());
+				//var countryProvider = new DeliveryServiceCountryProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>());
+				//var areaProvider = new DeliveryServiceAreaProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>());
+				//var addressProvider = new DeliveryServiceAddressProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>());
+				//var resultAddress = addressProvider.GetLookupValues("Россия,Новосибирская область,Новосибирск,Советский район,район Академгородок,Полевая 12,12");
+				//var streetProvider = new DeliveryServiceStreetProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>() {
+				//	{ "settlement", "26067" }
+				//});
+				//var resultStreet = streetProvider.GetLookupValues("П");
+				//var resultRegion = regionProvider.GetLookupValues("М");
+				//var resultCity = cityProvider.GetLookupValues("М");
+				//var resultCountry = countryProvider.GetLookupValues("Р");
+				//var resultArea = areaProvider.GetLookupValues("М");
+				//var tester = new ImportServiceObject();
+				//tester.Run(consoleApp.SystemUserConnection);
+				var exportScenario = new PrimaryExportScenario(consoleApp.SystemUserConnection, true, 100);
+				exportScenario.Run();
 				while (true) {
 				}
 			} catch (ReflectionTypeLoadException e1) {
@@ -138,12 +170,16 @@ namespace QueryConsole
 		}
 
 		protected virtual void Initialize(ConfigurationSectionGroup appConfigurationSectionGroup) {
-			var appSettings = (AppConfigurationSectionGroup) appConfigurationSectionGroup;
-			string appDirectory = Path.GetDirectoryName(this.GetType().Assembly.Location);
-			appSettings.Initialize(appDirectory, Path.Combine(appDirectory, "App_Data"), Path.Combine(appDirectory, "Resources"),
-				appDirectory);
-			AppConnection.Initialize(appSettings);
-			AppConnection.InitializeWorkspace(WorkspaceName);
+			try {
+				var appSettings = (AppConfigurationSectionGroup) appConfigurationSectionGroup;
+				string appDirectory = Path.GetDirectoryName(this.GetType().Assembly.Location);
+				appSettings.Initialize(appDirectory, Path.Combine(appDirectory, "App_Data"), Path.Combine(appDirectory, "Resources"),
+					appDirectory);
+				AppConnection.Initialize(appSettings);
+				AppConnection.InitializeWorkspace(WorkspaceName);
+			} catch(Exception e) {
+				//Nothing
+			}
 		}
 
 		 

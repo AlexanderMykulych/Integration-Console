@@ -1,0 +1,168 @@
+﻿{
+    "data": [
+        {
+            "BusEventNotification": {
+                "action": "update",
+                "createdAt": "2016-09-08T15:37:50.188+0000",
+                "event": "Object",
+                "id": "57d185cecf6b9cda628b516d",
+                "isProcessed": false,
+                "isRead": false,
+                "loggedAt": "2016-09-08T15:37:50.195+0000",
+                "objectGuid": "c3d26f9f-c222-4d00-9190-ded182505a47",
+                "objectId": 125,
+                "objectType": "CompanyProfile",
+                "objectVersion": 5,
+                "ownerAgentId": 1100,
+                "partyCode": "TESTPARTY",
+                "realmCode": "AUTO3N",
+                "system": "ClientService",
+				"userId": null,
+				"data": {
+  "CompanyProfile": {
+    "id": 125,
+    "changedAt": "2016-09-20T14:33:11.669+0000",
+    "changedByParty": "BPMONLINE",
+    "changedByUser": "bpmonline",
+    "createdAt": "2016-09-20T14:32:25.953+0000",
+    "createdByParty": "BPMONLINE",
+    "createdByUser": "bpmonline",
+    "guid": "4e812da9-66dd-4a01-a94a-3ed52e264ca3",
+    "ownerAgentId": 1303,
+    "version": 2,
+    "additionalInfo": {
+      "category": null,
+      "scoring": null,
+      "employeesNumber": null,
+      "ownership": null,
+      "annualRevenue": null,
+      "industry": null,
+      "typology": null,
+      "accountFormat": null,
+      "accountPositioning": null,
+      "retailMarkup": 0,
+      "wolesaleMakup": 0
+    },
+    "alternativeName": "",
+    "anniversaryDates": null,
+    "assignments": [],
+    "b2b": false,
+    "b2c": true,
+    "b2s": false,
+    "bankrupt": false,
+    "billingInfos": null,
+    "companyRegistrationNumber": "",
+    "companyRegistrationNumberName": "КПП",
+    "contacts": [],
+    "counteragentId": 8115,
+    "externalId": "290",
+    "liquidation": false,
+    "localMarkets": [],
+    "mainContactInfo": {
+      "ContactInfo": {
+        "id": 9,
+        "addresses": [
+          {
+            "AddressInfo": {
+              "id": 474,
+              "address": "Россия,Новосибирская область,Новосибирск,Советский район,район Академгородок,Полевая 12,12",
+              "apartment": null,
+              "area": null,
+              "comment": null,
+              "country": null,
+              "directions": null,
+              "house": null,
+              "main": true,
+              "name": "Домашний",
+              "region": null,
+              "settlement": null,
+              "settlementId": null,
+              "street": null,
+              "type": {
+                "#ref": {
+                  "id": 4,
+                  "type": "AddressType",
+                  "name": "Home"
+                }
+              },
+              "zipCode": ""
+            }
+          }
+        ],
+        "emailAllowed": true,
+        "faxAllowed": false,
+        "mailAllowed": false,
+        "name": "ContactInfo",
+        "phoneAllowed": true,
+        "records": [],
+        "smsAllowed": true
+      }
+    },
+    "mainPerson": {
+      "#ref": {
+        "id": 8,
+        "type": "PersonProfile",
+        "name": "Contact Communication Test"
+      }
+    },
+    "name": "Contact Communication Test",
+    "notificationProfiles": [
+      {
+        "NotificationProfile": {
+          "id": 25,
+          "communicationType": "",
+          "disabled": false,
+          "notificationChannel": "",
+          "notifyOnHolidays": false,
+          "person": {
+            "#ref": {
+              "id": 8,
+              "type": "PersonProfile",
+              "name": "Contact Communication Test"
+            }
+          },
+          "timeFrom": null,
+          "timeTo": null,
+          "timezone": "Africa/Gaborone",
+          "type": "Прибытие"
+        }
+      },
+      {
+        "NotificationProfile": {
+          "id": 26,
+          "communicationType": "",
+          "disabled": false,
+          "notificationChannel": "",
+          "notifyOnHolidays": false,
+          "person": {
+            "#ref": {
+              "id": 8,
+              "type": "PersonProfile",
+              "name": "Contact Communication Test"
+            }
+          },
+          "timeFrom": null,
+          "timeTo": null,
+          "timezone": "Africa/Abidjan",
+          "type": "Отправка"
+        }
+      }
+    ],
+    "ownerCompanyId": null,
+    "parentCompany": null,
+    "relationships": [],
+    "scenario": "простой",
+    "specialization": null,
+    "subtype": null,
+    "taxRegistrationNumber": "",
+    "taxRegistrationNumberName": "ИНН",
+    "type": "Клиент"
+  }
+}
+            }
+        }
+    ],
+    "limit": 100,
+    "skip": 0,
+    "total": 1
+}

@@ -1,10 +1,17 @@
 ﻿using Newtonsoft.Json.Linq;
+using NodaTime.TimeZones;
+using NodaTime.TimeZones.Cldr;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Terrasoft.Common;
+using Terrasoft.Core;
+using Terrasoft.Core.DB;
 
 namespace Terrasoft.TsConfiguration
 {
@@ -28,19 +35,27 @@ namespace Terrasoft.TsConfiguration
 			{ "TimeSpanToDate", x => DateToTimeSpan(x) },
 			{ "TimeSpanToDateTime", x => DateToTimeSpan(x) }
 		};
-		public static Dictionary<string, Func<object, object>> OverMacrosDictImport = new Dictionary<string, Func<object, object>>() {
-			{ "ConvertJson", x => ConvertStringToJson(x)},
-			{ "ConvertJsonArray", x => ConvertJsonToArray(x)},
-			{ "ToLdapName", x => LdapNameToSimpleName(x) }
+		public static Dictionary<string, Func<object, CsConstant.IntegrationInfo, object>> OverMacrosDictImport = new Dictionary<string, Func<object, CsConstant.IntegrationInfo, object>>() {
+			{ "ConvertJson", (x, u) => ConvertStringToJson(x)},
+			{ "ConvertJsonArray", (x, u) => ConvertJsonToArray(x)},
+			{ "ToLdapName", (x, u)=> LdapNameToSimpleName(x) },
+			{ "ToIsoFormat", (x, u) => FromIsoFormat(x) },
+			{ "ParseOrderNumber", (x, u) => ParseOrderNumber(x) },
+			{ "EmptyStringIfNull",(x, u) => NullIfEmptyString(x) }
 		};
-		public static Dictionary<string, Func<object, object>> OverMacrosDictExport = new Dictionary<string, Func<object, object>>() {
-			{ "ConvertJson", x => ConvertJsonToString(x)},
-			{ "ConvertJsonArray", x => ConvertArrayToJson(x)},
-			{ "ToLdapName", x => ToLdapName(x) }
+		public static Dictionary<string, Func<object, CsConstant.IntegrationInfo, object>> OverMacrosDictExport = new Dictionary<string, Func<object, CsConstant.IntegrationInfo, object>>() {
+			{ "ConvertJson", (x, u) => ConvertJsonToString(x)},
+			{ "ConvertJsonArray", (x, u) => ConvertArrayToJson(x)},
+			{ "ToLdapName", (x, u) => ToLdapName(x) },
+			{ "ToIsoFormat", (x, u) => ToIsoFormat(x) },
+			{ "EmptyStringIfNull", (x, u) => EmptyStringIfNull(x) },
+			{ "GetIsoByAccountId", (x, u) => GetIsoByAccountId(x, u) }
 		};
-
-
-		public static object GetMacrosResultImport(string macrosName, object value, MacrosType type = MacrosType.Rule)
+		public static Dictionary<string, Action<object, UserConnection>> BeforeDeleteMacros = new Dictionary<string, Action<object, UserConnection>>() {
+			{ "BeforeDeleteContactCommunication", (x, y) => BeforeDeleteContactCommunication(x, y) },
+			{ "BeforeDeleteShipmentPosition", (x, y) => BeforeDeleteShipmentPosition(x, y) }
+		};
+		public static object GetMacrosResultImport(string macrosName, object value, MacrosType type = MacrosType.Rule, CsConstant.IntegrationInfo integrationInfo = null)
 		{
 			switch (type)
 			{
@@ -53,7 +68,7 @@ namespace Terrasoft.TsConfiguration
 				case MacrosType.OverRule:
 					if (OverMacrosDictImport.ContainsKey(macrosName) && OverMacrosDictImport[macrosName] != null)
 					{
-						return OverMacrosDictImport[macrosName](value);
+						return OverMacrosDictImport[macrosName](value, integrationInfo);
 					}
 					return value;
 				default:
@@ -61,7 +76,7 @@ namespace Terrasoft.TsConfiguration
 			}
 
 		}
-		public static object GetMacrosResultExport(string macrosName, object value, MacrosType type = MacrosType.Rule)
+		public static object GetMacrosResultExport(string macrosName, object value, MacrosType type = MacrosType.Rule, CsConstant.IntegrationInfo integrationInfo = null)
 		{
 			switch (type)
 			{
@@ -74,29 +89,39 @@ namespace Terrasoft.TsConfiguration
 				case MacrosType.OverRule:
 					if (OverMacrosDictExport.ContainsKey(macrosName) && OverMacrosDictExport[macrosName] != null)
 					{
-						return OverMacrosDictExport[macrosName](value);
+						return OverMacrosDictExport[macrosName](value, integrationInfo);
 					}
 					return value;
 				default:
 					return value;
 			}
 		}
-
-		public static Func<object, object> ToLdapName = (x) => {
+		public static void ExecuteBeforeDeleteMacros(string macrosName, object value, UserConnection userConnection)
+		{
+			if (BeforeDeleteMacros.ContainsKey(macrosName))
+			{
+				BeforeDeleteMacros[macrosName](value, userConnection);
+			}
+		}
+		public static Func<object, object> ToLdapName = (x) =>
+		{
 			var ldapName = CsConstant.IntegratorSettings.LdapDomainName;
-			if(!string.IsNullOrEmpty(ldapName)) {
+			if (!string.IsNullOrEmpty(ldapName))
+			{
 				return string.Format(@"{0}@{1}", x.ToString(), ldapName);
 			}
 			return x;
 		};
-		public static Func<object, object> LdapNameToSimpleName = (x) => {
-			if (x == null) {
+		public static Func<object, object> LdapNameToSimpleName = (x) =>
+		{
+			if (x == null)
+			{
 				return x;
 			}
 			var text = x.ToString();
-			var parts = text.Split(new char[] {'@'});
+			var parts = text.Split(new char[] { '@' });
 			return parts.FirstOrDefault();
-		}; 
+		};
 
 		public static Func<object, object> DateTimeToYearInteger = (x) =>
 		{
@@ -107,7 +132,7 @@ namespace Terrasoft.TsConfiguration
 				DateTime dateTimeResult = DateTime.MinValue;
 				if (DateTime.TryParse((string)x, out dateTimeResult))
 				{
-					return dateTimeResult.Year;
+					return dateTimeResult.ToUniversalTime().Year;
 				}
 			}
 			if (x is DateTime)
@@ -123,9 +148,17 @@ namespace Terrasoft.TsConfiguration
 			if (x is string)
 			{
 				DateTime dateTimeResult = DateTime.MinValue;
-				if (DateTime.TryParse((string)x, out dateTimeResult))
+				if (((string)x).Contains("T"))
 				{
-					return dateTimeResult.Date;
+					var dateStr = (string)x;
+					if (DateTime.TryParse(dateStr.Substring(0, dateStr.IndexOf("T")), out dateTimeResult))
+					{
+						return DateTime.SpecifyKind(dateTimeResult, DateTimeKind.Utc).Date;
+					}
+				}
+				if (!DateTime.TryParse((string)x, out dateTimeResult))
+				{
+					return DateTime.SpecifyKind(dateTimeResult, DateTimeKind.Utc).Date;
 				}
 			}
 			if (x is DateTime)
@@ -186,7 +219,7 @@ namespace Terrasoft.TsConfiguration
 				DateTime date;
 				if (DateTime.TryParse((string)x, out date))
 				{
-					return date;
+					return date.ToUniversalTime();
 				}
 			}
 			if (x is int)
@@ -212,33 +245,39 @@ namespace Terrasoft.TsConfiguration
 			}
 			return x;
 		};
-		public static Func<object, object> ConvertStringToJson = (x) => {
+		public static Func<object, object> ConvertStringToJson = (x) =>
+		{
 			if (x == null)
 				return null;
-			if (x is string) {
+			if (x is string)
+			{
 				return JToken.Parse((string)x);
 			}
 			return x;
 		};
-		public static Func<object, object> ConvertJsonToArray = (x) => {
+		public static Func<object, object> ConvertJsonToArray = (x) =>
+		{
 			if (x == null)
 				return null;
-			if (x is string) {
+			if (x is string)
+			{
 				return JToken.Parse((string)x);
 			}
 			return x;
 		};
-		public static Func<object, object> ConvertArrayToJson = (x) => {
+		public static Func<object, object> ConvertArrayToJson = (x) =>
+		{
 			if (x == null)
 				return null;
-			if (x is IEnumerable) {
+			if (x is IEnumerable)
+			{
 				return JArray.FromObject((IEnumerable)x);
 			}
 			return x;
 		};
-		 
 
-				public static Func<object, object> YearIntegerToDateTime = (x) =>
+
+		public static Func<object, object> YearIntegerToDateTime = (x) =>
 		{
 			if (x == null)
 				return null;
@@ -282,6 +321,182 @@ namespace Terrasoft.TsConfiguration
 			}
 			return x;
 		};
-		 
+		public static Func<object, CsConstant.IntegrationInfo, object> GetIsoByAccountId = (x, integrationInfo) =>
+		{
+			try
+			{
+				if (x == null)
+					return null;
+				Guid accountId;
+				if (x is JValue && Guid.TryParse((x as JValue).Value.ToString(), out accountId))
+				{
+					var selectIso = new Select(integrationInfo.UserConnection)
+										.Top(1)
+										.Column("c", "TsCountryCode")
+										.From("AccountAddress").As("a")
+										.InnerJoin("Country").As("c")
+										.On("a", "CountryId").IsEqual("c", "Id")
+										.Where("a", "AccountId").IsEqual(Column.Parameter(accountId))
+										.OrderByDesc("a", "CreatedOn") as Select;
+					var seletWithTypeFilter = new Select(integrationInfo.UserConnection)
+										.Top(1)
+										.Column("c", "TsCountryCode")
+										.From("AccountAddress").As("a")
+										.InnerJoin("Country").As("c")
+										.On("a", "CountryId").IsEqual("c", "Id")
+										.Where("a", "AccountId").IsEqual(Column.Parameter(accountId))
+										.And("a", "AddressTypeId").IsEqual(Column.Parameter(CsConstant.EntityConst.AddressType.Legal))
+										.OrderByDesc("a", "CreatedOn") as Select;
+					using (var dbExecutor = integrationInfo.UserConnection.EnsureDBConnection())
+					{
+						using (var reader = seletWithTypeFilter.ExecuteReader(dbExecutor))
+						{
+							if (reader.Read())
+							{
+								return reader.GetColumnValue<string>("TsCountryCode");
+							}
+						}
+						using (var readerAll = selectIso.ExecuteReader(dbExecutor))
+						{
+							if (readerAll.Read())
+							{
+								return readerAll.GetColumnValue<string>("TsCountryCode");
+							}
+						}
+					}
+				}
+			} catch(Exception e)
+			{
+				IntegrationLogger.Error(e, integrationInfo.ToString());
+			}
+			return string.Empty;
+		};
+		public static Action<object, UserConnection> BeforeDeleteContactCommunication = (x, userConnection) =>
+		{
+			if (x == null)
+				return;
+			if (x is Select)
+			{
+				var list = (Select)x;
+				try
+				{
+					var updateAccountNotification = new Update(userConnection, "TsAccountNotification")
+								.Set("TsCommunicationId", Column.Const(null))
+								.Where("TsCommunicationId").In(list) as Update;
+					updateAccountNotification.Execute();
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e);
+				}
+				try
+				{
+					var updateContactNotification = new Update(userConnection, "TsContactNotifications")
+								.Set("TsCommunicationMeansId", Column.Const(null))
+								.Where("TsCommunicationMeansId").In(list) as Update;
+					updateContactNotification.Execute();
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e);
+				}
+			}
+		};
+		public static Action<object, UserConnection> BeforeDeleteShipmentPosition = (x, userConnection) =>
+		{
+			if (x == null)
+				return;
+			if (x is Select)
+			{
+				var list = (Select)x;
+				try
+				{
+					var deleteReturnPosition = new Delete(userConnection)
+								.From("TsShipmentPosition")
+								.Where("TsShipmentId").In(list) as Delete;
+					deleteReturnPosition.Execute();
+				}
+				catch (Exception e)
+				{
+					IntegrationLogger.Error(e);
+				}
+			}
+		};
+		public static Func<object, object> ToIsoFormat = (x) =>
+		{
+			if(x is JToken)
+			{
+				var value = ((JToken)x).Value<string>();
+				if (!string.IsNullOrEmpty(value))
+				{
+					var isoFormat = TzdbDateTimeZoneSource.Default.MapTimeZoneId(TimeZoneInfo.FindSystemTimeZoneById(value));
+					if (isoFormat != null && !string.IsNullOrEmpty(isoFormat))
+					{
+						return isoFormat;
+					}
+				}
+			}
+			return x;
+		};
+		public static Func<object, object> EmptyStringIfNull = (x) =>
+		{
+			if(x == null)
+			{
+				return string.Empty;
+			}
+			if (x is JToken)
+			{
+				var value = ((JToken)x).Value<string>();
+				if (value == null)
+				{
+					return string.Empty;
+				}
+			}
+			return x;
+		};
+		public static Func<object, object> FromIsoFormat = (x) =>
+		{
+			if (x is JToken)
+			{
+				var value = ((JToken)x).Value<string>();
+				if (!string.IsNullOrEmpty(value))
+				{
+					var codeFormat = TzdbDateTimeZoneSource.Default.WindowsMapping.MapZones.FirstOrDefault(y => y.TzdbIds.Contains((string)value) && !string.IsNullOrEmpty(y.WindowsId));
+					if (codeFormat != null)
+					{
+						return JToken.FromObject(codeFormat.WindowsId);
+					}
+				}
+			}
+			return x;
+		};
+		public static Func<object, object> ParseOrderNumber = (x) =>
+		{
+			if (x is JToken)
+			{
+				var value = ((JToken)x).Value<string>();
+				if (!string.IsNullOrEmpty(value))
+				{
+					var orderNumberMatch = Regex.Match(value, @"\d+");
+					if (orderNumberMatch.Success && orderNumberMatch.Length > 0 && !string.IsNullOrEmpty(orderNumberMatch.Value))
+					{
+						return JToken.FromObject(orderNumberMatch.Value);
+					}
+				}
+			}
+			return x;
+		};
+		public static Func<object, object> NullIfEmptyString = (x) =>
+		{
+			if (x is JToken)
+			{
+				var value = ((JToken)x).Value<string>();
+				if (value == string.Empty)
+				{
+					return JToken.FromObject(null);
+				}
+			}
+			return x;
+		};
 	}
 }

@@ -71,59 +71,83 @@ namespace Terrasoft.TsConfiguration {
 		/// Получает BusEventNotification, после чего вызывает OnBusEventNotificationsDataRecived
 		/// </summary>
 		/// <param name="withData"></param>
-		public void GetBusEventNotification(bool withData = true) {
-			if(!_isIntegratorActive) {
+		public void GetBusEventNotification(bool withData = true, int level = 0) {
+			if (!_isIntegratorActive)
+			{
 				return;
 			}
-			var url = GenerateUrl(
-				withData == true ? TIntegratorRequest.BusEventNotificationData : TIntegratorRequest.BusEventNotification,
-				TRequstMethod.GET,
-				"0",
-				_notifyLimit.ToString(),
-				CsConstant.DefaultBusEventFilters,
-				CsConstant.DefaultBusEventSorts
-			);
-			IntegrationLogger.StartTransaction(UserConnection, CsConstant.PersonName.Bpm, CsConstant.IntegratorSettings.Settings[this.GetType()].Name, "", "");
-			var logId = IntegrationLogger.CurrentLogId;
-			if(Settings.IsDebugMode) {
-				var json = Settings.DebugModeInfo.GetDebugDataJson();
-				var responceObj = json.DeserializeJson();
-				var busEventNotifications = (JArray)responceObj["data"];
-				//var total = (responceObj["total"] as JToken).Value<int>();
-				if (busEventNotifications != null) {
-					OnBusEventNotificationsDataRecived(busEventNotifications, UserConnection);
-				}
-			} else {
-				PushRequestWrapper(TRequstMethod.GET, url, "", (x, y) => {
-					var responceObj = x.DeserializeJson();
+			bool isNotifyEmpty = true;
+			LockerHelper.DoWithEntityLock(0, "GetBusEventNotification", () =>
+			{
+				var url = GenerateUrl(
+					withData == true ? TIntegratorRequest.BusEventNotificationData : TIntegratorRequest.BusEventNotification,
+					TRequstMethod.GET,
+					"0",
+					_notifyLimit.ToString(),
+					CsConstant.DefaultBusEventFilters,
+					CsConstant.DefaultBusEventSorts
+				);
+				if (Settings.IsDebugMode)
+				{
+					var json = Settings.DebugModeInfo.GetDebugDataJson();
+					var responceObj = json.DeserializeJson();
 					var busEventNotifications = (JArray)responceObj["data"];
-					//var total = (responceObj["total"] as JToken).Value<int>();
-					if (busEventNotifications != null) {
-						OnBusEventNotificationsDataRecived(busEventNotifications, y);
+					if (busEventNotifications != null && busEventNotifications.Any())
+					{
+						OnBusEventNotificationsDataRecived(busEventNotifications, UserConnection);
 					}
-				}, logId);
+				}
+				else
+				{
+					PushRequestWrapper(TRequstMethod.GET, url, "", (x, y) => {
+						var responceObj = x.DeserializeJson();
+						var busEventNotifications = (JArray)responceObj["data"];
+						if (busEventNotifications != null && busEventNotifications.Any())
+						{
+							isNotifyEmpty = false;
+							OnBusEventNotificationsDataRecived(busEventNotifications, y);
+						}
+					});
+				}
+			}, IntegrationLogger.SimpleLoggerErrorAction, "IntegrationService");
+			if (!isNotifyEmpty && level < Settings.NotifyHierarhicalLevel)
+			{
+				GetBusEventNotification(true, ++level);
 			}
 		}
-
-		public void IniciateLoadChanges() {
-			GetBusEventNotification(true);
+		public void IniciateLoadChanges()
+		{
+			var logInfo = LoggerInfo.GetNotifyRequestLogInfo(UserConnection);
+			LoggerHelper.DoInTransaction(logInfo, () =>
+			{
+				GetBusEventNotification(true);
+			});
 		}
 		/// <summary>
 		/// Всем нотификейшенам в ReadedNotificationIds ставит статус "Прочитано"
 		/// </summary>
 		public void SetNotifyRead() {
-			var url = GenerateUrl(
-				TIntegratorRequest.BusEventNotification,
-				TRequstMethod.PUT
-			);
+			if(Settings.IsDebugMode || !ReadedNotificationIds.Any()) {
+				return;
+			}
+			try
+			{
+				var url = GenerateUrl(
+					TIntegratorRequest.BusEventNotification,
+					TRequstMethod.PUT
+				);
 
-			var json = ReadedNotificationIds.Select(x => new {
-				isRead = true,
-				id = x
-			}).SerializeToJson();
-
-			PushRequestWrapper(TRequstMethod.PUT, url, json, null, IntegrationLogger.CurrentLogId);
-			ReadedNotificationIds.Clear();
+				var json = ReadedNotificationIds.Select(x => new {
+					isRead = true,
+					id = x
+				}).SerializeToJson();
+				PushRequestWrapper(TRequstMethod.PUT, url, json, null);
+				ReadedNotificationIds.Clear();
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e);
+			}
 		}
 
 		/// <summary>
@@ -139,23 +163,8 @@ namespace Terrasoft.TsConfiguration {
 		/// </summary>
 		/// <param name="integrationInfo"></param>
 		public void CreatedOnEntityExist(IntegrationInfo integrationInfo) {
-			//string jName = integrationInfo.EntityName;
-			//var data = integrationInfo.Data[jName];
-			//int version = data.Value<int>("version");
-			//int jId = data.Value<int>("id");
-			//string url = string.Format("{0}/AUTO3N/{1}/{2}", _baseClientServiceUrl, jName, jId);
-			//integrationInfo.EntityName = jName;
 			integrationInfo.Action = CsConstant.IntegrationActionName.Update;
 			_integrationEntityHelper.IntegrateEntity(integrationInfo);
-			//PushRequestWrapper(TRequstMethod.GET, url, "", (x, y) => {
-			//	var responceObj = JObject.Parse(x);
-			//	var csData = responceObj[jName] as JObject;
-			//	var csVersion = csData.Value<int>("version");
-			//	if (csVersion >= version)
-			//	{
-					
-			//	}
-			//}, IntegrationLogger.CurrentLogId);
 		}
 
 		/// <summary>
@@ -173,13 +182,10 @@ namespace Terrasoft.TsConfiguration {
 					var system = busEvent["system"].ToString();
 					var notifyId = busEvent["id"].ToString();
 					var objectId = busEvent["objectId"].Value<int>();
-					if (!string.IsNullOrEmpty(objectType) && data != null)
-					{
+					if (!string.IsNullOrEmpty(objectType) && data != null) {
 						IntegrateServiceEntity(data, objectType);
-					} else
-					{
-						if (system == CsConstant.IntegratorSettings.Settings[typeof(OrderServiceIntegrator)].Name)
-						{
+					} else {
+						if (system == CsConstant.IntegratorSettings.Settings[typeof(OrderServiceIntegrator)].Name) {
 							var integrator = new OrderServiceIntegrator(userConnection);
 							ExportServiceEntity(integrator, objectType, objectId);
 						}
@@ -292,11 +298,11 @@ namespace Terrasoft.TsConfiguration {
 			var collection = param.Where(x => !string.IsNullOrEmpty(x));
 			return collection.Any() ? collection.Aggregate((cur, next) => cur + "&" + next) : "";
 		}
-		private void PushRequestWrapper(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection> callback, Guid logId) {
+		private void PushRequestWrapper(TRequstMethod requestMethod, string url, string jsonText, Action<string, UserConnection> callback) {
 			if (!_isIntegratorActive) {
 				return;
 			}
-			_integratorHelper.PushRequest(requestMethod, url, jsonText, callback, UserConnection, logId, null, _auth);
+			_integratorHelper.PushRequest(requestMethod, url, jsonText, callback, UserConnection, null, _auth);
 		}
 
 
