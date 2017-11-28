@@ -4,6 +4,25 @@
         <name>Terrasoft.Messaging.Common</name>
     </assembly>
     <members>
+        <member name="T:Terrasoft.Messaging.Common.IMsgChannelManager">
+            <summary>
+            Interface for message channel manager.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Messaging.Common.IMsgChannelManager.FindItemByUId(System.Guid)">
+            <summary>
+            Finds the channel by its identifier (often it is admin unit identifier).
+            </summary>
+            <param name="id">The channel identifier.</param>
+            <returns>Found channel or <c>null</c>.</returns>
+        </member>
+        <member name="M:Terrasoft.Messaging.Common.MsgChannelManager.FindItemByUId(System.Guid)">
+            <summary>
+            Finds the channel by its identifier (often it is admin unit identifier).
+            </summary>
+            <param name="id">The channel identifier.</param>
+            <returns>Found channel or <c>null</c>.</returns>
+        </member>
         <member name="T:Terrasoft.Messaging.Common.MsgUtilService">
             <summary>
             Класс веб-сервиса сообщений.
@@ -1039,12 +1058,11 @@
         </member>
         <member name="M:Terrasoft.Messaging.Common.WebSocketServiceLayer.Initilize(System.Int32)">
             <summary>
-            Инициализация сервиса веб-сокетов, при этом номер порта подключения формируется в зависимости от заданного
-            номера рабочего пространства.
+            Intializes the web-socket service. The port number depends on the number of the current workspace.
             </summary>
-            <param name="workspaceNumber">Номер рабочего пространства.</param>
-            <remarks>К номеру порта подключения клиента прибавляется номер рабочего пространства.</remarks>
-            <returns></returns>
+            <param name="workspaceNumber">The number of the current workspace.</param>
+            <remarks>The number of the workspace is added to the setting's port number.</remarks>
+            <returns><c>true</c>, if the service is successfully initialized. Otherwise - <c>false</c>.</returns>
         </member>
     </members>
 </doc>

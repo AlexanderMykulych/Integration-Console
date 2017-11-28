@@ -1,0 +1,103 @@
+// ***** BenchmarkRunner: Start   *****
+// Found benchmarks:
+//   ReverseProjectBuilderBenchmark.Run: DefaultJob
+
+// Validating benchmarks:
+// **************************
+// Benchmark: ReverseProjectBuilderBenchmark.Run: DefaultJob
+// *** Generate *** 
+// Result = Success
+// BinariesDirectoryPath = C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils\bin\Release
+
+// *** Build ***
+BuildScript: C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils\bin\Release\44a8bb44-2b57-420e-bfa1-0e691e7bde87.bat
+// Exception: System.IO.FileNotFoundException: Не удалось загрузить файл или сборку "System.Security.Cryptography.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" либо одну из их зависимостей. Не удается найти указанный файл.
+Имя файла: 'System.Security.Cryptography.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+   в Microsoft.CodeAnalysis.CryptographicHashProvider.ComputeSha1(Byte[] bytes)
+   в Microsoft.CodeAnalysis.CryptographicHashProvider.ComputeSha1(ImmutableArray`1 bytes)
+   в Microsoft.CodeAnalysis.AssemblyIdentity.CalculatePublicKeyToken(ImmutableArray`1 publicKey)
+   в Microsoft.CodeAnalysis.AssemblyIdentity.get_PublicKeyToken()
+   в Microsoft.CodeAnalysis.AssemblyIdentity.KeysEqual(AssemblyIdentity x, AssemblyIdentity y)
+   в Microsoft.CodeAnalysis.AssemblyIdentity.EqualIgnoringNameAndVersion(AssemblyIdentity x, AssemblyIdentity y)
+   в Microsoft.CodeAnalysis.AssemblyIdentity.MemberwiseEqual(AssemblyIdentity x, AssemblyIdentity y)
+   в Microsoft.CodeAnalysis.AssemblyIdentityComparer.TriviallyEquivalent(AssemblyIdentity x, AssemblyIdentity y)
+   в Microsoft.CodeAnalysis.AssemblyIdentityComparer.Compare(AssemblyIdentity reference, String referenceDisplayName, AssemblyIdentity definition, Boolean& unificationApplied, Boolean ignoreVersion)
+   в Microsoft.CodeAnalysis.AssemblyIdentityComparer.Compare(AssemblyIdentity reference, AssemblyIdentity definition)
+   в Microsoft.CodeAnalysis.CommonReferenceManager`2.ResolveReferencedAssembly(AssemblyIdentity reference, ImmutableArray`1 definitions, Int32 definitionStartIndex, AssemblyIdentityComparer assemblyIdentityComparer)
+   в Microsoft.CodeAnalysis.CommonReferenceManager`2.ResolveReferencedAssemblies(ImmutableArray`1 references, ImmutableArray`1 definitions, Int32 definitionStartIndex, AssemblyIdentityComparer assemblyIdentityComparer)
+   в Microsoft.CodeAnalysis.CSharp.CSharpCompilation.ReferenceManager.AssemblyDataForMetadataOrCompilation.BindAssemblyReferences(ImmutableArray`1 assemblies, AssemblyIdentityComparer assemblyIdentityComparer)
+   в Microsoft.CodeAnalysis.CommonReferenceManager`2.Bind(TCompilation compilation, ImmutableArray`1 explicitAssemblies, ImmutableArray`1 explicitModules, ImmutableArray`1 explicitReferences, ImmutableArray`1 explicitReferenceMap, MetadataReferenceResolver resolverOpt, MetadataImportOptions importOptions, Boolean supersedeLowerVersions, Dictionary`2 assemblyReferencesBySimpleName, ImmutableArray`1& allAssemblies, ImmutableArray`1& implicitlyResolvedReferences, ImmutableArray`1& implicitlyResolvedReferenceMap, DiagnosticBag resolutionDiagnostics, Boolean& hasCircularReference, Int32& corLibraryIndex)
+   в Microsoft.CodeAnalysis.CSharp.CSharpCompilation.ReferenceManager.CreateAndSetSourceAssemblyFullBind(CSharpCompilation compilation)
+   в Microsoft.CodeAnalysis.CSharp.CSharpCompilation.ReferenceManager.CreateSourceAssemblyForCompilation(CSharpCompilation compilation)
+   в Microsoft.CodeAnalysis.CSharp.CSharpCompilation.GetBoundReferenceManager()
+   в Microsoft.CodeAnalysis.CSharp.CSharpCompilation.get_SourceAssembly()
+   в Microsoft.CodeAnalysis.CSharp.CSharpCompilation.get_Assembly()
+   в Microsoft.CodeAnalysis.CSharp.CSharpCompilation.GetRuntimeMetadataVersion(EmitOptions emitOptions)
+   в Microsoft.CodeAnalysis.CSharp.CSharpCompilation.GetRuntimeMetadataVersion(EmitOptions emitOptions, DiagnosticBag diagnostics)
+   в Microsoft.CodeAnalysis.CSharp.CSharpCompilation.CreateModuleBuilder(EmitOptions emitOptions, IMethodSymbol debugEntryPoint, Stream sourceLinkStream, IEnumerable`1 embeddedTexts, IEnumerable`1 manifestResources, CompilationTestData testData, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+   в Microsoft.CodeAnalysis.Compilation.CheckOptionsAndCreateModuleBuilder(DiagnosticBag diagnostics, IEnumerable`1 manifestResources, EmitOptions options, IMethodSymbol debugEntryPoint, Stream sourceLinkStream, IEnumerable`1 embeddedTexts, CompilationTestData testData, CancellationToken cancellationToken)
+   в Microsoft.CodeAnalysis.Compilation.Emit(Stream peStream, Stream metadataPEStream, Stream pdbStream, Stream xmlDocumentationStream, Stream win32Resources, IEnumerable`1 manifestResources, EmitOptions options, IMethodSymbol debugEntryPoint, Stream sourceLinkStream, IEnumerable`1 embeddedTexts, CompilationTestData testData, CancellationToken cancellationToken)
+   в Microsoft.CodeAnalysis.Compilation.Emit(Stream peStream, Stream pdbStream, Stream xmlDocumentationStream, Stream win32Resources, IEnumerable`1 manifestResources, EmitOptions options, IMethodSymbol debugEntryPoint, Stream sourceLinkStream, IEnumerable`1 embeddedTexts, Stream metadataPEStream, CancellationToken cancellationToken)
+   в Microsoft.CodeAnalysis.Compilation.Emit(Stream peStream, Stream pdbStream, Stream xmlDocumentationStream, Stream win32Resources, IEnumerable`1 manifestResources, EmitOptions options, IMethodSymbol debugEntryPoint, Stream sourceLinkStream, IEnumerable`1 embeddedTexts, CancellationToken cancellationToken)
+   в BenchmarkDotNet.Toolchains.Roslyn.Builder.Build(GenerateResult generateResult, ILogger logger, Benchmark benchmark, IResolver resolver)
+   в BenchmarkDotNet.Running.BenchmarkRunnerCore.Build(ILogger logger, IToolchain toolchain, GenerateResult generateResult, Benchmark benchmark, IResolver resolver)
+   в BenchmarkDotNet.Running.BenchmarkRunnerCore.Run(Benchmark benchmark, ILogger logger, IConfig config, String rootArtifactsFolderPath, Func`2 toolchainProvider, IResolver resolver, List`1 artifactsToCleanup)
+
+=== Информация о состоянии предварительной привязки ===
+Журнал: DisplayName = System.Security.Cryptography.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+ (Fully-specified)
+Журнал: Appbase = file:///C:/Dev/R&D/DynamicIntegration/Integration-Console/Terra-integration/ProjectUtils/bin/Release/
+Журнал: Initial PrivatePath = NULL
+Вызов сборки: Microsoft.CodeAnalysis, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35.
+===
+Журнал: данная привязка начинается в контексте загрузки default.
+Журнал: используется файл конфигурации приложения: C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils\bin\Release\ProjectUtils.exe.Config.
+Журнал: используется файл конфигурации главного узла: 
+Журнал: используется файл конфигурации компьютера из C:\Windows\Microsoft.NET\Framework\v4.0.30319\config\machine.config.
+Журнал: ссылка после применения политики: System.Security.Cryptography.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+Журнал: попытка скачивания нового URL file:///C:/Dev/R&D/DynamicIntegration/Integration-Console/Terra-integration/ProjectUtils/bin/Release/System.Security.Cryptography.Primitives.DLL.
+Журнал: попытка скачивания нового URL file:///C:/Dev/R&D/DynamicIntegration/Integration-Console/Terra-integration/ProjectUtils/bin/Release/System.Security.Cryptography.Primitives/System.Security.Cryptography.Primitives.DLL.
+Журнал: попытка скачивания нового URL file:///C:/Dev/R&D/DynamicIntegration/Integration-Console/Terra-integration/ProjectUtils/bin/Release/System.Security.Cryptography.Primitives.EXE.
+Журнал: попытка скачивания нового URL file:///C:/Dev/R&D/DynamicIntegration/Integration-Console/Terra-integration/ProjectUtils/bin/Release/System.Security.Cryptography.Primitives/System.Security.Cryptography.Primitives.EXE.
+
+
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  BenchmarkDotNet.Artifacts\results\ReverseProjectBuilderBenchmark-report.csv
+  BenchmarkDotNet.Artifacts\results\ReverseProjectBuilderBenchmark-report-github.md
+  BenchmarkDotNet.Artifacts\results\ReverseProjectBuilderBenchmark-report.html
+
+// * Detailed results *
+ReverseProjectBuilderBenchmark.Run: DefaultJob
+Runtime = ; GC = 
+There are no any results runs
+
+Total time: 00:00:01 (1.2 sec)
+
+// * Summary *
+
+BenchmarkDotNet=v0.10.9, OS=Windows 10 Redstone 2 (10.0.15063)
+Processor=Intel Core i5-7600 CPU 3.50GHz (Kaby Lake), ProcessorCount=4
+Frequency=3421880 Hz, Resolution=292.2370 ns, Timer=TSC
+  [Host] : .NET Framework 4.7 (CLR 4.0.30319.42000), 32bit LegacyJIT-v4.7.2110.0  [AttachedDebugger]
+
+
+ Method | Mean | Error |
+------- |-----:|------:|
+    Run |   NA |    NA |
+
+Benchmarks with issues:
+  ReverseProjectBuilderBenchmark.Run: DefaultJob
+
+// * Warnings *
+Environment
+  Summary -> Benchmark was executed with attached debugger
+
+// * Legends *
+  Mean  : Arithmetic mean of all measurements
+  Error : Half of 99.9% confidence interval
+  1 ns  : 1 Nanosecond (0.000000001 sec)
+
+// ***** BenchmarkRunner: End *****
+// * Artifacts cleanup *

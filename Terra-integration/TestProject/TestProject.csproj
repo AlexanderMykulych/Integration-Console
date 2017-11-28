@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{06F59C79-4645-40E3-937A-A65980969B6A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TestProject</RootNamespace>
+    <AssemblyName>TestProject</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Terrasoft.Common">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Configuration">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\Terrasoft.Configuration\bin\Terrasoft.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Configuration.UnitTest">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Configuration.UnitTest.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.Entities.Services">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.Entities.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.Packages">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.Packages.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.RabbitQueue">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.RabbitQueue.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.Scheduler">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.Scheduler.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.ScriptEngine">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.ScriptEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.ServiceModelClient">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.ServiceModelClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.ServiceModelContract">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.ServiceModelContract.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.DB.MSSql">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.DB.MSSql.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.DB.Oracle">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.DB.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.GlobalSearch">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.GlobalSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.GoogleServerConnector">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.GoogleServerConnector.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.GoogleServices">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.GoogleServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.IO">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.Common">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.Core">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.FlashPolicyService">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.FlashPolicyService.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.MicrosoftWSService">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.MicrosoftWSService.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.SuperWSService">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.SuperWSService.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Mobile">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Mobile.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Nui">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Nui.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Nui.ServiceModel">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Nui.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Performance.Profiler">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Performance.Profiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Redis">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Reports">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Reports.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Social">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Social.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Social.Service">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Social.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Store.WebAdapters">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Store.WebAdapters.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Svn">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Svn.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Sync">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Sync.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.TestFramework">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.TestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.Common">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.InvisibleCrm.Connector">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.InvisibleCrm.Connector.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.JsApiExtension">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.JsApiExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.JsApiParsers">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.JsApiParsers.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.JsApiValidator.Plugin">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.JsApiValidator.Plugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.UI.WebControls">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.UI.WebControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Web.Common">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.WebApp">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.WebApp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Temp\IStorageCellValue.cs" />
+    <Compile Include="Temp\IStorageEnumerator.cs" />
+    <Compile Include="Temp\IStorageRow.cs" />
+    <Compile Include="Temp\MappingConfig.cs" />
+    <Compile Include="Temp\ServiceCallCaseImporter.cs" />
+    <Compile Include="Temp\StorageCellValue.cs" />
+    <Compile Include="Temp\StorageRow.cs" />
+    <Compile Include="Temp\Test.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="1.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

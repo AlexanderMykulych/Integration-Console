@@ -4,11 +4,28 @@
         <name>Terrasoft.GoogleServices</name>
     </assembly>
     <members>
+        <member name="P:Terrasoft.GoogleServices.GoogleActivity.TimeZoneId">
+            <summary>
+            Windows time zone identifier.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.GoogleServices.GoogleActivity.Reminders">
+            <summary>
+            Google calendar reminders.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.GoogleServices.GContactSyncProvider.CheckMembership(Google.Contacts.Contact)">
+            <summary>
+            Проверяет, входит ли контакт в группу.
+            </summary>
+            <param name="contact">Контакт</param>
+            <returns>Результат проверки.</returns>
+        </member>
         <member name="F:Terrasoft.GoogleServices.GoogleServicesUtilities._googleServerConnector">
             <summary>
-            Returns instance of google serve connector.
+            Returns instance of google server connector.
             </summary>
-            <value>Instance of google serve connector.</value>
+            <value>Instance of google server connector.</value>
         </member>
         <member name="F:Terrasoft.GoogleServices.GoogleServicesUtilities._googleConsumerInfo">
             <summary>

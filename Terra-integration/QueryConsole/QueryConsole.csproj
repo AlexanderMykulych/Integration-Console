@@ -7,7 +7,7 @@
     <ProjectGuid>{BB4E58D7-FCE2-454B-8850-7F3FF12CDB2C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QueryConsole</RootNamespace>
+    <RootNamespace>Terrasoft.TsIntegration.Configuration</RootNamespace>
     <AssemblyName>QueryConsole</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -74,7 +74,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\inetpub\wwwroot\DAMU_Site\bin\DotNetOpenAuth.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Facebook, Version=5.2.1.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
@@ -102,33 +102,42 @@
       <HintPath>bin\Debug\MailBee.NET.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build" />
-    <Reference Include="Microsoft.Exchange.WebServices">
-      <HintPath>..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Exchange.WebServices.Auth">
-      <HintPath>..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.Auth.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject">
+    <Reference Include="Ninject, Version=2.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
-    </Reference>
-    <Reference Include="NodaTime, Version=1.3.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NodaTime.1.3.2\lib\net35-Client\NodaTime.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Quartz">
       <HintPath>..\..\..\WebApp\Armtek\Terrasoft.WebApp\bin\Quartz.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.ServiceInterface">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStackWrapper, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\ServiceStackWrapper.dll</HintPath>
+    </Reference>
     <Reference Include="SharpSvn, Version=1.8016.3866.130, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=AMD64">
       <HintPath>..\packages\SharpSvn.1.8-x64.1.8016.3866.130\lib\net40\SharpSvn.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="SharpSvn.UI, Version=1.8016.3866.130, Culture=neutral, PublicKeyToken=33789aa53ca44aa9, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpSvn.1.8-x64.1.8016.3866.130\lib\net40\SharpSvn.UI.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -150,173 +159,336 @@
     <Reference Include="System.Xml" />
     <Reference Include="Terrasoft.Common, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Configuration, Version=7.7.0.2881, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Dev\Armtek_T\C#\A.Mykulych\Terrasoft.Configuration.dll</HintPath>
+    <Reference Include="Terrasoft.Configuration.UnitTest">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Configuration.UnitTest.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.Entities.Services, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.Entities.Services.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core.Packages, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Core.Packages.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.Packages.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.RabbitQueue, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.RabbitQueue.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core.Scheduler, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Core.Scheduler.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.Scheduler.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.ScriptEngine, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.ScriptEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.ServiceModelClient">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.ServiceModelClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.ServiceModelContract">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.ServiceModelContract.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.DB.MSSql, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.DB.MSSql.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.DB.MSSql.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.DB.Oracle, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.DB.Oracle.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.DB.Oracle.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Messaging.FlashPolicyService, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Messaging.FlashPolicyService.dll</HintPath>
+    <Reference Include="Terrasoft.GlobalSearch">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.GlobalSearch.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Mobile, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Mobile.dll</HintPath>
+    <Reference Include="Terrasoft.GoogleServerConnector">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.GoogleServerConnector.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Redis, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.GoogleServices, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Redis.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.GoogleServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.IO">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.Common, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.Core">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.FlashPolicyService, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.FlashPolicyService.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.MicrosoftWSService, Version=7.7.0.1868, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.MicrosoftWSService.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.SuperWSService, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.SuperWSService.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Mobile, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Mobile.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Nui">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Nui.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Nui.ServiceModel">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Nui.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Performance.Profiler, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Performance.Profiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Redis, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Redis.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Reports, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Reports.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Reports.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Store.WebAdapters, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.Social">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Social.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Social.Service">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Social.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Store.WebAdapters, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Store.WebAdapters.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Store.WebAdapters.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Svn, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Svn.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Sync">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Sync.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.TestFramework">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.TestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.Common, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.InvisibleCrm.Connector">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.InvisibleCrm.Connector.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.JsApiExtension">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.JsApiExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.JsApiParsers">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.JsApiParsers.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.JsApiValidator.Plugin">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.JsApiValidator.Plugin.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.UI.WebControls, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.UI.WebControls.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.UI.WebControls.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Web.Common, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.Web.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Web.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.WebApp.Loader, Version=7.7.0.2753, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
+    <Reference Include="Terrasoft.WebApp, Version=7.7.0.1868, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Armtek770_T\bin\Terrasoft.WebApp.Loader.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.WebApp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Files\AdvancedSearch\AdvancedSearchInfo.cs" />
-    <Compile Include="Files\BpmEntityHelper\AccountEntityHelper.cs" />
-    <Compile Include="Files\BpmEntityHelper\AddressHelper.cs" />
-    <Compile Include="Files\BpmEntityHelper\ContactEntityHelper.cs" />
-    <Compile Include="Files\BpmEntityHelper\EntityHelper.cs" />
-    <Compile Include="Files\BpmEntityHelper\IntegrationEntityHelper.cs" />
-    <Compile Include="Files\BpmEntityHelper\PhoneFormatHelper.cs" />
-    <Compile Include="Files\BpmEntityHelper\ProductEntityHelper.cs" />
-    <Compile Include="Files\BpmIntegrator\CsReference.cs" />
-    <Compile Include="Files\BpmIntegrator\CsReferenceProperty.cs" />
-    <Compile Include="Files\BpmIntegrator\IntegrationHandlerAttribute.cs" />
-    <Compile Include="Files\ConsoleManager\ConsoleInfo.cs" />
-    <Compile Include="Files\ConsoleManager\ConsoleManager.cs" />
-    <Compile Include="Files\ConsoleManager\IConsoleTable.cs" />
-    <Compile Include="Files\ConsoleManager\IntegrationConsole.cs" />
-    <Compile Include="Files\ConsoleManager\IntegrationConsoleManager.cs" />
-    <Compile Include="Files\ConsoleManager\Pair.cs" />
-    <Compile Include="Files\ConsoleManager\TableConsoleParser.cs" />
-    <Compile Include="Files\ConsoleManager\TableRowNameAttribute.cs" />
-    <Compile Include="Files\ConsoleManager\Trio.cs" />
-    <Compile Include="Files\Constants\CsConstant.cs" />
-    <Compile Include="Files\BpmEntityHelper\DbExecutorHelper.cs" />
-    <Compile Include="Files\Extension\JTokeExtension.cs" />
-    <Compile Include="Files\Extension\ObjectExstension.cs" />
-    <Compile Include="Files\IntegratorHelper\DependentEntityLoader.cs" />
-    <Compile Include="Files\IntegratorHelper\IntegratorHelper.cs" />
-    <Compile Include="Files\Integrators\DeliveryServiceIntegrator.cs" />
-    <Compile Include="Files\Integrators\DeliveryServices\Area\DeliveryServiceAreaProvider.cs" />
-    <Compile Include="Files\Integrators\DeliveryServices\Country\DeliveryServiceCountryProvider.cs" />
-    <Compile Include="Files\Integrators\DeliveryServices\DeliveryServiceEntityProvider.cs" />
-    <Compile Include="Files\Integrators\DeliveryServices\DeliveryServiceLookupProvider.cs" />
-    <Compile Include="Files\Integrators\DeliveryServices\DeliveryServiceServiceProvider.cs" />
-    <Compile Include="Files\Integrators\DeliveryServices\ParseAddress\DeliveryServiceAddressProvider.cs" />
-    <Compile Include="Files\Integrators\DeliveryServices\Region\DeliveryServiceRegionProvider.cs" />
-    <Compile Include="Files\Integrators\DeliveryServices\Settlement\DeliveryServiceSettlementProvider.cs" />
-    <Compile Include="Files\Integrators\DeliveryServices\Street\DeliveryServiceStreetProvider.cs" />
-    <Compile Include="Files\Integrators\IntegrationServiceIntegrator.cs" />
-    <Compile Include="Files\Integrators\IntegratorBuilder.cs" />
-    <Compile Include="Files\Integrators\NewClientServiceIntegrator.cs" />
-    <Compile Include="Files\Integrators\OrderServiceIntegrator.cs" />
-    <Compile Include="Files\IntegratorTester\BaseIntegratorTester.cs" />
-    <Compile Include="Files\IntegratorTester\ClientServiceIntegratorTester.cs" />
-    <Compile Include="Files\IntegratorTester\OrderServiceIntegratorTester.cs" />
-    <Compile Include="Files\IntegratorTester\PrimaryImport\ImportServiceObject.cs" />
-    <Compile Include="Files\IntegratorTester\TesterManager.cs" />
-    <Compile Include="Files\Locker\IntegrationLocker.cs" />
-    <Compile Include="Files\Locker\LockerHelper.cs" />
-    <Compile Include="Files\Logger\IntegrationLogger.cs" />
-    <Compile Include="Files\Logger\LoggerHelper.cs" />
-    <Compile Include="Files\Logger\LoggerInfo\BaseLoggerInfo.cs" />
-    <Compile Include="Files\Logger\LoggerInfo\LoggerInfo.cs" />
-    <Compile Include="Files\Logger\LoggerInfo\MappingErrorLoggerInfo.cs" />
-    <Compile Include="Files\Logger\LoggerInfo\RequestErrorLoggerInfo.cs" />
-    <Compile Include="Files\Logger\LoggerState.cs" />
-    <Compile Include="Files\Logger\LoggerInfo\RequestLoggerInfo.cs" />
-    <Compile Include="Files\Logger\LoggerInfo\ResponseLoggerInfo.cs" />
-    <Compile Include="Files\Logger\TsLogger.cs" />
-    <Compile Include="Files\MappingManager\IMapRule.cs" />
-    <Compile Include="Files\MappingManager\JsonHelper.cs" />
-    <Compile Include="Files\MappingManager\MappingHelper.cs" />
-    <Compile Include="Files\MappingManager\MappingItem.cs" />
-    <Compile Include="Files\MappingManager\MappRule\ArrayOfCompositeObjectMappRule.cs" />
-    <Compile Include="Files\MappingManager\MappRule\ArrayOfReferenceMappRule.cs" />
-    <Compile Include="Files\MappingManager\MappRule\BaseMappRule.cs" />
-    <Compile Include="Files\MappingManager\MappRule\ComplexFieldMappRule.cs" />
-    <Compile Include="Files\MappingManager\MappRule\CompositMappRule.cs" />
-    <Compile Include="Files\MappingManager\MappRule\ConstMappRule.cs" />
-    <Compile Include="Files\MappingManager\MappRule\ManyToManyMappRule.cs" />
-    <Compile Include="Files\MappingManager\MappRule\ReferensToEntityMappRule.cs" />
-    <Compile Include="Files\MappingManager\MappRule\SimpleMappRule.cs" />
-    <Compile Include="Files\MappingManager\MappRule\ToDetailMappRule.cs" />
-    <Compile Include="Files\MappingManager\RuleExportInfo.cs" />
-    <Compile Include="Files\MappingManager\RuleImportInfo.cs" />
-    <Compile Include="Files\MappingManager\RuleInfo.cs" />
-    <Compile Include="Files\MappingManager\RulesFactory.cs" />
-    <Compile Include="Files\MappingManager\TsMacrosHelper.cs" />
-    <Compile Include="Files\PrimaryExport\PrimaryExportParam.cs" />
-    <Compile Include="Files\PrimaryExport\PrimaryExportProvider.cs" />
-    <Compile Include="Files\PrimaryExport\PrimaryExportScenario.cs" />
-    <Compile Include="Files\PrimaryImport\PrimaryImportParam.cs" />
-    <Compile Include="Files\PrimaryImport\PrimaryImportProvider.cs" />
-    <Compile Include="Files\PrimaryImport\PrimaryImportScenario.cs" />
-    <Compile Include="Files\Queue\DefaultIntegrationQueue.cs" />
-    <Compile Include="Files\Queue\IIntegrationQueue.cs" />
-    <Compile Include="Files\Signal\SignalGenerator.cs" />
-    <Compile Include="Files\Signal\SignalHandler.cs" />
-    <Compile Include="Files\Signal\SignalProcessor.cs" />
-    <Compile Include="Files\UrlMaker\ServiceUrlMaker.cs" />
-    <Compile Include="Files\Integrators\TsServiceIntegrator.cs" />
-    <Compile Include="Files\TsClientServiceInegration.TsBase.cs" />
-    <Compile Include="Files\TsIntegrationServiceEntity.TsBase.cs" />
-    <Compile Include="Files\WCFService\TsAuto3nService.cs" />
-    <Compile Include="Files\XmlManager\DynamicXmlParser.cs" />
-    <Compile Include="Files\XmlManager\IntegrationPath.cs" />
-    <Compile Include="Files\XmlManager\IntegrationPathConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\ConfigSetting\HandlerConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\EndPointConfig\EndPointConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\EndPointConfig\EndPointHandlerConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\LogConfig\LogItemConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\Main\IntegrationConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\ConfigSetting\ConfigSetting.cs" />
+    <Compile Include="Files\Core\Configuration\Model\MappingConfig\MappingConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\MappingItem\MappingItem.cs" />
+    <Compile Include="Files\Core\Configuration\Model\PrerenderConfig\PrerenderConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\RouteConfig\RouteConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\TemplateSetting\TemplateSetting.cs" />
+    <Compile Include="Files\Core\Configuration\Model\TriggerSetting\TriggerSetting.cs" />
+    <Compile Include="Files\Core\Configuration\XmlManager\XmlConfigManager.cs" />
+    <Compile Include="Files\Core\Constants\CsConstant.cs" />
+    <Compile Include="Files\Core\Constants\SettingsManager.cs" />
+    <Compile Include="Files\Core\Extension\ObjectExtension.cs" />
+    <Compile Include="Files\Core\Extension\StringBuilderExtension.cs" />
+    <Compile Include="Files\Core\Factory\BaseAttributeFactory.cs" />
+    <Compile Include="Files\Core\Factory\IFactory.cs" />
+    <Compile Include="Files\Core\Handler\Exception\EntityNotFoundException.cs" />
+    <Compile Include="Files\Core\Handler\Factory\HandlerFactory.cs" />
+    <Compile Include="Files\Core\Handler\Instance\AdvancedSearchHandler.cs" />
+    <Compile Include="Files\Core\Handler\Instance\BaseEntityHandler.cs" />
+    <Compile Include="Files\Core\Handler\Instance\DefaultEntityHandler.cs" />
+    <Compile Include="Files\Core\Handler\Instance\NoEntityHandler.cs" />
+    <Compile Include="Files\Core\Handler\Manager\Attribute\DefaultHandlerAttribute.cs" />
+    <Compile Include="Files\Core\Handler\Manager\Attribute\ExportHandlerAttribute.cs" />
+    <Compile Include="Files\Core\Handler\Manager\Attribute\ImportHandlerAttribute.cs" />
+    <Compile Include="Files\Core\Handler\Manager\Attribute\IntegrationHandlerAttribute.cs" />
+    <Compile Include="Files\Core\Handler\Plugin\Entity\EntityPreparer.cs" />
+    <Compile Include="Files\Core\Handler\Plugin\Entity\HandlerEntityWorker.cs" />
+    <Compile Include="Files\Core\Handler\Plugin\Entity\Interface\IEntityPreparer.cs" />
+    <Compile Include="Files\Core\Handler\Plugin\Entity\Interface\IHandlerEntityWorker.cs" />
+    <Compile Include="Files\Core\Handler\Plugin\KeyGenerator\HandlerKeyGenerator.cs" />
+    <Compile Include="Files\Core\Handler\Plugin\KeyGenerator\Interface\IHandlerKeyGenerator.cs" />
+    <Compile Include="Files\Core\Handler\Plugin\Search\AdvancedSearchInfo.cs" />
+    <Compile Include="Files\Core\IntegrationObject\Instance\Interface\IIntegrationObject.cs" />
+    <Compile Include="Files\Core\IntegrationObject\Instance\Json\IntegrJObject.cs" />
+    <Compile Include="Files\Core\IntegrationObject\Instance\Xml\IntegrXObject.cs" />
+    <Compile Include="Files\Core\IntegrationObject\Plugin\IntegrationObjectProvider.cs" />
+    <Compile Include="Files\Core\IntegrationObject\Plugin\IntegrationPath.cs" />
+    <Compile Include="Files\Core\IntegrationObject\Plugin\Interface\IIntegrationObjectProvider.cs" />
+    <Compile Include="Files\Core\IntegrationObject\Type\TIntegrationObjectType.cs" />
+    <Compile Include="Files\Core\Integrator\BaseIntegrator.cs" />
+    <Compile Include="Files\Core\Integrator\EndPoint\ExceptionProcessStrategy\Model\ExceptionProcessData.cs" />
+    <Compile Include="Files\Core\Integrator\EndPoint\ExceptionProcessStrategy\Factory\ExceptionProcessStrategyFactory.cs" />
+    <Compile Include="Files\Core\Integrator\EndPoint\ExceptionProcessStrategy\Factory\ExceptionProcessStrategyAttribute.cs" />
+    <Compile Include="Files\Core\Integrator\EndPoint\ExceptionProcessStrategy\Interface\IExceptionProcessStrategy.cs" />
+    <Compile Include="Files\Core\Integrator\EndPoint\ExceptionProcessStrategy\RedirectRequestExceptionProcessStrategy.cs" />
+    <Compile Include="Files\Core\Integrator\EndPoint\Factory\EndPointAttribute.cs" />
+    <Compile Include="Files\Core\Integrator\EndPoint\Factory\EndPointFactory.cs" />
+    <Compile Include="Files\Core\Integrator\EndPoint\Instance\BaseEndPointHandler.cs" />
+    <Compile Include="Files\Core\Integrator\EndPoint\Interface\IEndPointHandler.cs" />
+    <Compile Include="Files\Core\Integrator\Integrator\BaseIntegrationService.cs" />
+    <Compile Include="Files\Core\Integrator\Integrator\Interface\IIntegrationService.cs" />
+    <Compile Include="Files\Core\Integrator\Integrator\Sync\Interface\ISyncExportChecker.cs" />
+    <Compile Include="Files\Core\Integrator\Integrator\Sync\SyncIntegrator.cs" />
+    <Compile Include="Files\Core\Integrator\Integrator\Sync\SyncValidator.cs" />
+    <Compile Include="Files\Core\Integrator\Interface\IIntegrator.cs" />
+    <Compile Include="Files\Core\Integrator\Mock\BaseIntegratorMock.cs" />
+    <Compile Include="Files\Core\Integrator\ObjectWorker\IntegrationObjectWorker.cs" />
+    <Compile Include="Files\Core\Integrator\ObjectWorker\Interface\IIntegrationObjectWorker.cs" />
+    <Compile Include="Files\Core\Integrator\Service\Attribute\IntegrationServiceAttribute.cs" />
+    <Compile Include="Files\Core\Integrator\Service\Extension\HttpRequestHelper.cs" />
+    <Compile Include="Files\Core\Integrator\Service\Factory\ServiceFactory.cs" />
+    <Compile Include="Files\Core\Integrator\Service\Interface\IServiceIntegrator.cs" />
+    <Compile Include="Files\Core\Integrator\Service\Manager\Interface\IServiceHandlerWorkers.cs" />
+    <Compile Include="Files\Core\Integrator\Service\Manager\ServiceHandlerWorker.cs" />
+    <Compile Include="Files\Core\Integrator\Service\MethodType\TRequstMethod.cs" />
+    <Compile Include="Files\Core\Integrator\Service\Mock\ServiceMock.cs" />
+    <Compile Include="Files\Core\Integrator\Service\Mock\ServiceMockConfig.cs" />
+    <Compile Include="Files\Core\Integrator\Service\Mock\WebRequestMock.cs" />
+    <Compile Include="Files\Core\Integrator\Service\Mock\WebResponseMock.cs" />
+    <Compile Include="Files\Core\Configuration\Model\ServiceConfig\ServiceConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\ServiceConfig\ServiceHeaderConfig.cs" />
+    <Compile Include="Files\Core\Integrator\Service\RequestWorker\Interface\IServiceRequestWorker.cs" />
+    <Compile Include="Files\Core\Integrator\Service\RequestWorker\ServiceRequestWorker.cs" />
+    <Compile Include="Files\Core\Integrator\Utils\IntegrationEntityHelper.cs" />
+    <Compile Include="Files\Core\Integrator\WCFService\DataModel\MappingServiceResponse.cs" />
+    <Compile Include="Files\Core\Integrator\WCFService\IntegrationService.cs" />
+    <Compile Include="Files\Core\Integrator\WCFService\IntegrationServiceWrapper.cs" />
+    <Compile Include="Files\Core\Integrator\WCFService\TsIntegrationCoreService.cs" />
+    <Compile Include="Files\Core\Integrator\_Object\ServiceRequestInfo.cs" />
+    <Compile Include="Files\Core\Locker\IntegrationLocker.cs" />
+    <Compile Include="Files\Core\Locker\LockerHelper.cs" />
+    <Compile Include="Files\Core\Logger\IntegrationLogger.cs" />
+    <Compile Include="Files\Core\Logger\LoggerHelper.cs" />
+    <Compile Include="Files\Core\Logger\LoggerInfo.cs" />
+    <Compile Include="Files\Core\Logger\LoggerState.cs" />
+    <Compile Include="Files\Core\Logger\Templater\MappingErrorLoggerInfo.cs" />
+    <Compile Include="Files\Core\Logger\Templater\RequestErrorLoggerInfo.cs" />
+    <Compile Include="Files\Core\Logger\Templater\RequestLoggerInfo.cs" />
+    <Compile Include="Files\Core\Logger\Templater\ResponseLoggerInfo.cs" />
+    <Compile Include="Files\Core\Logger\TsLogger.cs" />
+    <Compile Include="Files\Core\Logger\Type\TLogObjectType.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Attribute\MacrosExportAttribute.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Attribute\MacrosImportAttribute.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Factory\MacrosFactory.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Instace\DateFormatMacros.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Instace\DateFormatMacros2.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Instace\DateTimeMacros.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Instace\EpochDateTime.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Instace\GetOnlyNumberMacros.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Instace\Interface\IMacrosCreator.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Instace\Interface\IMacrosOverRuleCreator.cs" />
+    <Compile Include="Files\Core\Mapping\Macros\Instace\IntToLowMacros.cs" />
+    <Compile Include="Files\Core\Mapping\Mapper\IntegrationMapper.cs" />
+    <Compile Include="Files\Core\Mapping\Mapper\Interface\IMapper.cs" />
+    <Compile Include="Files\Core\Mapping\Plugin\DependentEntityLoader.cs" />
+    <Compile Include="Files\Core\Mapping\Plugin\DynamicXmlParser.cs" />
+    <Compile Include="Files\Core\Mapping\Plugin\Interface\IMapperDbWorker.cs" />
+    <Compile Include="Files\Core\Mapping\Plugin\MapperDbWorker.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Attribute\RuleAttribute.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Factory\RuleFactoryItem.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Factory\RulesFactory.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Interface\IMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Json\ArrayOfCompositeObjectMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Json\ArrayOfReferenceMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Json\ComplexFieldMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Json\CompositMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Json\ConstMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Json\ManyToManyMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Json\ReferensToEntityMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Json\SimpleMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Json\ToDetailMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Xml\ComplexFieldMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Xml\CompositXmlMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Xml\ConstRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Xml\JoinedColumnXmlMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Xml\SimpleByPathRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Xml\SimpleOrDefault.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Xml\XmlArrayMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Instance\Xml\XmlSimpleMappRule.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Optimizator\Attribute\MappRuleOptimizatorAttribute.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Optimizator\Factory\MappRuleOptimizatorFactory.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Optimizator\Model\Interface\IMappRuleOptimizator.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Optimizator\Model\MappRuleOptimizator.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Parameter\RuleExportInfo.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Parameter\RuleImportInfo.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Parameter\RuleInfo.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\_Objects\Ref\CsReference.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\_Objects\Ref\CsReferenceProperty.cs" />
+    <Compile Include="Files\Core\Mapping\Type\MacrosType.cs" />
+    <Compile Include="Files\Core\Mapping\Type\TConstType.cs" />
+    <Compile Include="Files\Core\Mapping\Type\TMapExecuteType.cs" />
+    <Compile Include="Files\Core\Project\DeleteBeforeImportHandler.cs" />
+    <Compile Include="Files\Core\ServiceConstructor\Model\Attribute\TemplateAttribute.cs" />
+    <Compile Include="Files\Core\ServiceConstructor\Model\Interface\ITemplateFactory.cs" />
+    <Compile Include="Files\Core\ServiceConstructor\Model\Interface\ITemplateHandler.cs" />
+    <Compile Include="Files\Core\ServiceConstructor\Model\TemplateHandlerFactory.cs" />
+    <Compile Include="Files\Core\ServiceConstructor\Model\XmlBaseTemplateHandler.cs" />
+    <Compile Include="Files\Core\Configuration\Test\DataModel\EntitySchemaInfo.cs" />
+    <Compile Include="Files\Core\Configuration\Test\DataModel\TestExportInfo.cs" />
+    <Compile Include="Files\Core\Configuration\Test\DataModel\TestImportInfo.cs" />
+    <Compile Include="Files\Core\Configuration\Test\DataModel\TestServiceInfo.cs" />
+    <Compile Include="Files\Core\Configuration\Test\DataModel\TriggerServiceInfo.cs" />
+    <Compile Include="Files\Core\Configuration\Test\Logic\TestScenarioProvider.cs" />
+    <Compile Include="Files\Core\Configuration\Test\Logic\TsIntegrationCodeServiceHelper.cs" />
+    <Compile Include="Files\Core\Configuration\Test\Logic\TsIntegrationCodeServiceHelperTester.cs" />
+    <Compile Include="Files\Core\Trigger\Interface\ITriggerCheckerItem.cs" />
+    <Compile Include="Files\Core\Trigger\Interface\ITriggerCollection.cs" />
+    <Compile Include="Files\Core\Trigger\Interface\ITriggerEngine.cs" />
+    <Compile Include="Files\Core\Trigger\MappingConfigTriggerCollection.cs" />
+    <Compile Include="Files\Core\Trigger\TriggerCheckerCollection.cs" />
+    <Compile Include="Files\Core\Trigger\TriggerCheckerItem.cs" />
+    <Compile Include="Files\Core\Trigger\TriggerEngine.cs" />
+    <Compile Include="Files\Initializator\OnStart.cs" />
+    <Compile Include="Files\Remove\IntegratorHelper.cs" />
+    <Compile Include="Files\Remove\JsonEntityHelper.cs" />
+    <Compile Include="Files\UsingHelper\UsingHelper.cs" />
     <Compile Include="IntegrationJson\JsonFilterProvider.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Files\Core\Project\ArhiveSessionIntegrationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TempFile\EsqHelper.cs" />
     <Compile Include="TempFile\TsBotService.cs" />
+    <Compile Include="TempFile\TsiSelectQuery.cs" />
     <Compile Include="TempFile\UsrEquipmentHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Files\responseClientServiceCompanyProfile.json" />
-    <None Include="Files\responseIntegrationService.json" />
     <None Include="IntegrationJson\ClientService.json" />
     <None Include="IntegrationJson\IntegrationServiceAgent.json" />
     <None Include="packages.config" />
@@ -337,9 +509,6 @@
     <Content Include="ConfigurationFile.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Files\responseOrderService.json" />
-    <Content Include="Files\export.txt" />
-    <Content Include="Files\TextFile1.txt" />
     <Content Include="IntegrationJson\CompanyProfile.txt" />
     <Content Include="IntegrationJson\PersonProfile.txt" />
   </ItemGroup>

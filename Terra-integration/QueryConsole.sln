@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryConsole", "QueryConsole\QueryConsole.csproj", "{BB4E58D7-FCE2-454B-8850-7F3FF12CDB2C}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationUnitTest", "IntegrationUnitTest\IntegrationUnitTest.csproj", "{D80E71E9-67C8-453A-9DE9-E0EA85F52972}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectUtilsClassLibrary", "ProjectUtilsClassLibrary\ProjectUtilsClassLibrary.csproj", "{639C73EA-BFDA-457F-A816-A753F2B944C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{06F59C79-4645-40E3-937A-A65980969B6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,8 +47,15 @@ Global
 		{639C73EA-BFDA-457F-A816-A753F2B944C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{639C73EA-BFDA-457F-A816-A753F2B944C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{639C73EA-BFDA-457F-A816-A753F2B944C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06F59C79-4645-40E3-937A-A65980969B6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06F59C79-4645-40E3-937A-A65980969B6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06F59C79-4645-40E3-937A-A65980969B6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06F59C79-4645-40E3-937A-A65980969B6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC566524-70D3-4B2A-A209-754C9ADD2029}
 	EndGlobalSection
 EndGlobal

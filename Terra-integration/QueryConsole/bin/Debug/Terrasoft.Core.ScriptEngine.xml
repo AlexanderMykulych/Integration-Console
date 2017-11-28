@@ -27,11 +27,12 @@
             <param name="expression">Текст выражения.</param>
             <returns>Результат выполнения выражения.</returns>
         </member>
-        <member name="M:Terrasoft.Core.ScriptEngine.DynamicExpressoEngine.Eval(System.String)">
+        <member name="M:Terrasoft.Core.ScriptEngine.DynamicExpressoEngine.Eval(System.String,System.Type)">
             <summary>
             Выполняет выражение, возвращающее результат типа <see cref="T:System.Object"/>.
             </summary>
             <param name="expression">Текст выражения.</param>
+            <param name="resultType">Ожидаемый тип результата вычисления.</param>
             <returns>Результат выполнения выражения с типом данных <see cref="T:System.Object"/>.</returns>
         </member>
         <member name="M:Terrasoft.Core.ScriptEngine.DynamicExpressoEngine.SetVariable(System.String,System.Object)">
@@ -55,16 +56,13 @@
             </summary>
             <param name="type">Тип.</param>
         </member>
-        <member name="M:Terrasoft.Core.ScriptEngine.DynamicExpressoEngine.Validate(System.String,System.Type,System.String@)">
+        <member name="M:Terrasoft.Core.ScriptEngine.DynamicExpressoEngine.Validate(System.String,System.Type)">
             <summary>
-            Проверяет корректность выражения и возвращает сообщение об ошибке.
+            Validates the expression.
             </summary>
-            <param name="expression">Текст выражения.</param>
-            <param name="resultType">Ожидаемый тип результата вычисления.</param>
-            <param name="result">
-            Строка с результатами проверки корректности выражения. Если выражение корректно, возвращается пустая строка.
-            </param>
-            <returns><c>true</c>, если выражение корректно; иначе - <c>false</c>.</returns>
+            <param name="expression">The text of expression.</param>
+            <param name="resultType">The expression result type.</param>
+            <exception cref="T:Terrasoft.Core.ValidateExpressionException">Throws, if the expression is not valid.</exception>
         </member>
         <member name="M:Terrasoft.Core.ScriptEngine.DynamicExpressoEngine.Dispose">
             <summary>

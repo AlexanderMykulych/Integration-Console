@@ -4,8 +4,73 @@
         <name>Terrasoft.UI.WebControls</name>
     </assembly>
     <members>
+        <member name="T:Terrasoft.UI.WebControls.HttpApplicationWrap">
+            <summary>
+            <see cref="T:System.Web.HttpApplication"/> wrapper class.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.UI.WebControls.HttpApplicationWrap._application">
+            <summary>
+            <see cref="T:System.Web.HttpApplication"/> instance.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.UI.WebControls.HttpApplicationWrap.#ctor">
+            <summary>
+            Unit test constructor. Creates not initialized class instance.
+            </summary>
+        </member>
+        <member name="E:Terrasoft.UI.WebControls.HttpApplicationWrap.PostAcquireRequestState">
+            <summary>
+            <see cref="E:System.Web.HttpApplication.PostAcquireRequestState"/> wrapper.
+            </summary>
+        </member>
+        <member name="E:Terrasoft.UI.WebControls.HttpApplicationWrap.PreSendRequestHeaders">
+            <summary>
+            <see cref="E:System.Web.HttpApplication.PreSendRequestHeaders"/> wrapper.
+            </summary>
+        </member>
+        <member name="E:Terrasoft.UI.WebControls.HttpApplicationWrap.ReleaseRequestState">
+            <summary>
+            <see cref="E:System.Web.HttpApplication.ReleaseRequestState"/> wrapper.
+            </summary>
+        </member>
         <member name="T:Terrasoft.UI.WebControls.ResourceHandlers.AppLevelResourceHandler">
             <summary>Используется для получения ресурсов не требующих UserConnection</summary>
+        </member>
+        <member name="M:Terrasoft.UI.WebControls.Controls.ResourceHandlerBase.GetMimeType(System.String)">
+            <summary>
+            Returns MIME-type according to file`s extension.
+            </summary>
+            <param name="resourceExtention">
+            Extension of the file.
+            </param>
+            <returns>
+            MIME-type.
+            </returns>
+        </member>
+        <member name="M:Terrasoft.UI.WebControls.Controls.ResourceHandlerBase.GetExtension(System.Byte[])">
+            <summary>
+            Identifies type of the file from its first bytes.
+            </summary>
+            <param name="binaryFile">
+            Binary file whose extension is to be found.
+            </param>
+            <returns>
+            Extension of the file.
+            </returns>
+        </member>
+        <member name="F:Terrasoft.UI.WebControls.Controls.ProcessUserTaskSchemaDesignModeManager._methodsGroupUId">
+            <summary>
+            Methods group node identifier.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.UI.WebControls.Controls.ProcessUserTaskSchemaDesignModeManager.SetPropertyDataSourceStructure(Terrasoft.Core.DesignModeClassDescriptor,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Initializes PropertyDataSource structure,
+            if user task is partial hides ExecuteBody.
+            </summary>
+            <param name="descriptor">Design mode class descriptor.</param>
+            <param name="skipPropertiesNames">Hidden properties list.</param>
         </member>
         <member name="M:Terrasoft.UI.WebControls.ResourceHandlers.UserProfileResourceHandler.UpdateUserProfile(Terrasoft.Core.UserConnection,Terrasoft.UI.WebControls.ResourceHandlers.UserProfile,System.Guid)">
             <summary>
@@ -31,19 +96,59 @@
         </member>
         <member name="M:Terrasoft.UI.WebControls.ResourceHandlers.UserProfileResourceHandler.FindUserProfileId(Terrasoft.Core.UserConnection,Terrasoft.UI.WebControls.ResourceHandlers.UserProfile)">
             <summary>
-            Возвращает идентификатор записи в таблице данных профиля.
+            Returns row id in profile data table.
             </summary>
-            <param name="userConnection">Пользовательское подключение.</param>
-            <param name="profile">Профиль пользователя.</param>
-            <returns>Идентификатор записи в таблице данных профиля.</returns>
+            <param name="userConnection">User connection.</param>
+            <param name="profile">User profile.</param>
+            <returns>Profile data id.</returns>
         </member>
         <member name="M:Terrasoft.UI.WebControls.ResourceHandlers.UserProfileResourceHandler.SaveUserProfile(Terrasoft.Core.UserConnection,Terrasoft.UI.WebControls.ResourceHandlers.UserProfile)">
             <summary>
-            Сохраняет данные в профиль.
+            Saves data to profile.
             </summary>
-            <param name="userConnection">Пользовательское подключение.</param>
-            <param name="profile">Данные профиля пользователя.</param>
-            <remarks>Если данные в профиле не указаны, то профиль очищается.</remarks>
+            <param name="userConnection">User connection.</param>
+            <param name="profile">User profile data.</param>
+            <remarks>If profile data does not set, than profile cleans.</remarks>
+        </member>
+        <member name="M:Terrasoft.UI.WebControls.ResourceHandlers.UserProfileResourceHandler.Fetch">
+            <summary>
+            Returns profile data.
+            </summary>
+            <remarks>Returns profile data for profile key and current culture.</remarks>
+        </member>
+        <member name="M:Terrasoft.UI.WebControls.AjaxRequestModule.RedirectPreSendRequestHeaders(System.Object,System.EventArgs)">
+            <summary>
+            <see cref="E:System.Web.HttpApplication.PreSendRequestHeaders"/> event handler.
+            </summary>
+            <param name="sender"><see cref="T:System.Web.HttpApplication"/> instance.</param>
+            <param name="e"><see cref="T:System.EventArgs"/> instance.</param>
+        </member>
+        <member name="M:Terrasoft.UI.WebControls.AjaxRequestModule.GetHttpContextWrapper(System.Object)">
+            <summary>
+            Creates <see cref="T:System.Web.HttpContextBase"/> instance.
+            </summary>
+            <param name="sender"><see cref="T:System.Web.HttpApplication"/> instance.</param>
+            <returns><see cref="T:System.Web.HttpContextBase"/> instance.</returns>
+        </member>
+        <member name="M:Terrasoft.UI.WebControls.AjaxRequestModule.GetHttpApplicationWrap(System.Web.HttpApplication)">
+            <summary>
+            Creates <see cref="T:Terrasoft.UI.WebControls.HttpApplicationWrap"/> instance.
+            </summary>
+            <param name="app"><see cref="T:System.Web.HttpApplication"/> instance.</param>
+            <returns><see cref="T:Terrasoft.UI.WebControls.HttpApplicationWrap"/> instance.</returns>
+        </member>
+        <member name="M:Terrasoft.UI.WebControls.Ext.HasAjaxHeader(System.Web.HttpRequestBase)">
+            <summary>
+            Cheks if request has Ajax header.
+            </summary>
+            <param name="request"><see cref="T:System.Web.HttpRequestBase"/> instance.</param>
+            <returns>True, if request has Ajax header</returns>
+        </member>
+        <member name="M:Terrasoft.UI.WebControls.Controls.ScriptManager.GetClientCoreUrl">
+            <summary>
+            Returns web application ClientCoreUrl parameter value.
+            </summary>
+            <returns>ClientCoreUrl parameter value.</returns>
         </member>
         <member name="T:Terrasoft.UI.WebControls.Utilities.ProcessDataSourceFiltersConverter">
             <summary>

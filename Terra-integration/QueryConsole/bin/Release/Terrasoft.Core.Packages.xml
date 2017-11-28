@@ -4,121 +4,80 @@
         <name>Terrasoft.Core.Packages</name>
     </assembly>
     <members>
-        <member name="F:Terrasoft.Core.Packages.Descriptor._modifiedOnUtc">
-            <summary>Дата/время последней модификации объекта</summary>
-        </member>
-        <member name="P:Terrasoft.Core.Packages.Descriptor.IsLocked">
-            <summary>
-            Признак, является ли элемент заблокированным.
-            </summary>
-        </member>
-        <member name="P:Terrasoft.Core.Packages.Descriptor.IsModifiedByUser">
-            <summary>
-            Признак, является ли элемент измененым пользователем.
-            </summary>
-        </member>
         <member name="M:Terrasoft.Core.Packages.FileStorage.IFileStorageTransaction.Get">
             <summary>Поиск модулей для текущей конфигурации.</summary>
             <returns>Словарь, содержащий в качестве ключа имя модуля, в качестве значения - массив байт модуля.
             </returns>
         </member>
-        <member name="T:Terrasoft.Core.Packages.IPackageContentProvider">
+        <member name="T:Terrasoft.Core.Packages.SchemaDependencyItem">
             <summary>
-            Интерфейс провайдера содержимого пакета.
+            Экземпляр зависимости схемы.
             </summary>
         </member>
-        <member name="M:Terrasoft.Core.Packages.IPackageContentProvider.GetSchemaStreamValues(Terrasoft.Core.Packages.Package,Terrasoft.Core.Packages.SchemaDescriptor)">
+        <member name="M:Terrasoft.Core.Packages.SchemaDependencyItem.GetHashCode">
             <summary>
-            Возвращает свойства схемы в бинарном представлении.
+            Возвращает хэш-код для данной зависимости.
             </summary>
-            <param name="package">Пакет.</param>
-            <param name="schema">Дескриптор схемы.</param>
-            <returns>Словарь cо свойствами схемы.</returns>
+            <returns>
+            Хэш-код для данного экземпляра <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/> в виде 32-битового целого
+            числа со знаком.
+            </returns>
         </member>
-        <member name="T:Terrasoft.Core.Packages.ConfigurationAssemblyException">
-            <summary>Класс исключения для передачи информации об ошибках al.exe</summary>
-        </member>
-        <member name="P:Terrasoft.Core.Packages.SchemaDescriptor.IncludeDependenciesSource">
+        <member name="M:Terrasoft.Core.Packages.SchemaDependencyItem.Equals(System.Object)">
             <summary>
-            Включить коды зависимых схем
+            Определяет, равны ли данный экземпляр <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/> и заданный
+            экземпляр <see cref="T:System.Object"/>.
             </summary>
+            <param name="obj">Экземпляр <see cref="T:System.Object"/> для сравнения с данным экземпляром
+            <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/>.</param>
+            <returns>
+            <c>true</c>, если <paramref name="obj"/> имеет тип <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/> и его
+            значение совпадает со значением данного экземпляра <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/>; 
+            иначе - <c>false</c>.
+            </returns>
+            <remarks>Перегруженный метод.</remarks>
         </member>
-        <member name="P:Terrasoft.Core.Packages.SchemaDescriptor.ForceAbstract">
-            <summary>Признак того, что класс нужно принудительно сделать абстрактным</summary>
-        </member>
-        <member name="P:Terrasoft.Core.Packages.Package.PackageVersion">
+        <member name="M:Terrasoft.Core.Packages.SchemaDependencyItem.Equals(Terrasoft.Core.Packages.SchemaDependencyItem)">
             <summary>
-            Версия пакета.
+            Определяет, равны ли данный экземпляр <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/> и заданный
+            экземпляр <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/>.
             </summary>
+            <param name="other">Экземпляр <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/> для сравнения с данным экземпляром.</param>
+            <returns>
+            <c>true</c>, если <paramref name="other"/> совпадает со значением данного экземпляра 
+            <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/>; 
+            иначе - <c>false</c>.
+            </returns>
         </member>
-        <member name="P:Terrasoft.Core.Packages.Package.IntegratedModifiedOnUtc">
-            <summary>Дата/время последней модификации пакета с учетом времени модификации всех схем пакета</summary>
-        </member>
-        <member name="M:Terrasoft.Core.Packages.PackageUtilities.SetPackagesStateByInstallType(Terrasoft.Core.Packages.PackageStorage,Terrasoft.Core.Packages.PackageStorageObjectState,Terrasoft.Common.SysPackageInstallType)">
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.UId">
             <summary>
-            Переводит пакеты с указанным типом установки в указанное состояние.
-            </summary>
-            <param name="source">Хранилище пакетов.</param>
-            <param name="state">Состояние элемента хранилища.</param>
-            <param name="installType">Тип установки пакета.</param>
-        </member>
-        <member name="M:Terrasoft.Core.Packages.PackageUtilities.SetPackageStateByCondition(Terrasoft.Core.Packages.PackageStorage,Terrasoft.Core.Packages.PackageStorageObjectState,System.Func{Terrasoft.Core.Packages.Package,System.Boolean})">
-            <summary>
-            Переводит в указанное состояние пакеты, которые соответствуют указанному условию.
-            </summary>
-            <param name="source">Хранилище пакетов.</param>
-            <param name="state">Состояние элемента хранилища.</param>
-            <param name="getIsPackageCondition">Условие перевода пакета в указанное состояние.</param>
-        </member>
-        <member name="M:Terrasoft.Core.Packages.PackageUtilities.SetPackagesNotModifiedAndUnlocked(Terrasoft.Core.Packages.PackageStorage)">
-            <summary>
-            Снимает признак измененности и блокировки со всех элементов хранилища пакетов.
-            </summary>
-            <param name="source">Хранилище.</param>
-        </member>
-        <member name="F:Terrasoft.Core.Packages.PackageStorage.ResourceManagerName">
-            <summary>
-            Имя менеджера ресурсов.
+            Идентификатор зависимости.
             </summary>
         </member>
-        <member name="M:Terrasoft.Core.Packages.PackageStorage.GetPackagesOrderByTopology">
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.Name">
             <summary>
-            Возвращает иерархически отсортированное перечисление пакетов.
+            Наименование зависимости.
             </summary>
-            <returns>Перечисление пакетов, отсортированное по иерархии.</returns>
         </member>
-        <member name="T:Terrasoft.Core.Packages.SqlScriptLoopsException">
-            <summary>Класс исключения для передачи информации о цикле зависимостей между Sql-сценариями</summary>
-        </member>
-        <member name="T:Terrasoft.Core.Packages.WorkspaceComposerLoopsException">
-            <summary>Класс исключения для передачи информации о цикле зависимостей между модулями</summary>
-        </member>
-        <member name="T:Terrasoft.Core.Packages.WorkspaceComposer">
-            <summary>Класс, который содержит логику построения последовательности компиляции модулей</summary>
-        </member>
-        <member name="M:Terrasoft.Core.Packages.WorkspaceComposer.ProcessSimpleSchema(Terrasoft.Core.Packages.SchemaDescriptor)">
-            <summary>Обработка обычной схемы</summary>
-            <param name="schema">Схема</param>
-        </member>
-        <member name="M:Terrasoft.Core.Packages.WorkspaceComposer.ProcessExtensionSchema(Terrasoft.Core.Packages.SchemaDescriptor)">
-            <summary>Обработка схемы, которая замещает родителя в иерархии. Такая схема должна быть в том же модуле,
-            что и родитель.</summary>
-            <param name="schema">Схема</param>
-        </member>
-        <member name="M:Terrasoft.Core.Packages.WorkspaceComposer.SortByTopology(System.Collections.Generic.IList{Terrasoft.Core.Packages.ModuleDescriptor})">
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.CreatedInSchemaUId">
             <summary>
-            Генерирует последовательность сборки модулей с учетом зависимостей между ними.
-            В случае зацикления генерирует исключение с информацией о модулях, образовавших циклическую зависимость.
-            Выделена из Compose() исключительно для тестовых целей.
+            Идентификатор схемы в которой была создана зависимость.
             </summary>
-            <param name="modules">Последовательность модулей</param>
-            <returns>Отсортированная последовательность модулей</returns>
         </member>
-        <member name="M:Terrasoft.Core.Packages.WorkspaceComposer.Compose(Terrasoft.Core.Packages.PackageStorage)">
-            <summary>Для данного хранилища пакетов генерирует последовательность сборки модулей с учетом зависимостей 
-            между классами и пакетами</summary>
-            <param name="storage">Хранилище пакетов</param>
-            <returns>Последовательность модулей</returns>
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.ModifiedInSchemaUId">
+            <summary>
+            Идентификатор схемы в которой была изменена зависимость.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.SchemaUId">
+            <summary>
+            Идентификатор схемы.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.ManagerName">
+            <summary>
+            Наименование менеджера.
+            </summary>
         </member>
     </members>
 </doc>

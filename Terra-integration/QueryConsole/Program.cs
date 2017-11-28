@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
@@ -7,86 +8,43 @@ using Terrasoft.Core;
 using Terrasoft.Core.DB;
 using Terrasoft.Core.Entities;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Newtonsoft.Json.Linq;
-using Terrasoft.Core.Factories;
-using Terrasoft.TsConfiguration;
-using NodaTime.TimeZones;
-using NodaTime;
 using System.Linq;
-using QueryConsole.Files.IntegratorTester.PrimaryImport;
-using QueryConsole.IntegrationJson;
+using System.ServiceModel.Web;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using Terrasoft.Configuration;
-using BaseIntegratorTester = Terrasoft.TsConfiguration.BaseIntegratorTester;
-using IntegrationServiceIntegrator = Terrasoft.TsConfiguration.IntegrationServiceIntegrator;
-using OrderServiceIntegratorTester = Terrasoft.TsConfiguration.OrderServiceIntegratorTester;
+using Terrasoft.Core.Factories;
+using Terrasoft.TsIntegration.Configuration;
 
 namespace QueryConsole
 {
 
 	public class Program
 	{
-		public static void AddBindings() {
-			//ClassFactory.ReBind<Terrasoft.Configuration.Passport.OrderPassportHelper, Terrasoft.Configuration.Passport.OrderPassportHelper>("SomeBind");
-			//ClassFactory.Get<Terrasoft.Configuration.Passport.OrderPassportHelper>();
-		}
 		public static void Main(string[] args) {
 			try
 			{
-				
+
 				var consoleApp = new TerrasoftConsoleClass("Default");
-				try {
+				try
+				{
 					consoleApp.Run();
-				} catch(Exception e) {
+				}
+				catch (Exception e)
+				{
 					consoleApp.ConsoleColorWrite("Connect to Database: Failed", ConsoleColor.Red);
 					Console.WriteLine(e.Message);
 				}
 
-				consoleApp.ConsoleColorWrite("Connect to Database: Success");
-				AddBindings();
-				Console.WriteLine("Press any button to start integrate");
-				Console.ReadKey();
-				Console.WriteLine("Start");
-				//CsConstant.IsDebugMode = true;
-				var testers = new List<BaseIntegratorTester>() {
-					new OrderServiceIntegratorTester(consoleApp.SystemUserConnection),
-					new ClientServiceIntegratorTester(consoleApp.SystemUserConnection)
-				};
-				double val = 190165.26;
-				var val2 = (float)val;
-				Console.WriteLine(val2);
-				//var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
-				//	{"ManagerInfo", 500, 0, 1},
-				//	{"CounteragentContactInfo", 500, 0, 1},
-				//	{"Counteragent", 500, 0, 1},
-				//	{"Contract", 500, 0, 1},
-				//	{"Order", 500, 0, 1},
-				//	{"Shipment", 5, 0, 1},
-				//	{"Payment", 500, 0, 1},
-				//	{"Return", 500, 0, 1},
-				//};
-				//testerManager.Run();
-				//testers[1].ImportAllBpmEntity();
-				//var integrator = new IntegrationServiceIntegrator(consoleApp.SystemUserConnection);
-				//integrator.IniciateLoadChanges();
-				//var regionProvider = new DeliveryServiceRegionProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>());
-				//var cityProvider = new DeliveryServiceSettlementProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>());
-				//var countryProvider = new DeliveryServiceCountryProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>());
-				//var areaProvider = new DeliveryServiceAreaProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>());
-				//var addressProvider = new DeliveryServiceAddressProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>());
-				//var resultAddress = addressProvider.GetLookupValues("Россия,Новосибирская область,Новосибирск,Советский район,район Академгородок,Полевая 12,12");
-				//var streetProvider = new DeliveryServiceStreetProvider(consoleApp.SystemUserConnection, new Dictionary<string, string>() {
-				//	{ "settlement", "26067" }
-				//});
-				//var resultStreet = streetProvider.GetLookupValues("П");
-				//var resultRegion = regionProvider.GetLookupValues("М");
-				//var resultCity = cityProvider.GetLookupValues("М");
-				//var resultCountry = countryProvider.GetLookupValues("Р");
-				//var resultArea = areaProvider.GetLookupValues("М");
-				//var tester = new ImportServiceObject();
-				//tester.Run(consoleApp.SystemUserConnection);
-				var exportScenario = new PrimaryExportScenario(consoleApp.SystemUserConnection, true, 100);
-				exportScenario.Run();
+				var userConnection = consoleApp.SystemUserConnection;
+				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "Account");
+				esq.AddColumn("Id");
+				esq.AddColumn("Name");
+				esq.AddColumn("Address");
+				esq.AddColumn("City");
+				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Contain, "=[TsiPersonalAccount:TsiAccount:Id].=[TsiPersAccAddress:TsiPersonalAccount:Id].=[TsiAddress:Id:TsiAddress].TsiAddressName", "вул"));
+
+
 				while (true) {
 				}
 			} catch (ReflectionTypeLoadException e1) {

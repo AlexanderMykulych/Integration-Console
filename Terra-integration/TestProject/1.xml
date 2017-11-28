@@ -1,0 +1,124 @@
+﻿<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:ServiceStatistics">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <urn:GetCArchiveSession>
+      <errCode>?</errCode>
+      <!--Optional:-->
+      <errMsg>?</errMsg>
+      <GetCArchiveSessionOUT>
+        <!--Zero or more repetitions:-->
+        <item>
+          <id>5</id>
+          <!--Optional:-->
+          <serviceName>ServiceName 1</serviceName>
+          <inputSize>111</inputSize>
+          <outputSize>1111</outputSize>
+          <inPakets>11111</inPakets>
+          <outPakets>11111</outPakets>
+          <!--Optional:-->
+          <userName>UserName 1</userName>
+          <!--Optional:-->
+          <deviceName>DeviceName 1</deviceName>
+          <!--Optional:-->
+          <clientPort>123456</clientPort>
+          <!--Optional:-->
+          <session-Id>1</session-Id>
+          <!--Optional:-->
+          <registerTime>registerTime 1</registerTime>
+          <!--Optional:-->
+          <beginTime>beginTime 1</beginTime>
+          <!--Optional:-->
+          <endTime>endTime 1</endTime>
+          <clientCurrency>1</clientCurrency>
+          <!--Optional:-->
+          <clientMoney>1</clientMoney>
+          <duration>1</duration>
+          <acceptedDuration>1</acceptedDuration>
+          <disconnectCause>1</disconnectCause>
+          <devicePort>1</devicePort>
+          <!--Optional:-->
+          <disconnectCauseMsg>disconnectCauseMsg 1</disconnectCauseMsg>
+          <!--Optional:-->
+          <ipAddrChar>111.111.111.111</ipAddrChar>
+          <!--Optional:-->
+          <sendPhone>1380959013923</sendPhone>
+          <status>1</status>
+        </item>
+        <item>
+          <id>2</id>
+          <!--Optional:-->
+          <serviceName>ServiceName 2</serviceName>
+          <inputSize>222</inputSize>
+          <outputSize>2222</outputSize>
+          <inPakets>22222</inPakets>
+          <outPakets>22222</outPakets>
+          <!--Optional:-->
+          <userName>UserName 2</userName>
+          <!--Optional:-->
+          <deviceName>DeviceName 2</deviceName>
+          <!--Optional:-->
+          <clientPort>223456</clientPort>
+          <!--Optional:-->
+          <session-Id>2</session-Id>
+          <!--Optional:-->
+          <registerTime>registerTime 2</registerTime>
+          <!--Optional:-->
+          <beginTime>beginTime 2</beginTime>
+          <!--Optional:-->
+          <endTime>endTime 2</endTime>
+          <clientCurrency>2</clientCurrency>
+          <!--Optional:-->
+          <clientMoney>2</clientMoney>
+          <duration>2</duration>
+          <acceptedDuration>2</acceptedDuration>
+          <disconnectCause>2</disconnectCause>
+          <devicePort>2</devicePort>
+          <!--Optional:-->
+          <disconnectCauseMsg>disconnectCauseMsg 2</disconnectCauseMsg>
+          <!--Optional:-->
+          <ipAddrChar>222.222.222.222</ipAddrChar>
+          <!--Optional:-->
+          <sendPhone>2380959023923</sendPhone>
+          <status>2</status>
+        </item>
+        <item>
+          <id>4</id>
+          <!--Optional:-->
+          <serviceName>ServiceName 3</serviceName>
+          <inputSize>333</inputSize>
+          <outputSize>3333</outputSize>
+          <inPakets>33333</inPakets>
+          <outPakets>33333</outPakets>
+          <!--Optional:-->
+          <userName>UserName 3</userName>
+          <!--Optional:-->
+          <deviceName>DeviceName 3</deviceName>
+          <!--Optional:-->
+          <clientPort>333456</clientPort>
+          <!--Optional:-->
+          <session-Id>3</session-Id>
+          <!--Optional:-->
+          <registerTime>registerTime 3</registerTime>
+          <!--Optional:-->
+          <beginTime>beginTime 3</beginTime>
+          <!--Optional:-->
+          <endTime>endTime 3</endTime>
+          <clientCurrency>3</clientCurrency>
+          <!--Optional:-->
+          <clientMoney>3</clientMoney>
+          <duration>3</duration>
+          <acceptedDuration>3</acceptedDuration>
+          <disconnectCause>3</disconnectCause>
+          <devicePort>3</devicePort>
+          <!--Optional:-->
+          <disconnectCauseMsg>disconnectCauseMsg 3</disconnectCauseMsg>
+          <!--Optional:-->
+          <ipAddrChar>333.333.333.333</ipAddrChar>
+          <!--Optional:-->
+          <sendPhone>3380959033933</sendPhone>
+          <status>3</status>
+        </item>
+      </GetCArchiveSessionOUT>
+    </urn:GetCArchiveSession>
+  </soapenv:Body>
+</soapenv:Envelope>

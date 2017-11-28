@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MethodDeclarationSyntax = Microsoft.CodeAnalysis.CSharp.Syntax.MethodDeclarationSyntax;
 
 namespace ProjectUtils
 {
@@ -18,10 +19,11 @@ namespace ProjectUtils
 			{ "Terrasoft.TsConfiguration", "Terrasoft.Configuration" }
 		};
 
-		public ProjectBuilder(string sourcePath, string outputPath)
+		public ProjectBuilder(string sourcePath, string outputPath, bool metaProgramingEnabled = false)
 		{
 			SourcePath = sourcePath;
 			OutputPath = outputPath;
+			_metaProgramingEnabled = metaProgramingEnabled;
 		}
 
 		public List<string> Run()
@@ -37,6 +39,8 @@ namespace ProjectUtils
 		private List<string> FilePath = new List<string>();
 		public static Dictionary<string, List<NodeProjectInfo>> NamespaceText = new Dictionary<string, List<NodeProjectInfo>>();
 		public static Dictionary<string, List<string>> Usings = new Dictionary<string, List<string>>();
+		private bool _metaProgramingEnabled;
+
 		private void DirSearch(string sDir)
 		{
 			try
@@ -56,7 +60,7 @@ namespace ProjectUtils
 			}
 		}
 
-		private static void CreateTestCompilation(string programPath)
+		private void CreateTestCompilation(string programPath)
 		{
 			string programText = File.ReadAllText(programPath);
 			SyntaxTree programTree =
@@ -80,6 +84,7 @@ namespace ProjectUtils
 					if (node is ClassDeclarationSyntax)
 					{
 						type = "Class";
+						
 						name = ((ClassDeclarationSyntax)node).Identifier.ValueText;
 					}
 					else if (node is InterfaceDeclarationSyntax)
@@ -92,13 +97,28 @@ namespace ProjectUtils
 						type = "Enum";
 						name = ((EnumDeclarationSyntax)node).Identifier.ValueText;
 					}
-					resultNodes.Add(new NodeProjectInfo()
+					if (_metaProgramingEnabled && node is ClassDeclarationSyntax)
 					{
-						Node = node,
-						Path = programPath,
-						Name = name,
-						Type = type
-					});
+						var genNode = ProcessMetaPrograming((ClassDeclarationSyntax) node);
+						resultNodes.Add(new NodeProjectInfo()
+						{
+							Node = genNode,
+							Path = programPath,
+							Name = name,
+							Type = type
+						});
+					}
+					else
+					{
+						resultNodes.Add(new NodeProjectInfo()
+						{
+							Node = node,
+							Path = programPath,
+							Name = name,
+							Type = type
+						});
+					}
+					
 				}
 			}
 			foreach (var usingName in root.Usings)
@@ -121,6 +141,71 @@ namespace ProjectUtils
 			{
 				NamespaceText.Add(nameSpace, resultNodes);
 			}
+		}
+
+		private ClassDeclarationSyntax ProcessMetaPrograming(ClassDeclarationSyntax classDeclaration)
+		{
+			var metaProcessor = new MetaProgrammingProcessor();
+
+			var nodes = classDeclaration.ChildNodesAndTokens();
+			var modifiedList = new List<System.Tuple<MethodDeclarationSyntax, List<MethodDeclarationSyntax>>>();
+			foreach (SyntaxNodeOrToken nodeOrToken in nodes)
+			{
+				if (nodeOrToken.IsNode)
+				{
+					var node = nodeOrToken.AsNode();
+					if (node is MethodDeclarationSyntax methodDeclaration)
+					{
+						var commentTrivia = node.GetLeadingTrivia().FirstOrDefault(x => x.Kind() == SyntaxKind.SingleLineCommentTrivia);
+						var comment = commentTrivia.ToString();
+						if (!string.IsNullOrEmpty(comment))
+						{
+							var res = metaProcessor.ProcessMethod(comment, methodDeclaration, classDeclaration);
+							if (res.Count() > 1)
+							{
+								modifiedList.Add(new Tuple<MethodDeclarationSyntax, List<MethodDeclarationSyntax>>(methodDeclaration, res));
+							}
+						}
+					}
+				}
+			}
+			return ProcessModifiedNodes(classDeclaration, modifiedList);
+		}
+
+		private ClassDeclarationSyntax ProcessModifiedNodes(ClassDeclarationSyntax classDeclaration, List<Tuple<MethodDeclarationSyntax, List<MethodDeclarationSyntax>>> modifiedList)
+		{
+			if (modifiedList.Any())
+			{
+				classDeclaration =
+					classDeclaration.RemoveNodes(modifiedList.Select(x => x.Item1), SyntaxRemoveOptions.KeepNoTrivia);
+				classDeclaration.Members.AddRange(modifiedList.SelectMany(x => x.Item2));
+				return SyntaxFactory.ClassDeclaration(
+					classDeclaration.AttributeLists,
+					classDeclaration.Modifiers,
+					classDeclaration.Keyword,
+					classDeclaration.Identifier,
+					classDeclaration.TypeParameterList,
+					classDeclaration.BaseList,
+					classDeclaration.ConstraintClauses,
+					classDeclaration.OpenBraceToken,
+					classDeclaration.Members.AddRange(modifiedList.SelectMany(x => x.Item2).ToList()),
+					classDeclaration.CloseBraceToken,
+					classDeclaration.SemicolonToken);
+			}
+			return classDeclaration;
+		}
+
+		private ClassDeclarationSyntax CreateClasClone(ClassDeclarationSyntax classDeclaration)
+		{
+			return SyntaxFactory.ClassDeclaration(
+				classDeclaration.AttributeLists,
+				classDeclaration.Modifiers,
+				classDeclaration.Identifier,
+				classDeclaration.TypeParameterList,
+				classDeclaration.BaseList,
+				classDeclaration.ConstraintClauses,
+				classDeclaration.Members
+			);
 		}
 
 		private List<string> GenerateFiles()

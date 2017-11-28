@@ -1,25 +1,12 @@
-using BaseIntegratorTester = Terrasoft.Configuration.BaseIntegratorTester;
-using IntegrationServiceIntegrator = Terrasoft.Configuration.IntegrationServiceIntegrator;
-using Newtonsoft.Json.Linq;
-using NodaTime.TimeZones;
-using NodaTime;
-using OrderServiceIntegratorTester = Terrasoft.Configuration.OrderServiceIntegratorTester;
-using QueryConsole.Files.IntegratorTester.PrimaryImport;
-using QueryConsole.IntegrationJson;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System;
 using Terrasoft.Common;
-using Terrasoft.Configuration;
 using Terrasoft.Core.DB;
 using Terrasoft.Core.Entities;
-using Terrasoft.Core.Factories;
 using Terrasoft.Core;
-using Terrasoft.Configuration;
 
 namespace QueryConsole {
 
@@ -31,10 +18,6 @@ namespace QueryConsole {
 
 	public class Program
 	{
-		public static void AddBindings() {
-			//ClassFactory.ReBind<Terrasoft.Configuration.Passport.OrderPassportHelper, Terrasoft.Configuration.Passport.OrderPassportHelper>("SomeBind");
-			//ClassFactory.Get<Terrasoft.Configuration.Passport.OrderPassportHelper>();
-		}
 		public static void Main(string[] args) {
 			try
 			{
@@ -48,18 +31,11 @@ namespace QueryConsole {
 				}
 
 				consoleApp.ConsoleColorWrite("Connect to Database: Success");
-				AddBindings();
 				Console.WriteLine("Press any button to start integrate");
 				Console.ReadKey();
 				Console.WriteLine("Start");
 				//CsConstant.IsDebugMode = true;
-				var testers = new List<BaseIntegratorTester>() {
-					new OrderServiceIntegratorTester(consoleApp.SystemUserConnection),
-					new ClientServiceIntegratorTester(consoleApp.SystemUserConnection)
-				};
-				double val = 190165.26;
-				var val2 = (float)val;
-				Console.WriteLine(val2);
+				
 				//var testerManager = new TesterManager(consoleApp.SystemUserConnection, testers[0], testers[1]) {
 				//	{"ManagerInfo", 500, 0, 1},
 				//	{"CounteragentContactInfo", 500, 0, 1},
@@ -90,8 +66,6 @@ namespace QueryConsole {
 				//var resultArea = areaProvider.GetLookupValues("М");
 				//var tester = new ImportServiceObject();
 				//tester.Run(consoleApp.SystemUserConnection);
-				var exportScenario = new PrimaryExportScenario(consoleApp.SystemUserConnection, true, 100);
-				exportScenario.Run();
 				while (true) {
 				}
 			} catch (ReflectionTypeLoadException e1) {
