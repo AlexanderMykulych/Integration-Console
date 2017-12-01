@@ -24,7 +24,6 @@ namespace QueryConsole
 		public static void Main(string[] args) {
 			try
 			{
-
 				var consoleApp = new TerrasoftConsoleClass("Default");
 				try
 				{
@@ -35,15 +34,15 @@ namespace QueryConsole
 					consoleApp.ConsoleColorWrite("Connect to Database: Failed", ConsoleColor.Red);
 					Console.WriteLine(e.Message);
 				}
-
 				var userConnection = consoleApp.SystemUserConnection;
-				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "Account");
-				esq.AddColumn("Id");
-				esq.AddColumn("Name");
-				esq.AddColumn("Address");
-				esq.AddColumn("City");
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Contain, "=[TsiPersonalAccount:TsiAccount:Id].=[TsiPersAccAddress:TsiPersonalAccount:Id].=[TsiAddress:Id:TsiAddress].TsiAddressName", "вул"));
 
+				var test = ObjectFactory.Get<ISettingProvider>();
+				ConnectionProvider.DoWith(userConnection, () =>
+				{
+					var res = test
+						.Get("MappingConfig")
+						.SelectFromList<MappingConfig>();
+				});
 
 				while (true) {
 				}

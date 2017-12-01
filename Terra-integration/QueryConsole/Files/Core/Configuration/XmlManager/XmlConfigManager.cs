@@ -61,7 +61,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 		}
 		private static void InitConfigData()
 		{
-			//
 			IntegrationConfig = new IntegrationConfig();
 			InitPrepareConfig();
 			InitExportRouteConfig();
