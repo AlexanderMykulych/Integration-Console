@@ -41,6 +41,20 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public static class SettingsManager
 	{
+		private static ISettingProvider _settingProvider;
+
+		private static ISettingProvider settingProvider
+		{
+			get
+			{
+				if (_settingProvider == null)
+				{
+					_settingProvider = ObjectFactory.Get<ISettingProvider>();
+				}
+				return _settingProvider;
+			}
+		}
+
 		private static ConcurrentDictionary<string, ValueType> _integration;
 		public static ConcurrentDictionary<string, ValueType> Integration {
 			get {
@@ -80,27 +94,28 @@ namespace Terrasoft.TsIntegration.Configuration{
 			switch (type)
 			{
 				case CsConstant.TIntegrationType.Export:
-					routeConfig = XmlConfigManager.IntegrationConfig.ExportRouteConfig.Where(x => x.Key == key).ToList();
+					routeConfig = GetExportRoutes(key).ToList();
 					break;
 				default:
-					routeConfig = XmlConfigManager.IntegrationConfig.ImportRouteConfig.Where(x => x.Key == key).ToList();
+					routeConfig = GetImportRoutes(key).ToList();
 					break;
 			}
-			if (routeConfig != null)
-			{
-				var config = XmlConfigManager.IntegrationConfig.ConfigSetting.Where(x => routeConfig.Any(y => y.ConfigId == x.Id)).ToList();
-				ConfigSettings.TryAdd(key, config);
-				return config;
-			}
-			return new List<ConfigSetting>();
+			var config = GetSettings<ConfigSetting>("ConfigSetting").Where(x => routeConfig.Any(y => y.ConfigId == x.Id)).ToList();
+			ConfigSettings.TryAdd(key, config);
+			return config;
 		}
 		public static IEnumerable<RouteConfig> GetExportRoutes(string key)
 		{
-			return XmlConfigManager.IntegrationConfig.ExportRouteConfig.Where(x => x.Key == key);
+			return GetSettings<RouteConfig>("ExportRouteConfig").Where(x => x.Key == key);
+		}
+
+		private static IEnumerable<T> GetSettings<T>(string name)
+		{
+			return settingProvider.Get(name).SelectFromList<T>();
 		}
 		public static IEnumerable<RouteConfig> GetImportRoutes(string key)
 		{
-			return XmlConfigManager.IntegrationConfig.ImportRouteConfig.Where(x => x.Key == key);
+			return GetSettings<RouteConfig>("ImportRouteConfig").Where(x => x.Key == key);
 		}
 		public static ConfigSetting GetHandlerConfig(string key, string handlerName, CsConstant.TIntegrationType type)
 		{
@@ -108,29 +123,15 @@ namespace Terrasoft.TsIntegration.Configuration{
 		}
 		public static MappingConfig GetMappingConfig(string key)
 		{
-			if (MappingConfig == null)
-			{
-				MappingConfig = new ConcurrentDictionary<string, MappingConfig>();
-			}
-			if (MappingConfig.ContainsKey(key))
-			{
-				return MappingConfig[key];
-			}
-			var mappingConfig = XmlConfigManager.IntegrationConfig.MappingConfig.FirstOrDefault(x => x.Id == key);
-			if (mappingConfig != null)
-			{
-				MappingConfig.TryAdd(key, mappingConfig);
-				return mappingConfig;
-			}
-			return null;
+			return GetSettings<MappingConfig>("MappingConfig").FirstOrDefault(x => x.Id == key);
 		}
 		public static MappingConfig GetMappingConfigById(string mappingId)
 		{
-			return XmlConfigManager.IntegrationConfig.MappingConfig.FirstOrDefault(x => x.Id == mappingId);
+			return GetSettings<MappingConfig>("MappingConfig").FirstOrDefault(x => x.Id == mappingId);
 		}
 		public static ConfigSetting GetHandlerConfigById(string configId)
 		{
-			return XmlConfigManager.IntegrationConfig.ConfigSetting.FirstOrDefault(x => x.Id == configId);
+			return GetSettings<ConfigSetting>("ConfigSetting").FirstOrDefault(x => x.Id == configId);
 		}
 		public static MappingConfig GetMappingConfigByRoute(string key, string handlerName, CsConstant.TIntegrationType type)
 		{
@@ -147,39 +148,35 @@ namespace Terrasoft.TsIntegration.Configuration{
 		}
 		public static ServiceConfig GetServiceConfig(string key)
 		{
-			return XmlConfigManager.IntegrationConfig.ServiceConfig.FirstOrDefault(x => x.Id == key);
+			return GetSettings<ServiceConfig>("ServiceConfig").FirstOrDefault(x => x.Id == key);
 		}
 		public static ServiceMockConfig GetServiceMockConfig(string key)
 		{
-			return XmlConfigManager.IntegrationConfig.ServiceMockConfig.FirstOrDefault(x => x.Id == key);
+			return GetSettings<ServiceMockConfig>("ServiceMockConfig").FirstOrDefault(x => x.Id == key);
 		}
 		public static TemplateSetting GetTemplatesConfig(string key)
 		{
-			return XmlConfigManager.GetTemplateConfig(key);
+			return GetSettings<TemplateSetting>("TemplateConfig").FirstOrDefault(x => x.Name == key);
 		}
 		public static List<TriggerSetting> GetTriggersConfig()
 		{
-			return XmlConfigManager.IntegrationConfig.TriggerConfig;
+			return GetSettings<TriggerSetting>("TriggerConfig").ToList();
 		}
 		public static List<EndPointConfig> GetEndPointConfigs()
 		{
-			return XmlConfigManager.IntegrationConfig.EndPointConfig;
+			return GetSettings<EndPointConfig>("EndPointConfig").ToList();
 		}
 		public static EndPointConfig GetEndPointConfig(string name)
 		{
-			return XmlConfigManager.IntegrationConfig.EndPointConfig.FirstOrDefault(x => x.Name == name);
+			return GetSettings<EndPointConfig>("EndPointConfig").FirstOrDefault(x => x.Name == name);
 		}
 		public static EndPointConfig GetEndPointConfigByHandler(string name)
 		{
-			return XmlConfigManager.IntegrationConfig.EndPointConfig.FirstOrDefault(x => x.EndPointHandler == name);
+			return GetSettings<EndPointConfig>("EndPointConfig").FirstOrDefault(x => x.Name == name);
 		}
 		public static LogItemConfig GetLogConfig(string name)
 		{
-			if (XmlConfigManager.IntegrationConfig != null && XmlConfigManager.IntegrationConfig.LogConfig != null)
-			{
-				return XmlConfigManager.IntegrationConfig.LogConfig.FirstOrDefault(x => x.Name == name);
-			}
-			return null;
+			return GetSettings<LogItemConfig>("LogConfig").FirstOrDefault(x => x.Name == name);
 		}
 		public static T GetSetting<T>(ConcurrentDictionary<string, ValueType> Settings, string settingName)
 		{
@@ -219,10 +216,10 @@ namespace Terrasoft.TsIntegration.Configuration{
 			{
 				return _integration;
 			}
-			var infoDictionary = InitIntegrationId();
-			InitXmlConfig();
-			RegisterHandlers();
-			return infoDictionary;
+			//var infoDictionary = InitIntegrationId();
+			//InitXmlConfig();
+			//RegisterHandlers();
+			return new ConcurrentDictionary<string, ValueType>();
 		}
 		public static void ReinitXmlConfigSettings()
 		{
@@ -234,41 +231,8 @@ namespace Terrasoft.TsIntegration.Configuration{
 			{
 				MappingConfig.Clear();
 			}
-			XmlConfigManager.IsConfigInited = false;
-			InitXmlConfig();
+			_settingProvider.Reinit();
 		}
-		public static ConcurrentDictionary<string, ValueType> InitIntegrationId()
-		{
-			var addData = new ConcurrentDictionary<string, ValueType>();
-			var select = new Select(UserConnection)
-				.Top(1)
-				.Column("Id")
-				.Column("TsIsActive")
-				.Column("TsIsDebugMode")
-				.Column("TsIntegrObjectTypeId")
-				.From("TsIntegration")
-				.Where("TsIsActive").IsEqual(Column.Const(1)) as Select;
-			using (var dBExecutor = UserConnection.EnsureDBConnection())
-			{
-				using (var reader = select.ExecuteReader(dBExecutor))
-				{
-					if (reader.Read())
-					{
-						IntegrationId = reader.GetColumnValue<Guid>("Id");
-						addData.TryAdd("TsIsDebugMode", reader.GetColumnValue<bool>("TsIsDebugMode"));
-						addData.TryAdd("TsIsActive", reader.GetColumnValue<bool>("TsIsActive"));
-						addData.TryAdd("TsIntegrationObjectType", GetIntegrationObjectTypeById(reader.GetColumnValue<Guid>("TsIntegrObjectTypeId")));
-					}
-				}
-			}
-			return addData;
-		}
-		public static void InitXmlConfig()
-		{
-			var xmlData = GetXmlConfigData();
-			XmlConfigManager.InitLoadConfig(xmlData);
-		}
-
 		public static void RegisterHandlers()
 		{
 			var attributeType = typeof(IntegrationHandlerAttribute);
@@ -277,26 +241,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 				.GetTypes()
 				.Where(x => x.GetCustomAttributes(attributeType, true).Any())
 				.ToList();
-		}
-		public static string GetXmlConfigData()
-		{
-			var select = new Select(UserConnection)
-				.Column("tmc", "TsXmlConfig")
-				.From("TsMappingConfig").As("tmc")
-				.InnerJoin("TsIntegrMapping").As("tim")
-				.On("tim", "TsMappingConfigId").IsEqual("tmc", "Id")
-				.Where("tim", "TsIntegrationId").IsEqual(Column.Parameter(IntegrationId)) as Select;
-			using (var dBExecutor = UserConnection.EnsureDBConnection())
-			{
-				using (var reader = select.ExecuteReader(dBExecutor))
-				{
-					if (reader.Read())
-					{
-						return reader.GetColumnValue<string>("TsXmlConfig");
-					}
-				}
-			}
-			return string.Empty;
 		}
 		#endregion
 

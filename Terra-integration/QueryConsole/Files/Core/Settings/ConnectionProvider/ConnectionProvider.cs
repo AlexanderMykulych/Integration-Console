@@ -90,5 +90,26 @@ namespace Terrasoft.TsIntegration.Configuration
 				Clear();
 			}
 		}
+		public static T DoWith<T>(object connection, Func<T> predicate, T defaultValue, Action<Exception> onErrorAction = null)
+		{
+			try
+			{
+				Set(connection);
+				return predicate();
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e.ToString());
+				if (onErrorAction != null)
+				{
+					onErrorAction(e);
+				}
+			}
+			finally
+			{
+				Clear();
+			}
+			return defaultValue;
+		}
 	}
 }

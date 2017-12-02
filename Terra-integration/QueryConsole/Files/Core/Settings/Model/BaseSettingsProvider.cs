@@ -68,7 +68,7 @@ namespace Terrasoft.TsIntegration.Configuration
 
 		public ISetting GetUnsafe(string settingName)
 		{
-			return new SettingProvider(XmlConfigManager.IntegrationConfig.Get(settingName));
+			return new Setting(XmlConfigManager.IntegrationConfig.Get(settingName));
 		}
 	}
 }

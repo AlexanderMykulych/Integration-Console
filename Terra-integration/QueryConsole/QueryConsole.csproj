@@ -107,6 +107,7 @@
     </Reference>
     <Reference Include="Ninject, Version=2.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Quartz">
       <HintPath>..\..\..\WebApp\Armtek\Terrasoft.WebApp\bin\Quartz.dll</HintPath>
@@ -329,7 +330,7 @@
     <Compile Include="Files\Core\Settings\Model\ISetting.cs" />
     <Compile Include="Files\Core\Settings\Model\ISettingProvider.cs" />
     <Compile Include="Files\Core\Settings\Model\Repository\IRepositorySettingsProvider.cs" />
-    <Compile Include="Files\Core\Settings\Model\SettingProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\Setting.cs" />
     <Compile Include="Files\Core\Settings\Model\Xml\IXmlProvider.cs" />
     <Compile Include="Files\Core\Settings\SettingsManager.cs" />
     <Compile Include="Files\Core\DiCore\CoreDiModule.cs" />

@@ -20,6 +20,10 @@ namespace Terrasoft.TsIntegration.Configuration
 		}
 		public string MergeXmls(List<string> xmls)
 		{
+			if (xmls == null || !xmls.Any())
+			{
+				return null;
+			}
 			var regex = new Regex(_configRegex);
 			var config = xmls.Select(x =>
 			{
