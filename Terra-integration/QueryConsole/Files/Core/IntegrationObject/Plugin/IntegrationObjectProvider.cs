@@ -69,6 +69,8 @@ namespace Terrasoft.TsIntegration.Configuration{
 					return new IntegrJObject();
 				case TIntegrationObjectType.Xml:
 					return new IntegrXObject(name);
+				case TIntegrationObjectType.TsEntity:
+					return new IntegrTsEntity(name);
 				default:
 					throw new Exception("Не удалось распознать тип объекта интеграции!");
 			}

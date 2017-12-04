@@ -320,6 +320,7 @@
     <Compile Include="Files\Core\Configuration\Model\TemplateSetting\TemplateSetting.cs" />
     <Compile Include="Files\Core\Configuration\Model\TriggerSetting\TriggerSetting.cs" />
     <Compile Include="Files\Core\Configuration\XmlManager\XmlConfigManager.cs" />
+    <Compile Include="Files\Core\IntegrationObject\Instance\Terrasoft.Entity\IntegrTsEntity.cs" />
     <Compile Include="Files\Core\Settings\ConnectionProvider\BpmConnectionProvider.cs" />
     <Compile Include="Files\Core\Settings\ConnectionProvider\ConnectionProvider.cs" />
     <Compile Include="Files\Core\Settings\ConnectionProvider\IConnectionProvider.cs" />
