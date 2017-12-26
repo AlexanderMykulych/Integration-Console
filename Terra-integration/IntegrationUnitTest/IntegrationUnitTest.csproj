@@ -192,6 +192,7 @@
     <Compile Include="Setup\SetuperTest.cs" />
     <Compile Include="Strategy\BaseIntegerAddStrategy.cs" />
     <Compile Include="Strategy\BaseResultStrategyStepTester.cs" />
+    <Compile Include="Strategy\StringToIObjectStepTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QueryConsole\QueryConsole.csproj">

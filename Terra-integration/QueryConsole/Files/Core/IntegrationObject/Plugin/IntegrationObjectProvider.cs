@@ -59,7 +59,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 					throw new Exception("Не удалось распознать тип объекта интеграции!");
 			}
 		}
-
+		[System.Obsolete]
 		public virtual IIntegrationObject NewInstance(string name = null)
 		{
 			var objectType = GetObjectType();

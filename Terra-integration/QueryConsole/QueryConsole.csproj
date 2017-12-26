@@ -490,6 +490,7 @@
     <Compile Include="Files\Core\Strategy\Instance\BaseStrategyStepInfo.cs" />
     <Compile Include="Files\Core\Strategy\Instance\BaseSubscriber.cs" />
     <Compile Include="Files\Core\Strategy\Instance\Steps\BaseStrategyStep.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\Steps\Input\StringToIObjectStep.cs" />
     <Compile Include="Files\Core\Strategy\Instance\Steps\Test\IntegerStrategyStep.cs" />
     <Compile Include="Files\Core\Strategy\Instance\Steps\Test\StringFormatStrategyStep.cs" />
     <Compile Include="Files\Core\Strategy\Model\BuilderStepExtensions.cs" />
