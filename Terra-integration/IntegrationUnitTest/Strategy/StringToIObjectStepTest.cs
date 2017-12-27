@@ -12,7 +12,7 @@ namespace IntegrationUnitTest.Strategy
 	[TestFixture]
 	public class StringToIObjectStepTest
 	{
-		private string _json;
+		private readonly string _json;
 
 		public StringToIObjectStepTest()
 		{
