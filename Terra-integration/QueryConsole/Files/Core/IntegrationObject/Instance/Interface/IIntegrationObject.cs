@@ -43,6 +43,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 	{
 		object GetObject();
 		void SetObject(object obj);
+		void InitObject(string rootName = null);
 		T GetProperty<T>(string name, T defaultValue = default(T));
 		void SetProperty(string name, object obj);
 		string GetRootName(string defaultValue = null);

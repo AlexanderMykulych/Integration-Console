@@ -134,6 +134,14 @@ namespace Terrasoft.TsIntegration.Configuration{
 			return null;
 		}
 		//Log key=iObject
+		public void InitObject(string rootName = null)
+		{
+			if (!string.IsNullOrEmpty(rootName))
+			{
+				_data.Add(new XElement(rootName));
+			}
+		}
+		//Log key=iObject
 		public void SetObject(object obj)
 		{
 			if (obj is XElement)

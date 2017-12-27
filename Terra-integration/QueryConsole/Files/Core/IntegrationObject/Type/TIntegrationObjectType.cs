@@ -43,8 +43,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 	{
 		Json,
 		Xml,
-		Excell,
-		TsEntity,
-		All
+		Excell
 	}
 }

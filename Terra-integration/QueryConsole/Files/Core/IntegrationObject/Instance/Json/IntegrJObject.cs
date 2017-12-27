@@ -108,6 +108,13 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			return new List<IIntegrationObject>();
 		}
+		public void InitObject(string rootName = null)
+		{
+			if (!string.IsNullOrEmpty(rootName))
+			{
+				_data[rootName] = new JObject();
+			}
+		}
 
 		public void SetObject(object jObj)
 		{
