@@ -37,13 +37,29 @@ namespace QueryConsole
 				}
 
 				var userConnection = consoleApp.SystemUserConnection;
-				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "Account");
-				esq.AddColumn("Id");
-				esq.AddColumn("Name");
-				esq.AddColumn("Address");
-				esq.AddColumn("City");
-				esq.Filters.Add(esq.CreateFilterWithParameters(FilterComparisonType.Contain, "=[TsiPersonalAccount:TsiAccount:Id].=[TsiPersAccAddress:TsiPersonalAccount:Id].=[TsiAddress:Id:TsiAddress].TsiAddressName", "вул"));
+				var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, "TsiServiceCallCase");
+				esq.RowCount = 1;
+				esq.AddAllSchemaColumns();
+				var entity = esq.GetEntity(userConnection, new Guid("eda077d3-9779-4836-8006-bd48d7a2a462"));
 
+
+				//var rule = new ConcatenateDetailColumnRule();
+				//rule.Export(new RuleExportInfo()
+				//{
+				//	action = null, 
+				//	config = new MappingItem()
+				//	{
+				//		TsDetailName = "TsiCaseCharacteristicValue",
+				//		TsDetailPath = "TsiCase",
+				//		TsDetailResPath = "TsiCharacteristic.TsiName",
+				//		TsDetailTag = "CondColumn=TsiCaseCharType,CondColumnValue={EE3B6DE8-4BB2-46F4-B87C-1006B40D91FB},ResultColumn=TsiGuidValue;;",
+				//		TsSourcePath = "Id"
+				//	},
+				//	userConnection = userConnection,
+				//	entity = entity,
+				//	integrationType = CsConstant.TIntegrationType.Export,
+				//	json = null
+				//});
 
 				while (true) {
 				}

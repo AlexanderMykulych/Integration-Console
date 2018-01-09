@@ -290,7 +290,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			var dict = new Dictionary<string, EntitySchemaQueryColumn>();
 
 			var mapItems = mappingConfig.Items.Where(i => i.TsSourcePath != null && i.TsSourcePath != esq.RootSchema.PrimaryColumn.Name);
-			var columns = mapItems.Select(i => i.TsSourcePath);
+			var columns = mapItems.Select(i => i.TsSourcePath).Distinct();
 
 			foreach (var col in columns)
 			{

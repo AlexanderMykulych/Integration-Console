@@ -331,6 +331,7 @@
     <Compile Include="Files\Core\Handler\Instance\BaseEntityHandler.cs" />
     <Compile Include="Files\Core\Handler\Instance\DefaultEntityHandler.cs" />
     <Compile Include="Files\Core\Handler\Instance\NoEntityHandler.cs" />
+    <Compile Include="Files\Core\Handler\Instance\TsiServiceCallCaseIntegrationHandler.cs" />
     <Compile Include="Files\Core\Handler\Manager\Attribute\DefaultHandlerAttribute.cs" />
     <Compile Include="Files\Core\Handler\Manager\Attribute\ExportHandlerAttribute.cs" />
     <Compile Include="Files\Core\Handler\Manager\Attribute\ImportHandlerAttribute.cs" />
@@ -480,10 +481,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Files\Core\Project\ArhiveSessionIntegrationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TempFile\EsqHelper.cs" />
-    <Compile Include="TempFile\TsBotService.cs" />
-    <Compile Include="TempFile\TsiSelectQuery.cs" />
-    <Compile Include="TempFile\UsrEquipmentHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -512,7 +509,9 @@
     <Content Include="IntegrationJson\CompanyProfile.txt" />
     <Content Include="IntegrationJson\PersonProfile.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="TempFile\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
