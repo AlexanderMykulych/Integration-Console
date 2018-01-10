@@ -41,8 +41,8 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public interface IIntegrator
 	{
-		void ExportWithRequest(UserConnection userConnection, Guid id, string schemaName, string routeKey = null);
-		void Export(UserConnection userConnection, Guid id, string schemaName, string routeKey = null, Action<IIntegrationObject, ConfigSetting, BaseEntityHandler, Entity> OnGet = null);
-		void Import(UserConnection userConnection, IIntegrationObject iObject, string routeKey = null, Action<CsConstant.IntegrationInfo> onSuccess = null, Action<CsConstant.IntegrationInfo, Exception> onError = null);
+		void ExportWithRequest(Guid id, string schemaName, string routeKey = null);
+		void Export(Guid id, string schemaName, string routeKey = null, Action<IIntegrationObject, ConfigSetting, BaseEntityHandler, Entity> OnGet = null);
+		void Import(IIntegrationObject iObject, string routeKey = null, Action<CsConstant.IntegrationInfo> onSuccess = null, Action<CsConstant.IntegrationInfo, Exception> onError = null);
 	}
 }

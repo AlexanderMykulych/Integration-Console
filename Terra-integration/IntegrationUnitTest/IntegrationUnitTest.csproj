@@ -146,11 +146,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Entities\AccountEntityTest.cs" />
-    <Compile Include="Entities\BaseEntityTest.cs" />
-    <Compile Include="Entities\JArray.cs" />
     <Compile Include="EntityDbTester.cs" />
-    <Compile Include="IEntities\IEntityTest.cs" />
     <Compile Include="IntegrationSystem\NancyInit\JsonOrderServiceTest.cs" />
     <Compile Include="IntegrationSystem\Remedy\RemedyMockIntegrationConfig.cs" />
     <Compile Include="IntegrationSystem\Remedy\RemedyService.cs" />

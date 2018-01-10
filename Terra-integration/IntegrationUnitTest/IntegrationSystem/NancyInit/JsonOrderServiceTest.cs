@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Nancy;
 using Nancy.Hosting.Self;
-using Nancy.Testing;
 using NUnit.Framework;
 using Terrasoft.TsIntegration.Configuration;
 

@@ -310,6 +310,7 @@
     <Compile Include="Files\Core\Configuration\Model\EndPointConfig\EndPointConfig.cs" />
     <Compile Include="Files\Core\Configuration\Model\EndPointConfig\EndPointHandlerConfig.cs" />
     <Compile Include="Files\Core\Configuration\Model\LogConfig\LogItemConfig.cs" />
+    <Compile Include="Files\Core\Configuration\Model\Main\IIntegrationConfig.cs" />
     <Compile Include="Files\Core\Configuration\Model\Main\IntegrationConfig.cs" />
     <Compile Include="Files\Core\Configuration\Model\ConfigSetting\ConfigSetting.cs" />
     <Compile Include="Files\Core\Configuration\Model\MappingConfig\MappingConfig.cs" />
@@ -321,6 +322,8 @@
     <Compile Include="Files\Core\Configuration\XmlManager\XmlConfigManager.cs" />
     <Compile Include="Files\Core\Constants\CsConstant.cs" />
     <Compile Include="Files\Core\Constants\SettingsManager.cs" />
+    <Compile Include="Files\Core\DiCore\CoreDiModule.cs" />
+    <Compile Include="Files\Core\DiCore\ObjectFactory.cs" />
     <Compile Include="Files\Core\Extension\ObjectExtension.cs" />
     <Compile Include="Files\Core\Extension\StringBuilderExtension.cs" />
     <Compile Include="Files\Core\Factory\BaseAttributeFactory.cs" />
@@ -466,6 +469,18 @@
     <Compile Include="Files\Core\Configuration\Test\Logic\TestScenarioProvider.cs" />
     <Compile Include="Files\Core\Configuration\Test\Logic\TsIntegrationCodeServiceHelper.cs" />
     <Compile Include="Files\Core\Configuration\Test\Logic\TsIntegrationCodeServiceHelperTester.cs" />
+    <Compile Include="Files\Core\Settings\ConnectionProvider\BpmConnectionProvider.cs" />
+    <Compile Include="Files\Core\Settings\ConnectionProvider\ConnectionProvider.cs" />
+    <Compile Include="Files\Core\Settings\ConnectionProvider\IConnectionProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\ISetting.cs" />
+    <Compile Include="Files\Core\Settings\Model\ISettingProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\Repository\BaseRepositorySettingProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\Repository\IRepositorySettingsProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\SettingProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\SettingsProviderExtension.cs" />
+    <Compile Include="Files\Core\Settings\Model\Xml\BaseXmlProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\Xml\IXmlProvider.cs" />
+    <Compile Include="Files\Core\Settings\SettingsManager.cs" />
     <Compile Include="Files\Core\Trigger\Interface\ITriggerCheckerItem.cs" />
     <Compile Include="Files\Core\Trigger\Interface\ITriggerCollection.cs" />
     <Compile Include="Files\Core\Trigger\Interface\ITriggerEngine.cs" />

@@ -13,14 +13,7 @@ namespace Terrasoft.TsIntegration.Configuration
 		public static IKernel CurrentKernel
 		{
 			set { _currentKernel = value; }
-			get
-			{
-				if (_currentKernel == null)
-				{
-					_currentKernel = new StandardKernel(new CoreDiModule());
-				}
-				return _currentKernel;
-			}
+			get { return _currentKernel ?? (_currentKernel = new StandardKernel(new CoreDiModule())); }
 		}
 
 		public static T Get<T>()
