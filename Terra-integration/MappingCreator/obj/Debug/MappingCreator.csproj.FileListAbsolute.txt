@@ -413,10 +413,3 @@ C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\MappingCr
 C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\MappingCreator\bin\Debug\Microsoft.Data.Edm.xml
 C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\MappingCreator\bin\Debug\Microsoft.Data.OData.xml
 C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\MappingCreator\bin\Debug\Microsoft.Web.Administration.dll
-C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Debug\MappingCreator.csprojResolveAssemblyReference.cache
-C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Debug\MappingCreator.Form1.resources
-C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Debug\MappingCreator.Properties.Resources.resources
-C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Debug\MappingCreator.csproj.GenerateResource.Cache
-C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Debug\MappingCreator.csproj.CoreCompileInputs.cache
-C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Debug\MappingCreator.exe
-C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Debug\MappingCreator.pdb

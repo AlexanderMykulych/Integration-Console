@@ -107,6 +107,7 @@
     </Reference>
     <Reference Include="Ninject, Version=2.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Quartz">
       <HintPath>..\..\..\WebApp\Armtek\Terrasoft.WebApp\bin\Quartz.dll</HintPath>
@@ -140,6 +141,7 @@
       <HintPath>..\packages\SharpSvn.1.8-x64.1.8016.3866.130\lib\net40\SharpSvn.UI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -319,8 +321,23 @@
     <Compile Include="Files\Core\Configuration\Model\TemplateSetting\TemplateSetting.cs" />
     <Compile Include="Files\Core\Configuration\Model\TriggerSetting\TriggerSetting.cs" />
     <Compile Include="Files\Core\Configuration\XmlManager\XmlConfigManager.cs" />
-    <Compile Include="Files\Core\Constants\CsConstant.cs" />
-    <Compile Include="Files\Core\Constants\SettingsManager.cs" />
+    <Compile Include="Files\Core\IntegrationObject\Instance\Terrasoft.Entity\IntegrTsEntity.cs" />
+    <Compile Include="Files\Core\Project\TsiImportStarter.cs" />
+    <Compile Include="Files\Core\Settings\ConnectionProvider\BpmConnectionProvider.cs" />
+    <Compile Include="Files\Core\Settings\ConnectionProvider\ConnectionProvider.cs" />
+    <Compile Include="Files\Core\Settings\ConnectionProvider\IConnectionProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\Repository\BaseRepositorySettingProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\BaseSettingsProvider.cs" />
+    <Compile Include="Files\Core\Settings\CsConstant.cs" />
+    <Compile Include="Files\Core\Settings\Model\Xml\BaseXmlProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\ISetting.cs" />
+    <Compile Include="Files\Core\Settings\Model\ISettingProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\Repository\IRepositorySettingsProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\Setting.cs" />
+    <Compile Include="Files\Core\Settings\Model\Xml\IXmlProvider.cs" />
+    <Compile Include="Files\Core\Settings\SettingsManager.cs" />
+    <Compile Include="Files\Core\DiCore\CoreDiModule.cs" />
+    <Compile Include="Files\Core\DiCore\ObjectFactory.cs" />
     <Compile Include="Files\Core\Extension\ObjectExtension.cs" />
     <Compile Include="Files\Core\Extension\StringBuilderExtension.cs" />
     <Compile Include="Files\Core\Factory\BaseAttributeFactory.cs" />
@@ -331,7 +348,6 @@
     <Compile Include="Files\Core\Handler\Instance\BaseEntityHandler.cs" />
     <Compile Include="Files\Core\Handler\Instance\DefaultEntityHandler.cs" />
     <Compile Include="Files\Core\Handler\Instance\NoEntityHandler.cs" />
-    <Compile Include="Files\Core\Handler\Instance\TsiServiceCallCaseIntegrationHandler.cs" />
     <Compile Include="Files\Core\Handler\Manager\Attribute\DefaultHandlerAttribute.cs" />
     <Compile Include="Files\Core\Handler\Manager\Attribute\ExportHandlerAttribute.cs" />
     <Compile Include="Files\Core\Handler\Manager\Attribute\ImportHandlerAttribute.cs" />
@@ -466,6 +482,29 @@
     <Compile Include="Files\Core\Configuration\Test\Logic\TestScenarioProvider.cs" />
     <Compile Include="Files\Core\Configuration\Test\Logic\TsIntegrationCodeServiceHelper.cs" />
     <Compile Include="Files\Core\Configuration\Test\Logic\TsIntegrationCodeServiceHelperTester.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStepBuilder.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStrategy.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStrategyConfigurator.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStrategyImplementation.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStrategyImplementationBuilder.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStrategyStepInfo.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseSubscriber.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\Steps\BaseStrategyStep.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\Steps\Input\StringToIObjectStep.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\Steps\Test\IntegerStrategyStep.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\Steps\Test\StringFormatStrategyStep.cs" />
+    <Compile Include="Files\Core\Strategy\Model\BuilderStepExtensions.cs" />
+    <Compile Include="Files\Core\Strategy\Model\EventStep.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IExecutorSubscriber.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStepBuilder.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStrategy.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStrategyConfigurator.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStrategyImplementation.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStrategyImplementationBuilder.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStrategyStep.cs" />
+    <Compile Include="Files\Core\Strategy\Model\ISubscriber.cs" />
+    <Compile Include="Files\Core\Strategy\Model\StrategyStepInfo.cs" />
+    <Compile Include="Files\Core\Strategy\TestClass.cs" />
     <Compile Include="Files\Core\Trigger\Interface\ITriggerCheckerItem.cs" />
     <Compile Include="Files\Core\Trigger\Interface\ITriggerCollection.cs" />
     <Compile Include="Files\Core\Trigger\Interface\ITriggerEngine.cs" />
@@ -509,9 +548,7 @@
     <Content Include="IntegrationJson\CompanyProfile.txt" />
     <Content Include="IntegrationJson\PersonProfile.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TempFile\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

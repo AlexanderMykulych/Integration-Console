@@ -38,90 +38,137 @@
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=2.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="Terrasoft.Common">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Configuration.UnitTest">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Configuration.UnitTest.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core.Entities.Services">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.Entities.Services.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.Entities.Services.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core.Packages">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.Packages.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.Packages.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core.RabbitQueue">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.RabbitQueue.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.RabbitQueue.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core.Scheduler">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.Scheduler.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.Scheduler.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core.ScriptEngine">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.ScriptEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.ScriptEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Core.ServiceModelClient">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.ServiceModelClient.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Core.ServiceModelContract">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Core.ServiceModelContract.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.ServiceModelContract.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.DB.MSSql">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.DB.MSSql.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.DB.MSSql.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.DB.Oracle">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.DB.Oracle.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.DB.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.GlobalSearch">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.GlobalSearch.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.GoogleServerConnector">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.GoogleServerConnector.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.GoogleServerConnector.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.GoogleServices">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.GoogleServices.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.GoogleServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.IO">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.IO.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Messaging.Common">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Messaging.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.Core">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Messaging.FlashPolicyService">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.FlashPolicyService.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Messaging.MicrosoftWSService">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Messaging.MicrosoftWSService.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.MicrosoftWSService.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Messaging.SuperWSService">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Messaging.SuperWSService.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Messaging.SuperWSService.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Mobile">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Mobile.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Mobile.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Nui">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Nui.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Nui.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Nui.ServiceModel">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Nui.ServiceModel.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Nui.ServiceModel.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Performance.Profiler">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Performance.Profiler.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Performance.Profiler.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Redis">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Redis.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Redis.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Reports">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Reports.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Reports.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Social">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Social.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Social.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Social.Service">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Social.Service.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Store.WebAdapters">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Store.WebAdapters.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Store.WebAdapters.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Svn">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Svn.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Svn.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Sync">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Sync.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Sync.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.TestFramework">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.TestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.Common">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.InvisibleCrm.Connector">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.InvisibleCrm.Connector.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.JsApiExtension">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.JsApiExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.JsApiParsers">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.JsApiParsers.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.Tools.JsApiValidator.Plugin">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Tools.JsApiValidator.Plugin.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.UI.WebControls">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.UI.WebControls.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.UI.WebControls.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Web.Common">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Web.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Web.Common.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.WebApp">
-      <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.WebApp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.WebApp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
@@ -137,12 +184,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Entities\AccountEntityTest.cs" />
-    <Compile Include="Entities\BaseEntityTest.cs" />
-    <Compile Include="Entities\JArray.cs" />
-    <Compile Include="EntityDbTester.cs" />
-    <Compile Include="IEntities\IEntityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\RepositoryProvider\RepositoryProviderTest.cs" />
+    <Compile Include="Settings\SettingsProvider\SettingsProviderTest.cs" />
+    <Compile Include="Settings\XmlProvider\XmlProviderTest.cs" />
+    <Compile Include="Setup\Setuper.cs" />
+    <Compile Include="Setup\SetuperTest.cs" />
+    <Compile Include="Strategy\BaseIntegerAddStrategy.cs" />
+    <Compile Include="Strategy\BaseResultStrategyStepTester.cs" />
+    <Compile Include="Strategy\StringToIObjectStepTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QueryConsole\QueryConsole.csproj">
@@ -152,7 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="JsonFiles\Account.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

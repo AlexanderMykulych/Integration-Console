@@ -503,4 +503,3 @@ C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\bin\Debug\ru\DevExpress.XtraVerticalGrid.v10.2.resources.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\bin\Debug\ru\DevExpress.XtraLayout.v10.2.resources.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\bin\Debug\ru\DevExpress.Xpo.v10.2.resources.dll
-C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.csproj.QueryConsole.exe.config

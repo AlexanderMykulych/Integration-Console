@@ -53,5 +53,34 @@ namespace Terrasoft.TsIntegration.Configuration{
 		public List<TriggerSetting> TriggerConfig;
 		public List<EndPointConfig> EndPointConfig;
 		public List<LogItemConfig> LogConfig;
+
+		private Dictionary<string, Func<object>> _mapping;
+
+		public IntegrationConfig()
+		{
+			_mapping = new Dictionary<string, Func<object>>()
+			{
+				{ "PrerenderConfig", () => PrerenderConfig },
+				{ "ExportRouteConfig", () => ExportRouteConfig },
+				{ "ImportRouteConfig", () => ImportRouteConfig },
+				{ "ConfigSetting", () => ConfigSetting },
+				{ "DefaultMappingConfig", () => DefaultMappingConfig },
+				{ "MappingConfig", () => MappingConfig },
+				{ "ServiceConfig", () => ServiceConfig },
+				{ "ServiceMockConfig", () => ServiceMockConfig },
+				{ "TemplateConfig", () => TemplateConfig },
+				{ "TriggerConfig", () => TriggerConfig },
+				{ "EndPointConfig", () => EndPointConfig },
+				{ "LogConfig", () => LogConfig }
+			};
+		}
+		public object Get(string settingName)
+		{
+			if (_mapping != null && _mapping.ContainsKey(settingName))
+			{
+				return _mapping[settingName]();
+			}
+			return null;
+		}
 	}
 }
