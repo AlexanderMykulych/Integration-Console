@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Nancy, Version=1.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nancy.1.4.4\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Hosting.Self, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nancy.Hosting.Self.1.4.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Terrasoft.Common">
@@ -142,7 +151,26 @@
     <Compile Include="Entities\JArray.cs" />
     <Compile Include="EntityDbTester.cs" />
     <Compile Include="IEntities\IEntityTest.cs" />
+    <Compile Include="IntegrationSystem\NancyInit\JsonOrderServiceTest.cs" />
+    <Compile Include="IntegrationSystem\Remedy\RemedyMockIntegrationConfig.cs" />
+    <Compile Include="IntegrationSystem\Remedy\RemedyService.cs" />
+    <Compile Include="IntegrationSystem\Remedy\RemedyServiceTest.cs" />
+    <Compile Include="IntegrationSytems\OrderJsonIntegrationService.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\RepositoryProvider\RepositoryProviderTest.cs" />
+    <Compile Include="Settings\SettingsProvider\SettingsProviderTest.cs" />
+    <Compile Include="Settings\XmlProvider\XmlProvidertest.cs" />
+    <Compile Include="Setup\Setuper.cs" />
+    <Compile Include="Setup\SetuperTest.cs" />
+    <Compile Include="Strategy\BaseIntegerAddStrategy.cs" />
+    <Compile Include="Strategy\BaseResultStrategyStepTester.cs" />
+    <Compile Include="Strategy\StringToIObjectStepTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QueryConsole\QueryConsole.csproj">
@@ -153,7 +181,23 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="JsonFiles\Account.json" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\IntegrationUnitTest.csproj.CopyComplete" />
+    <None Include="obj\Debug\IntegrationUnitTest.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\IntegrationUnitTest.csprojResolveAssemblyReference.cache" />
+    <None Include="obj\Release\build.force" />
+    <None Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Release\IntegrationUnitTest.csproj.CoreCompileInputs.cache" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="obj\Debug\IntegrationUnitTest.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\IntegrationUnitTest.dll" />
+    <Content Include="obj\Debug\IntegrationUnitTest.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\Release\TempPE\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
