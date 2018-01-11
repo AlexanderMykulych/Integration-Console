@@ -112,10 +112,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 				get;
 				set;
 			}
-			public UserConnection UserConnection {
-				get;
-				set;
-			}
 			public TIntegrationType IntegrationType {
 				get;
 				set;
@@ -150,7 +146,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			}
 
 
-			public IntegrationInfo(IIntegrationObject data, UserConnection userConnection, TIntegrationType integrationType = TIntegrationType.Export,
+			public IntegrationInfo(IIntegrationObject data, TIntegrationType integrationType = TIntegrationType.Export,
 				string action = "Create", Entity integratedEntity = null)
 			{
 				Data = data;
@@ -167,17 +163,17 @@ namespace Terrasoft.TsIntegration.Configuration{
 			}
 
 
-			public static IntegrationInfo CreateForImport(UserConnection userConnection, string action, IIntegrationObject data)
+			public static IntegrationInfo CreateForImport(string action, IIntegrationObject data)
 			{
-				return new IntegrationInfo(data, userConnection, TIntegrationType.Import, action, null);
+				return new IntegrationInfo(data, ObjectFactory.Get<UserConnection>(), TIntegrationType.Import, action, null);
 			}
-			public static IntegrationInfo CreateForExport(UserConnection userConnection, Entity entity)
+			public static IntegrationInfo CreateForExport(Entity entity)
 			{
-				return new IntegrationInfo(null, userConnection, TIntegrationType.Export, CsConstant.IntegrationActionName.Empty, entity);
+				return new IntegrationInfo(null, ObjectFactory.Get<UserConnection>(), TIntegrationType.Export, CsConstant.IntegrationActionName.Empty, entity);
 			}
-			public static IntegrationInfo CreateForResponse(UserConnection userConnection, Entity entity)
+			public static IntegrationInfo CreateForResponse(Entity entity)
 			{
-				return new IntegrationInfo(null, userConnection, TIntegrationType.ExportResponseProcess, CsConstant.IntegrationActionName.UpdateFromResponse, entity);
+				return new IntegrationInfo(null, ObjectFactory.Get<UserConnection>(), TIntegrationType.ExportResponseProcess, CsConstant.IntegrationActionName.UpdateFromResponse, entity);
 			}
 		}
 

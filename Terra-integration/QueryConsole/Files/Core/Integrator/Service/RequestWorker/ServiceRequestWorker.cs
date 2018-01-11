@@ -42,7 +42,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 	public class ServiceRequestWorker : IServiceRequestWorker
 	{
 		//Log key=Integration Service
-		public void MakeRequest(UserConnection userConnection, IServiceHandlerWorkers serviceHandlerWorker, Entity entity, BaseEntityHandler handler, string serviceName, string content)
+		public void MakeRequest(IServiceHandlerWorkers serviceHandlerWorker, Entity entity, BaseEntityHandler handler, string serviceName, string content)
 		{
 			var config = serviceHandlerWorker.GetServiceConfig(serviceName);
 			if (config != null)

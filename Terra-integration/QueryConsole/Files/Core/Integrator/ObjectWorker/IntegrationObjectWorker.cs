@@ -42,18 +42,17 @@ namespace Terrasoft.TsIntegration.Configuration{
 	public class IntegrationObjectWorker : IIntegrationObjectWorker
 	{
 		//Log key=Integration Service
-		public virtual IIntegrationObject Get(UserConnection userConnection, BaseEntityHandler handler, Entity entity)
+		public virtual IIntegrationObject Get(BaseEntityHandler handler, Entity entity)
 		{
-			var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
+			var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(entity);
 			integrationInfo.Handler = handler;
 			return handler.ToJson(integrationInfo);
 		}
 		//Log key=Integration Service
-		public virtual void Import(UserConnection userConnection, IServiceHandlerWorkers handlerWorker, ConfigSetting handlerConfig, IIntegrationObject iObject,
+		public virtual void Import(IServiceHandlerWorkers handlerWorker, ConfigSetting handlerConfig, IIntegrationObject iObject,
 			Action<CsConstant.IntegrationInfo> onSuccess = null, Action<CsConstant.IntegrationInfo, Exception> onError = null)
 		{
-			var integrationInfo = CsConstant.IntegrationInfo.CreateForImport(userConnection,
-					CsConstant.IntegrationActionName.Create, iObject);
+			var integrationInfo = CsConstant.IntegrationInfo.CreateForImport(CsConstant.IntegrationActionName.Create, iObject);
 			try
 			{
 				integrationInfo.Handler = handlerWorker.GetWithConfig(handlerConfig.Handler, handlerConfig);

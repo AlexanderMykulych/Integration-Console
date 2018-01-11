@@ -41,7 +41,7 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public interface ISyncExportChecker<T>
 	{
-		void DoInSync(UserConnection userConnection, string routeKey, T info, Action syncAction);
+		void DoInSync(string routeKey, T info, Action syncAction);
 		bool IsSyncEnable(string routeKey);
 	}
 }

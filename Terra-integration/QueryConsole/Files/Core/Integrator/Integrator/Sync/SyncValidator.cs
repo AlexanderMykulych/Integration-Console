@@ -41,6 +41,15 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public class SyncValidator : ISyncExportChecker<Guid>
 	{
+		private IConnectionProvider _connectionProvider;
+
+		private UserConnection userConnection {
+			get { return _connectionProvider.Get<UserConnection>(); }
+		}
+		public SyncValidator(IConnectionProvider connectionProvider)
+		{
+			_connectionProvider = connectionProvider;
+		}
 		public class SyncValidatorInfo
 		{
 			public DateTime LastSyncDate;
@@ -67,26 +76,26 @@ namespace Terrasoft.TsIntegration.Configuration{
 			}
 		}
 		//Log key=Integration Sync
-		public virtual void DoInSync(UserConnection userConnection, string routeKey, Guid info, Action syncAction)
+		public virtual void DoInSync(string routeKey, Guid info, Action syncAction)
 		{
 			if (info == Guid.Empty)
 			{
 				return;
 			}
 			var routeConfig = SettingsManager.GetExportRoutes(routeKey).FirstOrDefault();
-			SyncValidatorInfo lastSyncInfo = GetLastSyncDate(userConnection, routeKey, info);
+			SyncValidatorInfo lastSyncInfo = GetLastSyncDate(routeKey, info);
 			if (lastSyncInfo != null)
 			{
 				if ((DateTime.UtcNow - lastSyncInfo.LastSyncDate).TotalMilliseconds >= routeConfig.SyncMilliseconds)
 				{
 					syncAction();
-					UpdateSyncDate(userConnection, lastSyncInfo);
+					UpdateSyncDate(lastSyncInfo);
 				}
 			}
 			else
 			{
 				syncAction();
-				InsertSyncDate(userConnection, routeKey, info);
+				InsertSyncDate(routeKey, info);
 			}
 		}
 		//Log key=Integration Sync
@@ -96,7 +105,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			return routeConfig.IsSyncEnable;
 		}
 		//Log key=Integration Sync
-		protected virtual SyncValidatorInfo GetLastSyncDate(UserConnection userConnection, string routeKey, Guid info)
+		protected virtual SyncValidatorInfo GetLastSyncDate(string routeKey, Guid info)
 		{
 			var select = new Select(userConnection)
 					.Top(1)
@@ -123,7 +132,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			return lastSyncInfo;
 		}
 		//Log key=Integration Sync
-		protected virtual void UpdateSyncDate(UserConnection userConnection, SyncValidatorInfo lastSyncInfo)
+		protected virtual void UpdateSyncDate(SyncValidatorInfo lastSyncInfo)
 		{
 			var update = new Update(userConnection, SyncTableName)
 				.Set(SyncLastSyncDateColumnName, Column.Parameter(DateTime.UtcNow))
@@ -131,7 +140,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			update.Execute();
 		}
 		//Log key=Integration Sync
-		protected virtual void InsertSyncDate(UserConnection userConnection, string routeKey, Guid info)
+		protected virtual void InsertSyncDate(string routeKey, Guid info)
 		{
 			var insert = new Insert(userConnection)
 				.Into(SyncTableName)

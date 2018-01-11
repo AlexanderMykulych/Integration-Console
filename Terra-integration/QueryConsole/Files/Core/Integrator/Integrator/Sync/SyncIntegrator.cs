@@ -42,33 +42,31 @@ namespace Terrasoft.TsIntegration.Configuration{
 	[Override]
 	public class SyncIntegrator : BaseIntegrator
 	{
-		private ISyncExportChecker<Guid> _syncExportChecker;
-		public virtual ISyncExportChecker<Guid> SyncExportChecker {
-			set {
-				_syncExportChecker = value;
-			}
-			get {
-				if (_syncExportChecker == null)
-				{
-					_syncExportChecker = new SyncValidator();
-				}
-				return _syncExportChecker;
-			}
+		public SyncIntegrator(IEntityPreparer entityPreparer, IIntegrationObjectWorker iObjectWorker,
+			IServiceHandlerWorkers serviceHandlerWorker, IServiceRequestWorker serviceRequestWorker,
+			ISyncExportChecker<Guid> syncExportChecker)
+			: base(entityPreparer, iObjectWorker, serviceHandlerWorker, serviceRequestWorker)
+		{
+			SyncExportChecker = syncExportChecker;
 		}
+
+		public virtual ISyncExportChecker<Guid> SyncExportChecker { get; set; }
 		//Log key=Integration Sync
-		public override void Export(UserConnection userConnection, Guid id, string schemaName, string routeKey = null, Action<IIntegrationObject, ConfigSetting, BaseEntityHandler, Entity> OnGet = null)
+		public override void Export(Guid id, string schemaName, string routeKey = null, Action<IIntegrationObject, ConfigSetting, BaseEntityHandler, Entity> OnGet = null)
 		{
 			string exportRouteKey = routeKey ?? schemaName;
 			if (SyncExportChecker.IsSyncEnable(exportRouteKey))
 			{
-				SyncExportChecker.DoInSync(userConnection, exportRouteKey, id, () => {
-					base.Export(userConnection, id, schemaName, routeKey, OnGet);
+				SyncExportChecker.DoInSync(exportRouteKey, id, () => {
+					base.Export(id, schemaName, routeKey, OnGet);
 				});
 			}
 			else
 			{
-				base.Export(userConnection, id, schemaName, routeKey, OnGet);
+				base.Export(id, schemaName, routeKey, OnGet);
 			}
 		}
+
+		
 	}
 }
