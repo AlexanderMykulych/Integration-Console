@@ -60,7 +60,8 @@ namespace Terrasoft.TsIntegration.Configuration{
 			var entityId = info.entity.GetTypedColumnValue<Guid>(info.config.TsSourcePath);
 			if (entityId != Guid.Empty)
 			{
-				ConfigSetting config = SettingsManager.GetHandlerConfigById(info.config.HandlerConfigId);
+				var settingProvider = ObjectFactory.Get<ISettingProvider>();
+				var config = settingProvider.SelectFirstByType<ConfigSetting>(x => x.Id == info.config.HandlerConfigId);
 				var entityHelper = new IntegrationEntityHelper();
 				var handler = entityHelper.GetAllIntegrationHandler(new List<ConfigSetting>() { config }).FirstOrDefault();
 				if (handler != null)

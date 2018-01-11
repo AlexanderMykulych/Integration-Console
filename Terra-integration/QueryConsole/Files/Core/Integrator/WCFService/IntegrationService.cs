@@ -73,7 +73,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			get {
 				if (_iObjectProvider == null)
 				{
-					_iObjectProvider = new IntegrationObjectProvider();
+					_iObjectProvider = ObjectFactory.Get<IIntegrationObjectProvider>();
 				}
 				return _iObjectProvider;
 			}

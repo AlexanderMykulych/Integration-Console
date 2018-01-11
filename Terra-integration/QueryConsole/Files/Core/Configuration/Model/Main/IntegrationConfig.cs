@@ -51,6 +51,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 
 		public void Init(XDocument document)
 		{
+			Document = document;
 			InitPrepareConfig();
 			InitExportRouteConfig();
 			InitConfigSetting();

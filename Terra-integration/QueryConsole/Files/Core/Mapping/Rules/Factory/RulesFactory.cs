@@ -39,8 +39,12 @@ using Terrasoft.Core;
 using Terrasoft.UI.WebControls;
 using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TIntegrationType;
 namespace Terrasoft.TsIntegration.Configuration{
-	public class RulesFactory
+	public class RulesFactory: IRuleFactory
 	{
+		public RulesFactory(ISettingProvider settingProvider)
+		{
+			_settingProvider = settingProvider;
+		}
 		private TIntegrationObjectType? _objectType;
 		public TIntegrationObjectType ObjectType {
 			get {
@@ -48,7 +52,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 				{
 					try
 					{
-						_objectType = SettingsManager.GetIntegratorSetting<TIntegrationObjectType>("TsIntegrationObjectType");
+						_objectType = _settingProvider.Get("Global_TsIntegrationObjectType").SelectFromList<TIntegrationObjectType>().FirstOrDefault();
 					}
 					catch (Exception e)
 					{
@@ -91,6 +95,9 @@ namespace Terrasoft.TsIntegration.Configuration{
 		/// Признак что правила прошли реестрацию
 		/// </summary>
 		public static bool IsRuleRegister = false;
+
+		private ISettingProvider _settingProvider;
+
 		/// <summary>
 		/// Ищет по сборке все классы с атрибутом RuleAttribute и для каждого атрибута
 		/// создает инстанс правила

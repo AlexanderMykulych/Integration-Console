@@ -41,6 +41,8 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public class BaseIntegratorMock : BaseIntegrator
 	{
+		private ISettingProvider _settingProvider;
+
 		public string Mock { get; set; }
 		protected override ServiceConfig GetServiceConfig(string serviceName)
 		{
@@ -50,12 +52,16 @@ namespace Terrasoft.TsIntegration.Configuration{
 		}
 		protected override IIntegrationService GetService(string serviceName)
 		{
-			var serviceMockConfig = SettingsManager.GetServiceMockConfig(Mock);
+			var serviceMockConfig = _settingProvider.SelectFirstByType<ServiceMockConfig>(x => x.Id == Mock);
 			return new ServiceMock(serviceMockConfig);
 		}
 
-		public BaseIntegratorMock(IEntityPreparer entityPreparer, IIntegrationObjectWorker iObjectWorker, IServiceHandlerWorkers serviceHandlerWorker, IServiceRequestWorker serviceRequestWorker) : base(entityPreparer, iObjectWorker, serviceHandlerWorker, serviceRequestWorker)
+		public BaseIntegratorMock(IEntityPreparer entityPreparer, IIntegrationObjectWorker iObjectWorker,
+			IServiceHandlerWorkers serviceHandlerWorker, IServiceRequestWorker serviceRequestWorker,
+			ISettingProvider settingProvider)
+			: base(entityPreparer, iObjectWorker, serviceHandlerWorker, serviceRequestWorker)
 		{
+			_settingProvider = settingProvider;
 		}
 	}
 }

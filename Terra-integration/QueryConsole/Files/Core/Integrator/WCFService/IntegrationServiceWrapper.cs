@@ -54,7 +54,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			get {
 				if (_iObjectProvider == null)
 				{
-					_iObjectProvider = new IntegrationObjectProvider();
+					_iObjectProvider = ObjectFactory.Get<IIntegrationObjectProvider>();
 				}
 				return _iObjectProvider;
 			}
@@ -66,10 +66,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			{
 				return null;
 			}
-			SettingsManager.UserConnection = UserConnection;
-			SettingsManager.InitIntegrationSettings();
-			SettingsManager.ReinitXmlConfigSettings();
-			var integrator = ClassFactory.Get<BaseIntegrator>();
+			var integrator = ObjectFactory.Get<IIntegrator>();
 			IIntegrationObject integrObject = null;
 			integrator.Export(new Guid(id), null, routeKey,
 				(iObject, handlerConfig, handler, entity) =>
@@ -97,10 +94,8 @@ namespace Terrasoft.TsIntegration.Configuration
 		//Log: key=Integration Service
 		public virtual Stream PostEndPoint(string endPointName, Stream requestStream)
 		{
-			SettingsManager.UserConnection = UserConnection;
-			SettingsManager.InitIntegrationSettings();
-			SettingsManager.ReinitXmlConfigSettings();
-			var endPointConfig = SettingsManager.GetEndPointConfig(endPointName);
+			var settingProvider = ObjectFactory.Get<ISettingProvider>();
+			var endPointConfig = settingProvider.SelectFirstByType<EndPointConfig>(x => x.Name == endPointName);
 			if (endPointConfig != null)
 			{
 				var endPointHandler = new EndPointFactory().Get(endPointConfig.EndPointHandler);
@@ -169,9 +164,6 @@ namespace Terrasoft.TsIntegration.Configuration
 			{
 				return null;
 			}
-			SettingsManager.UserConnection = UserConnection;
-			SettingsManager.InitIntegrationSettings();
-			SettingsManager.ReinitXmlConfigSettings();
 			string content = null;
 			using (StreamReader reader = new StreamReader(requestStream))
 			{

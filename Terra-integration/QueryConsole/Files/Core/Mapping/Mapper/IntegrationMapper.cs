@@ -41,14 +41,15 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public class IntegrationMapper : IMapper
 	{
-		public IntegrationMapper(IMapperDbWorker mapperDbWorker, IIntegrationObjectProvider integrationObjectProvider)
+		public IntegrationMapper(IMapperDbWorker mapperDbWorker, IIntegrationObjectProvider integrationObjectProvider, IRuleFactory ruleFactory)
 		{
 			MapperDbWorker = mapperDbWorker;
 			IntegrationObjectProvider = integrationObjectProvider;
+			RulesFactory = ruleFactory;
 		}
 		public List<MappingItem> MapConfig;
 		public Queue<Action> MethodQueue;
-		public RulesFactory RulesFactory;
+		public IRuleFactory RulesFactory;
 		public virtual IMapperDbWorker MapperDbWorker { get; set; }
 		public virtual IIntegrationObjectProvider IntegrationObjectProvider { get; set; }
 		public IntegrationMapper()
@@ -210,10 +211,8 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			try
 			{
-				var entity = integrationInfo.IntegratedEntity;
-				var integrationType = integrationInfo.IntegrationType;
-				Action executedMethod = new Action(() => { });
-				var rule = RulesFactory.GetRule(mapItem.MapType.ToString());
+				Action executedMethod = () => { };
+				var rule = RulesFactory.GetRule(mapItem.MapType);
 				if (rule != null)
 				{
 					RuleInfo ruleInfo = null;

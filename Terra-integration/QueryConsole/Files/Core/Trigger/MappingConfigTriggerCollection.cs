@@ -8,10 +8,12 @@ namespace Terrasoft.TsIntegration.Configuration
 	public class MappingConfigTriggerCollection : ITriggerCollection<Entity>
 	{
 		private TriggerCheckerCollection _instance;
+		private ISettingProvider _settingProvider;
 		public MappingConfigTriggerCollection(UserConnection userConnection, TriggerCheckerCollection obj)
 		{
 			_instance = obj;
 			LoadAllChecker(userConnection);
+			_settingProvider = ObjectFactory.Get<ISettingProvider>();
 		}
 		public bool Check(string eventName, Entity eventInfo, Action<TriggerSetting> onMath)
 		{
@@ -27,9 +29,7 @@ namespace Terrasoft.TsIntegration.Configuration
 		{
 			try
 			{
-				SettingsManager.UserConnection = userConnection;
-				SettingsManager.InitIntegrationSettings();
-				var triggersConfig = SettingsManager.GetTriggersConfig();
+				var triggersConfig = _settingProvider.Get("TriggerConfig").SelectFromList<TriggerSetting>();
 				_instance.AddRange(triggersConfig.Select(x => new TriggerCheckerItem(x)));
 			}
 			catch (Exception e)

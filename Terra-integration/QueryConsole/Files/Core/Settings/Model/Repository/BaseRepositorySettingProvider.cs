@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -63,6 +64,46 @@ namespace Terrasoft.TsIntegration.Configuration
 			var result = new List<string>();
 			select.ExecuteReader(x => result.Add(x.GetColumnValue<string>("conf")));
 			return result;
+		}
+		public ConcurrentDictionary<string, ValueType> GetGlobalSettings()
+		{
+			var addData = new ConcurrentDictionary<string, ValueType>();
+			var select = new Select(UserConnection)
+				.Top(1)
+				.Column("Id")
+				.Column("TsIsActive")
+				.Column("TsIsDebugMode")
+				.Column("TsIntegrObjectTypeId")
+				.From("TsIntegration")
+				.Where("TsIsActive").IsEqual(Column.Const(1)) as Select;
+			using (var dBExecutor = UserConnection.EnsureDBConnection())
+			{
+				using (var reader = select.ExecuteReader(dBExecutor))
+				{
+					if (reader.Read())
+					{
+						addData.TryAdd("TsIsDebugMode", reader.GetColumnValue<bool>("TsIsDebugMode"));
+						addData.TryAdd("TsIsActive", reader.GetColumnValue<bool>("TsIsActive"));
+						addData.TryAdd("TsIntegrationObjectType", GetIntegrationObjectTypeById(reader.GetColumnValue<Guid>("TsIntegrObjectTypeId")));
+					}
+				}
+			}
+			return addData;
+		}
+		private static TIntegrationObjectType GetIntegrationObjectTypeById(Guid integrObjectTypeId)
+		{
+			if (integrObjectTypeId == CsConstant.IntegartionObjectTypeIds.Json)
+			{
+				return TIntegrationObjectType.Json;
+			}
+			else if (integrObjectTypeId == CsConstant.IntegartionObjectTypeIds.Xml)
+			{
+				return TIntegrationObjectType.Xml;
+			}
+			else
+			{
+				throw new Exception("Невозможно распознать тип интеграции!");
+			}
 		}
 	}
 }

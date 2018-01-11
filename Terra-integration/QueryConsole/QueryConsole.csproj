@@ -419,6 +419,7 @@
     <Compile Include="Files\Core\Mapping\Plugin\Interface\IMapperDbWorker.cs" />
     <Compile Include="Files\Core\Mapping\Plugin\MapperDbWorker.cs" />
     <Compile Include="Files\Core\Mapping\Rules\Attribute\RuleAttribute.cs" />
+    <Compile Include="Files\Core\Mapping\Rules\Factory\IRuleFactory.cs" />
     <Compile Include="Files\Core\Mapping\Rules\Factory\RuleFactoryItem.cs" />
     <Compile Include="Files\Core\Mapping\Rules\Factory\RulesFactory.cs" />
     <Compile Include="Files\Core\Mapping\Rules\Instance\Interface\IMappRule.cs" />

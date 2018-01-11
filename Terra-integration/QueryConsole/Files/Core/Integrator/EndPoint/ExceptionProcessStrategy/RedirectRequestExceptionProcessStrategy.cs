@@ -11,19 +11,13 @@ namespace Terrasoft.TsIntegration.Configuration
 	[ExceptionProcessStrategy("RedirectRequest")]
 	public class RedirectRequestExceptionProcessStrategy: IExceptionProcessStrategy
 	{
-		private IServiceHandlerWorkers _serviceHandlerWorker;
-		public virtual IServiceHandlerWorkers ServiceHandlerWorker {
-			set {
-				_serviceHandlerWorker = value;
-			}
-			get {
-				if (_serviceHandlerWorker == null)
-				{
-					_serviceHandlerWorker = new ServiceHandlerWorker();
-				}
-				return _serviceHandlerWorker;
-			}
+		public RedirectRequestExceptionProcessStrategy(IServiceHandlerWorkers serviceWorker)
+		{
+			ServiceHandlerWorker = serviceWorker;
 		}
+
+		public virtual IServiceHandlerWorkers ServiceHandlerWorker { get; set; }
+
 		//Log key=Integration Redirect
 		public Stream Process(ExceptionProcessData data)
 		{

@@ -53,6 +53,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			HandlerKeyGenerator = ObjectFactory.Get<IHandlerKeyGenerator>();
 			IntegrationObjectProvider = ObjectFactory.Get<IIntegrationObjectProvider>();
 			TemplateFactory = ObjectFactory.Get<ITemplateFactory>();
+			SettingProvider = ObjectFactory.Get<ISettingProvider>();
 		}
 
 		#region Fields
@@ -83,6 +84,8 @@ namespace Terrasoft.TsIntegration.Configuration
 		public virtual IHandlerKeyGenerator HandlerKeyGenerator { get; set; }
 		public virtual IIntegrationObjectProvider IntegrationObjectProvider { get; set; }
 		public virtual ITemplateFactory TemplateFactory { get; set; }
+		public virtual ISettingProvider SettingProvider { get; set; }
+
 		public string ResponseMappingConfig {
 			get {
 				if (!string.IsNullOrEmpty(HandlerConfig.ResponseMappingConfig))
@@ -535,7 +538,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			}
 			LoggerHelper.DoInLogBlock("Templated", () =>
 			{
-				var templateConfig = SettingsManager.GetTemplatesConfig(HandlerConfig.TemplateName);
+				var templateConfig = SettingProvider.SelectFirstByType<TemplateSetting>(x => x.Name == HandlerConfig.TemplateName);
 				if (templateConfig == null)
 				{
 					IntegrationLogger.WarningFormat("Template Config: {0} doesn`t found", HandlerConfig.TemplateName);

@@ -32,6 +32,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			Bind<IIntegrationObjectProvider>().To<IntegrationObjectProvider>();
 			Bind<ITemplateFactory>().To<TemplateHandlerFactory>();
 			Bind<IIntegrationService>().To<BaseIntegrationService>();
+			Bind<IMapper>().To<IntegrationMapper>();
 		}
 
 		private void BindStrategy()
@@ -41,7 +42,8 @@ namespace Terrasoft.TsIntegration.Configuration
 			Bind<IStepBuilder>().To<BaseStepBuilder>();
 			Bind<IStrategyImplementationBuilder>().To<BaseStrategyImplementationBuilder>();
 			Bind<IExecutorSubscriber>().To<BaseSubscriber>();
-			
+			Bind<IMapperDbWorker>().To<MapperDbWorker>();
+			Bind<IRuleFactory>().To<RulesFactory>();
 		}
 
 		protected virtual void BindSettings()

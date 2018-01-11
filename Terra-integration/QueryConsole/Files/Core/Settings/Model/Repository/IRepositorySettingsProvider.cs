@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,7 @@ namespace Terrasoft.TsIntegration.Configuration
 		/// </summary>
 		/// <returns>List of configs</returns>
 		List<string> GetXmls();
+
+		ConcurrentDictionary<string, ValueType> GetGlobalSettings();
 	}
 }

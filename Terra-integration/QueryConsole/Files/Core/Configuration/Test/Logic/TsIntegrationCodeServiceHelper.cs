@@ -41,6 +41,10 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public class TsIntegrationCodeServiceHelper
 	{
+		public TsIntegrationCodeServiceHelper()
+		{
+			SettingProvider = ObjectFactory.Get<ISettingProvider>();
+		}
 		private global::Common.Logging.ILog _log;
 
 		public global::Common.Logging.ILog Log {
@@ -61,11 +65,14 @@ namespace Terrasoft.TsIntegration.Configuration{
 			get {
 				if (_integrationObjectProvider == null)
 				{
-					_integrationObjectProvider = new IntegrationObjectProvider();
+					_integrationObjectProvider = ObjectFactory.Get<IIntegrationObjectProvider>();
 				}
 				return _integrationObjectProvider;
 			}
 		}
+
+		public ISettingProvider SettingProvider { get; private set; }
+
 		public UserConnection userConnection;
 		public const string XmlHeaderStr = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 		public TsIntegrationCodeServiceHelper(UserConnection userConnection)
@@ -75,17 +82,11 @@ namespace Terrasoft.TsIntegration.Configuration{
 
 		public void ReinitSettings()
 		{
-			SettingsManager.UserConnection = userConnection;
-			SettingsManager.InitIntegrationSettings();
-			SettingsManager.ReinitXmlConfigSettings();
 			TriggerEngine.ClearTriggerCollection();
 		}
 		#region Service Mock
 		public void TestServiceByMock(TestServiceInfo info)
 		{
-			SettingsManager.UserConnection = userConnection;
-			SettingsManager.InitIntegrationSettings();
-			SettingsManager.ReinitXmlConfigSettings();
 			LoggerHelper.DoInLogBlock("Экспорт (Mock)", () =>
 			{
 				IIntegrator integrator = null;
@@ -179,9 +180,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 		public string TestToJson(TestExportInfo info)
 		{
 			var scenarioProvider = new TestScenarioProvider();
-			SettingsManager.UserConnection = userConnection;
-			SettingsManager.InitIntegrationSettings();
-			SettingsManager.ReinitXmlConfigSettings();
 			string result = string.Empty;
 			LoggerHelper.DoInLogBlock("Test To Json", () =>
 			{
@@ -199,7 +197,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			return () =>
 			{
-				var config = SettingsManager.GetHandlerConfigById(configId);
+				var config = SettingProvider.SelectFirstByType<ConfigSetting>(x => x.Id == configId);
 				if (config != null)
 				{
 					return string.Format("Конфиг найден!\nConfigId={0}\nHandler={1}\nEntityName={2}\nJName={3}\nUrl={4}\nAuth={5}\n",
@@ -212,7 +210,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			return () =>
 			{
-				var config = SettingsManager.GetHandlerConfigById(configId);
+				var config = SettingProvider.SelectFirstByType<ConfigSetting>(x => x.Id == configId);
 				if (config != null)
 				{
 					string result = string.Empty;
@@ -234,10 +232,10 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			return () =>
 			{
-				var config = SettingsManager.GetHandlerConfigById(сonfigId);
+				var config = SettingProvider.SelectFirstByType<ConfigSetting>(x => x.Id == сonfigId);
 				if (config != null)
 				{
-					var mapping = SettingsManager.GetMappingConfigById(config.DefaultMappingConfig);
+					var mapping = SettingProvider.SelectFirstByType<MappingConfig>(x => x.Id == config.DefaultMappingConfig);
 					if (mapping != null)
 					{
 						return string.Format("Маппинг найден:\nId={0}\nКоличество элементов={1}", mapping.Id, mapping.Items.Count());
@@ -250,7 +248,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			return () =>
 			{
-				var config = SettingsManager.GetHandlerConfigById(info.ConfigId);
+				var config = SettingProvider.SelectFirstByType<ConfigSetting>(x => x.Id == info.ConfigId);
 				if (config != null)
 				{
 					var builder = new StringBuilder();
@@ -291,9 +289,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 		public string TestToEntity(TestImportInfo info)
 		{
 			var scenarioProvider = new TestScenarioProvider();
-			SettingsManager.UserConnection = userConnection;
-			SettingsManager.InitIntegrationSettings();
-			SettingsManager.ReinitXmlConfigSettings();
 			string result = string.Empty;
 			LoggerHelper.DoInLogBlock("Test To Entity", () =>
 			{
@@ -312,7 +307,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			return () =>
 			{
-				var config = SettingsManager.GetHandlerConfigById(info.ConfigId);
+				var config = SettingProvider.SelectFirstByType<ConfigSetting>(x => x.Id == info.ConfigId);
 				if (config != null)
 				{
 					var builder = new StringBuilder();

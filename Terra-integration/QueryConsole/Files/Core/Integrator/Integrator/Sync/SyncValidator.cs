@@ -42,13 +42,15 @@ namespace Terrasoft.TsIntegration.Configuration{
 	public class SyncValidator : ISyncExportChecker<Guid>
 	{
 		private IConnectionProvider _connectionProvider;
+		private ISettingProvider _settingProvider;
 
 		private UserConnection userConnection {
 			get { return _connectionProvider.Get<UserConnection>(); }
 		}
-		public SyncValidator(IConnectionProvider connectionProvider)
+		public SyncValidator(IConnectionProvider connectionProvider, ISettingProvider settingProvider)
 		{
 			_connectionProvider = connectionProvider;
+			_settingProvider = settingProvider;
 		}
 		public class SyncValidatorInfo
 		{
@@ -82,7 +84,10 @@ namespace Terrasoft.TsIntegration.Configuration{
 			{
 				return;
 			}
-			var routeConfig = SettingsManager.GetExportRoutes(routeKey).FirstOrDefault();
+			var routeConfig = _settingProvider
+				.Get("ExportRouteConfig")
+				.SelectFromList<RouteConfig>()
+				.First(x => x.Key == routeKey);
 			SyncValidatorInfo lastSyncInfo = GetLastSyncDate(routeKey, info);
 			if (lastSyncInfo != null)
 			{
@@ -101,7 +106,10 @@ namespace Terrasoft.TsIntegration.Configuration{
 		//Log key=Integration Sync
 		public virtual bool IsSyncEnable(string routeKey)
 		{
-			var routeConfig = SettingsManager.GetExportRoutes(routeKey).FirstOrDefault();
+			var routeConfig = _settingProvider
+				.Get("ExportRouteConfig")
+				.SelectFromList<RouteConfig>()
+				.First(x => x.Key == routeKey);
 			return routeConfig.IsSyncEnable;
 		}
 		//Log key=Integration Sync

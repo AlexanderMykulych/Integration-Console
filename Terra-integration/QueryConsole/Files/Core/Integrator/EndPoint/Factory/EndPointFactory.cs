@@ -30,7 +30,8 @@ namespace Terrasoft.TsIntegration.Configuration
 
 		protected override void RegisterRule(EndPointAttribute attr, IEndPointHandler instance)
 		{
-			var endPointConfig = SettingsManager.GetEndPointConfigByHandler(attr.Name);
+			var settingProvider = ObjectFactory.Get<ISettingProvider>();
+			var endPointConfig = settingProvider.SelectFirstByType<EndPointConfig>(x => x.Name == attr.Name);
 			if (endPointConfig != null)
 			{
 				instance.Config = endPointConfig.HandlerConfigs;

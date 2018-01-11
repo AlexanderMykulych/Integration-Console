@@ -16,6 +16,8 @@ namespace Terrasoft.TsIntegration.Configuration
 		private List<string> _xmls;
 		private IXmlProvider _xmlProvider;
 		private IConfigManager _configManager;
+		private ConcurrentDictionary<string, ValueType> _globalSettings;
+		private string _globalPrefix = @"Global_";
 
 		public BaseSettingsProvider(IRepositorySettingsProvider repositoryProvider, IXmlProvider xmlProvider, IConfigManager configManager)
 		{
@@ -33,6 +35,7 @@ namespace Terrasoft.TsIntegration.Configuration
 					if (!_isInit)
 					{
 						var xmls = _repositoryProvider.GetXmls();
+						_globalSettings = _repositoryProvider.GetGlobalSettings();
 						var xmlData = ProcessXmls(xmls);
 						_configManager.InitLoadConfig(xmlData);
 						_isInit = true;
@@ -59,6 +62,12 @@ namespace Terrasoft.TsIntegration.Configuration
 				Init();
 				if (_isInit)
 				{
+					if (settingName.StartsWith(_globalPrefix))
+					{
+						ValueType result;
+						_globalSettings.TryGetValue(settingName.Substring(_globalPrefix.Length), out result);
+						return new Setting(result);
+					}
 					return GetUnsafe(settingName);
 				}
 				var message = string.Format("Try to get setting: {0}, but config is not initialize!", settingName);

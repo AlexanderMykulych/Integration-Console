@@ -38,13 +38,18 @@ using Terrasoft.Core.Factories;
 using Terrasoft.Core;
 using Terrasoft.UI.WebControls;
 using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TIntegrationType;
-namespace Terrasoft.TsIntegration.Configuration{
+namespace Terrasoft.TsIntegration.Configuration {
 	public class IntegrationObjectProvider : IIntegrationObjectProvider
 	{
-		public static TIntegrationObjectType GetObjectType()
+		private readonly ISettingProvider _settingsProvider;
+
+		public IntegrationObjectProvider(ISettingProvider settingsProvider)
 		{
-			//TODO: Перенести в ServiceHandlerWorker
-			return SettingsManager.GetIntegratorSetting<TIntegrationObjectType>("TsIntegrationObjectType");
+			_settingsProvider = settingsProvider;
+		}
+		public TIntegrationObjectType GetObjectType()
+		{
+			return _settingsProvider.SelectGlobalFirstByType<TIntegrationObjectType>();
 		}
 		public virtual IIntegrationObject Parse(string text)
 		{

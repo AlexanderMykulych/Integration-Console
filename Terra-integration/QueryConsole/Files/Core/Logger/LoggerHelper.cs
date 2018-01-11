@@ -41,6 +41,7 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public static class LoggerHelper
 	{
+		
 		/// <summary>
 		/// Гарантирует выполнение Action в транзакции логгирования
 		/// </summary>
@@ -90,11 +91,11 @@ namespace Terrasoft.TsIntegration.Configuration{
 
 		public static bool IsActive(string logName)
 		{
-			var logConfig = SettingsManager.GetLogConfig(logName);
-			if (logConfig != null)
-			{
-				return logConfig.IsActive;
-			}
+			//var logConfig = SettingProvider.GetLogConfig(logName);
+			//if (logConfig != null)
+			//{
+			//	return logConfig.IsActive;
+			//}
 			return false;
 		}
 	}

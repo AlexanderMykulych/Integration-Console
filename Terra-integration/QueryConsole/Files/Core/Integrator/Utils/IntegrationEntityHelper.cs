@@ -92,14 +92,14 @@ namespace Terrasoft.TsIntegration.Configuration{
 			foreach (var handlerConfig in handlerConfigs)
 			{
 				var attrType = typeof(IntegrationHandlerAttribute);
-				var handlerType = SettingsManager
-					.Handlers
-					.FirstOrDefault(x => x.GetCustomAttributes(attrType, true).Any(y => ((IntegrationHandlerAttribute)y).Name == handlerConfig.Handler));
-				if (handlerType != null)
-				{
-					var handler = Activator.CreateInstance(handlerType, handlerConfig) as BaseEntityHandler;
-					handlers.Add(handler);
-				}
+				//var handlerType = SettingsManager
+				//	.Handlers
+				//	.FirstOrDefault(x => x.GetCustomAttributes(attrType, true).Any(y => ((IntegrationHandlerAttribute)y).Name == handlerConfig.Handler));
+				//if (handlerType != null)
+				//{
+				//	var handler = Activator.CreateInstance(handlerType, handlerConfig) as BaseEntityHandler;
+				//	handlers.Add(handler);
+				//}
 			}
 			return handlers;
 		}

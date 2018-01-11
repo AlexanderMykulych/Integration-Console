@@ -41,9 +41,26 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public class ServiceHandlerWorker : IServiceHandlerWorkers
 	{
+		private readonly ISettingProvider _settingProvider;
+
+		public ServiceHandlerWorker(ISettingProvider settingProvider)
+		{
+			_settingProvider = settingProvider;
+		}
 		public List<ConfigSetting> GetConfigs(string routeKey, CsConstant.TIntegrationType type)
 		{
-			return SettingsManager.GetHandlerConfigs(routeKey, type);
+			IEnumerable<RouteConfig> routeConfig;
+			switch (type)
+			{
+				case CsConstant.TIntegrationType.Export:
+					routeConfig = _settingProvider.Get("ExportRouteConfig").SelectFromList<RouteConfig>().Where(x => x.Key == routeKey).ToList();
+					break;
+				default:
+					routeConfig = _settingProvider.Get("ImportRouteConfig").SelectFromList<RouteConfig>().Where(x => x.Key == routeKey).ToList();
+					break;
+			}
+			var config = _settingProvider.SelectEnumerableByType<ConfigSetting>().Where(x => routeConfig.Any(y => y.ConfigId == x.Id)).ToList();
+			return config;
 		}
 		public BaseEntityHandler GetWithConfig(string name, ConfigSetting config)
 		{
@@ -51,7 +68,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		}
 		public ServiceConfig GetServiceConfig(string serviceName)
 		{
-			return SettingsManager.GetServiceConfig(serviceName);
+			return _settingProvider.SelectFirstByType<ServiceConfig>(x => x.Id == serviceName);
 		}
 		public IIntegrationService GetService(string serviceName)
 		{
@@ -59,7 +76,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		}
 		public MappingConfig GetMappingConfig(string configId)
 		{
-			return SettingsManager.GetMappingConfig(configId);
+			return _settingProvider.SelectFirstByType<MappingConfig>(x => x.Id == configId);
 		}
 	}
 }

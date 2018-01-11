@@ -43,7 +43,8 @@ namespace Terrasoft.TsIntegration.Configuration{
 	{
 		public static string GeneratePath(params string[] steps)
 		{
-			var objectType = IntegrationObjectProvider.GetObjectType();
+			var iObjectProvider = ObjectFactory.Get<IIntegrationObjectProvider>();
+			var objectType = iObjectProvider.GetObjectType();
 			switch (objectType)
 			{
 				case TIntegrationObjectType.Json:
@@ -57,7 +58,8 @@ namespace Terrasoft.TsIntegration.Configuration{
 
 		public static string GenerateValuePath(params string[] steps)
 		{
-			var objectType = IntegrationObjectProvider.GetObjectType();
+			var iObjectProvider = ObjectFactory.Get<IIntegrationObjectProvider>();
+			var objectType = iObjectProvider.GetObjectType();
 			switch (objectType)
 			{
 				case TIntegrationObjectType.Json:

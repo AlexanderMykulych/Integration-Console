@@ -45,5 +45,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 		IIntegrationObject NewInstance(string name = null);
 		Stream GetMemoryStream(IIntegrationObject iObject);
 		string GetContentType(IIntegrationObject iObject);
+		TIntegrationObjectType GetObjectType();
 	}
 }

@@ -55,9 +55,6 @@ namespace Terrasoft.Configuration
 			UserConnection = GetUserConnection(context);
 			try
 			{
-				SettingsManager.UserConnection = UserConnection;
-				SettingsManager.InitIntegrationSettings();
-				SettingsManager.ReinitXmlConfigSettings();
 			}
 			catch (Exception)
 			{
