@@ -41,10 +41,17 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public class EntityPreparer : IEntityPreparer
 	{
-		//Log key=Handler Util
-		public Entity Get(UserConnection userConnection, string schemaName, Guid id)
+		private readonly IConnectionProvider _connectionProvider;
+
+		public EntityPreparer(IConnectionProvider connectionProvider)
 		{
-			EntitySchema entitySchema = userConnection.EntitySchemaManager.GetInstanceByName(schemaName);
+			_connectionProvider = connectionProvider;
+		}
+		//Log key=Handler Util
+		public Entity Get(string schemaName, Guid id)
+		{
+			var userConnection = _connectionProvider.Get<UserConnection>();
+			var entitySchema = userConnection.EntitySchemaManager.GetInstanceByName(schemaName);
 			if (entitySchema != null)
 			{
 				Entity entity = entitySchema.CreateEntity(userConnection);

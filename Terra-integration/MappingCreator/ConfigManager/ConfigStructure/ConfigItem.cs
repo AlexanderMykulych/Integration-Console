@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Terrasoft.TsConfiguration;
+using Terrasoft.TsIntegration.Configuration;
 
 namespace MappingCreator.Structure {
 	public class ConfigItem {

@@ -41,6 +41,6 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public interface IEntityPreparer
 	{
-		Entity Get(UserConnection userConnection, string schemaName, Guid id);
+		Entity Get(string schemaName, Guid id);
 	}
 }

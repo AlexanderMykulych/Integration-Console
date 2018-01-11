@@ -14,6 +14,16 @@ namespace Terrasoft.TsIntegration.Configuration
 			BindSettings();
 
 			BindStrategy();
+
+			BindIntegrator();
+		}
+
+		private void BindIntegrator()
+		{
+			Bind<IEntityPreparer>().To<EntityPreparer>();
+			Bind<IIntegrationObjectWorker>().To<IntegrationObjectWorker>();
+			Bind<IServiceHandlerWorkers>().To<ServiceHandlerWorker>();
+			Bind<IServiceRequestWorker>().To<ServiceRequestWorker>();
 		}
 
 		private void BindStrategy()

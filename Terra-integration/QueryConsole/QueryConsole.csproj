@@ -161,9 +161,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Terrasoft.Configuration.UnitTest">
-      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Configuration.UnitTest.dll</HintPath>
-    </Reference>
     <Reference Include="Terrasoft.Core, Version=7.7.0.2881, Culture=neutral, PublicKeyToken=edaadfbc3b0bb879, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.Core.dll</HintPath>
@@ -321,7 +318,6 @@
     <Compile Include="Files\Core\Configuration\Model\TriggerSetting\TriggerSetting.cs" />
     <Compile Include="Files\Core\Configuration\XmlManager\XmlConfigManager.cs" />
     <Compile Include="Files\Core\Constants\CsConstant.cs" />
-    <Compile Include="Files\Core\Constants\SettingsManager.cs" />
     <Compile Include="Files\Core\DiCore\CoreDiModule.cs" />
     <Compile Include="Files\Core\DiCore\ObjectFactory.cs" />
     <Compile Include="Files\Core\Extension\ObjectExtension.cs" />
@@ -481,6 +477,28 @@
     <Compile Include="Files\Core\Settings\Model\Xml\BaseXmlProvider.cs" />
     <Compile Include="Files\Core\Settings\Model\Xml\IXmlProvider.cs" />
     <Compile Include="Files\Core\Settings\SettingsManager.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStepBuilder.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStrategy.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStrategyConfigurator.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStrategyImplementation.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStrategyImplementationBuilder.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseStrategyStepInfo.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\BaseSubscriber.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\Steps\BaseStrategyStep.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\Steps\Test\IntegerStrategyStep.cs" />
+    <Compile Include="Files\Core\Strategy\Instance\Steps\Test\StringFormatStrategyStep.cs" />
+    <Compile Include="Files\Core\Strategy\Model\BuilderStepExtensions.cs" />
+    <Compile Include="Files\Core\Strategy\Model\EventStep.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IExecutorSubscriber.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStepBuilder.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStrategy.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStrategyConfigurator.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStrategyImplementation.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStrategyImplementationBuilder.cs" />
+    <Compile Include="Files\Core\Strategy\Model\IStrategyStep.cs" />
+    <Compile Include="Files\Core\Strategy\Model\ISubscriber.cs" />
+    <Compile Include="Files\Core\Strategy\Model\StrategyStepInfo.cs" />
+    <Compile Include="Files\Core\Strategy\TestClass.cs" />
     <Compile Include="Files\Core\Trigger\Interface\ITriggerCheckerItem.cs" />
     <Compile Include="Files\Core\Trigger\Interface\ITriggerCollection.cs" />
     <Compile Include="Files\Core\Trigger\Interface\ITriggerEngine.cs" />

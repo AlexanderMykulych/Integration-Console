@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using Terrasoft.TsConfiguration;
 
 namespace MappingCreator {
 	public class ConfigManager {

@@ -41,6 +41,6 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public interface IServiceRequestWorker
 	{
-		void MakeRequest(UserConnection userConnection, IServiceHandlerWorkers serviceHandlerWorker, Entity entity, BaseEntityHandler handler, string serviceName, string content);
+		void MakeRequest(IServiceHandlerWorkers serviceHandlerWorker, Entity entity, BaseEntityHandler handler, string serviceName, string content);
 	}
 }

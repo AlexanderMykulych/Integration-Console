@@ -41,8 +41,8 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public interface IIntegrationObjectWorker
 	{
-		IIntegrationObject Get(UserConnection userConnection, BaseEntityHandler handler, Entity entity);
-		void Import(UserConnection userConnection, IServiceHandlerWorkers handlerWorker, ConfigSetting handlerConfig, IIntegrationObject iObject,
+		IIntegrationObject Get(BaseEntityHandler handler, Entity entity);
+		void Import(IServiceHandlerWorkers handlerWorker, ConfigSetting handlerConfig, IIntegrationObject iObject,
 			Action<CsConstant.IntegrationInfo> onSuccess = null, Action<CsConstant.IntegrationInfo, Exception> onError = null);
 	}
 }

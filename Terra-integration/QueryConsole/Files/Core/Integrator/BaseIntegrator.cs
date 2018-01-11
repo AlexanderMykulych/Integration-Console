@@ -1,111 +1,36 @@
-using IntegrationInfo = Terrasoft.TsIntegration.Configuration.CsConstant.IntegrationInfo;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using Ninject.Infrastructure.Language;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Runtime.Serialization;
-using System.ServiceModel.Activation;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Web;
-using System.ServiceModel;
-using System.Text.RegularExpressions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Web.Configuration;
-using System.Web;
-using System.Xml.Linq;
-using System.Xml.Serialization;
-using System.Xml.XPath;
-using System.Xml;
 using System;
-using Terrasoft.Common;
-using Terrasoft.Core.Configuration;
-using Terrasoft.Core.DB;
 using Terrasoft.Core.Entities;
-using Terrasoft.Core.Factories;
-using Terrasoft.Core;
-using Terrasoft.UI.WebControls;
-using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TIntegrationType;
-namespace Terrasoft.TsIntegration.Configuration{
+
+namespace Terrasoft.TsIntegration.Configuration {
 	public class BaseIntegrator : IIntegrator
 	{
-		private IEntityPreparer _entityPreparer;
-		public virtual IEntityPreparer EntityPreparer {
-			set {
-				_entityPreparer = value;
-			}
-			get {
-				if (_entityPreparer == null)
-				{
-					_entityPreparer = new EntityPreparer();
-				}
-				return _entityPreparer;
-			}
-		}
-
-		private IIntegrationObjectWorker _iObjectWorker;
-		public virtual IIntegrationObjectWorker IObjectWorker {
-			set {
-				_iObjectWorker = value;
-			}
-			get {
-				if (_iObjectWorker == null)
-				{
-					IObjectWorker = new IntegrationObjectWorker();
-				}
-				return _iObjectWorker;
-			}
-		}
-
-		private IServiceHandlerWorkers _serviceHandlerWorker;
-		public virtual IServiceHandlerWorkers ServiceHandlerWorker {
-			set {
-				_serviceHandlerWorker = value;
-			}
-			get {
-				if (_serviceHandlerWorker == null)
-				{
-					_serviceHandlerWorker = new ServiceHandlerWorker();
-				}
-				return _serviceHandlerWorker;
-			}
-		}
-
-		private IServiceRequestWorker _serviceRequestWorker;
-		public virtual IServiceRequestWorker ServiceRequestWorker {
-			set {
-				_serviceRequestWorker = value;
-			}
-			get {
-				if (_serviceRequestWorker == null)
-				{
-					_serviceRequestWorker = new ServiceRequestWorker();
-				}
-				return _serviceRequestWorker;
-			}
-		}
-		//Log key=Integrator
-		public virtual void ExportWithRequest(UserConnection userConnection, Guid id, string schemaName, string routeKey = null)
+		public BaseIntegrator(IEntityPreparer entityPreparer, IIntegrationObjectWorker iObjectWorker,
+			IServiceHandlerWorkers serviceHandlerWorker, IServiceRequestWorker serviceRequestWorker)
 		{
-			Export(userConnection, id, schemaName, routeKey, (iObject, handlerConfig, handler, entity) =>
+			EntityPreparer = entityPreparer;
+			IObjectWorker = iObjectWorker;
+			ServiceHandlerWorker = serviceHandlerWorker;
+			ServiceRequestWorker = serviceRequestWorker;
+		}
+
+		public virtual IEntityPreparer EntityPreparer { set; get; }
+
+		public virtual IIntegrationObjectWorker IObjectWorker { set; get; }
+
+		public virtual IServiceHandlerWorkers ServiceHandlerWorker { set; get; }
+
+		public virtual IServiceRequestWorker ServiceRequestWorker { set; get; }
+		//Log key=Integrator
+		public virtual void ExportWithRequest(Guid id, string schemaName, string routeKey = null)
+		{
+			Export(id, schemaName, routeKey, (iObject, handlerConfig, handler, entity) =>
 			{
-				ServiceRequestWorker.MakeRequest(userConnection, ServiceHandlerWorker, entity, handler, handlerConfig.Service, iObject.ToString());
+				ServiceRequestWorker.MakeRequest(ServiceHandlerWorker, entity, handler, handlerConfig.Service, iObject.ToString());
 			});
 		}
 		//Log key=Integrator
-		public virtual void Export(UserConnection userConnection, Guid id, string schemaName, string routeKey = null, Action<IIntegrationObject, ConfigSetting, BaseEntityHandler, Entity> OnGet = null)
+		public virtual void Export(Guid id, string schemaName, string routeKey = null, Action<IIntegrationObject, ConfigSetting, BaseEntityHandler, Entity> OnGet = null)
 		{
 			if (OnGet == null)
 			{
@@ -123,7 +48,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 						IntegrationLogger.Warning("Не найдено конфигураций для " + routeKey);
 					}
 					schemaName = schemaName ?? handlerConfigs.First().EntityName;
-					Entity entity = EntityPreparer.Get(userConnection, schemaName, id);
+					Entity entity = EntityPreparer.Get(schemaName, id);
 					foreach (var handlerConfig in handlerConfigs)
 					{
 
@@ -136,7 +61,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 						LoggerHelper.DoInLogBlock("Экспорт", () =>
 						{
 							IntegrationLogger.Info(LoggerInfo.GetMessage(handler.JName, entity, handler));
-							var iObject = IObjectWorker.Get(userConnection, handler, entity);
+							var iObject = IObjectWorker.Get(handler, entity);
 							OnGet(iObject, handlerConfig, handler, entity);
 						});
 					}
@@ -148,7 +73,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			}
 		}
 		//Log key=Integrator
-		public virtual void Import(UserConnection userConnection, IIntegrationObject iObject, string routeKey = null, Action<CsConstant.IntegrationInfo> onSuccess = null, Action<CsConstant.IntegrationInfo, Exception> onError = null)
+		public virtual void Import(IIntegrationObject iObject, string routeKey = null, Action<CsConstant.IntegrationInfo> onSuccess = null, Action<CsConstant.IntegrationInfo, Exception> onError = null)
 		{
 			if (string.IsNullOrEmpty(routeKey))
 			{
@@ -159,7 +84,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			{
 				LoggerHelper.DoInLogBlock("Импорт", () =>
 				{
-					IObjectWorker.Import(userConnection, ServiceHandlerWorker, handlerConfig, iObject, onSuccess, onError);
+					IObjectWorker.Import(ServiceHandlerWorker, handlerConfig, iObject, onSuccess, onError);
 				});
 			}
 		}

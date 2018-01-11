@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Activities.Expressions;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Terrasoft.TsIntegration.Configuration.Files.Core.Strategy.Model;
 
-namespace Terrasoft.TsIntegration.Configuration.Files.Core.Strategy.Instance
+namespace Terrasoft.TsIntegration.Configuration
 {
 	public class BaseStrategy<T>: IStrategy<T>
 	{
