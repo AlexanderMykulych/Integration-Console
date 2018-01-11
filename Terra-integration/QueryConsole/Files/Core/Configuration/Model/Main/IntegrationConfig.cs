@@ -6,10 +6,6 @@ using System;
 namespace Terrasoft.TsIntegration.Configuration{
 	public class IntegrationConfig: IIntegrationConfig
 	{
-		public IntegrationConfig()
-		{
-			
-		}
 
 		public virtual List<PrerenderConfig> PrerenderConfig { get; set; }
 		public virtual List<RouteConfig> ExportRouteConfig { get; set; }
@@ -55,10 +51,20 @@ namespace Terrasoft.TsIntegration.Configuration{
 
 		public void Init(XDocument document)
 		{
-			throw new NotImplementedException();
+			InitPrepareConfig();
+			InitExportRouteConfig();
+			InitConfigSetting();
+			InitDefaultMappingConfig();
+			InitMappingConfig();
+			InitServiceConfig();
+			InitMockConfig();
+			InitTemplateConfig();
+			InitTriggerConfig();
+			InitEndPointConfig();
+			InitLogConfig();
 		}
 
-		public static List<MappingConfig> GetMappingConfig(string path, Func<XElement, MappingItem> customeXmlMapper = null)
+		public  List<MappingConfig> GetMappingConfig(string path, Func<XElement, MappingItem> customeXmlMapper = null)
 		{
 			if (customeXmlMapper == null)
 			{
@@ -81,7 +87,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 				})
 				.ToList();
 		}
-		private static List<EndPointConfig> GetEndPointConfig(string path, Func<XElement, EndPointHandlerConfig> customeXmlMapper = null)
+		private  List<EndPointConfig> GetEndPointConfig(string path, Func<XElement, EndPointHandlerConfig> customeXmlMapper = null)
 		{
 			if (customeXmlMapper == null)
 			{
@@ -106,7 +112,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 				.ToList();
 		}
 
-		public static List<ServiceConfig> GetServiceConfig(string path, Func<XElement, ServiceHeaderConfig> customeXmlMapper = null)
+		public  List<ServiceConfig> GetServiceConfig(string path, Func<XElement, ServiceHeaderConfig> customeXmlMapper = null)
 		{
 			if (customeXmlMapper == null)
 			{
@@ -133,15 +139,15 @@ namespace Terrasoft.TsIntegration.Configuration{
 				})
 				.ToList();
 		}
-		public static TemplateSetting GetTemplateConfig(string name)
+		public  TemplateSetting GetTemplateConfig(string name)
 		{
-			if (IntegrationConfig != null && IntegrationConfig.TemplateConfig.Any())
+			if (TemplateConfig.Any())
 			{
-				return IntegrationConfig.TemplateConfig.FirstOrDefault(x => x.Name == name);
+				return TemplateConfig.FirstOrDefault(x => x.Name == name);
 			}
 			return null;
 		}
-		public static List<TriggerSetting> GetTriggerConfigs(string path)
+		public  List<TriggerSetting> GetTriggerConfigs(string path)
 		{
 
 			return RootNode
@@ -149,7 +155,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 				.Select(x => DynamicXmlParser.StartMapXmlToObj<TriggerSetting>(x, typeof(TriggerSetting), null, PreparePredicate))
 				.ToList();
 		}
-		public static List<TemplateSetting> GetTemplateConfigs(string path, Func<XElement, ServiceHeaderConfig> customeXmlMapper = null)
+		public  List<TemplateSetting> GetTemplateConfigs(string path, Func<XElement, ServiceHeaderConfig> customeXmlMapper = null)
 		{
 			if (customeXmlMapper == null)
 			{
@@ -173,14 +179,14 @@ namespace Terrasoft.TsIntegration.Configuration{
 				})
 				.ToList();
 		}
-		private static List<RouteConfig> GetRoutesByPath(string path)
+		private  List<RouteConfig> GetRoutesByPath(string path)
 		{
 			return RootNode
 				.XPathSelectElements(path)
 				.Select(x => DynamicXmlParser.StartMapXmlToObj<RouteConfig>(x, typeof(RouteConfig), null, PreparePredicate))
 				.ToList();
 		}
-		private static MappingItem GetMappingDefaultObjByNode(XElement node)
+		private  MappingItem GetMappingDefaultObjByNode(XElement node)
 		{
 			if (node != null)
 			{
@@ -189,7 +195,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 				{
 					var mappingType = mapTypeAttr.Value;
 					var defaultByTypeMapConfig =
-						IntegrationConfig.DefaultMappingConfig.FirstOrDefault(x => x.Id == DefaultByTypeMapAttrName);
+						DefaultMappingConfig.FirstOrDefault(x => x.Id == DefaultByTypeMapAttrName);
 					if (defaultByTypeMapConfig != null)
 					{
 						var itemByType = defaultByTypeMapConfig.Items.FirstOrDefault(x => x.MapType == mappingType);
@@ -199,7 +205,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 						}
 					}
 				}
-				var defaultMapConfig = IntegrationConfig.DefaultMappingConfig.FirstOrDefault(x => x.Id == DefaultMapAttrName);
+				var defaultMapConfig = DefaultMappingConfig.FirstOrDefault(x => x.Id == DefaultMapAttrName);
 				if (defaultMapConfig != null)
 				{
 					var item = defaultMapConfig.Items.FirstOrDefault();
@@ -211,21 +217,89 @@ namespace Terrasoft.TsIntegration.Configuration{
 			}
 			return null;
 		}
-		public static string PreparePredicate(string value)
+		public  string PreparePredicate(string value)
 		{
 			if (string.IsNullOrEmpty(value))
 			{
 				return value;
 			}
-			IntegrationConfig.PrerenderConfig.ForEach(x => value = value.Replace(x.From, x.To));
+			PrerenderConfig.ForEach(x => value = value.Replace(x.From, x.To));
 			return value;
 		}
 
-		#region Fields
-		public static XDocument Document;
+		public  XDocument Document;
 
-		private static XElement RootNode {
+		private  XElement RootNode {
 			get { return Document.Root; }
 		}
+
+		private  void InitLogConfig()
+		{
+			LogConfig = RootNode
+				.XPathSelectElements("logConfig")
+				.Select(x => DynamicXmlParser.StartMapXmlToObj<LogItemConfig>(x, null, null, PreparePredicate))
+				.ToList();
+		}
+		public  void InitPrepareConfig()
+		{
+			PrerenderConfig = RootNode
+				.XPathSelectElements("prerenderConfig/replace")
+				.Select(x => DynamicXmlParser.StartMapXmlToObj<PrerenderConfig>(x, typeof(PrerenderConfig)))
+				.ToList();
+		}
+		public  void InitExportRouteConfig()
+		{
+			ExportRouteConfig = GetRoutesByPath("ExportRoutes/route");
+			ImportRouteConfig = GetRoutesByPath("ImportRoutes/route");
+		}
+		public  void InitConfigSetting()
+		{
+			ConfigSetting = RootNode
+				.XPathSelectElements("config")
+				.Select(x =>
+				{
+					var config = DynamicXmlParser.StartMapXmlToObj<ConfigSetting>(x, typeof(ConfigSetting), null, PreparePredicate);
+					config.HandlerConfigs = x.XPathSelectElements("handlerConfig")
+						.Select(y => DynamicXmlParser.StartMapXmlToObj<HandlerConfig>(y, typeof(HandlerConfig), null, PreparePredicate))
+						.ToList();
+					return config;
+				})
+				.ToList();
+		}
+		public  void InitMockConfig()
+		{
+			ServiceMockConfig = RootNode
+				.XPathSelectElements("serviceMockConfig")
+				.Select(x => DynamicXmlParser.StartMapXmlToObj<ServiceMockConfig>(x, typeof(ServiceMockConfig), null, PreparePredicate))
+				.ToList();
+		}
+		public  void InitTemplateConfig()
+		{
+			TemplateConfig = GetTemplateConfigs("templateConfig");
+		}
+		public  void InitTriggerConfig()
+		{
+			TriggerConfig = GetTriggerConfigs("TriggerSettings");
+		}
+		public  void InitDefaultMappingConfig()
+		{
+			DefaultMappingConfig = GetMappingConfig("mappingConfig[@Id='" + DefaultMapAttrName + "']");
+			DefaultMappingConfig.AddRange(GetMappingConfig("mappingConfig[@Id='" + DefaultByTypeMapAttrName + "']"));
+		}
+		public  void InitMappingConfig()
+		{
+			MappingConfig = GetMappingConfig(String.Format("mappingConfig[@Id!='{0}' and @Id!='{1}']", DefaultMapAttrName, DefaultByTypeMapAttrName),
+				x => DynamicXmlParser.StartMapXmlToObj<MappingItem>(x, typeof(MappingItem), GetMappingDefaultObjByNode(x), PreparePredicate));
+		}
+		public  void InitServiceConfig()
+		{
+			ServiceConfig = GetServiceConfig("serviceConfig");
+		}
+		private void InitEndPointConfig()
+		{
+			EndPointConfig = GetEndPointConfig("endPointConfig");
+		}
+		public const string DefaultMapAttrName = "Default";
+		public const string DefaultByTypeMapAttrName = "DefaultByMappingType";
 	}
 }

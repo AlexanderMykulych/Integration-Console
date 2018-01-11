@@ -39,110 +39,28 @@ using Terrasoft.Core;
 using Terrasoft.UI.WebControls;
 using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TIntegrationType;
 namespace Terrasoft.TsIntegration.Configuration{
-	public static class XmlConfigManager
+	public class XmlConfigManager: IConfigManager
 	{
-		public const string DefaultMapAttrName = "Default";
-		public const string DefaultByTypeMapAttrName = "DefaultByMappingType";
-		public static bool IsConfigInited = false;
-		public static IntegrationConfig IntegrationConfig;
-		public static void InitLoadConfig(string xmlData)
+		public XmlConfigManager(IIntegrationConfig integrationConfig)
+		{
+			IntegrationConfig = integrationConfig;
+		}
+		public bool IsConfigInited = false;
+
+		public IIntegrationConfig IntegrationConfig { get; set; }
+
+		private void InitDocument(string xmlData)
+		{
+			IntegrationConfig.Init(XDocument.Parse(xmlData));
+		}
+		public void InitLoadConfig(string xmlData)
 		{
 			if (IsConfigInited)
 			{
 				return;
 			}
 			InitDocument(xmlData);
-			InitConfigData();
 			IsConfigInited = true;
 		}
-		private static void InitDocument(string xmlData)
-		{
-			Document = XDocument.Parse(xmlData);
-		}
-		private static void InitConfigData()
-		{
-			IntegrationConfig = new IntegrationConfig();
-			InitPrepareConfig();
-			InitExportRouteConfig();
-			InitConfigSetting();
-			InitDefaultMappingConfig();
-			InitMappingConfig();
-			InitServiceConfig();
-			InitMockConfig();
-			InitTemplateConfig();
-			InitTriggerConfig();
-			InitEndPointConfig();
-			InitLogConfig();
-		}
-
-		private static void InitEndPointConfig()
-		{
-			IntegrationConfig.EndPointConfig = GetEndPointConfig("endPointConfig");
-		}
-
-		private static void InitLogConfig()
-		{
-			IntegrationConfig.LogConfig = RootNode
-				.XPathSelectElements("logConfig")
-				.Select(x => DynamicXmlParser.StartMapXmlToObj<LogItemConfig>(x, null, null, PreparePredicate))
-				.ToList();
-		}
-		public static void InitPrepareConfig()
-		{
-			IntegrationConfig.PrerenderConfig = RootNode
-				.XPathSelectElements("prerenderConfig/replace")
-				.Select(x => DynamicXmlParser.StartMapXmlToObj<PrerenderConfig>(x, typeof(PrerenderConfig)))
-				.ToList();
-		}
-		public static void InitExportRouteConfig()
-		{
-			IntegrationConfig.ExportRouteConfig = GetRoutesByPath("ExportRoutes/route");
-			IntegrationConfig.ImportRouteConfig = GetRoutesByPath("ImportRoutes/route");
-		}
-		public static void InitConfigSetting()
-		{
-			IntegrationConfig.ConfigSetting = RootNode
-				.XPathSelectElements("config")
-				.Select(x =>
-				{
-					var config = DynamicXmlParser.StartMapXmlToObj<ConfigSetting>(x, typeof(ConfigSetting), null, PreparePredicate);
-					config.HandlerConfigs = x.XPathSelectElements("handlerConfig")
-						.Select(y => DynamicXmlParser.StartMapXmlToObj<HandlerConfig>(y, typeof(HandlerConfig), null, PreparePredicate))
-						.ToList();
-					return config;
-				})
-				.ToList();
-		}
-		public static void InitMockConfig()
-		{
-			IntegrationConfig.ServiceMockConfig = RootNode
-				.XPathSelectElements("serviceMockConfig")
-				.Select(x => DynamicXmlParser.StartMapXmlToObj<ServiceMockConfig>(x, typeof(ServiceMockConfig), null, PreparePredicate))
-				.ToList();
-		}
-		public static void InitTemplateConfig()
-		{
-			IntegrationConfig.TemplateConfig = GetTemplateConfigs("templateConfig");
-		}
-		public static void InitTriggerConfig()
-		{
-			IntegrationConfig.TriggerConfig = GetTriggerConfigs("TriggerSettings");
-		}
-		public static void InitDefaultMappingConfig()
-		{
-			IntegrationConfig.DefaultMappingConfig = GetMappingConfig("mappingConfig[@Id='" + DefaultMapAttrName + "']");
-			IntegrationConfig.DefaultMappingConfig.AddRange(GetMappingConfig("mappingConfig[@Id='" + DefaultByTypeMapAttrName + "']"));
-		}
-		public static void InitMappingConfig()
-		{
-			IntegrationConfig.MappingConfig = GetMappingConfig(String.Format("mappingConfig[@Id!='{0}' and @Id!='{1}']", DefaultMapAttrName, DefaultByTypeMapAttrName),
-				x => DynamicXmlParser.StartMapXmlToObj<MappingItem>(x, typeof(MappingItem), GetMappingDefaultObjByNode(x), PreparePredicate));
-		}
-		public static void InitServiceConfig()
-		{
-			IntegrationConfig.ServiceConfig = GetServiceConfig("serviceConfig");
-		}
-		
-		#endregion
 	}
 }

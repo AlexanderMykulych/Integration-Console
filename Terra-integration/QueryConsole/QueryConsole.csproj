@@ -468,6 +468,7 @@
     <Compile Include="Files\Core\Settings\ConnectionProvider\BpmConnectionProvider.cs" />
     <Compile Include="Files\Core\Settings\ConnectionProvider\ConnectionProvider.cs" />
     <Compile Include="Files\Core\Settings\ConnectionProvider\IConnectionProvider.cs" />
+    <Compile Include="Files\Core\Settings\IConfigManager.cs" />
     <Compile Include="Files\Core\Settings\Model\BaseSettingsProvider.cs" />
     <Compile Include="Files\Core\Settings\Model\ISetting.cs" />
     <Compile Include="Files\Core\Settings\Model\ISettingProvider.cs" />

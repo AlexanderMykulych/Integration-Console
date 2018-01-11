@@ -49,7 +49,8 @@ namespace Terrasoft.TsIntegration.Configuration
 			Bind<IRepositorySettingsProvider>().To<BaseRepositorySettingProvider>();
 			Bind<IXmlProvider>().To<BaseXmlProvider>();
 			Bind<ISettingProvider>().To<BaseSettingsProvider>();
-
+			Bind<IIntegrationConfig>().To<IntegrationConfig>();
+			Bind<IConfigManager>().To<XmlConfigManager>();
 			Bind<IConnectionProvider>().To<BpmConnectionProvider>();
 		}
 	}

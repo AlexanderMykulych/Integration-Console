@@ -15,11 +15,13 @@ namespace Terrasoft.TsIntegration.Configuration
 		private bool _isInit = false;
 		private List<string> _xmls;
 		private IXmlProvider _xmlProvider;
+		private IConfigManager _configManager;
 
-		public BaseSettingsProvider(IRepositorySettingsProvider repositoryProvider, IXmlProvider xmlProvider)
+		public BaseSettingsProvider(IRepositorySettingsProvider repositoryProvider, IXmlProvider xmlProvider, IConfigManager configManager)
 		{
 			_repositoryProvider = repositoryProvider;
 			_xmlProvider = xmlProvider;
+			_configManager = configManager;
 		}
 
 		public void Init()
@@ -32,7 +34,7 @@ namespace Terrasoft.TsIntegration.Configuration
 					{
 						var xmls = _repositoryProvider.GetXmls();
 						var xmlData = ProcessXmls(xmls);
-						XmlConfigManager.InitLoadConfig(xmlData);
+						_configManager.InitLoadConfig(xmlData);
 						_isInit = true;
 					}
 				}
@@ -68,7 +70,7 @@ namespace Terrasoft.TsIntegration.Configuration
 
 		public ISetting GetUnsafe(string settingName)
 		{
-			return new Setting(XmlConfigManager.IntegrationConfig.Get(settingName));
+			return new Setting(_configManager.IntegrationConfig.Get(settingName));
 		}
 	}
 }
