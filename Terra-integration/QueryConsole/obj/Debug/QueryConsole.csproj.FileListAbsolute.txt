@@ -317,7 +317,6 @@ C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\QueryCons
 C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Microsoft.Data.OData.xml
 C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\QueryConsole\bin\Debug\Microsoft.Data.Services.Client.xml
 C:\VS_Project\IntegrationConsole\Integration-Console\Terra-integration\QueryConsole\bin\Debug\System.Spatial.xml
-C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.csprojResolveAssemblyReference.cache
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.csproj.CoreCompileInputs.cache
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.exe
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.pdb
@@ -504,3 +503,4 @@ C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\bin\Debug\ru\DevExpress.XtraLayout.v10.2.resources.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\bin\Debug\ru\DevExpress.Xpo.v10.2.resources.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.csproj.QueryConsole.exe.config
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\obj\Debug\QueryConsole.csprojResolveAssemblyReference.cache

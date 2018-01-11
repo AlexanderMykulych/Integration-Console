@@ -67,12 +67,12 @@ namespace Terrasoft.TsIntegration.Configuration{
 					}
 					else if (info.config.TsTag == "stringtoguid")
 					{
-						resultValue = JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1).FirstOrDefault();
+						resultValue = JsonEntityHelper.GetColumnValues(info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1).FirstOrDefault();
 					}
 					var filters = new List<Tuple<string, object>>() {
 						new Tuple<string, object>(info.config.TsDetailPath, resultId)
 					};
-					JsonEntityHelper.UpdateOrInsertEntityColumn(info.config.TsDetailName, info.config.TsDetailResPath, resultValue, info.userConnection, optionalColumns, filters);
+					JsonEntityHelper.UpdateOrInsertEntityColumn(info.config.TsDetailName, info.config.TsDetailResPath, resultValue, optionalColumns, filters);
 				}
 			}
 		}

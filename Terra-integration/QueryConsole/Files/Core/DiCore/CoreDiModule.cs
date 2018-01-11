@@ -31,6 +31,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			Bind<IHandlerKeyGenerator>().To<HandlerKeyGenerator>();
 			Bind<IIntegrationObjectProvider>().To<IntegrationObjectProvider>();
 			Bind<ITemplateFactory>().To<TemplateHandlerFactory>();
+			Bind<IIntegrationService>().To<BaseIntegrationService>();
 		}
 
 		private void BindStrategy()

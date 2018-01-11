@@ -56,7 +56,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 					var newValue = newJValue.Value;
 					if (newValue != null)
 					{
-						resultId = JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1).FirstOrDefault();
+						resultId = JsonEntityHelper.GetColumnValues(info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1).FirstOrDefault();
 						if (info.config.CreateIfNotExist && (resultId == null || (resultId is string && (string)resultId == string.Empty) || (resultId is Guid && (Guid)resultId == Guid.Empty)))
 						{
 							Dictionary<string, string> defaultColumn = null;
@@ -72,7 +72,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 									}
 								}
 							}
-							resultId = JsonEntityHelper.CreateColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1, "CreateOn", Common.OrderDirection.Descending, defaultColumn).FirstOrDefault();
+							resultId = JsonEntityHelper.CreateColumnValues(info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1, "CreateOn", Common.OrderDirection.Descending, defaultColumn).FirstOrDefault();
 						}
 					}
 				}
@@ -85,7 +85,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			if (JsonEntityHelper.IsAllNotNullAndEmpty(info.entity, info.config.TsDestinationName, info.config.TsSourcePath, info.config.TsDestinationPath, info.config.TsDestinationResPath))
 			{
 				var sourceValue = info.entity.GetColumnValue(info.config.TsSourcePath);
-				resultObject = JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationPath, sourceValue, info.config.TsDestinationResPath).FirstOrDefault();
+				resultObject = JsonEntityHelper.GetColumnValues(info.config.TsDestinationName, info.config.TsDestinationPath, sourceValue, info.config.TsDestinationResPath).FirstOrDefault();
 			}
 			info.json.FromObject(resultObject);
 		}

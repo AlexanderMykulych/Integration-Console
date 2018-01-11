@@ -41,6 +41,6 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public interface IMapperDbWorker
 	{
-		bool IsExists(UserConnection userConnection, string entityName, string externalIdPath, object externalId);
+		bool IsExists(string entityName, string externalIdPath, object externalId);
 	}
 }

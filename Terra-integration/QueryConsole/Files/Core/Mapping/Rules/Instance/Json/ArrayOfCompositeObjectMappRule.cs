@@ -73,16 +73,19 @@ namespace Terrasoft.TsIntegration.Configuration{
 					}
 					if (info.config.DeleteBeforeExport)
 					{
-						EntitySchema entitySchema = info.userConnection.EntitySchemaManager.GetInstanceByName(info.config.TsDestinationName);
+						var userConnection = ObjectFactory
+							.Get<IConnectionProvider>()
+							.Get<UserConnection>();
+						EntitySchema entitySchema = userConnection.EntitySchemaManager.GetInstanceByName(info.config.TsDestinationName);
 						string destColumnName = JsonEntityHelper.GetSqlNameByEntity(entitySchema, info.config.TsDestinationPath);
 						if (integrateIds != null && integrateIds.Any())
 						{
-							var idSelect = new Select(info.userConnection)
+							var idSelect = new Select(userConnection)
 											.Column("Id")
 											.From(info.config.TsDestinationName)
 											.Where("Id").Not().In(integrateIds)
 											.And(destColumnName).In(
-												new Select(info.userConnection)
+												new Select(userConnection)
 													.Column(destColumnName)
 													.From(info.config.TsDestinationName)
 													.Where("Id").In(integrateIds)
@@ -90,16 +93,16 @@ namespace Terrasoft.TsIntegration.Configuration{
 											as Select;
 							if (!string.IsNullOrEmpty(info.config.BeforeDeleteMacros))
 							{
-								MacrosFactory.ExecuteBeforeDeleteMacros(info.config.BeforeDeleteMacros, idSelect, info.userConnection);
+								MacrosFactory.ExecuteBeforeDeleteMacros(info.config.BeforeDeleteMacros, idSelect, userConnection);
 							}
-							var delete = new Delete(info.userConnection)
+							var delete = new Delete(userConnection)
 									.From(info.config.TsDestinationName)
 									.Where("Id").In(idSelect) as Delete;
 							delete.Execute();
 						}
 						else
 						{
-							var delete = new Delete(info.userConnection)
+							var delete = new Delete(userConnection)
 									.From(info.config.TsDestinationName)
 									.Where(destColumnName).IsEqual(Column.Parameter(info.entity.GetColumnValue(info.config.TsSourcePath))) as Delete;
 							delete.Execute();

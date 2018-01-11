@@ -14,7 +14,7 @@ namespace Terrasoft.TsIntegration.Configuration
 		public NoEntityHandler(ConfigSetting handlerConfig) : base(handlerConfig)
 		{
 		}
-		public override Entity CreateEntityForExportMyMapping(ref MappingConfig mappingConfig, UserConnection userConnection)
+		public override Entity CreateEntityForExportMyMapping(ref MappingConfig mappingConfig)
 		{
 			return null;
 		}

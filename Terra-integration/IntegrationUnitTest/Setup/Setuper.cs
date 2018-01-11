@@ -22,6 +22,7 @@ namespace IntegrationUnitTest
 		private CancellationTokenSource _tokenSource;
 		private volatile bool _isHostStarted = false;
 
+
 		[OneTimeSetUp]
 		public void Setup()
 		{
@@ -46,7 +47,7 @@ namespace IntegrationUnitTest
 			
 			Task.Factory.StartNew(() =>
 			{
-				using (var host = new NancyHost(new Uri("htpp://localhost:1234")))
+				using (var host = new NancyHost(new Uri("http://localhost:1234")))
 				{
 					host.Start();
 					_isHostStarted = true;

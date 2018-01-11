@@ -41,6 +41,15 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public static class JsonEntityHelper
 	{
+		private static UserConnection userConnection
+		{
+			get
+			{
+				return ObjectFactory
+					.Get<IConnectionProvider>()
+					.Get<UserConnection>();
+			}
+		}
 		public static object GetSimpleTypeValue(object value)
 		{
 			try
@@ -62,7 +71,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			}
 		}
 
-		public static List<object> GetColumnValues(UserConnection userConnection, string entityName, string entityPath, object entityPathValue, string resultColumnName, int limit = -1,
+		public static List<object> GetColumnValues(string entityName, string entityPath, object entityPathValue, string resultColumnName, int limit = -1,
 			string orderColumnName = "CreatedOn", OrderDirection orderType = OrderDirection.Descending, Dictionary<string, string> filters = null)
 		{
 			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, entityName);
@@ -91,7 +100,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			).ToList();
 		}
 
-		public static List<object> CreateColumnValues(UserConnection userConnection, string entityName, string entityPath, object entityPathValue, string resultColumnName, int limit = -1,
+		public static List<object> CreateColumnValues(string entityName, string entityPath, object entityPathValue, string resultColumnName, int limit = -1,
 			string orderColumnName = "CreatedOn", OrderDirection orderType = OrderDirection.Descending, Dictionary<string, string> filters = null)
 		{
 			try
@@ -128,7 +137,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			}
 		}
 
-		public static List<object> GetColumnValuesWithFilters(UserConnection userConnection, string entityName, string entityPath, object entityPathValue, string resultColumnName, Dictionary<string, string> filters, int limit = -1,
+		public static List<object> GetColumnValuesWithFilters(string entityName, string entityPath, object entityPathValue, string resultColumnName, Dictionary<string, string> filters, int limit = -1,
 			string orderColumnName = "CreatedOn", OrderDirection orderType = OrderDirection.Descending)
 		{
 			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, entityName);
@@ -172,7 +181,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			return strings.FirstOrDefault(x => !string.IsNullOrEmpty(x));
 		}
-		public static List<IIntegrationObject> GetCompositeJObjects(object colValue, string colName, string entityName, string handlerName, UserConnection userConnection, int maxCount = -1)
+		public static List<IIntegrationObject> GetCompositeJObjects(object colValue, string colName, string entityName, string handlerName, int maxCount = -1)
 		{
 			try
 			{
@@ -193,7 +202,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 						BaseEntityHandler handler = null;//(new IntegrationEntityHelper()).GetIntegrationHandler(integrationInfo);
 						if (handler != null)
 						{
-							jObjectsList.Add(handler.ToJson(integrationInfo));
 						}
 					}
 					catch (Exception e)
@@ -209,7 +217,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 				return new List<IIntegrationObject>();
 			}
 		}
-		public static Tuple<Dictionary<string, string>, Entity> GetEntityByExternalId(string schemaName, int externalId, UserConnection userConnection, bool addAllColumn, params string[] columns)
+		public static Tuple<Dictionary<string, string>, Entity> GetEntityByExternalId(string schemaName, int externalId, bool addAllColumn, params string[] columns)
 		{
 			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, schemaName);
 			var columnDict = new Dictionary<string, string>();
@@ -229,7 +237,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			var entity = esq.GetEntityCollection(userConnection).FirstOrDefault();
 			return new Tuple<Dictionary<string, string>, Entity>(columnDict, entity);
 		}
-		public static bool isEntityExist(string schemaName, UserConnection userConnection, Dictionary<string, object> filters)
+		public static bool isEntityExist(string schemaName, Dictionary<string, object> filters)
 		{
 			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, schemaName);
 			var schema = userConnection.EntitySchemaManager.GetInstanceByName(schemaName);
@@ -252,12 +260,12 @@ namespace Terrasoft.TsIntegration.Configuration{
 			return false;
 		}
 
-		public static void UpdateOrInsertEntityColumn(string entityName, string setColumn, object setValue, UserConnection userConnection, Dictionary<string, string> optionalColumns, List<Tuple<string, object>> filters)
+		public static void UpdateOrInsertEntityColumn(string entityName, string setColumn, object setValue, Dictionary<string, string> optionalColumns, List<Tuple<string, object>> filters)
 		{
 			var schema = userConnection.EntitySchemaManager.GetInstanceByName(entityName);
 
 			filters.AddRange(optionalColumns.Select(x => new Tuple<string, object>(x.Key, x.Value)));
-			if (GetEntityCount(entityName, userConnection, filters) > 0)
+			if (GetEntityCount(entityName, filters) > 0)
 			{
 				var update = new Update(userConnection, entityName);
 				var selectUpdate = new Select(userConnection)
@@ -296,7 +304,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			return schema.Columns.GetByName(columnName).ColumnValueName;
 		}
-		public static int GetEntityCount(string entityName, UserConnection userConnection, List<Tuple<string, object>> filters)
+		public static int GetEntityCount(string entityName, List<Tuple<string, object>> filters)
 		{
 			var schema = userConnection.EntitySchemaManager.GetInstanceByName(entityName);
 			var select = new Select(userConnection)

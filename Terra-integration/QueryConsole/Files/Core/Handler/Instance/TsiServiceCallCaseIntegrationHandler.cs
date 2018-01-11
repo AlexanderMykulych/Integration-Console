@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using Terrasoft.Core;
 using Terrasoft.Core.DB;
 
 namespace Terrasoft.TsIntegration.Configuration
@@ -55,11 +56,11 @@ namespace Terrasoft.TsIntegration.Configuration
 			try
 			{
 				var id = integrationInfo.IntegratedEntity.PrimaryColumnValue;
-				var insert = new Insert(integrationInfo.UserConnection)
+				var insert = new Insert(ConnectionProvider.Get<UserConnection>())
 					.Into("TsiTriggerQueue")
 					.Set("TsiObjectName", Column.Parameter(integrationInfo.IntegratedEntity.SchemaName))
 					.Set("TsiObjectId", Column.Parameter(id))
-					.Set("TsiTriggerName", Column.Parameter(triggerName)) as Insert;
+					.Set("TsiTriggerName", Column.Parameter(triggerName));
 				insert.Execute();
 			}
 			catch (Exception e)

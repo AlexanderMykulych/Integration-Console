@@ -43,8 +43,11 @@ namespace Terrasoft.TsIntegration.Configuration{
 	{
 		public string StoredProcedureName;
 		//Log key=Handler Util
-		public Guid Search(UserConnection userConnection, Action<StoredProcedure> procedureAction, Action<Exception> onErrorAction = null)
+		public Guid Search(Action<StoredProcedure> procedureAction, Action<Exception> onErrorAction = null)
 		{
+			var userConnection = ObjectFactory
+				.Get<IConnectionProvider>()
+				.Get<UserConnection>();
 			try
 			{
 				if (string.IsNullOrEmpty(StoredProcedureName) || procedureAction == null)

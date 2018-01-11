@@ -41,7 +41,18 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public class MapperDbWorker : IMapperDbWorker
 	{
-		public bool IsExists(UserConnection userConnection, string entityName, string externalIdPath, object externalId)
+		private IConnectionProvider _connectionProvider;
+
+		private UserConnection userConnection
+		{
+			get { return _connectionProvider.Get<UserConnection>(); }
+		}
+
+		public MapperDbWorker(IConnectionProvider connectionProvider)
+		{
+			_connectionProvider = connectionProvider;
+		}
+		public bool IsExists(string entityName, string externalIdPath, object externalId)
 		{
 			var select = new Select(userConnection)
 							.Column(Func.Count(Column.Const(1))).As("Count")

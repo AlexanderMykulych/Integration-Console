@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Terrasoft.Core;
 
 namespace Terrasoft.TsIntegration.Configuration
 {
@@ -21,7 +22,7 @@ namespace Terrasoft.TsIntegration.Configuration
 					var newValue = newJValue.Value;
 					if (newValue != null)
 					{
-						resultId = JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1).FirstOrDefault();
+						resultId = JsonEntityHelper.GetColumnValues(info.config.TsDestinationName, info.config.TsDestinationResPath, newValue, info.config.TsDestinationPath, 1).FirstOrDefault();
 					}
 				}
 			}
@@ -33,7 +34,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			if (JsonEntityHelper.IsAllNotNullAndEmpty(info.entity, info.config.TsDestinationName, info.config.TsSourcePath, info.config.TsDestinationPath, info.config.TsDestinationResPath))
 			{
 				var sourceValue = info.entity.GetColumnValue(info.config.TsSourcePath);
-				resultObject = JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationPath, sourceValue, info.config.TsDestinationResPath).FirstOrDefault();
+				resultObject = JsonEntityHelper.GetColumnValues(info.config.TsDestinationName, info.config.TsDestinationPath, sourceValue, info.config.TsDestinationResPath).FirstOrDefault();
 			}
 			info.json.FromObject(resultObject);
 		}

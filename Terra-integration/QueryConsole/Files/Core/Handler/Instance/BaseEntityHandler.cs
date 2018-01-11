@@ -46,7 +46,7 @@ namespace Terrasoft.TsIntegration.Configuration
 		public BaseEntityHandler(ConfigSetting handlerConfig)
 		{
 			HandlerConfig = handlerConfig;
-			Mapper = new IntegrationMapper();
+			Mapper = ObjectFactory.Get<IMapper>();
 			ConnectionProvider = ObjectFactory.Get<IConnectionProvider>();
 			HandlerEntityWorker = ObjectFactory.Get<IHandlerEntityWorker>();
 			ServiceHandlerWorker = ObjectFactory.Get<IServiceHandlerWorkers>();
@@ -240,7 +240,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			return true;
 		}
 
-		public virtual EntitySchemaQuery GetEntitySchemaQuery(ref MappingConfig mappingConfig, UserConnection userConnection)
+		public virtual EntitySchemaQuery GetEntitySchemaQuery(ref MappingConfig mappingConfig)
 		{
 			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, HandlerConfig.EntityName);
 			esq.UseAdminRights = false;
@@ -275,7 +275,7 @@ namespace Terrasoft.TsIntegration.Configuration
 
 		public virtual Entity CreateEntityForExportMyMapping(ref MappingConfig mappingConfig)
 		{
-			var esqEntity = GetEntitySchemaQuery(ref mappingConfig, userConnection);
+			var esqEntity = GetEntitySchemaQuery(ref mappingConfig);
 			return esqEntity.GetEntity(userConnection, EntityId);
 		}
 		public virtual void Delete(IntegrationInfo integrationInfo)

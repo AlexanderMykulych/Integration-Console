@@ -58,13 +58,13 @@ namespace Terrasoft.TsIntegration.Configuration
 			List<string> sessionIds = GetSessionIds(integrationInfo.Data);
 			LoggerHelper.DoInLogBlock(DeleteLogCaption, () =>
 			{
-				DeleteArchiveSessionByNotThisIds(sessionIds, integrationInfo.UserConnection);
+				DeleteArchiveSessionByNotThisIds(sessionIds);
 			});
 		}
 
-		private void DeleteArchiveSessionByNotThisIds(List<string> sessionIds, UserConnection userConnection)
+		private void DeleteArchiveSessionByNotThisIds(List<string> sessionIds)
 		{
-			var delete = new Delete(userConnection)
+			var delete = new Delete(ConnectionProvider.Get<UserConnection>())
 				.From(DeleteEntityName)
 				.Where(DeleteEntityPrimaryColumnName).IsEqual(Column.Parameter(MainEntityPrimaryColumnName)) as Delete;
 			if (sessionIds.Any())

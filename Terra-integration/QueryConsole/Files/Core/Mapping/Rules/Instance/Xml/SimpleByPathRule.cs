@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terrasoft.Core;
 using Terrasoft.Core.Entities;
 
 namespace Terrasoft.TsIntegration.Configuration
@@ -13,7 +14,10 @@ namespace Terrasoft.TsIntegration.Configuration
 		//Log Name=Simple By Path Mapp, Key=MappingRule
 		public void Export(RuleExportInfo info)
 		{
-			var esq = new EntitySchemaQuery(info.userConnection.EntitySchemaManager, info.entity.SchemaName);
+			var userConnection = ObjectFactory
+				.Get<IConnectionProvider>()
+				.Get<UserConnection>();
+			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, info.entity.SchemaName);
 			esq.RowCount = 1;
 			var column = esq.AddColumn(info.config.TsSourcePath);
 			Entity entity = null;
@@ -42,11 +46,11 @@ namespace Terrasoft.TsIntegration.Configuration
 			}
 			if (loadById)
 			{
-				entity = esq.GetEntity(info.userConnection, info.entity.PrimaryColumnValue);
+				entity = esq.GetEntity(userConnection, info.entity.PrimaryColumnValue);
 			}
 			else
 			{
-				entity = esq.GetEntityCollection(info.userConnection).FirstOrDefault();
+				entity = esq.GetEntityCollection(userConnection).FirstOrDefault();
 			}
 			if (entity != null)
 			{

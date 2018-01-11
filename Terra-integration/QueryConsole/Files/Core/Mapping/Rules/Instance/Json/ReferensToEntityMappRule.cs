@@ -83,7 +83,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 				info.config.JSourceName, info.config.TsDestinationPath))
 			{
 				var resultValue =
-					JsonEntityHelper.GetColumnValues(info.userConnection, info.config.TsDestinationName, info.config.TsDestinationPath,
+					JsonEntityHelper.GetColumnValues(info.config.TsDestinationName, info.config.TsDestinationPath,
 							info.entity.GetTypedColumnValue<Guid>(info.config.TsSourcePath), info.config.TsExternalIdPath)
 						.FirstOrDefault(x => (int)x > 0);
 				if (resultValue != null)

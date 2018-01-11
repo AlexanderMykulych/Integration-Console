@@ -41,35 +41,16 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public class IntegrationMapper : IMapper
 	{
+		public IntegrationMapper(IMapperDbWorker mapperDbWorker, IIntegrationObjectProvider integrationObjectProvider)
+		{
+			MapperDbWorker = mapperDbWorker;
+			IntegrationObjectProvider = integrationObjectProvider;
+		}
 		public List<MappingItem> MapConfig;
 		public Queue<Action> MethodQueue;
 		public RulesFactory RulesFactory;
-		private IMapperDbWorker _mapperDbWorker;
-		public virtual IMapperDbWorker MapperDbWorker {
-			set {
-				_mapperDbWorker = value;
-			}
-			get {
-				if (_mapperDbWorker == null)
-				{
-					_mapperDbWorker = new MapperDbWorker();
-				}
-				return _mapperDbWorker;
-			}
-		}
-		private IIntegrationObjectProvider _integrationObjectProvider;
-		public virtual IIntegrationObjectProvider IntegrationObjectProvider {
-			set {
-				_integrationObjectProvider = value;
-			}
-			get {
-				if (_integrationObjectProvider == null)
-				{
-					_integrationObjectProvider = new IntegrationObjectProvider();
-				}
-				return _integrationObjectProvider;
-			}
-		}
+		public virtual IMapperDbWorker MapperDbWorker { get; set; }
+		public virtual IIntegrationObjectProvider IntegrationObjectProvider { get; set; }
 		public IntegrationMapper()
 		{
 			MethodQueue = new Queue<Action>();
@@ -112,7 +93,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 				throw;
 			}
 		}
-		public virtual bool CheckIsExist(UserConnection userConnection, string entityName, object externalId, string externalIdPath = "TsExternalId", object entityExternalId = null)
+		public virtual bool CheckIsExist(string entityName, object externalId, string externalIdPath = "TsExternalId", object entityExternalId = null)
 		{
 			if (entityExternalId != null && entityExternalId.ToString() != string.Empty && entityExternalId.ToString() != "0")
 			{
@@ -122,7 +103,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			{
 				return false;
 			}
-			return MapperDbWorker.IsExists(userConnection, entityName, externalIdPath, externalId);
+			return MapperDbWorker.IsExists(entityName, externalIdPath, externalId);
 		}
 		//Log key=Mapper
 		protected virtual void StartMappImportByConfig(IntegrationInfo integrationInfo, string jName, List<MappingItem> mapConfig)
@@ -246,7 +227,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 								config = mapItem,
 								entity = integrationInfo.IntegratedEntity,
 								json = jToken,
-								userConnection = userConnection,
 								integrationType = integrationInfo.IntegrationType,
 								action = integrationInfo.Action
 							};
@@ -271,7 +251,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 								config = mapItem,
 								entity = integrationInfo.IntegratedEntity,
 								json = jToken,
-								userConnection = userConnection,
 								integrationType = integrationInfo.IntegrationType,
 								action = integrationInfo.Action
 							};

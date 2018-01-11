@@ -223,6 +223,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\MailBee.NET.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Microsoft.Data.Edm.dll</HintPath>
@@ -249,12 +250,18 @@
     <Reference Include="Nancy.Hosting.Self, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nancy.Hosting.Self.1.4.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject, Version=2.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7" />
     <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpSvn">
+      <HintPath>..\packages\SharpSvn.1.8-x64.1.8016.3866.130\lib\net40\SharpSvn.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpSvn.UI">
+      <HintPath>..\packages\SharpSvn.1.8-x64.1.8016.3866.130\lib\net40\SharpSvn.UI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -293,6 +300,9 @@
     </Reference>
     <Reference Include="Terrasoft.GoogleServices">
       <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.GoogleServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Terrasoft.IO">
+      <HintPath>..\..\..\..\..\..\WebApp\Utk\Terrasoft.WebApp\bin\Terrasoft.IO.dll</HintPath>
     </Reference>
     <Reference Include="Terrasoft.Messaging.Common">
       <HintPath>..\..\..\..\..\WebApp\Armtek_7.7.0.2881\Terrasoft.WebApp\bin\Terrasoft.Messaging.Common.dll</HintPath>
@@ -378,12 +388,6 @@
     <Compile Include="Strategy\StringToIObjectStepTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QueryConsole\QueryConsole.csproj">
-      <Project>{bb4e58d7-fce2-454b-8850-7f3ff12cdb2c}</Project>
-      <Name>QueryConsole</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="obj\Debug\IntegrationUnitTest.csproj.CopyComplete" />
@@ -402,6 +406,12 @@
   <ItemGroup>
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="obj\Release\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QueryConsole\QueryConsole.csproj">
+      <Project>{bb4e58d7-fce2-454b-8850-7f3ff12cdb2c}</Project>
+      <Name>QueryConsole</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

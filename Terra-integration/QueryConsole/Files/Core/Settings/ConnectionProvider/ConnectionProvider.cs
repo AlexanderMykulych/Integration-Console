@@ -15,10 +15,8 @@ namespace Terrasoft.TsIntegration.Configuration
 	{
 		private static readonly ConcurrentDictionary<int, object> _connections = new ConcurrentDictionary<int, object>();
 
-		private static int _currentId
-		{
-			get
-			{
+		private static int _currentId {
+			get {
 				return Thread.CurrentThread.ManagedThreadId;
 			}
 		}
@@ -89,6 +87,27 @@ namespace Terrasoft.TsIntegration.Configuration
 			{
 				Clear();
 			}
+		}
+		public static T DoWith<T>(object connection, Func<T> predicate, T defaultValue, Action<Exception> onErrorAction = null)
+		{
+			try
+			{
+				Set(connection);
+				return predicate();
+			}
+			catch (Exception e)
+			{
+				IntegrationLogger.Error(e.ToString());
+				if (onErrorAction != null)
+				{
+					onErrorAction(e);
+				}
+			}
+			finally
+			{
+				Clear();
+			}
+			return defaultValue;
 		}
 	}
 }

@@ -59,7 +59,10 @@ namespace Terrasoft.TsIntegration.Configuration{
 							JObject jObj = jArrayItem as JObject;
 							var externalId = jObj.SelectToken("#ref.id").Value<int>();
 							var type = jObj.SelectToken("#ref.type").Value<string>();
-							DependentEntityLoader.LoadDependenEntity(type, externalId, info.userConnection, null,
+							var userConnection = ObjectFactory
+								.Get<IConnectionProvider>()
+								.Get<UserConnection>();
+							DependentEntityLoader.LoadDependenEntity(type, externalId, userConnection, null,
 								IntegrationLogger.SimpleLoggerErrorAction);
 						}
 					};
