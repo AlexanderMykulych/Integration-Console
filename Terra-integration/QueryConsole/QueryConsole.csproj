@@ -468,10 +468,12 @@
     <Compile Include="Files\Core\Settings\ConnectionProvider\BpmConnectionProvider.cs" />
     <Compile Include="Files\Core\Settings\ConnectionProvider\ConnectionProvider.cs" />
     <Compile Include="Files\Core\Settings\ConnectionProvider\IConnectionProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\BaseSettingsProvider.cs" />
     <Compile Include="Files\Core\Settings\Model\ISetting.cs" />
     <Compile Include="Files\Core\Settings\Model\ISettingProvider.cs" />
     <Compile Include="Files\Core\Settings\Model\Repository\BaseRepositorySettingProvider.cs" />
     <Compile Include="Files\Core\Settings\Model\Repository\IRepositorySettingsProvider.cs" />
+    <Compile Include="Files\Core\Settings\Model\Setting.cs" />
     <Compile Include="Files\Core\Settings\Model\SettingProvider.cs" />
     <Compile Include="Files\Core\Settings\Model\SettingsProviderExtension.cs" />
     <Compile Include="Files\Core\Settings\Model\Xml\BaseXmlProvider.cs" />

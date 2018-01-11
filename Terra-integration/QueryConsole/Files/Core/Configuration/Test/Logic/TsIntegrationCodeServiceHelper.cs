@@ -91,13 +91,13 @@ namespace Terrasoft.TsIntegration.Configuration{
 				IIntegrator integrator = null;
 				if (info.IsUseMock)
 				{
-					integrator = ClassFactory.Get<BaseIntegratorMock>();
+					integrator = ObjectFactory.Get<BaseIntegratorMock>();
 				}
 				else
 				{
-					integrator = ClassFactory.Get<BaseIntegrator>();
+					integrator = ObjectFactory.Get<IIntegrator>();
 				}
-				integrator.ExportWithRequest(userConnection, info.Id, info.SchemaName, info.RouteKey);
+				integrator.ExportWithRequest(info.Id, info.SchemaName, info.RouteKey);
 			});
 		}
 		#endregion
@@ -267,7 +267,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 							foreach (var handler in handlers)
 							{
 								builder.AppendLineFormat("Обработчик: {0}", handler.GetType());
-								var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(userConnection, entity);
+								var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(entity);
 								builder.AppendLineFormat("Результат: {0}", handler.ToJson(integrationInfo));
 							}
 							return builder.ToString();
@@ -334,7 +334,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 						{
 							try
 							{
-								var integrationInfoCreate = CsConstant.IntegrationInfo.CreateForImport(userConnection, CsConstant.IntegrationActionName.Create, jObj);
+								var integrationInfoCreate = CsConstant.IntegrationInfo.CreateForImport(CsConstant.IntegrationActionName.Create, jObj);
 								handler.Create(integrationInfoCreate);
 								if (integrationInfoCreate != null && integrationInfoCreate.IntegratedEntity != null)
 								{
@@ -349,13 +349,13 @@ namespace Terrasoft.TsIntegration.Configuration{
 						bool isEntityExist = false;
 						if (info.IsExists)
 						{
-							var integrationInfoExists = CsConstant.IntegrationInfo.CreateForImport(userConnection, CsConstant.IntegrationActionName.Create, jObj);
+							var integrationInfoExists = CsConstant.IntegrationInfo.CreateForImport(CsConstant.IntegrationActionName.Create, jObj);
 							isEntityExist = handler.IsEntityAlreadyExist(integrationInfoExists);
 							builder.AppendLineFormat("Результат поиска: {0}", isEntityExist);
 						}
 						if (info.IsUpdate)
 						{
-							var integrationInfoUpdate = CsConstant.IntegrationInfo.CreateForImport(userConnection, CsConstant.IntegrationActionName.Update, jObj);
+							var integrationInfoUpdate = CsConstant.IntegrationInfo.CreateForImport(CsConstant.IntegrationActionName.Update, jObj);
 							if (!isEntityExist && !info.IsExists)
 							{
 								isEntityExist = handler.IsEntityAlreadyExist(integrationInfoUpdate);

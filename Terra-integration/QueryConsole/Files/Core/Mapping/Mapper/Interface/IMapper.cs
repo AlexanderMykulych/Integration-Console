@@ -42,7 +42,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 	public interface IMapper
 	{
 		void StartMappByConfig(CsConstant.IntegrationInfo integrationInfo, string jName, MappingConfig mapConfig);
-		bool CheckIsExist(UserConnection userConnection, string entityName, object externalId, string externalIdPath = "TsExternalId", object entityExternalId = null);
+		bool CheckIsExist(string entityName, object externalId, string externalIdPath = "TsExternalId", object entityExternalId = null);
 		void ExecuteMapMethodQueue();
 	}
 }

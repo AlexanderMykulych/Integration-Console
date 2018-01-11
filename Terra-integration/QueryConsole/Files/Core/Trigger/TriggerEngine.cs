@@ -18,7 +18,7 @@ namespace Terrasoft.TsIntegration.Configuration
 				LoggerHelper.DoInLogBlock("Find Trigger " + triggerInfo.Caption, () =>
 				{
 					var integrator = ClassFactory.Get<BaseIntegrator>();
-					integrator.ExportWithRequest(eventInfo.UserConnection, eventInfo.PrimaryColumnValue, eventInfo.SchemaName, triggerInfo.Route);
+					integrator.ExportWithRequest(eventInfo.PrimaryColumnValue, eventInfo.SchemaName, triggerInfo.Route);
 				});
 			});
 		}

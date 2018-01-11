@@ -71,7 +71,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			SettingsManager.ReinitXmlConfigSettings();
 			var integrator = ClassFactory.Get<BaseIntegrator>();
 			IIntegrationObject integrObject = null;
-			integrator.Export(UserConnection, new Guid(id), null, routeKey,
+			integrator.Export(new Guid(id), null, routeKey,
 				(iObject, handlerConfig, handler, entity) =>
 				{
 					integrObject = iObject;
@@ -117,7 +117,7 @@ namespace Terrasoft.TsIntegration.Configuration
 				var route = endPointHandler.GetImportRoute(integrObject);
 				var integrator = ClassFactory.Get<BaseIntegrator>();
 				Stream responseStream = null;
-				integrator.Import(UserConnection, integrObject, route, integrationInfo =>
+				integrator.Import(integrObject, route, integrationInfo =>
 				{
 					if (integrationInfo.IntegratedEntity != null)
 					{
@@ -185,7 +185,7 @@ namespace Terrasoft.TsIntegration.Configuration
 		{
 			var integrator = ClassFactory.Get<BaseIntegrator>();
 			Guid resultId = Guid.Empty;
-			integrator.Import(UserConnection, iObject, routeKey, integrationInfo =>
+			integrator.Import(iObject, routeKey, integrationInfo =>
 			{
 				if (integrationInfo.IntegratedEntity != null)
 				{

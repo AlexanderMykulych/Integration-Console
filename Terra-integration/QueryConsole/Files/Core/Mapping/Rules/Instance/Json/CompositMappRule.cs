@@ -44,6 +44,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 	{
 		public CompositMappRule()
 		{
+			
 		}
 		public void Import(RuleImportInfo info)
 		{
@@ -52,6 +53,10 @@ namespace Terrasoft.TsIntegration.Configuration{
 		}
 		public void Export(RuleExportInfo info)
 		{
+			var userConnection = ObjectFactory
+				.Get<IConnectionProvider>()
+				.Get<UserConnection>();
+			
 			var entityId = info.entity.GetTypedColumnValue<Guid>(info.config.TsSourcePath);
 			if (entityId != Guid.Empty)
 			{
@@ -60,12 +65,12 @@ namespace Terrasoft.TsIntegration.Configuration{
 				var handler = entityHelper.GetAllIntegrationHandler(new List<ConfigSetting>() { config }).FirstOrDefault();
 				if (handler != null)
 				{
-					var esq = new EntitySchemaQuery(info.userConnection.EntitySchemaManager, config.EntityName);
+					var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, config.EntityName);
 					esq.AddAllSchemaColumns();
-					var entity = esq.GetEntity(info.userConnection, entityId);
+					var entity = esq.GetEntity(userConnection, entityId);
 					if (entity != null)
 					{
-						var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(info.userConnection, entity);
+						var integrationInfo = CsConstant.IntegrationInfo.CreateForExport(entity);
 						var resultJson = handler.ToJson(integrationInfo);
 						info.json.SetObject(resultJson.GetObject());
 						return;

@@ -54,7 +54,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 					service.SendRequest(request, response =>
 					{
 						string responseContent = service.GetContentFromResponse(response);
-						var integrationInfo = CsConstant.IntegrationInfo.CreateForResponse(userConnection, entity);
+						var integrationInfo = CsConstant.IntegrationInfo.CreateForResponse(entity);
 						integrationInfo.StrData = responseContent;
 						integrationInfo.Handler = handler;
 						integrationInfo.Action = CsConstant.IntegrationActionName.UpdateFromResponse;

@@ -26,6 +26,11 @@ namespace Terrasoft.TsIntegration.Configuration
 			Bind<IServiceRequestWorker>().To<ServiceRequestWorker>();
 			Bind<IIntegrator>().To<SyncIntegrator>();
 			Bind<ISyncExportChecker<Guid>>().To<SyncValidator>();
+			Bind<BaseIntegratorMock>().ToSelf();
+			Bind<IHandlerEntityWorker>().To<HandlerEntityWorker>();
+			Bind<IHandlerKeyGenerator>().To<HandlerKeyGenerator>();
+			Bind<IIntegrationObjectProvider>().To<IntegrationObjectProvider>();
+			Bind<ITemplateFactory>().To<TemplateHandlerFactory>();
 		}
 
 		private void BindStrategy()

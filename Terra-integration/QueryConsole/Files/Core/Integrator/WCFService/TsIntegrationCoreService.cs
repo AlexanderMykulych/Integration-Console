@@ -153,7 +153,7 @@ namespace Terrasoft.TsIntegration.Configuration
 					if (triggerInfo != null)
 					{
 						var integrator = ClassFactory.Get<BaseIntegrator>();
-						integrator.ExportWithRequest(userConnection, info.PrimaryColumnValue, info.SchemaName, triggerInfo.Route);
+						integrator.ExportWithRequest(info.PrimaryColumnValue, info.SchemaName, triggerInfo.Route);
 					}
 					else
 					{

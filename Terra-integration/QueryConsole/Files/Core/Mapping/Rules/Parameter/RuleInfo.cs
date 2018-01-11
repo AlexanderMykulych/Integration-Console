@@ -44,7 +44,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 		public MappingItem config;
 		public Entity entity;
 		public IIntegrationObject json;
-		public UserConnection userConnection;
 		public CsConstant.TIntegrationType integrationType;
 		public string action;
 	}

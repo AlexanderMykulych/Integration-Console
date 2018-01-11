@@ -26,7 +26,7 @@ namespace Terrasoft.TsIntegration.Configuration
 				var value = integrationInfo.Data.GetProperty<string>(valuePath);
 				if (!string.IsNullOrEmpty(value))
 				{
-					result = isEntityExist(searchEntityName, searchEntityColumn, value, integrationInfo.UserConnection);
+					result = isEntityExist(searchEntityName, searchEntityColumn, value);
 				}
 			});
 			if (!result)
@@ -36,8 +36,11 @@ namespace Terrasoft.TsIntegration.Configuration
 			return bool.Parse(GetHandlerConfigValue("DefaultResult"));
 		}
 		//Log Key = Handler
-		protected virtual bool isEntityExist(string entityName, string columnName, string value, UserConnection userConnection)
+		protected virtual bool isEntityExist(string entityName, string columnName, string value)
 		{
+			var userConnection = ObjectFactory
+				.Get<IConnectionProvider>()
+				.Get<UserConnection>();
 			var select = new Select(userConnection)
 				.Column(Func.Count(Column.Asterisk()))
 				.From(entityName)

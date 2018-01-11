@@ -41,8 +41,19 @@ using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TInteg
 namespace Terrasoft.TsIntegration.Configuration{
 	public class HandlerEntityWorker : IHandlerEntityWorker
 	{
+		private IConnectionProvider _connectionProvider;
+
+		private UserConnection userConnection
+		{
+			get { return _connectionProvider.Get<UserConnection>(); }
+		}
+
+		public HandlerEntityWorker(IConnectionProvider connectionProvider)
+		{
+			_connectionProvider = connectionProvider;
+		}
 		//Log key=Handler Util
-		public Entity CreateEntity(UserConnection userConnection, string entityName)
+		public Entity CreateEntity(string entityName)
 		{
 			var entitySchema = userConnection.EntitySchemaManager.GetInstanceByName(entityName);
 			var entity = entitySchema.CreateEntity(userConnection);
@@ -75,7 +86,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			}
 		}
 		//Log key=Handler Util
-		public Entity GetEntityByExternalId(UserConnection userConnection, string entityName, string externalIdPath, string externalId)
+		public Entity GetEntityByExternalId(string entityName, string externalIdPath, string externalId)
 		{
 			var esq = new EntitySchemaQuery(userConnection.EntitySchemaManager, entityName);
 			esq.AddAllSchemaColumns();
@@ -84,7 +95,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			return esq.GetEntityCollection(userConnection).FirstOrDefault();
 		}
 		//Log key=Handler Util
-		public Entity GetEntityById(UserConnection userConnection, string entityName, Guid id)
+		public Entity GetEntityById(string entityName, Guid id)
 		{
 			var entityEsq = new EntitySchemaQuery(userConnection.EntitySchemaManager, entityName);
 			entityEsq.AddAllSchemaColumns();

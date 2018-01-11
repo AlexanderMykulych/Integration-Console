@@ -53,5 +53,9 @@ namespace Terrasoft.TsIntegration.Configuration{
 			var serviceMockConfig = SettingsManager.GetServiceMockConfig(Mock);
 			return new ServiceMock(serviceMockConfig);
 		}
+
+		public BaseIntegratorMock(IEntityPreparer entityPreparer, IIntegrationObjectWorker iObjectWorker, IServiceHandlerWorkers serviceHandlerWorker, IServiceRequestWorker serviceRequestWorker) : base(entityPreparer, iObjectWorker, serviceHandlerWorker, serviceRequestWorker)
+		{
+		}
 	}
 }

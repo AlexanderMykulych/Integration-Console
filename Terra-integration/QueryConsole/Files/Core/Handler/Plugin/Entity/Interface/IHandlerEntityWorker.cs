@@ -42,8 +42,8 @@ namespace Terrasoft.TsIntegration.Configuration{
 	public interface IHandlerEntityWorker
 	{
 		void SaveEntity(Entity entity, string jName, Action OnSuccess, Action OnError);
-		Entity CreateEntity(UserConnection userConnection, string entityName);
-		Entity GetEntityByExternalId(UserConnection userConnection, string entityName, string externalIdPath, string externalId);
-		Entity GetEntityById(UserConnection userConnection, string entityName, Guid id);
+		Entity CreateEntity(string entityName);
+		Entity GetEntityByExternalId(string entityName, string externalIdPath, string externalId);
+		Entity GetEntityById(string entityName, Guid id);
 	}
 }

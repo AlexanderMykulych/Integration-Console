@@ -150,7 +150,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 				string action = "Create", Entity integratedEntity = null)
 			{
 				Data = data;
-				UserConnection = userConnection;
 				IntegrationType = integrationType;
 				Action = action;
 				IntegratedEntity = integratedEntity;
@@ -165,15 +164,15 @@ namespace Terrasoft.TsIntegration.Configuration{
 
 			public static IntegrationInfo CreateForImport(string action, IIntegrationObject data)
 			{
-				return new IntegrationInfo(data, ObjectFactory.Get<UserConnection>(), TIntegrationType.Import, action, null);
+				return new IntegrationInfo(data, TIntegrationType.Import, action, null);
 			}
 			public static IntegrationInfo CreateForExport(Entity entity)
 			{
-				return new IntegrationInfo(null, ObjectFactory.Get<UserConnection>(), TIntegrationType.Export, CsConstant.IntegrationActionName.Empty, entity);
+				return new IntegrationInfo(null, TIntegrationType.Export, CsConstant.IntegrationActionName.Empty, entity);
 			}
 			public static IntegrationInfo CreateForResponse(Entity entity)
 			{
-				return new IntegrationInfo(null, ObjectFactory.Get<UserConnection>(), TIntegrationType.ExportResponseProcess, CsConstant.IntegrationActionName.UpdateFromResponse, entity);
+				return new IntegrationInfo(null, TIntegrationType.ExportResponseProcess, CsConstant.IntegrationActionName.UpdateFromResponse, entity);
 			}
 		}
 

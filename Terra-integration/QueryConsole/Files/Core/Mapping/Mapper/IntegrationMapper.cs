@@ -148,7 +148,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 						}
 						if (subJObj != null)
 						{
-							MapColumn(integrationInfo.UserConnection, item, ref subJObj, integrationInfo);
+							MapColumn(item, ref subJObj, integrationInfo);
 						}
 					}
 					catch (Exception e)
@@ -173,7 +173,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 					IIntegrationObject jObjItem = IntegrationObjectProvider.NewInstance(item.JSourcePath);
 					try
 					{
-						MapColumn(integrationInfo.UserConnection, item, ref jObjItem, integrationInfo);
+						MapColumn(item, ref jObjItem, integrationInfo);
 					}
 					catch (Exception e)
 					{
@@ -204,13 +204,13 @@ namespace Terrasoft.TsIntegration.Configuration{
 							var subJObjs = integrationInfo.Data.GetSubObjects(path);
 							subJObjs.ForEach(subJObj =>
 							{
-								MapColumn(integrationInfo.UserConnection, item, ref subJObj, integrationInfo);
+								MapColumn(item, ref subJObj, integrationInfo);
 							});
 						}
 						else
 						{
 							var subJObj = integrationInfo.Data.GetSubObject(path);
-							MapColumn(integrationInfo.UserConnection, item, ref subJObj, integrationInfo);
+							MapColumn(item, ref subJObj, integrationInfo);
 						}
 					}
 				}
@@ -225,7 +225,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			}
 		}
 		//Log key=Mapper
-		protected virtual void MapColumn(UserConnection userConnection, MappingItem mapItem, ref IIntegrationObject jToken, IntegrationInfo integrationInfo)
+		protected virtual void MapColumn(MappingItem mapItem, ref IIntegrationObject jToken, IntegrationInfo integrationInfo)
 		{
 			try
 			{

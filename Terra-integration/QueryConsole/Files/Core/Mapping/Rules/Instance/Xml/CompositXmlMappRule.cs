@@ -49,7 +49,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			var integrator = ClassFactory.Get<BaseIntegrator>();
 			info.json.SetProperty("TsiIntegrateParentId", info.entity.PrimaryColumnValue);
-			integrator.Import(info.userConnection, info.json, info.config.ImportRouteId);
+			integrator.Import(info.json, info.config.ImportRouteId);
 		}
 		public void Export(RuleExportInfo info)
 		{

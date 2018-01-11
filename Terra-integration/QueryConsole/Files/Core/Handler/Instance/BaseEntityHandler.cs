@@ -38,7 +38,8 @@ using Terrasoft.Core.Factories;
 using Terrasoft.Core;
 using Terrasoft.UI.WebControls;
 using TIntegrationType = Terrasoft.TsIntegration.Configuration.CsConstant.TIntegrationType;
-namespace Terrasoft.TsIntegration.Configuration{
+namespace Terrasoft.TsIntegration.Configuration
+{
 	public abstract class BaseEntityHandler
 	{
 		public ConfigSetting HandlerConfig;
@@ -46,6 +47,12 @@ namespace Terrasoft.TsIntegration.Configuration{
 		{
 			HandlerConfig = handlerConfig;
 			Mapper = new IntegrationMapper();
+			ConnectionProvider = ObjectFactory.Get<IConnectionProvider>();
+			HandlerEntityWorker = ObjectFactory.Get<IHandlerEntityWorker>();
+			ServiceHandlerWorker = ObjectFactory.Get<IServiceHandlerWorkers>();
+			HandlerKeyGenerator = ObjectFactory.Get<IHandlerKeyGenerator>();
+			IntegrationObjectProvider = ObjectFactory.Get<IIntegrationObjectProvider>();
+			TemplateFactory = ObjectFactory.Get<ITemplateFactory>();
 		}
 
 		#region Fields
@@ -62,68 +69,20 @@ namespace Terrasoft.TsIntegration.Configuration{
 				return _mapper;
 			}
 		}
-		private IHandlerEntityWorker _handlerEntityWorker;
-		public virtual IHandlerEntityWorker HandlerEntityWorker {
-			set {
-				_handlerEntityWorker = value;
-			}
+
+		public IConnectionProvider ConnectionProvider { get; set; }
+
+		private UserConnection userConnection {
 			get {
-				if (_handlerEntityWorker == null)
-				{
-					_handlerEntityWorker = new HandlerEntityWorker();
-				}
-				return _handlerEntityWorker;
+				return ConnectionProvider.Get<UserConnection>();
 			}
 		}
-		private IServiceHandlerWorkers _serviceHandlerWorker;
-		public virtual IServiceHandlerWorkers ServiceHandlerWorker {
-			set {
-				_serviceHandlerWorker = value;
-			}
-			get {
-				if (_serviceHandlerWorker == null)
-				{
-					_serviceHandlerWorker = new ServiceHandlerWorker();
-				}
-				return _serviceHandlerWorker;
-			}
-		}
-		private IHandlerKeyGenerator _handlerKeyGenerator;
-		public virtual IHandlerKeyGenerator HandlerKeyGenerator {
-			set {
-				_handlerKeyGenerator = value;
-			}
-			get {
-				if (_handlerKeyGenerator == null)
-				{
-					_handlerKeyGenerator = new HandlerKeyGenerator();
-				}
-				return _handlerKeyGenerator;
-			}
-		}
-		private IIntegrationObjectProvider _integrationObjectProvider;
-		public virtual IIntegrationObjectProvider IntegrationObjectProvider {
-			set {
-				_integrationObjectProvider = value;
-			}
-			get {
-				if (_integrationObjectProvider == null)
-				{
-					_integrationObjectProvider = new IntegrationObjectProvider();
-				}
-				return _integrationObjectProvider;
-			}
-		}
-		private ITemplateFactory _templateFactory;
-		public ITemplateFactory TemplateFactory {
-			get {
-				if (_templateFactory == null)
-				{
-					_templateFactory = new TemplateHandlerFactory();
-				}
-				return _templateFactory;
-			}
-		}
+
+		public virtual IHandlerEntityWorker HandlerEntityWorker { get; set; }
+		public virtual IServiceHandlerWorkers ServiceHandlerWorker { get; set; }
+		public virtual IHandlerKeyGenerator HandlerKeyGenerator { get; set; }
+		public virtual IIntegrationObjectProvider IntegrationObjectProvider { get; set; }
+		public virtual ITemplateFactory TemplateFactory { get; set; }
 		public string ResponseMappingConfig {
 			get {
 				if (!string.IsNullOrEmpty(HandlerConfig.ResponseMappingConfig))
@@ -189,7 +148,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			LoggerHelper.DoInLogBlock("Handler: Create", () =>
 			{
 				integrationInfo.TsExternalIdPath = ExternalIdPath;
-				integrationInfo.IntegratedEntity = HandlerEntityWorker.CreateEntity(integrationInfo.UserConnection, EntityName);
+				integrationInfo.IntegratedEntity = HandlerEntityWorker.CreateEntity(EntityName);
 				Templated(integrationInfo);
 				AddParentInfoToIntegrationObject(integrationInfo);
 				BeforeMapping(integrationInfo);
@@ -314,7 +273,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			return esq;
 		}
 
-		public virtual Entity CreateEntityForExportMyMapping(ref MappingConfig mappingConfig, UserConnection userConnection)
+		public virtual Entity CreateEntityForExportMyMapping(ref MappingConfig mappingConfig)
 		{
 			var esqEntity = GetEntitySchemaQuery(ref mappingConfig, userConnection);
 			return esqEntity.GetEntity(userConnection, EntityId);
@@ -332,7 +291,8 @@ namespace Terrasoft.TsIntegration.Configuration{
 		public virtual IIntegrationObject ToJson(IntegrationInfo integrationInfo)
 		{
 			IIntegrationObject result = null;
-			LoggerHelper.DoInLogBlock("Handler: To Json", () => {
+			LoggerHelper.DoInLogBlock("Handler: To Json", () =>
+			{
 				if (integrationInfo.IntegrationType == CsConstant.TIntegrationType.Export)
 				{
 					integrationInfo.TsExternalIdPath = ExternalIdPath;
@@ -340,7 +300,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 					var mapConfig = ServiceHandlerWorker.GetMappingConfig(HandlerConfig.DefaultMappingConfig);
 					if (integrationInfo.IntegratedEntity == null)
 					{
-						integrationInfo.IntegratedEntity = CreateEntityForExportMyMapping(ref mapConfig, integrationInfo.UserConnection);
+						integrationInfo.IntegratedEntity = CreateEntityForExportMyMapping(ref mapConfig);
 					}
 					Mapper.StartMappByConfig(integrationInfo, JName, mapConfig);
 					AfterMapping(integrationInfo);
@@ -410,8 +370,8 @@ namespace Terrasoft.TsIntegration.Configuration{
 		protected virtual void ProcessResponse(IntegrationInfo integrationInfo, string route)
 		{
 			integrationInfo.Data.SetProperty("TsiIntegrateParentId", integrationInfo.IntegratedEntity.PrimaryColumnValue);
-			var integrator = ClassFactory.Get<BaseIntegrator>();
-			integrator.Import(integrationInfo.UserConnection, integrationInfo.Data, route);
+			var integrator = ObjectFactory.Get<IIntegrator>();
+			integrator.Import(integrationInfo.Data, route);
 		}
 		protected virtual bool CheckIntegrationInfoForProcessResponse(IntegrationInfo integrationInfo)
 		{
@@ -498,7 +458,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 					externalId = integrationInfo.IntegratedEntity.GetColumnValue(ExternalIdPath);
 				}
 				var path = IntegrationPath.GenerateValuePath(JName, JsonIdPath);
-				result = Mapper.CheckIsExist(integrationInfo.UserConnection, EntityName, integrationInfo.Data.GetProperty<string>(path), integrationInfo.TsExternalIdPath, externalId);
+				result = Mapper.CheckIsExist(EntityName, integrationInfo.Data.GetProperty<string>(path), integrationInfo.TsExternalIdPath, externalId);
 				if (!result && IsAdvancedSearch)
 				{
 					result = IsEntityAlreadyExistAdvanced(integrationInfo);
@@ -517,13 +477,12 @@ namespace Terrasoft.TsIntegration.Configuration{
 			{
 				return false;
 			}
-			Guid resultId = AdvancedSearchInfo.Search(integrationInfo.UserConnection,
-					procedure => AddParameterToSearchProcedure(integrationInfo, procedure), IntegrationLogger.SimpleLoggerErrorAction);
+			Guid resultId = AdvancedSearchInfo.Search(procedure => AddParameterToSearchProcedure(integrationInfo, procedure), IntegrationLogger.SimpleLoggerErrorAction);
 			if (resultId == Guid.Empty)
 			{
 				return false;
 			}
-			integrationInfo.IntegratedEntity = HandlerEntityWorker.GetEntityById(integrationInfo.UserConnection, EntityName, resultId);
+			integrationInfo.IntegratedEntity = HandlerEntityWorker.GetEntityById(EntityName, resultId);
 			return true;
 		}
 		protected virtual void AddParameterToSearchProcedure(IntegrationInfo integrationInfo, StoredProcedure searchProcedure)
@@ -540,7 +499,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 			else
 			{
 				var path = IntegrationPath.GenerateValuePath(JName, JsonIdPath);
-				entity = HandlerEntityWorker.GetEntityByExternalId(integrationInfo.UserConnection, EntityName, integrationInfo.TsExternalIdPath, integrationInfo.Data.GetProperty<string>(path));
+				entity = HandlerEntityWorker.GetEntityByExternalId(EntityName, integrationInfo.TsExternalIdPath, integrationInfo.Data.GetProperty<string>(path));
 			}
 			if (entity != null)
 			{
