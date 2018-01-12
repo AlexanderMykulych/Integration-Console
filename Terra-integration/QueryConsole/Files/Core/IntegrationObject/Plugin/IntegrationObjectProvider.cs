@@ -49,7 +49,8 @@ namespace Terrasoft.TsIntegration.Configuration {
 		}
 		public TIntegrationObjectType GetObjectType()
 		{
-			return _settingsProvider.SelectGlobalFirstByType<TIntegrationObjectType>();
+			//TODO:
+			return _settingsProvider.SelectGlobalFirstByName<TIntegrationObjectType>("TsIntegrationObjectType");
 		}
 		public virtual IIntegrationObject Parse(string text)
 		{

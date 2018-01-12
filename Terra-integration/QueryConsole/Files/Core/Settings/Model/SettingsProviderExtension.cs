@@ -11,7 +11,7 @@ namespace Terrasoft.TsIntegration.Configuration
 		private static string _globalPrefix = @"Global_";
 		public static IEnumerable<T> SelectEnumerableByType<T>(this ISettingProvider settingProvider)
 		{
-			return settingProvider.Get(typeof(T).Name).SelectFromList<T>();
+			return SelectEnumerableByType<T>(settingProvider, typeof(T).Name);
 		}
 		public static T SelectFirstByType<T>(this ISettingProvider settingProvider)
 		{
@@ -23,7 +23,15 @@ namespace Terrasoft.TsIntegration.Configuration
 		}
 		public static T SelectGlobalFirstByType<T>(this ISettingProvider settingProvider)
 		{
-			return settingProvider.Get(_globalPrefix + typeof(T).Name).SelectFromList<T>().FirstOrDefault();
+			return SelectGlobalFirstByName<T>(settingProvider, typeof(T).Name);
+		}
+		public static T SelectGlobalFirstByName<T>(this ISettingProvider settingProvider, string name)
+		{
+			return settingProvider.Get(_globalPrefix + name).Select<T>();
+		}
+		public static IEnumerable<T> SelectEnumerableByType<T>(this ISettingProvider settingProvider, string name)
+		{
+			return settingProvider.Get(name).SelectFromList<T>();
 		}
 	}
 }
