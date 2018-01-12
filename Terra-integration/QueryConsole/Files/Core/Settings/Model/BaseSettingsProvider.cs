@@ -62,12 +62,6 @@ namespace Terrasoft.TsIntegration.Configuration
 				Init();
 				if (_isInit)
 				{
-					if (settingName.StartsWith(_globalPrefix))
-					{
-						ValueType result;
-						_globalSettings.TryGetValue(settingName.Substring(_globalPrefix.Length), out result);
-						return new Setting(result);
-					}
 					return GetUnsafe(settingName);
 				}
 				var message = string.Format("Try to get setting: {0}, but config is not initialize!", settingName);
@@ -79,6 +73,12 @@ namespace Terrasoft.TsIntegration.Configuration
 
 		public ISetting GetUnsafe(string settingName)
 		{
+			if (settingName.StartsWith(_globalPrefix))
+			{
+				ValueType result;
+				_globalSettings.TryGetValue(settingName.Substring(_globalPrefix.Length), out result);
+				return new Setting(result);
+			}
 			return new Setting(_configManager.IntegrationConfig.Get(settingName));
 		}
 	}

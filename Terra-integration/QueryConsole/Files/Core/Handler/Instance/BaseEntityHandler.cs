@@ -57,19 +57,8 @@ namespace Terrasoft.TsIntegration.Configuration
 		}
 
 		#region Fields
-		private IMapper _mapper;
-		public virtual IMapper Mapper {
-			set {
-				_mapper = value;
-			}
-			get {
-				if (_mapper == null)
-				{
-					_mapper = new IntegrationMapper();
-				}
-				return _mapper;
-			}
-		}
+
+		public virtual IMapper Mapper { get; set; }
 
 		public IConnectionProvider ConnectionProvider { get; set; }
 

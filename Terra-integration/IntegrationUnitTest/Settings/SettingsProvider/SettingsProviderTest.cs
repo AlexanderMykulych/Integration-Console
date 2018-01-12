@@ -18,7 +18,7 @@ namespace IntegrationUnitTest.Settings.SettingsProvider
 		[TestCase("ConfigSetting")]
 		[TestCase("DefaultMappingConfig")]
 		[TestCase("ServiceConfig")]
-		[TestCase("TemplateConfig")]
+		[TestCase("TemplateSetting")]
 		[TestCase("TriggerConfig")]
 		[TestCase("EndPointConfig")]
 		public void SettingsProvider(string settingName)

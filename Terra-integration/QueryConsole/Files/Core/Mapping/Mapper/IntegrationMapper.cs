@@ -43,6 +43,8 @@ namespace Terrasoft.TsIntegration.Configuration{
 	{
 		public IntegrationMapper(IMapperDbWorker mapperDbWorker, IIntegrationObjectProvider integrationObjectProvider, IRuleFactory ruleFactory)
 		{
+			MethodQueue = new Queue<Action>();
+			RulesFactory = new RulesFactory();
 			MapperDbWorker = mapperDbWorker;
 			IntegrationObjectProvider = integrationObjectProvider;
 			RulesFactory = ruleFactory;
@@ -52,11 +54,6 @@ namespace Terrasoft.TsIntegration.Configuration{
 		public IRuleFactory RulesFactory;
 		public virtual IMapperDbWorker MapperDbWorker { get; set; }
 		public virtual IIntegrationObjectProvider IntegrationObjectProvider { get; set; }
-		public IntegrationMapper()
-		{
-			MethodQueue = new Queue<Action>();
-			RulesFactory = new RulesFactory();
-		}
 		public virtual void StartMappByConfig(CsConstant.IntegrationInfo integrationInfo, string jName, MappingConfig mapConfig)
 		{
 			try

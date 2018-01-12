@@ -43,7 +43,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			Bind<IStrategyImplementationBuilder>().To<BaseStrategyImplementationBuilder>();
 			Bind<IExecutorSubscriber>().To<BaseSubscriber>();
 			Bind<IMapperDbWorker>().To<MapperDbWorker>();
-			Bind<IRuleFactory>().To<RulesFactory>();
+			Bind<IRuleFactory>().To<RulesFactory>().InSingletonScope();
 		}
 
 		protected virtual void BindSettings()

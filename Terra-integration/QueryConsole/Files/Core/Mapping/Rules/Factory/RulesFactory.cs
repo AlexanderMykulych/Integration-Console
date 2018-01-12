@@ -52,7 +52,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 				{
 					try
 					{
-						_objectType = _settingProvider.Get("Global_TsIntegrationObjectType").SelectFromList<TIntegrationObjectType>().FirstOrDefault();
+						_objectType = _settingProvider.Get("Global_TsIntegrationObjectType").Select<TIntegrationObjectType>();
 					}
 					catch (Exception e)
 					{
@@ -87,14 +87,23 @@ namespace Terrasoft.TsIntegration.Configuration{
 		}
 
 		#region Static Field
+
+		private List<RuleFactoryItem> _rules;
 		/// <summary>
 		/// Правыла маппинга
 		/// </summary>
-		public static List<RuleFactoryItem> Rules;
-		/// <summary>
-		/// Признак что правила прошли реестрацию
-		/// </summary>
-		public static bool IsRuleRegister = false;
+		public List<RuleFactoryItem> Rules
+		{
+			set { _rules = value; }
+			get
+			{
+				if (_rules == null)
+				{
+					_rules = RegisterRules();
+				}
+				return _rules;
+			}
+		}
 
 		private ISettingProvider _settingProvider;
 
@@ -102,16 +111,9 @@ namespace Terrasoft.TsIntegration.Configuration{
 		/// Ищет по сборке все классы с атрибутом RuleAttribute и для каждого атрибута
 		/// создает инстанс правила
 		/// </summary>
-		public static void RegisterRules()
+		public List<RuleFactoryItem> RegisterRules()
 		{
-			if (Rules == null)
-			{
-				Rules = new List<RuleFactoryItem>();
-			}
-			if (IsRuleRegister)
-			{
-				return;
-			}
+			var rules = new List<RuleFactoryItem>();
 			var assembly = typeof(RulesFactory).Assembly;
 			var ruleAttrType = typeof(RuleAttribute);
 			assembly
@@ -126,16 +128,16 @@ namespace Terrasoft.TsIntegration.Configuration{
 					}
 					attributess
 						.Where(attr => AttributeDataValidate(attr as RuleAttribute))
-						.ForEach(attr => Rules.Add(new RuleFactoryItem((RuleAttribute)attr, CreateRuleInstanse(x))));
+						.ForEach(attr => rules.Add(new RuleFactoryItem((RuleAttribute)attr, CreateRuleInstanse(x))));
 				});
-			IsRuleRegister = true;
+			return rules;
 		}
 		/// <summary>
 		/// Проверяет правило на соответсвия настройкам интеграции
 		/// </summary>
 		/// <param name="attribute"></param>
 		/// <returns></returns>
-		public static bool AttributeDataValidate(RuleAttribute attribute)
+		public bool AttributeDataValidate(RuleAttribute attribute)
 		{
 			return true;
 		}
@@ -144,7 +146,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		/// </summary>
 		/// <param name="ruleType"></param>
 		/// <returns></returns>
-		public static IMappRule CreateRuleInstanse(Type ruleType)
+		public IMappRule CreateRuleInstanse(Type ruleType)
 		{
 			return Activator.CreateInstance(ruleType) as IMappRule;
 		}

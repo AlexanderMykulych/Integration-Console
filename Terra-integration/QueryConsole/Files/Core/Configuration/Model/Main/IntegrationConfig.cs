@@ -15,7 +15,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		public virtual List<MappingConfig> MappingConfig { get; set; }
 		public virtual List<ServiceConfig> ServiceConfig { get; set; }
 		public virtual List<ServiceMockConfig> ServiceMockConfig { get; set; }
-		public virtual List<TemplateSetting> TemplateConfig { get; set; }
+		public virtual List<TemplateSetting> TemplateSetting { get; set; }
 		public virtual List<TriggerSetting> TriggerConfig { get; set; }
 		public virtual List<EndPointConfig> EndPointConfig { get; set; }
 		public virtual List<LogItemConfig> LogConfig { get; set; }
@@ -34,7 +34,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 				{ "MappingConfig", () => MappingConfig },
 				{ "ServiceConfig", () => ServiceConfig },
 				{ "ServiceMockConfig", () => ServiceMockConfig },
-				{ "TemplateConfig", () => TemplateConfig },
+				{ "TemplateSetting", () => TemplateSetting },
 				{ "TriggerConfig", () => TriggerConfig },
 				{ "EndPointConfig", () => EndPointConfig },
 				{ "LogConfig", () => LogConfig }
@@ -142,9 +142,9 @@ namespace Terrasoft.TsIntegration.Configuration{
 		}
 		public  TemplateSetting GetTemplateConfig(string name)
 		{
-			if (TemplateConfig.Any())
+			if (TemplateSetting.Any())
 			{
-				return TemplateConfig.FirstOrDefault(x => x.Name == name);
+				return TemplateSetting.FirstOrDefault(x => x.Name == name);
 			}
 			return null;
 		}
@@ -276,7 +276,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		}
 		public  void InitTemplateConfig()
 		{
-			TemplateConfig = GetTemplateConfigs("templateConfig");
+			TemplateSetting = GetTemplateConfigs("templateConfig");
 		}
 		public  void InitTriggerConfig()
 		{

@@ -156,7 +156,7 @@ namespace Terrasoft.TsIntegration.Configuration{
 		//}
 		//public static TemplateSetting GetTemplatesConfig(string key)
 		//{
-		//	return GetSettings<TemplateSetting>("TemplateConfig").FirstOrDefault(x => x.Name == key);
+		//	return GetSettings<TemplateSetting>("TemplateSetting").FirstOrDefault(x => x.Name == key);
 		//}
 		//public static List<TriggerSetting> GetTriggersConfig()
 		//{
