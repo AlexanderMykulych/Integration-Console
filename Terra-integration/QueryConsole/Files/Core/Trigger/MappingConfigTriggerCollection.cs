@@ -11,9 +11,9 @@ namespace Terrasoft.TsIntegration.Configuration
 		private ISettingProvider _settingProvider;
 		public MappingConfigTriggerCollection(UserConnection userConnection, TriggerCheckerCollection obj)
 		{
+			_settingProvider = ObjectFactory.Get<ISettingProvider>();
 			_instance = obj;
 			LoadAllChecker(userConnection);
-			_settingProvider = ObjectFactory.Get<ISettingProvider>();
 		}
 		public bool Check(string eventName, Entity eventInfo, Action<TriggerSetting> onMath)
 		{

@@ -23,7 +23,22 @@ namespace IntegrationUnitTest.IntegrationSystem.Remedy
 			_remedy_CreateIncident_Url = @"http://localhost:1234/remedy/create_incident";
 			_remedy_CreateIncidentWithOperatorCheck_Url = @"http://localhost:1234/remedy/create_incident_withoperatorcheck";
 		}
-		[Test]
+		[SetUp]
+		public void SetUp()
+		{
+			ClearServiceSettings();
+		}
+
+		private void ClearServiceSettings()
+		{
+			var settings = ObjectFactory.Get<ISettingProvider>();
+			ConnectionProvider.DoWith(Setuper.userConnection, () =>
+			{
+				//settings.Reinit();
+			});
+		}
+
+		[Test, Order(1)]
 		public void Request_CreateIncident_RemedyId()
 		{
 			var incident = CreateTestIncident();
@@ -31,22 +46,23 @@ namespace IntegrationUnitTest.IntegrationSystem.Remedy
 
 			Assert.IsNotNull(remedyId);
 			Assert.IsNotEmpty(remedyId);
+			Assert.Pass("Id Remedy: '{0}'", remedyId);
 		}
 
-		[Test]
+		[Test, Order(2)]
 		public void Request_CreateIncidentWithNotExistOperator_AddReupdateCaseToTriggerQueue()
 		{
 			var incident = CreateTestIncident();
 			var remedyId = SendCreateIncidentRequest(incident, _remedy_CreateIncidentWithOperatorCheck_Url);
-			Assert.IsTrue(string.IsNullOrEmpty(remedyId));
+			Assert.IsTrue(string.IsNullOrEmpty(remedyId), "Отправка с некоректным оператором " + remedyId.ToString());
 
 			var isTriggerExist = GetIsCaseTriggerAdded(incident.PrimaryColumnValue, "AddCaseWithoutOperatorLogin");
 			UpdateCaseTrigger(incident.PrimaryColumnValue, "AddCaseWithoutOperatorLogin");
-			Assert.IsTrue(isTriggerExist);
+			Assert.IsTrue(isTriggerExist, "Проверка существования тригера");
 			remedyId = SendCreateIncidentRequest(incident, _remedy_CreateIncidentWithOperatorCheck_Url, GetRouteByTrigger("AddCaseWithoutOperatorLogin"));
 
-			Assert.IsNotNull(remedyId);
-			Assert.IsNotEmpty(remedyId);
+			Assert.IsNotEmpty(remedyId, "Повторная отправка");
+			Assert.Pass("Id Remedy: '{0}'", remedyId);
 		}
 
 		private bool GetIsCaseTriggerAdded(Guid id, string triggerName)
@@ -87,7 +103,7 @@ namespace IntegrationUnitTest.IntegrationSystem.Remedy
 				}
 			};
 			ObjectFactory.CurrentKernel.Rebind<IIntegrationConfig>().ToConstant(mock);
-
+			
 			var integrator = ObjectFactory.Get<IIntegrator>();
 			ConnectionProvider.DoWith(Setuper.userConnection,
 				() =>
@@ -103,7 +119,8 @@ namespace IntegrationUnitTest.IntegrationSystem.Remedy
 		private string GetRouteByTrigger(string triggerName)
 		{
 			var triggerEngine = ObjectFactory.Get<TriggerEngine>();
-			return triggerEngine.GetTriggerByName(triggerName, Setuper.userConnection).Route;
+			return ConnectionProvider.DoWith(Setuper.userConnection,
+				() => triggerEngine.GetTriggerByName(triggerName, Setuper.userConnection).Route, string.Empty);
 		}
 
 		private Entity CreateTestIncident()
