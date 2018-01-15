@@ -10,6 +10,7 @@ using Terrasoft.TsIntegration.Configuration;
 namespace IntegrationUnitTest.Settings
 {
 	[TestFixture]
+	[Category("Settings")]
 	public class RepositoryProviderTest
 	{
 		[Test]

@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace IntegrationUnitTest.Setup
 {
 	[TestFixture]
+	[Category("Settup")]
 	public class SetuperTest
 	{
 		[Test]

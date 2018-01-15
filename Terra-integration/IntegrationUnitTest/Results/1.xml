@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<model>
+	<node name="IntegrationUnitTest" testCount="(27 tests)" status="[0:19.219] Success">
+		<node name="IntegrationUnitTest" testCount="(27 tests)" status="[0:19.219] Success">
+			<node name="IntegrationSystem" testCount="(4 tests)" status="[0:18.140] Success">
+				<node name="Remedy" testCount="(2 tests)" status="[0:17.596] Success">
+					<node name="RemedyServiceTest" testCount="(2 tests)" status="[0:17.596] Success">
+						<node name="Request_CreateIncidentWithNotExistOperator_AddReupdateCaseToTriggerQueue" status="[0:04.281] Success: Id Remedy: 'INC2222222'" output="  Проверка существования тригера&#xA;  Expected: True&#xA;" />
+						<node name="Request_CreateIncident_RemedyId" status="[0:13.313] Success: Id Remedy: 'INC123456'" output="  Expected: not &lt;empty&gt;&#xA;  But was:  &lt;string.Empty&gt;&#xA;" /></node>
+				</node>
+				<node name="JsonOrderServiceTest" testCount="(2 tests)" status="[0:00.544] Success">
+					<node name="SendOnPing_ResultPong" status="[0:00.482] Success" />
+					<node name="SendOnSum_ResultCorrectSum" status="[0:00.054] Success" /></node>
+			</node>
+			<node name="Settings" testCount="(12 tests)" status="[0:00.199] Success">
+				<node name="SettingsProvider" testCount="(9 tests)" status="[0:00.180] Success">
+					<node name="SettingsProviderTest" testCount="(9 tests)" status="[0:00.180] Success">
+						<node name="SettingsProvider" testCount="(9 tests)" status="[0:00.177] Success">
+							<node name="SettingsProvider(&quot;ConfigSetting&quot;)" status="[0:00.024] Success" />
+							<node name="SettingsProvider(&quot;DefaultMappingConfig&quot;)" status="[0:00.023] Success" />
+							<node name="SettingsProvider(&quot;EndPointConfig&quot;)" status="[0:00.013] Success" />
+							<node name="SettingsProvider(&quot;ExportRouteConfig&quot;)" status="[0:00.018] Success" />
+							<node name="SettingsProvider(&quot;ImportRouteConfig&quot;)" status="[0:00.013] Success" />
+							<node name="SettingsProvider(&quot;MappingConfig&quot;)" status="[0:00.017] Success" />
+							<node name="SettingsProvider(&quot;ServiceConfig&quot;)" status="[0:00.018] Success" />
+							<node name="SettingsProvider(&quot;TemplateSetting&quot;)" status="[0:00.018] Success" />
+							<node name="SettingsProvider(&quot;TriggerConfig&quot;)" status="[0:00.021] Success" /></node>
+					</node>
+				</node>
+				<node name="XmlProvider" testCount="(2 tests)" status="[0:00.001] Success">
+					<node name="XmlProviderTest" testCount="(2 tests)" status="[0:00.001] Success">
+						<node name="MergeEmptyXmlTest" status="[0:00.000] Success" />
+						<node name="MergeNullXmlTest" status="[0:00.000] Success" /></node>
+				</node>
+				<node name="RepositoryProviderTest" testCount="(1 test)" status="[0:00.017] Success">
+					<node name="GetXmlTest" status="[0:00.017] Success" /></node>
+			</node>
+			<node name="Setup" testCount="(1 test)" status="[0:00.001] Success">
+				<node name="SetuperTest" testCount="(1 test)" status="[0:00.001] Success">
+					<node name="UserConnectionCreateSucces" status="[0:00.000] Success" /></node>
+			</node>
+			<node name="Strategy" testCount="(9 tests)" status="[0:00.067] Success">
+				<node name="BaseAddStrategy" testCount="(2 tests)" status="[0:00.028] Success">
+					<node name="AddIntegerStrategy" status="[0:00.015] Success" />
+					<node name="AddStringStrategy" status="[0:00.010] Success" /></node>
+				<node name="StringToIObjectStepTest" testCount="(7 tests)" status="[0:00.038] Success">
+					<node name="CreateInstance_WithoutError" testCount="(5 tests)" status="[0:00.012] Success">
+						<node name="CreateInstance_WithoutError(All)" status="[0:00.000] Success" />
+						<node name="CreateInstance_WithoutError(Excell)" status="[0:00.000] Success" />
+						<node name="CreateInstance_WithoutError(Json)" status="[0:00.000] Success" />
+						<node name="CreateInstance_WithoutError(TsEntity)" status="[0:00.000] Success" />
+						<node name="CreateInstance_WithoutError(Xml)" status="[0:00.000] Success" /></node>
+					<node name="Execute_JsonType_CorrectAttributeValues" status="[0:00.021] Success" />
+					<node name="Execute_JsonType_CreateIObject" status="[0:00.000] Success" /></node>
+			</node>
+			<node name="Setuper" status="[0:00.811] Success" /></node>
+	</node>
+</model>

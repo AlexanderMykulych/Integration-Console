@@ -10,6 +10,7 @@ using Terrasoft.TsIntegration.Configuration;
 namespace IntegrationUnitTest.Strategy
 {
 	[TestFixture]
+	[Category("Strategy")]
 	public class StringToIObjectStepTest
 	{
 		private readonly string _json;

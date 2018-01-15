@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
 using NUnit.Framework.Internal;
 using NUnit.Framework;
 using Terrasoft.Core;
@@ -13,6 +15,7 @@ using Terrasoft.TsIntegration.Configuration;
 namespace IntegrationUnitTest.IntegrationSystem.Remedy
 {
 	[TestFixture]
+	[Category("Remedy")]
 	public class RemedyServiceTest
 	{
 		private string _remedy_CreateIncident_Url;
@@ -39,6 +42,7 @@ namespace IntegrationUnitTest.IntegrationSystem.Remedy
 		}
 
 		[Test, Order(1)]
+		[Benchmark()]
 		public void Request_CreateIncident_RemedyId()
 		{
 			var incident = CreateTestIncident();
@@ -50,9 +54,15 @@ namespace IntegrationUnitTest.IntegrationSystem.Remedy
 		}
 
 		[Test, Order(2)]
+		[Benchmark]
 		public void Request_CreateIncidentWithNotExistOperator_AddReupdateCaseToTriggerQueue()
 		{
 			var incident = CreateTestIncident();
+			ConnectionProvider.DoWith(Setuper.userConnection, () =>
+			{
+				var setting = ObjectFactory.Get<ISettingProvider>();
+				setting.Reinit();
+			});
 			var remedyId = SendCreateIncidentRequest(incident, _remedy_CreateIncidentWithOperatorCheck_Url);
 			Assert.IsTrue(string.IsNullOrEmpty(remedyId), "Отправка с некоректным оператором " + remedyId.ToString());
 

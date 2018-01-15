@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-run id="2" testcasecount="26" result="Passed" total="26" passed="26" failed="0" inconclusive="0" skipped="0" asserts="47" engine-version="3.7.0.0" clr-version="4.0.30319.42000" start-time="2018-01-15 17:34:36Z" end-time="2018-01-15 17:35:01Z" duration="24.963461">
+  <command-line><![CDATA["C:/Dev/R&D/DynamicIntegration/Integration-Console/Terra-integration/IntegrationUnitTest/AutoRunner/tools/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe" "C:/Dev/R&D/DynamicIntegration/Integration-Console/Terra-integration/IntegrationUnitTest/bin/Debug/IntegrationUnitTest.dll"]]></command-line>
+  <test-suite type="Assembly" id="0-1037" name="IntegrationUnitTest.dll" fullname="C:\Dev\R&amp;D\DynamicIntegration\Integration-Console\Terra-integration\IntegrationUnitTest\bin\Debug\IntegrationUnitTest.dll" runstate="Runnable" testcasecount="26" result="Passed" start-time="2018-01-15 17:34:36Z" end-time="2018-01-15 17:35:01Z" duration="24.393734" total="26" passed="26" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="47">
+    <environment framework-version="3.9.0.0" clr-version="4.0.30319.42000" os-version="Microsoft Windows NT 10.0.16299.0" platform="Win32NT" cwd="C:\Dev\R&amp;D\DynamicIntegration\Integration-Console\Terra-integration\IntegrationUnitTest\AutoRunner" machine-name="A_MYKULYCH" user="A.Mykulych" user-domain="TSCRM" culture="ru-UA" uiculture="ru-RU" os-architecture="x64" />
+    <settings>
+      <setting name="DisposeRunners" value="True" />
+      <setting name="WorkDirectory" value="C:\Dev\R&amp;D\DynamicIntegration\Integration-Console\Terra-integration\IntegrationUnitTest\AutoRunner" />
+      <setting name="ImageRuntimeVersion" value="4.0.30319" />
+      <setting name="ImageTargetFrameworkName" value=".NETFramework,Version=v4.6" />
+      <setting name="ImageRequiresX86" value="False" />
+      <setting name="ImageRequiresDefaultAppDomainAssemblyResolver" value="False" />
+      <setting name="NumberOfTestWorkers" value="4" />
+    </settings>
+    <properties>
+      <property name="_PID" value="6772" />
+      <property name="_APPDOMAIN" value="domain-" />
+    </properties>
+    <test-suite type="SetUpFixture" id="0-1000" name="IntegrationUnitTest" fullname="IntegrationUnitTest.Setuper" classname="IntegrationUnitTest.Setuper" runstate="Runnable" testcasecount="26" result="Passed" start-time="2018-01-15 17:34:36Z" end-time="2018-01-15 17:35:01Z" duration="24.374458" total="26" passed="26" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="47">
+      <test-suite type="TestSuite" id="0-1044" name="IntegrationSystem" fullname="IntegrationUnitTest.IntegrationSystem" runstate="Runnable" testcasecount="4" result="Passed" start-time="2018-01-15 17:34:46Z" end-time="2018-01-15 17:35:00Z" duration="13.933230" total="4" passed="4" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="7">
+        <test-suite type="TestFixture" id="0-1031" name="JsonOrderServiceTest" fullname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest" classname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-15 17:34:46Z" end-time="2018-01-15 17:34:47Z" duration="0.446561" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
+          <test-case id="0-1032" name="SendOnPing_ResultPong" fullname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest.SendOnPing_ResultPong" methodname="SendOnPing_ResultPong" classname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest" runstate="Runnable" seed="1727347040" result="Passed" start-time="2018-01-15 17:34:46Z" end-time="2018-01-15 17:34:47Z" duration="0.405509" asserts="1" />
+          <test-case id="0-1033" name="SendOnSum_ResultCorrectSum" fullname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest.SendOnSum_ResultCorrectSum" methodname="SendOnSum_ResultCorrectSum" classname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest" runstate="Runnable" seed="1474484838" result="Passed" start-time="2018-01-15 17:34:47Z" end-time="2018-01-15 17:34:47Z" duration="0.035784" asserts="1" />
+        </test-suite>
+        <test-suite type="TestSuite" id="0-1045" name="Remedy" fullname="IntegrationUnitTest.IntegrationSystem.Remedy" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-15 17:34:46Z" end-time="2018-01-15 17:35:00Z" duration="13.933203" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="5">
+          <test-suite type="TestFixture" id="0-1034" name="RemedyServiceTest" fullname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest" classname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-15 17:34:47Z" end-time="2018-01-15 17:35:00Z" duration="13.483485" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="5">
+            <properties>
+              <property name="Category" value="Remedy" />
+            </properties>
+            <test-case id="0-1035" name="Request_CreateIncident_RemedyId" fullname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest.Request_CreateIncident_RemedyId" methodname="Request_CreateIncident_RemedyId" classname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest" runstate="Runnable" seed="1439324576" result="Passed" start-time="2018-01-15 17:34:47Z" end-time="2018-01-15 17:34:58Z" duration="11.293860" asserts="2">
+              <properties>
+                <property name="Order" value="1" />
+              </properties>
+              <reason>
+                <message><![CDATA[Id Remedy: 'INC123456']]></message>
+              </reason>
+            </test-case>
+            <test-case id="0-1036" name="Request_CreateIncidentWithNotExistOperator_AddReupdateCaseToTriggerQueue" fullname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest.Request_CreateIncidentWithNotExistOperator_AddReupdateCaseToTriggerQueue" methodname="Request_CreateIncidentWithNotExistOperator_AddReupdateCaseToTriggerQueue" classname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest" runstate="Runnable" seed="1907396361" result="Passed" start-time="2018-01-15 17:34:58Z" end-time="2018-01-15 17:35:00Z" duration="2.189409" asserts="3">
+              <properties>
+                <property name="Order" value="2" />
+              </properties>
+              <reason>
+                <message><![CDATA[Id Remedy: 'INC2222222']]></message>
+              </reason>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+      <test-suite type="TestSuite" id="0-1041" name="Settings" fullname="IntegrationUnitTest.Settings" runstate="Runnable" testcasecount="12" result="Passed" start-time="2018-01-15 17:34:46Z" end-time="2018-01-15 17:35:01Z" duration="14.083108" total="12" passed="12" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="31">
+        <test-suite type="TestFixture" id="0-1015" name="RepositoryProviderTest" fullname="IntegrationUnitTest.Settings.RepositoryProviderTest" classname="IntegrationUnitTest.Settings.RepositoryProviderTest" runstate="Runnable" testcasecount="1" result="Passed" start-time="2018-01-15 17:35:00Z" end-time="2018-01-15 17:35:00Z" duration="0.032783" total="1" passed="1" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
+          <properties>
+            <property name="Category" value="Settings" />
+          </properties>
+          <test-case id="0-1016" name="GetXmlTest" fullname="IntegrationUnitTest.Settings.RepositoryProviderTest.GetXmlTest" methodname="GetXmlTest" classname="IntegrationUnitTest.Settings.RepositoryProviderTest" runstate="Runnable" seed="1732390922" result="Passed" start-time="2018-01-15 17:35:00Z" end-time="2018-01-15 17:35:00Z" duration="0.032602" asserts="2" />
+        </test-suite>
+        <test-suite type="TestSuite" id="0-1043" name="SettingsProvider" fullname="IntegrationUnitTest.Settings.SettingsProvider" runstate="Runnable" testcasecount="9" result="Passed" start-time="2018-01-15 17:34:46Z" end-time="2018-01-15 17:35:01Z" duration="14.082188" total="9" passed="9" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="27">
+          <test-suite type="TestFixture" id="0-1020" name="SettingsProviderTest" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" testcasecount="9" result="Passed" start-time="2018-01-15 17:35:00Z" end-time="2018-01-15 17:35:01Z" duration="0.116179" total="9" passed="9" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="27">
+            <properties>
+              <property name="Category" value="Settings" />
+            </properties>
+            <test-suite type="ParameterizedMethod" id="0-1030" name="SettingsProvider" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" testcasecount="9" result="Passed" start-time="2018-01-15 17:35:00Z" end-time="2018-01-15 17:35:01Z" duration="0.116063" total="9" passed="9" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="27">
+              <test-case id="0-1021" name="SettingsProvider(&quot;MappingConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;MappingConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="1563493532" result="Passed" start-time="2018-01-15 17:35:00Z" end-time="2018-01-15 17:35:00Z" duration="0.015598" asserts="3" />
+              <test-case id="0-1022" name="SettingsProvider(&quot;ExportRouteConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;ExportRouteConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="1454604789" result="Passed" start-time="2018-01-15 17:35:00Z" end-time="2018-01-15 17:35:00Z" duration="0.011792" asserts="3" />
+              <test-case id="0-1023" name="SettingsProvider(&quot;ImportRouteConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;ImportRouteConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="1210192668" result="Passed" start-time="2018-01-15 17:35:00Z" end-time="2018-01-15 17:35:00Z" duration="0.011137" asserts="3" />
+              <test-case id="0-1024" name="SettingsProvider(&quot;ConfigSetting&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;ConfigSetting&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="832290940" result="Passed" start-time="2018-01-15 17:35:00Z" end-time="2018-01-15 17:35:00Z" duration="0.013249" asserts="3" />
+              <test-case id="0-1025" name="SettingsProvider(&quot;DefaultMappingConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;DefaultMappingConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="80754910" result="Passed" start-time="2018-01-15 17:35:00Z" end-time="2018-01-15 17:35:00Z" duration="0.012216" asserts="3" />
+              <test-case id="0-1026" name="SettingsProvider(&quot;ServiceConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;ServiceConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="1848410619" result="Passed" start-time="2018-01-15 17:35:00Z" end-time="2018-01-15 17:35:01Z" duration="0.012363" asserts="3" />
+              <test-case id="0-1027" name="SettingsProvider(&quot;TemplateSetting&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;TemplateSetting&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="2114811413" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.014436" asserts="3" />
+              <test-case id="0-1028" name="SettingsProvider(&quot;TriggerConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;TriggerConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="1368889523" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.011320" asserts="3" />
+              <test-case id="0-1029" name="SettingsProvider(&quot;EndPointConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;EndPointConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="1035858784" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.013522" asserts="3" />
+            </test-suite>
+          </test-suite>
+        </test-suite>
+        <test-suite type="TestSuite" id="0-1042" name="XmlProvider" fullname="IntegrationUnitTest.Settings.XmlProvider" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-15 17:34:46Z" end-time="2018-01-15 17:35:01Z" duration="14.083099" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
+          <test-suite type="TestFixture" id="0-1017" name="XmlProviderTest" fullname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest" classname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000899" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
+            <properties>
+              <property name="Category" value="Settings" />
+            </properties>
+            <test-case id="0-1018" name="MergeEmptyXmlTest" fullname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest.MergeEmptyXmlTest" methodname="MergeEmptyXmlTest" classname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest" runstate="Runnable" seed="586137630" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000605" asserts="1" />
+            <test-case id="0-1019" name="MergeNullXmlTest" fullname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest.MergeNullXmlTest" methodname="MergeNullXmlTest" classname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest" runstate="Runnable" seed="265329316" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000161" asserts="1" />
+          </test-suite>
+        </test-suite>
+      </test-suite>
+      <test-suite type="TestSuite" id="0-1040" name="Setup" fullname="IntegrationUnitTest.Setup" runstate="Runnable" testcasecount="1" result="Passed" start-time="2018-01-15 17:34:46Z" end-time="2018-01-15 17:35:01Z" duration="14.083314" total="1" passed="1" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="1">
+        <test-suite type="TestFixture" id="0-1013" name="SetuperTest" fullname="IntegrationUnitTest.Setup.SetuperTest" classname="IntegrationUnitTest.Setup.SetuperTest" runstate="Runnable" testcasecount="1" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000204" total="1" passed="1" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="1">
+          <properties>
+            <property name="Category" value="Settup" />
+          </properties>
+          <test-case id="0-1014" name="UserConnectionCreateSucces" fullname="IntegrationUnitTest.Setup.SetuperTest.UserConnectionCreateSucces" methodname="UserConnectionCreateSucces" classname="IntegrationUnitTest.Setup.SetuperTest" runstate="Runnable" seed="578887046" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000115" asserts="1" />
+        </test-suite>
+      </test-suite>
+      <test-suite type="TestSuite" id="0-1039" name="Strategy" fullname="IntegrationUnitTest.Strategy" runstate="Runnable" testcasecount="9" result="Passed" start-time="2018-01-15 17:34:46Z" end-time="2018-01-15 17:35:01Z" duration="14.118417" total="9" passed="9" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="8">
+        <test-suite type="TestFixture" id="0-1001" name="BaseAddStrategy" fullname="IntegrationUnitTest.Strategy.BaseAddStrategy" classname="IntegrationUnitTest.Strategy.BaseAddStrategy" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.018270" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="3">
+          <properties>
+            <property name="Category" value="Strategy" />
+          </properties>
+          <test-case id="0-1002" name="AddIntegerStrategy" fullname="IntegrationUnitTest.Strategy.BaseAddStrategy.AddIntegerStrategy" methodname="AddIntegerStrategy" classname="IntegrationUnitTest.Strategy.BaseAddStrategy" runstate="Runnable" seed="654035285" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.014333" asserts="1" />
+          <test-case id="0-1003" name="AddStringStrategy" fullname="IntegrationUnitTest.Strategy.BaseAddStrategy.AddStringStrategy" methodname="AddStringStrategy" classname="IntegrationUnitTest.Strategy.BaseAddStrategy" runstate="Runnable" seed="1085020473" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.003812" asserts="2" />
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1004" name="StringToIObjectStepTest" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" testcasecount="7" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.016814" total="7" passed="7" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="5">
+          <properties>
+            <property name="Category" value="Strategy" />
+          </properties>
+          <test-suite type="ParameterizedMethod" id="0-1010" name="CreateInstance_WithoutError" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" testcasecount="5" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000577" total="5" passed="5" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="0-1005" name="CreateInstance_WithoutError(Json)" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError(Json)" methodname="CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="515619467" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000263" asserts="0" />
+            <test-case id="0-1006" name="CreateInstance_WithoutError(All)" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError(All)" methodname="CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="1696872520" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000087" asserts="0" />
+            <test-case id="0-1007" name="CreateInstance_WithoutError(Excell)" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError(Excell)" methodname="CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="348184982" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000061" asserts="0" />
+            <test-case id="0-1008" name="CreateInstance_WithoutError(TsEntity)" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError(TsEntity)" methodname="CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="399672130" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000062" asserts="0" />
+            <test-case id="0-1009" name="CreateInstance_WithoutError(Xml)" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError(Xml)" methodname="CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="903233295" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000058" asserts="0" />
+          </test-suite>
+          <test-case id="0-1012" name="Execute_JsonType_CorrectAttributeValues" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.Execute_JsonType_CorrectAttributeValues" methodname="Execute_JsonType_CorrectAttributeValues" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="796205400" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.015632" asserts="4" />
+          <test-case id="0-1011" name="Execute_JsonType_CreateIObject" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.Execute_JsonType_CreateIObject" methodname="Execute_JsonType_CreateIObject" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="1381339891" result="Passed" start-time="2018-01-15 17:35:01Z" end-time="2018-01-15 17:35:01Z" duration="0.000462" asserts="1" />
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

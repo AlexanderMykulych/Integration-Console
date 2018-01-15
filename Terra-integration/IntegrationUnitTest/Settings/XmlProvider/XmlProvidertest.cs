@@ -9,6 +9,7 @@ using Terrasoft.TsIntegration.Configuration;
 namespace IntegrationUnitTest.Settings.XmlProvider
 {
 	[TestFixture]
+	[Category("Settings")]
 	public class XmlProviderTest
 	{
 		[Test]

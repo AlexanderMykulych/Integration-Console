@@ -1,0 +1,105 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v1.1",
+    "signature": "5bc2f51167f90284056f83f603a81219f8643c5c"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v1.1": {
+      "tool_fsc/1.1.7": {
+        "dependencies": {
+          "Microsoft.FSharp.Compiler": "4.2.0-rc-170630-0"
+        },
+        "runtime": {}
+      },
+      "microsoft.diasymreader/1.0.8": {
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.DiaSymReader.dll": {}
+        }
+      },
+      "microsoft.diasymreader.portablepdb/1.1.0": {
+        "dependencies": {
+          "Microsoft.DiaSymReader": "1.0.8"
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.DiaSymReader.PortablePdb.dll": {}
+        }
+      },
+      "microsoft.fsharp.compiler/4.2.0-rc-170630-0": {
+        "dependencies": {
+          "Microsoft.DiaSymReader": "1.0.8",
+          "Microsoft.DiaSymReader.PortablePdb": "1.1.0",
+          "System.Diagnostics.TraceSource": "4.0.0",
+          "System.ValueTuple": "4.3.1"
+        },
+        "runtime": {
+          "lib/netstandard1.6/FSharp.Build.dll": {},
+          "lib/netstandard1.6/FSharp.Compiler.Interactive.Settings.dll": {},
+          "lib/netstandard1.6/FSharp.Compiler.Private.dll": {},
+          "lib/netstandard1.6/FSharp.Core.dll": {},
+          "lib/netstandard1.6/fsc.exe": {},
+          "lib/netstandard1.6/fsi.exe": {}
+        }
+      },
+      "system.diagnostics.tracesource/4.0.0": {
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.3/System.Diagnostics.TraceSource.dll": {
+            "rid": "unix",
+            "assetType": "runtime"
+          },
+          "runtimes/win/lib/netstandard1.3/System.Diagnostics.TraceSource.dll": {
+            "rid": "win",
+            "assetType": "runtime"
+          }
+        }
+      },
+      "system.valuetuple/4.3.1": {
+        "runtime": {
+          "lib/netstandard1.0/System.ValueTuple.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "tool_fsc/1.1.7": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "microsoft.diasymreader/1.0.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HAhTmRgU+nnDVYxMZFAS1iwqg6CudbsSMZfSY9UJj4AJO4L69xZCtTOPKC5rW8+egNBWjDb0iBZV4ZdNI6dZnA==",
+      "path": "microsoft.diasymreader/1.0.8",
+      "hashPath": "microsoft.diasymreader.1.0.8.nupkg.sha512"
+    },
+    "microsoft.diasymreader.portablepdb/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qQevOcNSXTxkIv4r6BvNdUxKNyK7VEqdRNohCKgj0WEppQTL/XZoofI1T3bo5H4Taapk+Wqb0yFTZCVcVL1l+Q==",
+      "path": "microsoft.diasymreader.portablepdb/1.1.0",
+      "hashPath": "microsoft.diasymreader.portablepdb.1.1.0.nupkg.sha512"
+    },
+    "microsoft.fsharp.compiler/4.2.0-rc-170630-0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NNM7Zkw4XNyt6TmaXAoART0ER7rJdtdgGkiEbQ32xeOyZjqrU0hRGwmLOwBZ67LIrxQvEi2r4JC32e55RyWbBQ==",
+      "path": "microsoft.fsharp.compiler/4.2.0-rc-170630-0",
+      "hashPath": "microsoft.fsharp.compiler.4.2.0-rc-170630-0.nupkg.sha512"
+    },
+    "system.diagnostics.tracesource/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6WVCczFZKXwpWpzd/iJkYnsmWTSFFiU24Xx/YdHXBcu+nFI/ehTgeqdJQFbtRPzbrO3KtRNjvkhtj4t5/WwWsA==",
+      "path": "system.diagnostics.tracesource/4.0.0",
+      "hashPath": "system.diagnostics.tracesource.4.0.0.nupkg.sha512"
+    },
+    "system.valuetuple/4.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xzDmg26Wb2x2rFDjwziaMYQJqxhrK+b4OUC008o7CnZhUMb2p5XfwgOgAQ/WlKhqxMUSDWRUm5/lNTKdh27pJA==",
+      "path": "system.valuetuple/4.3.1",
+      "hashPath": "system.valuetuple.4.3.1.nupkg.sha512"
+    }
+  }
+}

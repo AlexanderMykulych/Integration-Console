@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace IntegrationUnitTest.Strategy
 {
 	[TestFixture]
+	[Category("Strategy")]
 	public class BaseAddStrategy
 	{
 		[Test]

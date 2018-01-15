@@ -10,6 +10,7 @@ using Terrasoft.TsIntegration.Configuration;
 namespace IntegrationUnitTest.Settings.SettingsProvider
 {
 	[TestFixture]
+	[Category("Settings")]
 	public class SettingsProviderTest
 	{
 		[Test, TestCase("MappingConfig")]
