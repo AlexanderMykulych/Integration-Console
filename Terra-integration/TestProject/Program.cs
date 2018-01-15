@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -31,11 +33,23 @@ namespace TestProject
 	{
 		static void Main(string[] args)
 		{
-			var str = "	\t<soapenv>\r\n\t\t<Create_IncidentResponse>\r\n\t\t\t<TextMessage></TextMessage>\r\n\t\t\t<Error>100003</Error>\r\n\t\t\t<IncidentNumber/>\r\n\t\t</Create_IncidentResponse>\r\n\t</soapenv>";
-			var el = XElement.Parse(str);
-			var doc = new XDocument(el);
-			var res = doc.XPathEvaluate("/Create_IncidentResponse");
-			Console.ReadKey();
+			string path = "";
+			foreach (var chromeProcess in Process.GetProcessesByName("chrome"))
+			{
+				var process = chromeProcess.Modules[0];	
+				path = process.FileName;
+				chromeProcess.Kill();
+			}
+			Thread.Sleep(2000);
+			if (!string.IsNullOrEmpty(path))
+			{
+				Process.Start(path, "-enable-usermedia-screen-capturing");
+			}
+			else
+			{
+				Console.WriteLine("Active Chrome not found!");
+				Console.ReadKey();
+			}
 		}
 	}
 }

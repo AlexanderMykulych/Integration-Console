@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terrasoft.Core.Entities;
 using Terrasoft.TsIntegration.Configuration.Files.Core.Strategy.Instance;
 
 namespace Terrasoft.TsIntegration.Configuration
@@ -44,6 +45,7 @@ namespace Terrasoft.TsIntegration.Configuration
 			Bind<IExecutorSubscriber>().To<BaseSubscriber>();
 			Bind<IMapperDbWorker>().To<MapperDbWorker>();
 			Bind<IRuleFactory>().To<RulesFactory>().InSingletonScope();
+			Bind<ITriggerEngine<Entity>>().To<TriggerEngine>();
 		}
 
 		protected virtual void BindSettings()

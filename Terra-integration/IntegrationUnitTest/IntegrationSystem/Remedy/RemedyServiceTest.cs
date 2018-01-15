@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework.Internal;
-using Terrasoft.Core.Entities;
 using NUnit.Framework;
-using Terrasoft.Core.Factories;
+using Terrasoft.Core;
+using Terrasoft.Core.DB;
+using Terrasoft.Core.Entities;
 using Terrasoft.TsIntegration.Configuration;
 
 namespace IntegrationUnitTest.IntegrationSystem.Remedy
@@ -14,17 +15,65 @@ namespace IntegrationUnitTest.IntegrationSystem.Remedy
 	[TestFixture]
 	public class RemedyServiceTest
 	{
+		private string _remedy_CreateIncident_Url;
+		private string _remedy_CreateIncidentWithOperatorCheck_Url;
+
+		public RemedyServiceTest()
+		{
+			_remedy_CreateIncident_Url = @"http://localhost:1234/remedy/create_incident";
+			_remedy_CreateIncidentWithOperatorCheck_Url = @"http://localhost:1234/remedy/create_incident_withoperatorcheck";
+		}
 		[Test]
 		public void Request_CreateIncident_RemedyId()
 		{
 			var incident = CreateTestIncident();
-			var remedyId = SendCreateIncidentRequest(incident);
+			var remedyId = SendCreateIncidentRequest(incident, _remedy_CreateIncident_Url);
 
 			Assert.IsNotNull(remedyId);
 			Assert.IsNotEmpty(remedyId);
 		}
 
-		private string SendCreateIncidentRequest(Entity incident)
+		[Test]
+		public void Request_CreateIncidentWithNotExistOperator_AddReupdateCaseToTriggerQueue()
+		{
+			var incident = CreateTestIncident();
+			var remedyId = SendCreateIncidentRequest(incident, _remedy_CreateIncidentWithOperatorCheck_Url);
+			Assert.IsTrue(string.IsNullOrEmpty(remedyId));
+
+			var isTriggerExist = GetIsCaseTriggerAdded(incident.PrimaryColumnValue, "AddCaseWithoutOperatorLogin");
+			UpdateCaseTrigger(incident.PrimaryColumnValue, "AddCaseWithoutOperatorLogin");
+			Assert.IsTrue(isTriggerExist);
+			remedyId = SendCreateIncidentRequest(incident, _remedy_CreateIncidentWithOperatorCheck_Url, GetRouteByTrigger("AddCaseWithoutOperatorLogin"));
+
+			Assert.IsNotNull(remedyId);
+			Assert.IsNotEmpty(remedyId);
+		}
+
+		private bool GetIsCaseTriggerAdded(Guid id, string triggerName)
+		{
+			var userConnection = Setuper.userConnection;
+			return (new Select(userConnection)
+				.Column(Func.Count("Id"))
+				.From("TsiTriggerQueue")
+				.Where("TsiObjectName").IsEqual(Column.Parameter("Case"))
+				.And("TsiObjectId").IsEqual(Column.Parameter(id))
+				.And("TsiTriggerName").IsEqual(Column.Parameter(triggerName))
+				.And("TsiState").IsEqual(Column.Parameter(0)) as Select)
+			.ExecuteScalar<int>() > 0;
+		}
+
+		private void UpdateCaseTrigger(Guid id, string triggerName)
+		{
+			var userConnection = Setuper.userConnection;
+			var update = new Update(userConnection, "TsiTriggerQueue")
+				.Set("TsiState", Column.Parameter(1))
+				.Where("TsiObjectName").IsEqual(Column.Parameter("Case"))
+				.And("TsiObjectId").IsEqual(Column.Parameter(id))
+				.And("TsiTriggerName").IsEqual(Column.Parameter(triggerName));
+			update.Execute();
+		}
+
+		private string SendCreateIncidentRequest(Entity incident, string remedyUrl, string routeName = "Create_Case")
 		{
 			var mock = new RemedyMockIntegrationConfig
 			{
@@ -32,7 +81,7 @@ namespace IntegrationUnitTest.IntegrationSystem.Remedy
 				{
 					if (config.Id == "Create_IncidentConfigService")
 					{
-						config.Url = @"http://localhost:1234/remedy/create_incident";
+						config.Url = remedyUrl;
 					}
 					return config;
 				}
@@ -44,11 +93,17 @@ namespace IntegrationUnitTest.IntegrationSystem.Remedy
 				() =>
 				{
 					integrator.ExportWithRequest(incident.PrimaryColumnValue, incident.SchemaName,
-						"Create_Case");
+						routeName);
 				});
 			
 			incident.FetchFromDB(incident.PrimaryColumnValue, false);
 			return incident.GetTypedColumnValue<string>("TsiRemedyId");
+		}
+
+		private string GetRouteByTrigger(string triggerName)
+		{
+			var triggerEngine = ObjectFactory.Get<TriggerEngine>();
+			return triggerEngine.GetTriggerByName(triggerName, Setuper.userConnection).Route;
 		}
 
 		private Entity CreateTestIncident()

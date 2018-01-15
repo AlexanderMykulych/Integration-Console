@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Terrasoft.Configuration.UnitTest</name>
+    </assembly>
+    <members>
+        <member name="T:Terrasoft.Configuration.UnitTest.Api.ITest">
+            <summary>
+            Представляет свойства теста.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Configuration.UnitTest.Api.ITest.Id">
+            <summary>
+            Идентификатор теста.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Configuration.UnitTest.Api.ITest.Name">
+            <summary>
+            Имя теста.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Configuration.UnitTest.Api.ITest.ParentId">
+            <summary>
+            Идентификатор родительского теста.
+            </summary>
+        </member>
+        <member name="T:Terrasoft.Configuration.UnitTest.Api.ITestFilter">
+            <summary>
+            Предоставляет метод фильтрации запускаемых тестов.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.ITestFilter.Match(Terrasoft.Configuration.UnitTest.Api.ITest)">
+            <summary>
+            Проверяет тест.
+            </summary>
+            <returns>
+            Возвращает <c>true</c> если условие выполняется, иначе <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:Terrasoft.Configuration.UnitTest.Api.ITestListener">
+            <summary>
+            Интерфейс прослушивателей, осуществляющих мониторинг выполнения тестов.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.ITestListener.RunStarted">
+            <summary>
+            Вызывается перед запуском первого теста.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.ITestListener.RunFinished">
+            <summary>
+            Вызывается после запуска последнего теста.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.ITestListener.SuiteStarted(Terrasoft.Configuration.UnitTest.Api.ITest)">
+            <summary>
+            Вызывается перед запуском группы тестов.
+            </summary>
+            <param name="test">Тест.</param>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.ITestListener.SuiteFinished(Terrasoft.Configuration.UnitTest.Api.ITestResult)">
+            <summary>
+            Вызывается после завершения группы тестов.
+            </summary>
+            <param name="result">Результат прохождения теста.</param>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.ITestListener.TestStarted(Terrasoft.Configuration.UnitTest.Api.ITest)">
+            <summary>
+            Вызывается перед запуском заданного теста.
+            </summary>
+            <param name="test">Тест.</param>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.ITestListener.TestFinished(Terrasoft.Configuration.UnitTest.Api.ITestResult)">
+            <summary>
+            Вызывается после завершения теста с заданным результатом.
+            </summary>
+            <param name="result">Результат прохождения теста.</param>
+        </member>
+        <member name="T:Terrasoft.Configuration.UnitTest.Api.ITestResult">
+            <summary>
+            Результат прохождения теста.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Configuration.UnitTest.Api.ITestResult.Test">
+            <summary>
+            Тест.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Configuration.UnitTest.Api.ITestResult.Id">
+            <summary>
+            Идентификатор теста.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Configuration.UnitTest.Api.ITestResult.Status">
+            <summary>
+            Статус результата.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Configuration.UnitTest.Api.ITestResult.Message">
+            <summary>
+            Сообщение об ошибке, возникшей при запуске или прохождении теста.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Configuration.UnitTest.Api.ITestResult.StackTrace">
+            <summary>
+            Строковое представление стека вызова при возникновении ошибки запуска или прохождения теста.
+            </summary>
+        </member>
+        <member name="T:Terrasoft.Configuration.UnitTest.Api.ITestRunner">
+            <summary>
+            Представляет свойства и методы для запуска тестов.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.ITestRunner.Run(Terrasoft.Configuration.UnitTest.Api.ITestListener,Terrasoft.Configuration.UnitTest.Api.ITestFilter)">
+            <summary>
+            Запускает группу тестов, определенную фильтром.
+            </summary>
+            <param name="listener">Прослушиватель.</param>
+            <param name="filter">Заданный фильтр.</param>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.ITestRunner.Run(Terrasoft.Configuration.UnitTest.Api.ITestListener)">
+            <summary>
+            Запускает все тесты.
+            </summary>
+            <param name="listener">Прослушиватель.</param>
+        </member>
+        <member name="P:Terrasoft.Configuration.UnitTest.Api.ITestRunner.Tests">
+            <summary>
+            Список тестов.
+            </summary>
+        </member>
+        <member name="T:Terrasoft.Configuration.UnitTest.Api.TestIdFilter">
+            <summary>
+            Класс для фильтрации тестов по идентификатору.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.TestIdFilter.#ctor(System.String[])">
+            <summary>
+            Создает экземпляр <see cref="T:Terrasoft.Configuration.UnitTest.Api.TestIdFilter"/>.
+            </summary>
+            <param name="testIds">
+            Идентификаторы тестов, которые будут добавлены в список допустимых тестов.
+            </param>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.TestIdFilter.Match(Terrasoft.Configuration.UnitTest.Api.ITest)">
+            <summary>
+            Проверка на то, что тест <paramref name="test"/> в списке допустимых тестов.
+            </summary>
+            <param name="test">Тест.</param>
+            <returns>
+            Возвращает <c>true</c>, если идентификатор теста <paramref name="test"/> в списке допустимых тестов,
+            иначе <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.Api.TestIdFilter.Add(System.String)">
+            <summary>
+            Добавляет идентификатор теста в список допустимых тестов.
+            </summary>
+            <param name="testId">Идентификатор теста.</param>
+        </member>
+        <member name="P:Terrasoft.Configuration.UnitTest.WebService.RunTests.TestIds">
+            <summary>
+            Идентификаторы тестов, которые нужно запустить.
+            </summary>
+        </member>
+        <member name="T:Terrasoft.Configuration.UnitTest.WebService.UnitTestService">
+            <summary>
+            Сервис для получения и запуска конфигурационных Unit тестов.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.WebService.UnitTestService.#ctor(Terrasoft.Configuration.UnitTest.Api.ITestRunner,Terrasoft.Configuration.UnitTest.Api.ITestListener)">
+            <summary>
+            Создает экземпляр <see cref="T:Terrasoft.Configuration.UnitTest.WebService.UnitTestService"/>.
+            </summary>
+            <param name="runner">Класс, который реализует интерфейс <see cref="T:Terrasoft.Configuration.UnitTest.Api.ITestRunner"/>.</param>
+            <param name="listener">Класс, который реализует интерфейс <see cref="T:Terrasoft.Configuration.UnitTest.Api.ITestListener"/>.</param>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.WebService.UnitTestService.Initialize(Funq.Container)">
+            <summary>
+            Инициализирует сервис конфигурационных Unit тестов.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.WebService.UnitTestService.Post(Terrasoft.Configuration.UnitTest.WebService.GetTests)">
+            <summary>
+            Метод для получения списка всех Unit тестов конфигурации.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Configuration.UnitTest.WebService.UnitTestService.Post(Terrasoft.Configuration.UnitTest.WebService.RunTests)">
+            <summary>
+            Метод для запуска Unit тестов конфигурации.
+            </summary>
+            <remarks>
+            В параметре <paramref name="runTests"/> можно указать условие фильтрации тестов.
+            </remarks>
+        </member>
+    </members>
+</doc>

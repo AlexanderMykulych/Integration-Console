@@ -1,0 +1,5 @@
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Release\MappingCreator.csprojResolveAssemblyReference.cache
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Release\MappingCreator.Form1.resources
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Release\MappingCreator.Properties.Resources.resources
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Release\MappingCreator.csproj.GenerateResource.Cache
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\MappingCreator\obj\Release\MappingCreator.csproj.CoreCompileInputs.cache

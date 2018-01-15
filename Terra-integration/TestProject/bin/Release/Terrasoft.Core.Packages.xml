@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Terrasoft.Core.Packages</name>
+    </assembly>
+    <members>
+        <member name="M:Terrasoft.Core.Packages.FileStorage.IFileStorageTransaction.Get">
+            <summary>Поиск модулей для текущей конфигурации.</summary>
+            <returns>Словарь, содержащий в качестве ключа имя модуля, в качестве значения - массив байт модуля.
+            </returns>
+        </member>
+        <member name="T:Terrasoft.Core.Packages.SchemaDependencyItem">
+            <summary>
+            Экземпляр зависимости схемы.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Core.Packages.SchemaDependencyItem.GetHashCode">
+            <summary>
+            Возвращает хэш-код для данной зависимости.
+            </summary>
+            <returns>
+            Хэш-код для данного экземпляра <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/> в виде 32-битового целого
+            числа со знаком.
+            </returns>
+        </member>
+        <member name="M:Terrasoft.Core.Packages.SchemaDependencyItem.Equals(System.Object)">
+            <summary>
+            Определяет, равны ли данный экземпляр <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/> и заданный
+            экземпляр <see cref="T:System.Object"/>.
+            </summary>
+            <param name="obj">Экземпляр <see cref="T:System.Object"/> для сравнения с данным экземпляром
+            <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/>.</param>
+            <returns>
+            <c>true</c>, если <paramref name="obj"/> имеет тип <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/> и его
+            значение совпадает со значением данного экземпляра <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/>; 
+            иначе - <c>false</c>.
+            </returns>
+            <remarks>Перегруженный метод.</remarks>
+        </member>
+        <member name="M:Terrasoft.Core.Packages.SchemaDependencyItem.Equals(Terrasoft.Core.Packages.SchemaDependencyItem)">
+            <summary>
+            Определяет, равны ли данный экземпляр <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/> и заданный
+            экземпляр <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/>.
+            </summary>
+            <param name="other">Экземпляр <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/> для сравнения с данным экземпляром.</param>
+            <returns>
+            <c>true</c>, если <paramref name="other"/> совпадает со значением данного экземпляра 
+            <see cref="T:Terrasoft.Core.Packages.SchemaDependencyItem"/>; 
+            иначе - <c>false</c>.
+            </returns>
+        </member>
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.UId">
+            <summary>
+            Идентификатор зависимости.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.Name">
+            <summary>
+            Наименование зависимости.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.CreatedInSchemaUId">
+            <summary>
+            Идентификатор схемы в которой была создана зависимость.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.ModifiedInSchemaUId">
+            <summary>
+            Идентификатор схемы в которой была изменена зависимость.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.SchemaUId">
+            <summary>
+            Идентификатор схемы.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Core.Packages.SchemaDependencyItem.ManagerName">
+            <summary>
+            Наименование менеджера.
+            </summary>
+        </member>
+    </members>
+</doc>

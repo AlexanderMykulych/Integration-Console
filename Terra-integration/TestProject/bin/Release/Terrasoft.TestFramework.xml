@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Terrasoft.TestFramework</name>
+    </assembly>
+    <members>
+        <member name="M:Terrasoft.TestFramework.ArgExt.ContainsQueryParametersByValue(System.Object[])">
+            <summary>
+            Matches <see cref="T:Terrasoft.Core.DB.QueryParameterCollection"/> instance that contains parameters with all specified values.
+            </summary>
+            <param name="values">Values of parameters to match.</param>
+            <returns>Argument matcher for <see cref="T:Terrasoft.Core.DB.QueryParameterCollection"/> that contains parameters
+            with all specified values.</returns>
+        </member>
+        <member name="M:Terrasoft.TestFramework.ArgExt.HasQueryParametersByValue``1(System.Object[])">
+            <summary>
+            Matches instance of specified query type that contains parameters with all specified values.
+            </summary>
+            <typeparam name="T">Type derived from <see cref="T:Terrasoft.Core.DB.Query"/>.</typeparam>
+            <param name="values">Values of parameters to match.</param>
+            <returns>Argument matcher for specified type derived from <see cref="T:Terrasoft.Core.DB.Query"/> that contains parameters
+            with all specified values.</returns>
+        </member>
+        <member name="M:Terrasoft.TestFramework.ArgExt.HasInsertParametersByValue``1(System.Object[])">
+            <summary>
+            Matches instance of specified query type that contains parameters with all specified values.
+            </summary>
+            <typeparam name="T">Type derived from <see cref="T:Terrasoft.Core.DB.BaseInsert"/>.</typeparam>
+            <param name="values">Values of parameters to match.</param>
+            <returns>Argument matcher for specified type derived from <see cref="T:Terrasoft.Core.DB.BaseInsert"/> that contains parameters
+            with all specified values.</returns>
+        </member>
+        <member name="M:Terrasoft.TestFramework.ArgExt.EqualsQueryConditions``1(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Matches conditions of specified query type that contains condition with all specified values.
+            </summary>
+            <typeparam name="T">Type derived from <see cref="T:Terrasoft.Core.DB.BaseInsert"/>.</typeparam>
+            <param name="conditions">Values of conditions to match.</param>
+            <returns>Argument matcher for specified type derived from <see cref="T:Terrasoft.Core.DB.BaseInsert"/> that contains conditions
+            with all specified values.</returns>
+        </member>
+        <member name="M:Terrasoft.TestFramework.ArgExt.SelectFrom(System.String)">
+            <summary>
+            Matches instance of query with source schema name.
+            </summary>
+            <param name="schemaName">Name of the source schema.</param>
+            <returns>Select query matcher.</returns>
+        </member>
+        <member name="M:Terrasoft.TestFramework.ArgExt.IsSequence``1(``0[])">
+            <summary>
+            Matches the sequences contains exact same items using the default equality comparer.
+            </summary>
+            <typeparam name="TItem">Item type.</typeparam>
+            <param name="items">Sequences items.</param>
+            <returns><see cref="M:NSubstitute.Arg.Is``1(``0)"/> matcher.</returns>
+        </member>
+        <member name="M:Terrasoft.TestFramework.ArgExt.IsNullOrEmpty``1">
+            <summary>
+            Matches empty or null sequences.
+            </summary>
+            <typeparam name="TSequence">The type of the sequence.</typeparam>
+            <returns><see cref="M:NSubstitute.Arg.Is``1(``0)"/> matcher.</returns>
+        </member>
+        <member name="M:Terrasoft.TestFramework.TestAppConnection.SetSamlNameFieldName(System.String)">
+            <summary>
+            Sets SamlNameFieldName property by <paramref name="samlNameFieldName"/>.
+            </summary>
+            <param name="samlNameFieldName">Name of field name.</param>
+        </member>
+        <member name="M:Terrasoft.TestFramework.TestAppConnection.SetSamlRoleFieldName(System.String)">
+            <summary>
+            Sets SamlRoleFieldName property by <paramref name="samlRoleFieldName"/>.
+            </summary>
+            <param name="samlRoleFieldName">Name of field role.</param>
+        </member>
+        <member name="M:Terrasoft.TestFramework.TestAppConnection.SetDefUserType(System.String)">
+            <summary>
+            Sets DefUserType property by <paramref name="defUserType"/>.
+            </summary>
+            <param name="defUserType">Name of default user type.</param>
+        </member>
+        <member name="M:Terrasoft.TestFramework.TestResourceManagerProvider.Initialize">
+            <summary>
+            Creates <see cref="T:Terrasoft.TestFramework.TestResourceManagerProvider"/> instance and registers it in 
+            <see cref="T:Terrasoft.Common.GeneralResourceStorage"/> as resource manager provider.
+            </summary>
+            <returns>Instance.</returns>
+            <exception cref="T:Terrasoft.Common.InvalidObjectStateException">Previous instance is not disposed.</exception>
+        </member>
+        <member name="M:Terrasoft.TestFramework.TestResourceManagerProvider.Initialize(System.Action{Terrasoft.Common.IResourceManager})">
+            <summary>
+            Creates <see cref="T:Terrasoft.TestFramework.TestResourceManagerProvider"/> instance and registers it in 
+            <see cref="T:Terrasoft.Common.GeneralResourceStorage"/> as resource manager provider. Registers single resource manager mock
+            for any resource manager name.
+            </summary>
+            <param name="managerSetupAction">The manager setup action. Invoked using created resource manager 
+            mock.</param>
+            <returns>Instance.</returns>
+        </member>
+        <member name="M:Terrasoft.TestFramework.TestResourceManagerProvider.Initialize(System.String)">
+            <summary>
+            Creates <see cref="T:Terrasoft.TestFramework.TestResourceManagerProvider"/> instance and registers it in 
+            <see cref="T:Terrasoft.Common.GeneralResourceStorage"/> as resource manager provider. Registers single resource manager mock
+            for any resource manager name. Registers string value for any resource key.
+            </summary>
+            <param name="anyString">Any resource key value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrasoft.TestFramework.TestResourceManagerProvider.Initialize(System.String,System.Action{Terrasoft.Common.IResourceManager})">
+            <summary>
+            Creates <see cref="T:Terrasoft.TestFramework.TestResourceManagerProvider"/> instance and registers it in 
+            <see cref="T:Terrasoft.Common.GeneralResourceStorage"/> as resource manager provider. Registers single resource manager mock 
+            for specified resource manager name.
+            </summary>
+            <param name="managerName">Name of the manager.</param>
+            <param name="managerSetupAction">The manager setup action. Invoked using created resource manager 
+            mock.</param>
+            <returns>Instance.</returns>
+            <exception cref="T:Terrasoft.Common.InvalidObjectStateException">Previous instance is not disposed.</exception>
+        </member>
+        <member name="M:Terrasoft.TestFramework.TestResourceManagerProvider.Dispose">
+            <summary>
+            Performs reset <see cref="T:Terrasoft.Common.GeneralResourceStorage"/> settings made by current 
+            <see cref="T:Terrasoft.TestFramework.TestResourceManagerProvider"/> instance.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.TestFramework.TestResourceManagerProvider.SetupManager(System.String,Terrasoft.Common.IResourceManager)">
+            <summary>
+            Setups <see cref="T:Terrasoft.Common.GeneralResourceStorage"/> to provide the resource manager.
+            </summary>
+            <param name="managerName">Name of the manager. If not defined, current manager instance will be 
+            provided by <see cref="T:Terrasoft.Common.GeneralResourceStorage"/> for any resource manager name.</param>
+            <param name="manager">The manager. If it's not defined, <see cref="M:NSubstitute.Substitute.For``1(System.Object[])"/> 
+            will be used to create new one.</param>
+            <returns>Resource manager.</returns>
+        </member>
+        <member name="M:Terrasoft.TestFramework.TestResourceManagerProvider.SetupManager(System.Func{System.String},Terrasoft.Common.IResourceManager)">
+            <summary>
+            Setups <see cref="T:Terrasoft.Common.GeneralResourceStorage"/> to provide the resource manager.
+            </summary>
+            <param name="managerNameFunc">Function that returns manager name, used to support 
+            <see cref="M:NSubstitute.Arg.Is``1(``0)"/> like expressions.</param>
+            <param name="manager">The manager instance. If it's not defined, <see cref="M:NSubstitute.Substitute.For``1(System.Object[])"/> 
+            will be used to create new one.</param>
+            <returns>Resource manager.</returns>
+        </member>
+    </members>
+</doc>

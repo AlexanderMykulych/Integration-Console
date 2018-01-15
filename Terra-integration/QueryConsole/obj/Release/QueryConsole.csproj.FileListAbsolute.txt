@@ -495,3 +495,4 @@ C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\bin\Release\ru\DevExpress.XtraGrid.v10.2.resources.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\bin\Release\ru\DevExpress.XtraLayout.v10.2.resources.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\bin\Release\ru\DevExpress.Xpo.v10.2.resources.dll
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole\obj\Release\QueryConsole.csproj.QueryConsole.exe.config

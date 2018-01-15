@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Terrasoft.Web.Common</name>
+    </assembly>
+    <members>
+        <member name="M:Terrasoft.Web.Common.AuthHelper.CreateUserAuthDataSelect(Terrasoft.Core.UserConnection,System.String)">
+            <summary>
+            Возвращает запрос на выборку аутентификационных данных пользователя.
+            </summary>
+            <param name="userConnection">Пользовательское подключение.</param>
+            <param name="userName">Имя пользователя.</param>
+            <returns>Запрос на выборку аутентификационных данных пользователя.
+            </returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.BaseViewModule.SpecifyPageTitle">
+            <summary>
+            Sets page caption from SysSetting.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.EmailUtilities.SendMail(Terrasoft.Core.UserConnection,System.String,System.String,System.String)">
+            <summary>
+            Отправлет электронное письмо.
+            </summary>
+            <param name="userConnection">Пользовательское подключение.</param>
+            <param name="recipient">Электронный адрес получателя.</param>
+            <param name="subject">Заголовок электронного письма.</param>
+            <param name="bodyHtml">Тело электронного письма в формате Html.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.LoginUtilities.CreateUser(Terrasoft.Core.UserConnection,System.Guid,System.String,System.String)">
+            <summary>
+            Creates user, his contact, roles and distributes license user.
+            </summary>
+            <param name="userConnection">Specified instance of <see cref="T:Terrasoft.Core.UserConnection"/>.</param>
+            <param name="contactId">Contact identifier.</param>
+            <param name="name">User name.</param>
+            <param name="userPassword">User password.</param>
+            <returns>User identifier.</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.LoginUtilities.RewriteRedirectUrlToWorkspace(Terrasoft.Web.Common.WorkspaceManager,System.String,System.String)">
+            <summary>
+            Возвращает ссылку на главную страницу приложения для рабочего пространства <paramref name="workspaceName"/>.
+            </summary>
+            <param name="workspaceManager">Менеджер рабочих пространств пользователя.</param>
+            <param name="workspaceName">Имя рабочего пространства пользователя.</param>
+            <param name="redirectUrl">Ссылка на главную страницу приложения.</param>
+            <returns>Ссылка на главную страницу приложения для рабочего пространства пользователя.</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.LoginUtilities.GetRecoveryPasswordLink(Terrasoft.Core.UserConnection,System.String,System.String)">
+            <summary>
+            Возвращает ссылку на страницу для восстановления пароля пользователя.
+            </summary>
+            <param name="userConnection">Пользовательское подключение.</param>
+            <param name="userName">Имя пользователя.</param>
+            <param name="baseApplicationUrl">Строка URL-адреса текущего приложения.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.LoginUtilities.InitializeAuthData(Terrasoft.Core.UserConnection,Terrasoft.Core.AuthData,System.String)">
+            <summary>
+            Заполняет аутентификационные данные данными пользователя.
+            </summary>
+            <param name="userConnection">Пользовательское подключение.</param>
+            <param name="authData">Аутентификационные данные.</param>
+            <param name="userName">Имя пользователя.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.LoginUtilities.InitializeAuthData(Terrasoft.Core.UserConnection,Terrasoft.Core.AuthData,System.Guid,Terrasoft.Core.Configuration.LinkType)">
+            <summary>
+            Заполняет аутентификационные данные данными пользователя.
+            </summary>
+            <param name="userConnection">Пользовательское подключение.</param>
+            <param name="authData">Аутентификационные данные.</param>
+            <param name="linkId">Идентификатор ссылки.</param>
+            <param name="linkType">Тип ссылки.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.LoginUtilities.CreateRegistrationLink(Terrasoft.Core.UserConnection,System.Guid,System.String,System.String)">
+            <summary>
+            Создает ссылку на страницу для регистрации пользователя.
+            </summary>
+            <param name="userConnection">Пользовательское подключение.</param>
+            <param name="contactId">Идентификатор контакта.</param>
+            <param name="password">Пароль.</param>
+            <param name="baseApplicationUrl">Строка URL-адреса текущего приложения.</param>
+            <returns>
+            Cсылка на страницу для регистрации пользователя.
+            </returns>
+            <exception cref="T:System.Security.SecurityException"> Если значение системной настройки "Срок хранения 
+            регистрационных ссылок, дней" не установлено или равно 0.
+            Если информация о ссылке не добавлена в базу данных.
+            </exception>
+        </member>
+        <member name="M:Terrasoft.Web.Common.NtlmAuthModule.SetUnauthorizedResponse(System.Web.HttpContextBase)">
+            <summary>Переписать стандартный ответ Forms аутентификации</summary>
+            <remarks>В случае, если аутентификация не удалась, на клиент отправляется ответ с кодом 401 (не
+            авторизирован) и заголовок WWW-Authenticate, который указывает на способ передачи аутентификационных данных.
+            Но тут возникает проблема с Forms аутентифкацией, которая перехватывает все ответы с кодом 401, заменяет их
+            на 302 и добавляет RedirectLocation на страницу логина.
+            Для обхода столь не желательного нам поведения, мы на событие EndRequest в объекте HttpContext
+            перезаписываем ответ нужным нам.</remarks>
+        </member>
+        <member name="T:Terrasoft.Web.Common.BaseService">
+            <summary>
+            The base web service class.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.AuthModule._statusCode">
+            <summary>
+            // По умолчанию при ошибке авторизации возвращается код не авторизиован, если не указана другая ошибка
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.AuthModule.IsRequireSslForEntityDataService">
+            <summary>
+            По умолчанию требовать SSL соединение, если не указано обратное
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.AuthModule.RewriteUnauthorizedResponse(System.Web.HttpContextBase,Terrasoft.Web.Common.LocationConfig)">
+            <summary>
+            Переписать стандартный ответ Forms аутентификации отправив запрос кастомной аутентификации
+            </summary>
+            <remarks>
+            В случае если аутентификация неудалась на клиент отправляется ответ 
+            с кодом 401 (не авторизирован) и заголовок WWW-Authenticate,
+            который указывает на способ передачи аутентификационных данных.
+            Но тут возникает проблема с Forms аутентифкацией, которая перехватывает все ответы с кодом 401, 
+            заменяет их на 302 и добавляет RedirectLocation на страницу логина. 
+            Для обхода столь не желательного нам поведения, мы на событие EndRequest в объекте HttpContext.
+            Responce делаем следующие:
+            	Устанавливаем Response.RedirectLocation = null;
+            	Заново устанавливаем нужный код ошибки 401;
+            	Добавляем заголовок "WWW-Authenticate";
+            	Очищаем тело ответа, Response.Clear();
+            	Устанавливаем Response.ContentType = "text/html".
+            </remarks>
+        </member>
+        <member name="M:Terrasoft.Web.Common.AuthModule.InitializeSessionId">
+            <summary>
+            Метод реализован для тестов
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.AuthModule.GetAuthData(System.Web.HttpContextBase)">
+            <summary>
+            Creates <see cref="T:Terrasoft.Core.AuthData"/> instance from <paramref name="httpContext"/>.
+            </summary>
+            <param name="httpContext"><see cref="T:System.Web.HttpContextBase"/> instance.</param>
+            <returns><see cref="T:Terrasoft.Core.AuthData"/> instance.</returns>
+        </member>
+        <member name="T:Terrasoft.Web.Common.SamlServiceProviderWrap">
+            <summary>
+            <see cref="T:ComponentSpace.SAML2.SAMLServiceProvider"/> wrapper class.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SamlServiceProviderWrap.InitiateSlo(System.Web.HttpResponseBase,System.String,System.String,System.String)">
+            <summary>
+            Calls <see cref="M:ComponentSpace.SAML2.SAMLServiceProvider.InitiateSLO(System.Web.HttpResponseBase,System.String,System.String,System.String)"/> method.
+            </summary>
+            <param name="httpResponse"><see cref="T:System.Web.HttpResponseBase"/> instance.</param>
+            <param name="logoutReason">Logout reason.</param>
+            <param name="relayState">Relay state.</param>
+            <param name="partnerIdP">Partner identity provider name.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SessionHelper.AddCsrfCookieToRequest(System.String)">
+            <summary>
+            Sets csrf token in cookie.
+            </summary>
+            <param name="token">Token.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SessionHelper.CorrectAuthCookieTimeout(System.Int32)">
+            <summary>
+            Sets auth cookie timeout.
+            </summary>
+            <param name="timeout">Timeout in minutes.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SessionHelper.SingleLogout">
+            <summary>
+            Initiates single log out.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SessionHelper.SingleLogout(Terrasoft.Core.AppConnection,System.Web.HttpContextBase,Terrasoft.Web.Common.SamlServiceProviderWrap)">
+            <summary>
+            Initiates single log out.
+            </summary>
+            <param name="appConnection"><see cref="P:Terrasoft.Web.Common.SessionHelper.AppConnection"/> instance.</param>
+            <param name="httpContext"><see cref="T:System.Web.HttpContextBase"/> instance.</param>
+            <param name="provider"><see cref="P:Terrasoft.Web.Common.SessionHelper.SamlServiceProvider"/> instance.</param>
+        </member>
+        <member name="P:Terrasoft.Web.Common.SessionHelper.AppConnection">
+            <summary>
+            <see cref="P:Terrasoft.Web.Common.SessionHelper.AppConnection"/> instance.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Web.Common.SessionHelper.CurrentContext">
+            <summary>
+            <see cref="T:System.Web.HttpContextBase"/> instance.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Web.Common.SessionHelper.Response">
+            <summary>
+            <see cref="T:System.Web.HttpResponseBase"/> instance.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Web.Common.SessionHelper.Request">
+            <summary>
+            <see cref="T:System.Web.HttpRequestBase"/> instance.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Web.Common.SessionHelper.SamlServiceProvider">
+            <summary>
+            <see cref="T:Terrasoft.Web.Common.SamlServiceProviderWrap"/> instance.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SysAdminUtilities._actualizeContactJobName">
+            <summary>
+            Actualize contact job name.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SysAdminUtilities._actualizeContactJobGroup">
+            <summary>
+            Actualize contact job group name.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SysAdminUtilities._actualizeContactProcessName">
+            <summary>
+            Actualize contact process name.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SysAdminUtilities._actualizeContactParameterName">
+            <summary>
+            Actualize contact process parameter name.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.ActualizeUserRoles(Terrasoft.Core.UserConnection,System.Guid)">
+            <summary>
+            Calls user roles actualization procedure.
+            </summary>
+            <param name="userConnection"><see cref="T:Terrasoft.Core.UserConnection"/> instance.</param>
+            <param name="userId">User identifier.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.CreateContact(Terrasoft.Core.UserConnection,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Creates <see cref="T:Terrasoft.Core.Configuration.Contact"/> record.
+            </summary>
+            <param name="userConnection">Specified instance of <see cref="T:Terrasoft.Core.UserConnection"/>.</param>
+            <param name="contactValues">Contact column values dictionary.</param>
+            <returns>Contact values.</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.CreateUser(Terrasoft.Core.UserConnection,System.Guid,System.String,Terrasoft.Core.UserType)">
+            <summary>
+            Creates <see cref="T:Terrasoft.Core.Configuration.SysAdminUnit"/> record.
+            </summary>
+            <param name="userConnection">Specified instance of <see cref="T:Terrasoft.Core.UserConnection"/>.</param>
+            <param name="contactId">Contact identifier.</param>
+            <param name="name">User name.</param>
+            <param name="userType"><see cref="T:Terrasoft.Core.UserType"/> instance.</param>
+            <returns>User identifier.</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.CreateSysUserInRole(Terrasoft.Core.UserConnection,System.Guid,System.Guid)">
+            <summary>
+            Creates <see cref="T:Terrasoft.Core.Configuration.SysUserInRole"/> record
+            </summary>
+            <param name="userConnection">Specified instance of <see cref="T:Terrasoft.Core.UserConnection"/>.</param>
+            <param name="userId">User identifier.</param>
+            <param name="roleId">Role identifier</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.CreateRoles(Terrasoft.Core.UserConnection,System.Guid,Terrasoft.Core.UserType,System.Collections.Generic.List{System.String})">
+            <summary>
+            Creates roles for user.
+            </summary>
+            <param name="userConnection">Specified instance of <see cref="T:Terrasoft.Core.UserConnection"/>.</param>
+            <param name="userId">User identifier.</param>
+            <param name="userType">User <see cref="T:Terrasoft.Core.UserType"/>.</param>
+            <param name="roles">List of roles to be added for user.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.CreateRoles(Terrasoft.Core.UserConnection,System.Guid,Terrasoft.Core.UserType,System.Collections.Generic.List{System.String},System.Boolean)">
+            <summary>
+            Creates roles for user.
+            </summary>
+            <param name="userConnection">Specified instance of <see cref="T:Terrasoft.Core.UserConnection"/>.</param>
+            <param name="userId">User identifier.</param>
+            <param name="userType">User <see cref="T:Terrasoft.Core.UserType"/>.</param>
+            <param name="roles">List of roles to be added for user.</param>
+            <param name="actualizeRoles">Actualize users roles flag.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.RemoveUserRoles(Terrasoft.Core.UserConnection,System.Guid,Terrasoft.Core.UserType)">
+            <summary>
+            Removes roles for user
+            </summary>
+            <param name="userConnection"><see cref="T:Terrasoft.Core.UserConnection"/> instance.</param>
+            <param name="userId">User identifier.</param>
+            <param name="userType">User <see cref="T:Terrasoft.Core.UserType"/>.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.RemoveUserRoles(Terrasoft.Core.UserConnection,System.Guid,Terrasoft.Core.UserType,System.Boolean)">
+            <summary>
+            Removes roles for user
+            </summary>
+            <param name="userConnection"><see cref="T:Terrasoft.Core.UserConnection"/> instance.</param>
+            <param name="userId">User identifier.</param>
+            <param name="userType">User <see cref="T:Terrasoft.Core.UserType"/>.</param>
+            <param name="actualizeRoles">Actualize users roles flag.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.ActualizeUsersRoles(Terrasoft.Core.UserConnection)">
+            <summary>
+            Calls admin unit roles actualization procedure.
+            </summary>
+            <param name="userConnection"><see cref="T:Terrasoft.Core.UserConnection"/> instance.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.RunUpdateSsoContactProcess(Terrasoft.Core.UserConnection,System.Collections.Generic.Dictionary{System.String,System.Object},System.String)">
+            <summary>
+            Run UpdateSsoContact process.
+            </summary>
+            <param name="userConnection">Specified instance of <see cref="T:Terrasoft.Core.UserConnection"/>.</param>
+            <param name="contactValues">Contact values.</param>
+            <param name="workspaceName">Workspace name.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.AddUserLicences(Terrasoft.Core.UserConnection,System.Guid,System.Collections.ObjectModel.Collection{System.String})">
+            <summary>
+            Distributes license user.
+            </summary>
+            <param name="userConnection">Specified instance of <see cref="T:Terrasoft.Core.UserConnection"/>.</param>
+            <param name="userId">User identifier.</param>
+            <param name="packageNames">License package names.</param>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SysAdminUtilities.GetLicPackageNames(Terrasoft.Core.UserConnection,Terrasoft.Core.UserType)">
+            <summary>
+            Returns license packages names for<paramref name="userType"/>.
+            </summary>
+            <param name="userConnection"><see cref="T:Terrasoft.Core.UserConnection"/> instance.</param>
+            <param name="userType"><see cref="T:Terrasoft.Core.UserType"/> value.</param>
+            <returns><see cref="P:Terrasoft.Core.AppConnection.SspUserRegistrationLicPackage"/> value if user type SSP,
+            <c>null</c> otherwise.</returns>
+        </member>
+        <member name="T:Terrasoft.Web.Common.SsoSessionStore">
+            <summary>
+            SsoSessionStore class.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SsoSessionStore._instance">
+            <summary>
+            <see cref="T:Terrasoft.Web.Common.SsoSessionStore"/> instance.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SsoSessionStore._sessionSsoDataStore">
+            <summary>
+            Data store for sso session.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SsoSessionStore._ssoSessionType">
+            <summary>
+            Single sign on session type.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SsoSessionStore._cookieName">
+            <summary>
+            Cookie name for single sign on session.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SsoSessionStore._userTypeCookieName">
+            <summary>
+            Cookie name for user type.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SsoSessionStore._userType">
+            <summary>
+            <see cref="P:Terrasoft.Web.Common.SsoSessionStore.UserType"/>.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SsoSessionStore._ssoSessionRequestCookie">
+            <summary>
+            Sso session cookie from <see cref="T:System.Web.HttpRequest"/>.
+            </summary>
+        </member>
+        <member name="F:Terrasoft.Web.Common.SsoSessionStore._userTypeSessionRequestCookie">
+            <summary>
+            User type cookie from <see cref="T:System.Web.HttpRequest"/>.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.GetOrSetCookieValue(System.Web.HttpCookie,System.String,System.String)">
+            <summary>
+            Gets <see cref="T:System.Web.HttpCookie"/> value. If <paramref name="cookie"/> is empty creates new
+            <see cref="T:System.Web.HttpCookie"/> instance.
+            </summary>
+            <param name="cookie"><see cref="T:System.Web.HttpCookie"/> instance.</param>
+            <param name="cookieName"><see cref="T:System.Web.HttpCookie"/> name.</param>
+            <param name="newCookieValue">New <see cref="T:System.Web.HttpCookie"/> value.</param>
+            <returns><see cref="T:System.Web.HttpCookie"/> value.</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.GetDatabaseSessionId(System.Type)">
+            <summary>
+            Gets full database session uniqueidentifier.
+            </summary>
+            <param name="type">Type of single sign on object.</param>
+            <returns>Full database session uniqueidentifier</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.SetSsoResponseCookie(System.Web.HttpCookie)">
+            <summary>
+            Sets single sign on session cookie in <see cref="T:System.Web.HttpResponse"/>.
+            <param name="cookie"><see cref="T:System.Web.HttpCookie"/> instance.</param>
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.GetSsoResponseCookie(System.String)">
+            <summary>
+            Gets single sign on cookie from <see cref="T:System.Web.HttpResponse"/>.
+            </summary>
+            <param name="cookieName"><see cref="T:System.Web.HttpCookie"/> name.</param>
+            <returns><see cref="T:System.Web.HttpCookie"/> instance.</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.GetSsoRequestCookie(System.String)">
+            <summary>
+            Gets single sign on cookie from <see cref="T:System.Web.HttpRequest"/>.
+            </summary>
+            <param name="cookieName"><see cref="T:System.Web.HttpCookie"/> name.</param>
+            <returns><see cref="T:System.Web.HttpCookie"/> instance.</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.CloseSession">
+            <summary>
+            Ends current user session.
+            </summary>
+            <remarks>External dependency allocation.</remarks>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.GetInstance(Terrasoft.Core.UserType)">
+            <summary>
+            Gets <see cref="T:Terrasoft.Web.Common.SsoSessionStore"/> instance.
+            </summary>
+            <param name="userType"><see cref="P:Terrasoft.Web.Common.SsoSessionStore.UserType"/> instance.</param>
+            <returns><see cref="T:Terrasoft.Web.Common.SsoSessionStore"/> instance.</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.GetInstance">
+            <summary>
+            Gets <see cref="T:Terrasoft.Web.Common.SsoSessionStore"/> instance.
+            </summary>
+            <returns><see cref="T:Terrasoft.Web.Common.SsoSessionStore"/> instance.</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.Load(System.Type)">
+            <summary>
+            <see cref="M:ComponentSpace.SAML2.Data.AbstractSSOSessionStore.Load(System.Type)"/>
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.Save(System.Object)">
+            <summary>
+            <see cref="M:ComponentSpace.SAML2.Data.AbstractSSOSessionStore.Save(System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.SaveEmptySsoSession">
+            <summary>
+            Saves empty single sign on session in <see cref="P:Terrasoft.Web.Common.SsoSessionStore.EmptySsoSession"/> object.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.SsoSessionStore.SetEmptySsoSession">
+            <summary>
+            Sets empty single sign on session in data store object.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Web.Common.SsoSessionStore.SessionID">
+            <summary>
+            <see cref="P:ComponentSpace.SAML2.Data.AbstractSSOSessionStore.SessionID"/>.
+            </summary>
+        </member>
+        <member name="P:Terrasoft.Web.Common.SsoSessionStore.EmptySsoSession">
+            <summary>
+            Empty single sign on session object.
+            </summary>
+        </member>
+        <member name="M:Terrasoft.Web.Common.WebUtilities.GetUrlByAbsolutePath(System.Web.HttpRequest)">
+            <summary>
+            Возвращает URL строку, полный путь к странице в текущем приложении.
+            </summary>
+            <remarks>
+            Из HttpRequest используются ServerVariables установленые балансировщиком
+            и значения свойств ApplicationPath, AbsolutePath.
+            </remarks>
+            <param name="request">Текущий HttpRequest</param>
+            <returns>Полная URL строка</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.WebUtilities.GetUrlByAbsolutePath(System.Web.HttpRequestBase)">
+            <summary>
+            Метод для тестирования.
+            Возвращает URL строку, полный путь к странице в текущем приложении.
+            </summary>
+            <remarks>
+            Из HttpRequest используются ServerVariables установленые балансировщиком
+            и значения свойств ApplicationPath, AbsolutePath.
+            </remarks>
+            <param name="request">Параметр типа HttpRequestBase</param>
+            <returns>Полная URL строка</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.WebUtilities.GetUrlByRequest(System.Web.HttpRequest)">
+            <summary>
+            Возвращает URL, полный путь к странице в текущем приложении.
+            </summary>
+            <remarks>
+            Из HttpRequest используются ServerVariables установленые балансировщиком
+            и значения свойств ApplicationPath, Path, QueryString.
+            </remarks>
+            <param name="request">Текущий HttpRequest</param>
+            <returns>Полная URL строка</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.WebUtilities.GetUrlByRequest(System.Web.HttpRequestBase)">
+            <summary>
+            Метод для тестирования.
+            Возвращает URL строку, полный путь к странице в текущем приложении.
+            </summary>
+            <remarks>
+            Из HttpRequest используются ServerVariables установленые балансировщиком
+            и значения свойств ApplicationPath, Path, QueryString.
+            </remarks>
+            <param name="request">Параметр типа HttpRequestBase</param>
+            <returns>Полная URL строка</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.WebUtilities.GetParentUrlByRequest(System.Web.HttpRequest)">
+            <summary>
+            Возвращает URL строку, путь к родительсткому каталогу запрошенного ресурса в текущем приложении.
+            </summary>
+            <param name="request">Параметр типа HttpRequest</param>
+            <returns>Полная URL строка</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.WebUtilities.GetUrl(System.Web.HttpRequest,System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Возвращает URL строку, полный путь к странице в текущем приложении.
+            </summary>
+            <remarks>
+            Из HttpRequest используются ServerVariables установленые балансировщиком и
+            значение свойства ApplicationPath.
+            </remarks>
+            <param name="request">Текущий HttpRequest</param>
+            <param name="pagePath">Пути к странице в приложении,
+            может содержать корневой путь текущего приложения</param>
+            <param name="queryString">Коллекция параметров передаваемых на страницу, тип HttpValueCollection</param>
+            <returns>Полная URL строка</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.WebUtilities.GetUrl(System.Web.HttpRequestBase,System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Метод для тестирования.
+            Возвращает URL строку, полный путь к странице в текущем приложении.
+            </summary>
+            <remarks>
+            Из HttpRequest используются ServerVariables установленые балансировщиком
+            и значение свойства ApplicationPath.
+            </remarks>
+            <param name="requestBase">Параметр типа HttpRequestBase</param>
+            <param name="pagePath">Пути к странице в приложении,
+            может содержать корневой путь текущего приложения</param>
+            <param name="queryString">Коллекция параметров передаваемых на страницу, тип HttpValueCollection</param>
+            <returns>Полная URL строка</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.WebUtilities.GetUrlToLoaderPage(System.Web.HttpRequest,System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Возвращает URL строку, полный путь к странице в приложении Загрузчика (WebApp.Loader).
+            </summary>
+            <remarks>
+            Из HttpRequest используются ServerVariables установленые балансировщиком и
+            значение свойства ApplicationPath из которого получают корневой путь приложения Загрузчика (WebApp.Loader).
+            </remarks>
+            <param name="request">Текущий HttpRequest</param>
+            <param name="pagePath">Пути к странице в приложении Загрузчика (WebApp.Loader),
+            может содержать корневой путь приложения Загрузчика</param>
+            <param name="queryString">Коллекция параметров передаваемых на страницу, тип HttpValueCollection</param>
+            <returns>Полная URL строка</returns>
+        </member>
+        <member name="M:Terrasoft.Web.Common.WebUtilities.GetUrlToLoaderPage(System.Web.HttpRequestBase,System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Возвращает URL строку, полный путь к странице в приложении Загрузчика (WebApp.Loader).
+            </summary>
+            <remarks>
+            Из HttpRequest используются ServerVariables установленые балансировщиком и
+            значение свойства ApplicationPath из которого получают корневой путь приложения Загрузчика (WebApp.Loader).
+            </remarks>
+            <param name="requestBase">Текущий HttpRequest</param>
+            <param name="pagePath">Пути к странице в приложении Загрузчика (WebApp.Loader),
+            может содержать корневой путь приложения Загрузчика</param>
+            <param name="queryString">Коллекция параметров передаваемых на страницу, тип HttpValueCollection</param>
+            <returns>Полная URL строка</returns>
+        </member>
+    </members>
+</doc>
