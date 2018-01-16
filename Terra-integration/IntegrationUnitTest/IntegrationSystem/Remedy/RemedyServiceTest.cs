@@ -34,11 +34,7 @@ namespace IntegrationUnitTest.IntegrationSystem.Remedy
 
 		private void ClearServiceSettings()
 		{
-			var settings = ObjectFactory.Get<ISettingProvider>();
-			ConnectionProvider.DoWith(Setuper.userConnection, () =>
-			{
-				//settings.Reinit();
-			});
+			//TestContext.CurrentContext;
 		}
 
 		[Test, Order(1)]
