@@ -97,3 +97,6 @@ C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils\bin\Release\System.Xml.XmlDocument.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils\bin\Release\System.Xml.XPath.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils\bin\Release\System.Xml.XPath.XDocument.dll
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils\bin\Release\ManyConsole.dll
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils\bin\Release\Mono.Options.dll
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils\bin\Release\ManyConsole.pdb

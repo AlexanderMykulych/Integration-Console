@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Running;
+using ManyConsole;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -14,28 +15,15 @@ namespace ProjectUtils
 {
 	internal class Program
 	{
-		private static void Main()
+		private static int Main(string[] args)
 		{
-			Console.WriteLine("Укажите команду:\n1. Собрать проект в файл\n2. Создать проект из файла");
-			var res = int.Parse(Console.ReadLine());
-			if (res == 1)
-			{
-				var builder = new ProjectBuilder(@"..\..\..\QueryConsole\Files", @"..\..\..\BuildedFileTester\Temp", false);
-				builder.Run();
-			}
-			else
-			{
-				var builder = new ReverseProjectBuilder(@"..\..\..\BuildedFileTester\Temp\namespace_Terrasoft.TsConfiguration.cs", @"C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole");
-				builder.Run();
-			}
-			Console.WriteLine("Работа закончена!");
-			Console.ReadKey();
+			var commands = GetCommands();
+
+			return ConsoleCommandDispatcher.DispatchCommand(commands, args, Console.Out);
 		}
-	    private static void Main1()
-	    {
-			var builder = new ReverseProjectBuilder(@"..\..\..\BuildedFileTester\Temp\namespace_Terrasoft.TsConfiguration.cs", @"C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\QueryConsole");
-			builder.Run();
-			Console.ReadKey();
-	    }
-    }
+	    public static IEnumerable<ConsoleCommand> GetCommands()
+		{
+			return ConsoleCommandDispatcher.FindCommandsInSameAssemblyAs(typeof(Program));
+		}
+	}
 }

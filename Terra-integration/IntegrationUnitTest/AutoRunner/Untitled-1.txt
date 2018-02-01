@@ -1,0 +1,2 @@
+c:\WebApp\Sibur711_D\Terrasoft.WebApp\Terrasoft.Configuration\bin\
+./build.ps1 '-testDll=c:\WebApp\Sibur711_D\Terrasoft.WebApp\Terrasoft.Configuration\bin\Terrasoft.Configuration.dll' '-outputFolder=c:\Dev\Sibur_D' -projectName=Sibur711

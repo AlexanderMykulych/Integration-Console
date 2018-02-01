@@ -1,115 +1,470 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<test-run id="2" testcasecount="26" result="Passed" total="26" passed="26" failed="0" inconclusive="0" skipped="0" asserts="47" engine-version="3.7.0.0" clr-version="4.0.30319.42000" start-time="2018-01-16 08:09:02Z" end-time="2018-01-16 08:09:34Z" duration="32.392527">
-  <command-line><![CDATA["C:/Dev/R&D/DynamicIntegration/Integration-Console/Terra-integration/IntegrationUnitTest/AutoRunner/tools/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe" "C:/Dev/R&D/DynamicIntegration/Integration-Console/Terra-integration/IntegrationUnitTest/bin/Debug/IntegrationUnitTest.dll"]]></command-line>
-  <test-suite type="Assembly" id="0-1037" name="IntegrationUnitTest.dll" fullname="C:\Dev\R&amp;D\DynamicIntegration\Integration-Console\Terra-integration\IntegrationUnitTest\bin\Debug\IntegrationUnitTest.dll" runstate="Runnable" testcasecount="26" result="Passed" start-time="2018-01-16 08:09:02Z" end-time="2018-01-16 08:09:34Z" duration="31.489914" total="26" passed="26" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="47">
+<test-run id="2" testcasecount="7" result="Failed" total="7" passed="1" failed="6" inconclusive="0" skipped="0" asserts="1" engine-version="3.7.0.0" clr-version="4.0.30319.42000" start-time="2018-01-17 17:16:17Z" end-time="2018-01-17 17:16:19Z" duration="2.755446">
+  <command-line><![CDATA["C:/Dev/R&D/DynamicIntegration/Integration-Console/Terra-integration/IntegrationUnitTest/AutoRunner/tools/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe" "C:/Dev/Sibur_D/Sibur_D/SiburTests/bin/Debug/SiburTests.dll" "--out=c:/WebApp/Sibur711_D/Terrasoft.WebApp/Terrasoft.Configuration/TestResult/2018-01-17_07-16-16-PM.xml"]]></command-line>
+  <test-suite type="Assembly" id="0-1012" name="SiburTests.dll" fullname="C:\Dev\Sibur_D\Sibur_D\SiburTests\bin\Debug\SiburTests.dll" runstate="Runnable" testcasecount="7" result="Failed" site="Child" start-time="2018-01-17 17:16:17Z" end-time="2018-01-17 17:16:19Z" duration="2.160955" total="7" passed="1" failed="6" warnings="0" inconclusive="0" skipped="0" asserts="1">
     <environment framework-version="3.9.0.0" clr-version="4.0.30319.42000" os-version="Microsoft Windows NT 10.0.16299.0" platform="Win32NT" cwd="C:\Dev\R&amp;D\DynamicIntegration\Integration-Console\Terra-integration\IntegrationUnitTest\AutoRunner" machine-name="A_MYKULYCH" user="A.Mykulych" user-domain="TSCRM" culture="ru-UA" uiculture="ru-RU" os-architecture="x64" />
     <settings>
       <setting name="DisposeRunners" value="True" />
       <setting name="WorkDirectory" value="C:\Dev\R&amp;D\DynamicIntegration\Integration-Console\Terra-integration\IntegrationUnitTest\AutoRunner" />
       <setting name="ImageRuntimeVersion" value="4.0.30319" />
-      <setting name="ImageTargetFrameworkName" value=".NETFramework,Version=v4.6" />
+      <setting name="ImageTargetFrameworkName" value=".NETFramework,Version=v4.6.2" />
       <setting name="ImageRequiresX86" value="False" />
       <setting name="ImageRequiresDefaultAppDomainAssemblyResolver" value="False" />
       <setting name="NumberOfTestWorkers" value="4" />
     </settings>
     <properties>
-      <property name="_PID" value="10764" />
+      <property name="_PID" value="16228" />
       <property name="_APPDOMAIN" value="domain-" />
     </properties>
-    <test-suite type="SetUpFixture" id="0-1000" name="IntegrationUnitTest" fullname="IntegrationUnitTest.Setuper" classname="IntegrationUnitTest.Setuper" runstate="Runnable" testcasecount="26" result="Passed" start-time="2018-01-16 08:09:02Z" end-time="2018-01-16 08:09:34Z" duration="31.470997" total="26" passed="26" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="47">
-      <test-suite type="TestSuite" id="0-1044" name="IntegrationSystem" fullname="IntegrationUnitTest.IntegrationSystem" runstate="Runnable" testcasecount="4" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:34Z" duration="18.244527" total="4" passed="4" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="7">
-        <test-suite type="TestFixture" id="0-1031" name="JsonOrderServiceTest" fullname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest" classname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:16Z" duration="0.506824" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
-          <test-case id="0-1032" name="SendOnPing_ResultPong" fullname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest.SendOnPing_ResultPong" methodname="SendOnPing_ResultPong" classname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest" runstate="Runnable" seed="933361254" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:16Z" duration="0.463639" asserts="1" />
-          <test-case id="0-1033" name="SendOnSum_ResultCorrectSum" fullname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest.SendOnSum_ResultCorrectSum" methodname="SendOnSum_ResultCorrectSum" classname="IntegrationUnitTest.IntegrationSystem.JsonOrderServiceTest" runstate="Runnable" seed="2016194374" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:16Z" duration="0.038113" asserts="1" />
-        </test-suite>
-        <test-suite type="TestSuite" id="0-1045" name="Remedy" fullname="IntegrationUnitTest.IntegrationSystem.Remedy" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:34Z" duration="18.243619" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="5">
-          <test-suite type="TestFixture" id="0-1034" name="RemedyServiceTest" fullname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest" classname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:34Z" duration="17.732283" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="5">
-            <properties>
-              <property name="Category" value="Remedy" />
-            </properties>
-            <test-case id="0-1035" name="Request_CreateIncident_RemedyId" fullname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest.Request_CreateIncident_RemedyId" methodname="Request_CreateIncident_RemedyId" classname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest" runstate="Runnable" seed="339737490" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:31Z" duration="15.135584" asserts="2">
-              <properties>
-                <property name="Order" value="1" />
-              </properties>
-              <reason>
-                <message><![CDATA[Id Remedy: 'INC123456']]></message>
-              </reason>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="SetUpFixture" id="0-1000" name="SiburTests" fullname="SiburTests.Setuper" classname="SiburTests.Setuper" runstate="Runnable" testcasecount="7" result="Failed" site="Child" start-time="2018-01-17 17:16:17Z" end-time="2018-01-17 17:16:19Z" duration="2.142606" total="7" passed="1" failed="6" warnings="0" inconclusive="0" skipped="0" asserts="1">
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <output><![CDATA[
+]]></output>
+      <test-suite type="TestSuite" id="0-1015" name="Calculator" fullname="SiburTests.Calculator" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2018-01-17 17:16:18Z" end-time="2018-01-17 17:16:19Z" duration="0.422712" total="6" passed="1" failed="5" warnings="0" inconclusive="0" skipped="0" asserts="1">
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestFixture" id="0-1003" name="LaborCostCalculatorTest" fullname="SiburTests.Calculator.LaborCostCalculatorTest" classname="SiburTests.Calculator.LaborCostCalculatorTest" runstate="Runnable" testcasecount="4" result="Failed" site="Child" start-time="2018-01-17 17:16:18Z" end-time="2018-01-17 17:16:18Z" duration="0.244874" total="4" passed="0" failed="4" warnings="0" inconclusive="0" skipped="0" asserts="0">
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="ParameterizedMethod" id="0-1008" name="Calculation" fullname="SiburTests.Calculator.LaborCostCalculatorTest.Calculation" classname="SiburTests.Calculator.LaborCostCalculatorTest" runstate="Runnable" testcasecount="4" result="Failed" site="Child" start-time="2018-01-17 17:16:18Z" end-time="2018-01-17 17:16:18Z" duration="0.243324" total="4" passed="0" failed="4" warnings="0" inconclusive="0" skipped="0" asserts="0">
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-case id="0-1004" name="Calculation(363.604306046201d,231.305862141916d,85)" fullname="SiburTests.Calculator.LaborCostCalculatorTest.Calculation(363.604306046201d,231.305862141916d,85)" methodname="Calculation" classname="SiburTests.Calculator.LaborCostCalculatorTest" runstate="Runnable" seed="984709309" result="Failed" label="Error" start-time="2018-01-17 17:16:18Z" end-time="2018-01-17 17:16:18Z" duration="0.215949" asserts="0">
+              <failure>
+                <message><![CDATA[System.Reflection.ReflectionTypeLoadException : Unable to load one or more of the requested types. Retrieve the LoaderExceptions property for more information.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.]]></message>
+                <stack-trace><![CDATA[   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.Assembly.GetTypes()
+   at Terrasoft.Common.ReflectionUtilities.FindTypeByShortName(Assembly assembly, String name)
+   at Terrasoft.Core.SchemaManagerItem`1.get_TypeName()
+   at Terrasoft.Core.SchemaManager`1.InitializeCoreSchemaLocalizableValues(ISchemaManagerItem`1 schemaManagerItem)
+   at Terrasoft.Core.SchemaManager`1.AddCoreSchema(Guid uid, String name, Guid parenSchemaUId, Assembly assembly, Guid[] referenceSchemaUIds)
+   at Terrasoft.Core.Entities.SystemEntitySchemaManager.InitializeItems()
+   at Terrasoft.Core.Entities.EntitySchemaManager.Initialize(SchemaManagerProvider provider, SchemaManagerProviderConfigurationElement configuration)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSystemSchemaManager(String systemSchemaManagerName)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSchemaManager(String managerName)
+   at Terrasoft.Core.SchemaManagerProvider.GetManager(String managerName)
+   at Terrasoft.Core.Entities.Entity.get_EntitySchemaManager()
+   at Terrasoft.Core.Entities.Entity.get_Schema()
+   at Terrasoft.Core.Entities.Entity.get_ColumnValues()
+   at Terrasoft.Core.Entities.Entity.IsColumnValueLoaded(String valueName)
+   at Terrasoft.Core.SchemaManager`1.InitializeItems(Guid itemUId)
+   at Terrasoft.Core.SchemaManager`1.InitializeItems()
+   at Terrasoft.Core.Entities.EntitySchemaManager.Initialize(SchemaManagerProvider provider, SchemaManagerProviderConfigurationElement configuration)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSchemaManager(String managerName)
+   at Terrasoft.Core.SchemaManagerProvider.GetManager(String managerName)
+   at Terrasoft.Core.UserConnection.get_EntitySchemaManager()
+   at SiburTests.Helper.WorkOrderCreator.CreateWorkOrderWithRandowPlanFact(Decimal plan, Decimal fact) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 67
+   at SiburTests.Helper.WorkOrderCreator.createWorkOrdersWithRandomPlanFact(Decimal plan, Decimal fact, Int32 step, Int32 count) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 57
+   at SiburTests.Helper.WorkOrderCreator.CreateNewWorkWithWorkOrder(Decimal plan, Decimal fact, Int32 step, Int32 count) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 15
+   at SiburTests.Calculator.LaborCostCalculatorTest.<>c__DisplayClass0_0.<Calculation>b__0() in C:\Dev\Sibur_D\Sibur_D\SiburTests\Calculator\LaborCostCalculatorTest.cs:line 27
+   at Sibur_D.Core.Connection.ConnectionProvider.DoWith[T](Object connection, Func`1 predicate, T defaultValue, Action`1 onErrorAction) in C:\Dev\Sibur_D\Sibur_D\Sibur_D\Core\Connection\ConnectionProvider.cs:line 102
+   at SiburTests.Calculator.LaborCostCalculatorTest.Calculation(Double plan, Double fact, Int32 step) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Calculator\LaborCostCalculatorTest.cs:line 25
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+]]></stack-trace>
+              </failure>
             </test-case>
-            <test-case id="0-1036" name="Request_CreateIncidentWithNotExistOperator_AddReupdateCaseToTriggerQueue" fullname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest.Request_CreateIncidentWithNotExistOperator_AddReupdateCaseToTriggerQueue" methodname="Request_CreateIncidentWithNotExistOperator_AddReupdateCaseToTriggerQueue" classname="IntegrationUnitTest.IntegrationSystem.Remedy.RemedyServiceTest" runstate="Runnable" seed="992672725" result="Passed" start-time="2018-01-16 08:09:31Z" end-time="2018-01-16 08:09:34Z" duration="2.595473" asserts="3">
-              <properties>
-                <property name="Order" value="2" />
-              </properties>
-              <reason>
-                <message><![CDATA[Id Remedy: 'INC2222222']]></message>
-              </reason>
+            <test-case id="0-1005" name="Calculation(363.604306046201d,297.963877347281d,85)" fullname="SiburTests.Calculator.LaborCostCalculatorTest.Calculation(363.604306046201d,297.963877347281d,85)" methodname="Calculation" classname="SiburTests.Calculator.LaborCostCalculatorTest" runstate="Runnable" seed="1949674693" result="Failed" label="Error" start-time="2018-01-17 17:16:18Z" end-time="2018-01-17 17:16:18Z" duration="0.005543" asserts="0">
+              <failure>
+                <message><![CDATA[System.Reflection.ReflectionTypeLoadException : Unable to load one or more of the requested types. Retrieve the LoaderExceptions property for more information.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.]]></message>
+                <stack-trace><![CDATA[   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.Assembly.GetTypes()
+   at Terrasoft.Common.ReflectionUtilities.FindTypeByShortName(Assembly assembly, String name)
+   at Terrasoft.Core.SchemaManagerItem`1.get_TypeName()
+   at Terrasoft.Core.SchemaManager`1.InitializeCoreSchemaLocalizableValues(ISchemaManagerItem`1 schemaManagerItem)
+   at Terrasoft.Core.SchemaManager`1.AddCoreSchema(Guid uid, String name, Guid parenSchemaUId, Assembly assembly, Guid[] referenceSchemaUIds)
+   at Terrasoft.Core.Entities.SystemEntitySchemaManager.InitializeItems()
+   at Terrasoft.Core.Entities.EntitySchemaManager.Initialize(SchemaManagerProvider provider, SchemaManagerProviderConfigurationElement configuration)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSystemSchemaManager(String systemSchemaManagerName)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSchemaManager(String managerName)
+   at Terrasoft.Core.SchemaManagerProvider.GetManager(String managerName)
+   at Terrasoft.Core.Entities.Entity.get_EntitySchemaManager()
+   at Terrasoft.Core.Entities.Entity.get_Schema()
+   at Terrasoft.Core.Entities.Entity.get_ColumnValues()
+   at Terrasoft.Core.Entities.Entity.IsColumnValueLoaded(String valueName)
+   at Terrasoft.Core.SchemaManager`1.InitializeItems(Guid itemUId)
+   at Terrasoft.Core.SchemaManager`1.InitializeItems()
+   at Terrasoft.Core.Entities.EntitySchemaManager.Initialize(SchemaManagerProvider provider, SchemaManagerProviderConfigurationElement configuration)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSchemaManager(String managerName)
+   at Terrasoft.Core.SchemaManagerProvider.GetManager(String managerName)
+   at Terrasoft.Core.UserConnection.get_EntitySchemaManager()
+   at SiburTests.Helper.WorkOrderCreator.CreateWorkOrderWithRandowPlanFact(Decimal plan, Decimal fact) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 67
+   at SiburTests.Helper.WorkOrderCreator.createWorkOrdersWithRandomPlanFact(Decimal plan, Decimal fact, Int32 step, Int32 count) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 57
+   at SiburTests.Helper.WorkOrderCreator.CreateNewWorkWithWorkOrder(Decimal plan, Decimal fact, Int32 step, Int32 count) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 15
+   at SiburTests.Calculator.LaborCostCalculatorTest.<>c__DisplayClass0_0.<Calculation>b__0() in C:\Dev\Sibur_D\Sibur_D\SiburTests\Calculator\LaborCostCalculatorTest.cs:line 27
+   at Sibur_D.Core.Connection.ConnectionProvider.DoWith[T](Object connection, Func`1 predicate, T defaultValue, Action`1 onErrorAction) in C:\Dev\Sibur_D\Sibur_D\Sibur_D\Core\Connection\ConnectionProvider.cs:line 102
+   at SiburTests.Calculator.LaborCostCalculatorTest.Calculation(Double plan, Double fact, Int32 step) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Calculator\LaborCostCalculatorTest.cs:line 25
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="0-1006" name="Calculation(62.3773068866587d,231.305862141916d,85)" fullname="SiburTests.Calculator.LaborCostCalculatorTest.Calculation(62.3773068866587d,231.305862141916d,85)" methodname="Calculation" classname="SiburTests.Calculator.LaborCostCalculatorTest" runstate="Runnable" seed="553688125" result="Failed" label="Error" start-time="2018-01-17 17:16:18Z" end-time="2018-01-17 17:16:18Z" duration="0.008057" asserts="0">
+              <failure>
+                <message><![CDATA[System.Reflection.ReflectionTypeLoadException : Unable to load one or more of the requested types. Retrieve the LoaderExceptions property for more information.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.]]></message>
+                <stack-trace><![CDATA[   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.Assembly.GetTypes()
+   at Terrasoft.Common.ReflectionUtilities.FindTypeByShortName(Assembly assembly, String name)
+   at Terrasoft.Core.SchemaManagerItem`1.get_TypeName()
+   at Terrasoft.Core.SchemaManager`1.InitializeCoreSchemaLocalizableValues(ISchemaManagerItem`1 schemaManagerItem)
+   at Terrasoft.Core.SchemaManager`1.AddCoreSchema(Guid uid, String name, Guid parenSchemaUId, Assembly assembly, Guid[] referenceSchemaUIds)
+   at Terrasoft.Core.Entities.SystemEntitySchemaManager.InitializeItems()
+   at Terrasoft.Core.Entities.EntitySchemaManager.Initialize(SchemaManagerProvider provider, SchemaManagerProviderConfigurationElement configuration)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSystemSchemaManager(String systemSchemaManagerName)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSchemaManager(String managerName)
+   at Terrasoft.Core.SchemaManagerProvider.GetManager(String managerName)
+   at Terrasoft.Core.Entities.Entity.get_EntitySchemaManager()
+   at Terrasoft.Core.Entities.Entity.get_Schema()
+   at Terrasoft.Core.Entities.Entity.get_ColumnValues()
+   at Terrasoft.Core.Entities.Entity.IsColumnValueLoaded(String valueName)
+   at Terrasoft.Core.SchemaManager`1.InitializeItems(Guid itemUId)
+   at Terrasoft.Core.SchemaManager`1.InitializeItems()
+   at Terrasoft.Core.Entities.EntitySchemaManager.Initialize(SchemaManagerProvider provider, SchemaManagerProviderConfigurationElement configuration)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSchemaManager(String managerName)
+   at Terrasoft.Core.SchemaManagerProvider.GetManager(String managerName)
+   at Terrasoft.Core.UserConnection.get_EntitySchemaManager()
+   at SiburTests.Helper.WorkOrderCreator.CreateWorkOrderWithRandowPlanFact(Decimal plan, Decimal fact) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 67
+   at SiburTests.Helper.WorkOrderCreator.createWorkOrdersWithRandomPlanFact(Decimal plan, Decimal fact, Int32 step, Int32 count) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 57
+   at SiburTests.Helper.WorkOrderCreator.CreateNewWorkWithWorkOrder(Decimal plan, Decimal fact, Int32 step, Int32 count) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 15
+   at SiburTests.Calculator.LaborCostCalculatorTest.<>c__DisplayClass0_0.<Calculation>b__0() in C:\Dev\Sibur_D\Sibur_D\SiburTests\Calculator\LaborCostCalculatorTest.cs:line 27
+   at Sibur_D.Core.Connection.ConnectionProvider.DoWith[T](Object connection, Func`1 predicate, T defaultValue, Action`1 onErrorAction) in C:\Dev\Sibur_D\Sibur_D\Sibur_D\Core\Connection\ConnectionProvider.cs:line 102
+   at SiburTests.Calculator.LaborCostCalculatorTest.Calculation(Double plan, Double fact, Int32 step) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Calculator\LaborCostCalculatorTest.cs:line 25
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="0-1007" name="Calculation(62.3773068866587d,297.963877347281d,85)" fullname="SiburTests.Calculator.LaborCostCalculatorTest.Calculation(62.3773068866587d,297.963877347281d,85)" methodname="Calculation" classname="SiburTests.Calculator.LaborCostCalculatorTest" runstate="Runnable" seed="1066610272" result="Failed" label="Error" start-time="2018-01-17 17:16:18Z" end-time="2018-01-17 17:16:18Z" duration="0.004002" asserts="0">
+              <failure>
+                <message><![CDATA[System.Reflection.ReflectionTypeLoadException : Unable to load one or more of the requested types. Retrieve the LoaderExceptions property for more information.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.]]></message>
+                <stack-trace><![CDATA[   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.Assembly.GetTypes()
+   at Terrasoft.Common.ReflectionUtilities.FindTypeByShortName(Assembly assembly, String name)
+   at Terrasoft.Core.SchemaManagerItem`1.get_TypeName()
+   at Terrasoft.Core.SchemaManager`1.InitializeCoreSchemaLocalizableValues(ISchemaManagerItem`1 schemaManagerItem)
+   at Terrasoft.Core.SchemaManager`1.AddCoreSchema(Guid uid, String name, Guid parenSchemaUId, Assembly assembly, Guid[] referenceSchemaUIds)
+   at Terrasoft.Core.Entities.SystemEntitySchemaManager.InitializeItems()
+   at Terrasoft.Core.Entities.EntitySchemaManager.Initialize(SchemaManagerProvider provider, SchemaManagerProviderConfigurationElement configuration)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSystemSchemaManager(String systemSchemaManagerName)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSchemaManager(String managerName)
+   at Terrasoft.Core.SchemaManagerProvider.GetManager(String managerName)
+   at Terrasoft.Core.Entities.Entity.get_EntitySchemaManager()
+   at Terrasoft.Core.Entities.Entity.get_Schema()
+   at Terrasoft.Core.Entities.Entity.get_ColumnValues()
+   at Terrasoft.Core.Entities.Entity.IsColumnValueLoaded(String valueName)
+   at Terrasoft.Core.SchemaManager`1.InitializeItems(Guid itemUId)
+   at Terrasoft.Core.SchemaManager`1.InitializeItems()
+   at Terrasoft.Core.Entities.EntitySchemaManager.Initialize(SchemaManagerProvider provider, SchemaManagerProviderConfigurationElement configuration)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSchemaManager(String managerName)
+   at Terrasoft.Core.SchemaManagerProvider.GetManager(String managerName)
+   at Terrasoft.Core.UserConnection.get_EntitySchemaManager()
+   at SiburTests.Helper.WorkOrderCreator.CreateWorkOrderWithRandowPlanFact(Decimal plan, Decimal fact) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 67
+   at SiburTests.Helper.WorkOrderCreator.createWorkOrdersWithRandomPlanFact(Decimal plan, Decimal fact, Int32 step, Int32 count) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 57
+   at SiburTests.Helper.WorkOrderCreator.CreateNewWorkWithWorkOrder(Decimal plan, Decimal fact, Int32 step, Int32 count) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 15
+   at SiburTests.Calculator.LaborCostCalculatorTest.<>c__DisplayClass0_0.<Calculation>b__0() in C:\Dev\Sibur_D\Sibur_D\SiburTests\Calculator\LaborCostCalculatorTest.cs:line 27
+   at Sibur_D.Core.Connection.ConnectionProvider.DoWith[T](Object connection, Func`1 predicate, T defaultValue, Action`1 onErrorAction) in C:\Dev\Sibur_D\Sibur_D\Sibur_D\Core\Connection\ConnectionProvider.cs:line 102
+   at SiburTests.Calculator.LaborCostCalculatorTest.Calculation(Double plan, Double fact, Int32 step) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Calculator\LaborCostCalculatorTest.cs:line 25
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+]]></stack-trace>
+              </failure>
             </test-case>
           </test-suite>
         </test-suite>
+        <test-suite type="TestFixture" id="0-1009" name="TriggerTest" fullname="SiburTests.Calculator.TriggerTest" classname="SiburTests.Calculator.TriggerTest" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2018-01-17 17:16:18Z" end-time="2018-01-17 17:16:19Z" duration="0.174785" total="2" passed="1" failed="1" warnings="0" inconclusive="0" skipped="0" asserts="1">
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-case id="0-1011" name="QueueRun" fullname="SiburTests.Calculator.TriggerTest.QueueRun" methodname="QueueRun" classname="SiburTests.Calculator.TriggerTest" runstate="Runnable" seed="741857199" result="Passed" start-time="2018-01-17 17:16:18Z" end-time="2018-01-17 17:16:19Z" duration="0.168187" asserts="1" />
+          <test-case id="0-1010" name="RunTriggerTest" fullname="SiburTests.Calculator.TriggerTest.RunTriggerTest" methodname="RunTriggerTest" classname="SiburTests.Calculator.TriggerTest" runstate="Runnable" seed="978442701" result="Failed" label="Error" start-time="2018-01-17 17:16:19Z" end-time="2018-01-17 17:16:19Z" duration="0.006373" asserts="0">
+            <failure>
+              <message><![CDATA[System.Reflection.ReflectionTypeLoadException : Unable to load one or more of the requested types. Retrieve the LoaderExceptions property for more information.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8017.3940.496, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.
+  ----> System.BadImageFormatException : Could not load file or assembly 'SharpSvn, Version=1.8009.3299.43, Culture=neutral, PublicKeyToken=d729672594885a28' or one of its dependencies. Была сделана попытка загрузить программу, имеющую неверный формат.]]></message>
+              <stack-trace><![CDATA[   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.Assembly.GetTypes()
+   at Terrasoft.Common.ReflectionUtilities.FindTypeByShortName(Assembly assembly, String name)
+   at Terrasoft.Core.SchemaManagerItem`1.get_TypeName()
+   at Terrasoft.Core.SchemaManager`1.InitializeCoreSchemaLocalizableValues(ISchemaManagerItem`1 schemaManagerItem)
+   at Terrasoft.Core.SchemaManager`1.AddCoreSchema(Guid uid, String name, Guid parenSchemaUId, Assembly assembly, Guid[] referenceSchemaUIds)
+   at Terrasoft.Core.Entities.SystemEntitySchemaManager.InitializeItems()
+   at Terrasoft.Core.Entities.EntitySchemaManager.Initialize(SchemaManagerProvider provider, SchemaManagerProviderConfigurationElement configuration)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSystemSchemaManager(String systemSchemaManagerName)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSchemaManager(String managerName)
+   at Terrasoft.Core.SchemaManagerProvider.GetManager(String managerName)
+   at Terrasoft.Core.Entities.Entity.get_EntitySchemaManager()
+   at Terrasoft.Core.Entities.Entity.get_Schema()
+   at Terrasoft.Core.Entities.Entity.get_ColumnValues()
+   at Terrasoft.Core.Entities.Entity.IsColumnValueLoaded(String valueName)
+   at Terrasoft.Core.SchemaManager`1.InitializeItems(Guid itemUId)
+   at Terrasoft.Core.SchemaManager`1.InitializeItems()
+   at Terrasoft.Core.Entities.EntitySchemaManager.Initialize(SchemaManagerProvider provider, SchemaManagerProviderConfigurationElement configuration)
+   at Terrasoft.Core.SchemaManagerProvider.InitializeSchemaManager(String managerName)
+   at Terrasoft.Core.SchemaManagerProvider.GetManager(String managerName)
+   at Terrasoft.Core.UserConnection.get_EntitySchemaManager()
+   at SiburTests.Helper.WorkOrderCreator.CreateWorkOrderWithRandowPlanFact(Decimal plan, Decimal fact) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 67
+   at SiburTests.Helper.WorkOrderCreator.createWorkOrdersWithRandomPlanFact(Decimal plan, Decimal fact, Int32 step, Int32 count) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 57
+   at SiburTests.Helper.WorkOrderCreator.CreateNewWorkWithWorkOrder(Decimal plan, Decimal fact, Int32 step, Int32 count) in C:\Dev\Sibur_D\Sibur_D\SiburTests\Helper\WorkOrderCreator.cs:line 15
+   at SiburTests.Calculator.TriggerTest.<>c__DisplayClass0_0.<RunTriggerTest>b__0() in C:\Dev\Sibur_D\Sibur_D\SiburTests\Calculator\TriggerTest.cs:line 29
+   at Sibur_D.Core.Connection.ConnectionProvider.DoWith[T](Object connection, Func`1 predicate, T defaultValue, Action`1 onErrorAction) in C:\Dev\Sibur_D\Sibur_D\Sibur_D\Core\Connection\ConnectionProvider.cs:line 102
+   at SiburTests.Calculator.TriggerTest.RunTriggerTest() in C:\Dev\Sibur_D\Sibur_D\SiburTests\Calculator\TriggerTest.cs:line 27
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+
+--BadImageFormatException
+]]></stack-trace>
+            </failure>
+          </test-case>
+        </test-suite>
       </test-suite>
-      <test-suite type="TestSuite" id="0-1041" name="Settings" fullname="IntegrationUnitTest.Settings" runstate="Runnable" testcasecount="12" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:34Z" duration="18.382181" total="12" passed="12" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="31">
-        <test-suite type="TestFixture" id="0-1015" name="RepositoryProviderTest" fullname="IntegrationUnitTest.Settings.RepositoryProviderTest" classname="IntegrationUnitTest.Settings.RepositoryProviderTest" runstate="Runnable" testcasecount="1" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.015228" total="1" passed="1" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
-          <properties>
-            <property name="Category" value="Settings" />
-          </properties>
-          <test-case id="0-1016" name="GetXmlTest" fullname="IntegrationUnitTest.Settings.RepositoryProviderTest.GetXmlTest" methodname="GetXmlTest" classname="IntegrationUnitTest.Settings.RepositoryProviderTest" runstate="Runnable" seed="596427815" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.015019" asserts="2" />
-        </test-suite>
-        <test-suite type="TestSuite" id="0-1043" name="SettingsProvider" fullname="IntegrationUnitTest.Settings.SettingsProvider" runstate="Runnable" testcasecount="9" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:34Z" duration="18.380261" total="9" passed="9" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="27">
-          <test-suite type="TestFixture" id="0-1020" name="SettingsProviderTest" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" testcasecount="9" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.121143" total="9" passed="9" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="27">
-            <properties>
-              <property name="Category" value="Settings" />
-            </properties>
-            <test-suite type="ParameterizedMethod" id="0-1030" name="SettingsProvider" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" testcasecount="9" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.120251" total="9" passed="9" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="27">
-              <test-case id="0-1021" name="SettingsProvider(&quot;MappingConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;MappingConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="1070477806" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.012906" asserts="3" />
-              <test-case id="0-1022" name="SettingsProvider(&quot;ExportRouteConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;ExportRouteConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="474872058" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.011883" asserts="3" />
-              <test-case id="0-1023" name="SettingsProvider(&quot;ImportRouteConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;ImportRouteConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="1921216492" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.013443" asserts="3" />
-              <test-case id="0-1024" name="SettingsProvider(&quot;ConfigSetting&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;ConfigSetting&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="1909745967" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.012993" asserts="3" />
-              <test-case id="0-1025" name="SettingsProvider(&quot;DefaultMappingConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;DefaultMappingConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="405642315" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.010923" asserts="3" />
-              <test-case id="0-1026" name="SettingsProvider(&quot;ServiceConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;ServiceConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="1204350617" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.012579" asserts="3" />
-              <test-case id="0-1027" name="SettingsProvider(&quot;TemplateSetting&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;TemplateSetting&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="17753731" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.016210" asserts="3" />
-              <test-case id="0-1028" name="SettingsProvider(&quot;TriggerConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;TriggerConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="972492584" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.016015" asserts="3" />
-              <test-case id="0-1029" name="SettingsProvider(&quot;EndPointConfig&quot;)" fullname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest.SettingsProvider(&quot;EndPointConfig&quot;)" methodname="SettingsProvider" classname="IntegrationUnitTest.Settings.SettingsProvider.SettingsProviderTest" runstate="Runnable" seed="181540068" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.012799" asserts="3" />
-            </test-suite>
-          </test-suite>
-        </test-suite>
-        <test-suite type="TestSuite" id="0-1042" name="XmlProvider" fullname="IntegrationUnitTest.Settings.XmlProvider" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:34Z" duration="18.382167" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
-          <test-suite type="TestFixture" id="0-1017" name="XmlProviderTest" fullname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest" classname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.001896" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
-            <properties>
-              <property name="Category" value="Settings" />
-            </properties>
-            <test-case id="0-1018" name="MergeEmptyXmlTest" fullname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest.MergeEmptyXmlTest" methodname="MergeEmptyXmlTest" classname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest" runstate="Runnable" seed="1868254545" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.001527" asserts="1" />
-            <test-case id="0-1019" name="MergeNullXmlTest" fullname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest.MergeNullXmlTest" methodname="MergeNullXmlTest" classname="IntegrationUnitTest.Settings.XmlProvider.XmlProviderTest" runstate="Runnable" seed="852537551" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.000212" asserts="1" />
-          </test-suite>
-        </test-suite>
-      </test-suite>
-      <test-suite type="TestSuite" id="0-1040" name="Setup" fullname="IntegrationUnitTest.Setup" runstate="Runnable" testcasecount="1" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:34Z" duration="18.382381" total="1" passed="1" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="1">
-        <test-suite type="TestFixture" id="0-1013" name="SetuperTest" fullname="IntegrationUnitTest.Setup.SetuperTest" classname="IntegrationUnitTest.Setup.SetuperTest" runstate="Runnable" testcasecount="1" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.000204" total="1" passed="1" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="1">
-          <properties>
-            <property name="Category" value="Settup" />
-          </properties>
-          <test-case id="0-1014" name="UserConnectionCreateSucces" fullname="IntegrationUnitTest.Setup.SetuperTest.UserConnectionCreateSucces" methodname="UserConnectionCreateSucces" classname="IntegrationUnitTest.Setup.SetuperTest" runstate="Runnable" seed="2011033001" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.000091" asserts="1" />
-        </test-suite>
-      </test-suite>
-      <test-suite type="TestSuite" id="0-1039" name="Strategy" fullname="IntegrationUnitTest.Strategy" runstate="Runnable" testcasecount="9" result="Passed" start-time="2018-01-16 08:09:16Z" end-time="2018-01-16 08:09:34Z" duration="18.418192" total="9" passed="9" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="8">
-        <test-suite type="TestFixture" id="0-1001" name="BaseAddStrategy" fullname="IntegrationUnitTest.Strategy.BaseAddStrategy" classname="IntegrationUnitTest.Strategy.BaseAddStrategy" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.018752" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="3">
-          <properties>
-            <property name="Category" value="Strategy" />
-          </properties>
-          <test-case id="0-1002" name="AddIntegerStrategy" fullname="IntegrationUnitTest.Strategy.BaseAddStrategy.AddIntegerStrategy" methodname="AddIntegerStrategy" classname="IntegrationUnitTest.Strategy.BaseAddStrategy" runstate="Runnable" seed="2068506247" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.014754" asserts="1" />
-          <test-case id="0-1003" name="AddStringStrategy" fullname="IntegrationUnitTest.Strategy.BaseAddStrategy.AddStringStrategy" methodname="AddStringStrategy" classname="IntegrationUnitTest.Strategy.BaseAddStrategy" runstate="Runnable" seed="378397191" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.003834" asserts="2" />
-        </test-suite>
-        <test-suite type="TestFixture" id="0-1004" name="StringToIObjectStepTest" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" testcasecount="7" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.017041" total="7" passed="7" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="5">
-          <properties>
-            <property name="Category" value="Strategy" />
-          </properties>
-          <test-suite type="ParameterizedMethod" id="0-1010" name="CreateInstance_WithoutError" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" testcasecount="5" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.000571" total="5" passed="5" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="0">
-            <test-case id="0-1005" name="CreateInstance_WithoutError(Json)" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError(Json)" methodname="CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="2059586884" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.000259" asserts="0" />
-            <test-case id="0-1006" name="CreateInstance_WithoutError(All)" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError(All)" methodname="CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="1835978459" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.000071" asserts="0" />
-            <test-case id="0-1007" name="CreateInstance_WithoutError(Excell)" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError(Excell)" methodname="CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="351004973" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.000060" asserts="0" />
-            <test-case id="0-1008" name="CreateInstance_WithoutError(TsEntity)" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError(TsEntity)" methodname="CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="1942999077" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.000060" asserts="0" />
-            <test-case id="0-1009" name="CreateInstance_WithoutError(Xml)" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.CreateInstance_WithoutError(Xml)" methodname="CreateInstance_WithoutError" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="1704782775" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.000061" asserts="0" />
-          </test-suite>
-          <test-case id="0-1012" name="Execute_JsonType_CorrectAttributeValues" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.Execute_JsonType_CorrectAttributeValues" methodname="Execute_JsonType_CorrectAttributeValues" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="733642120" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.015840" asserts="4" />
-          <test-case id="0-1011" name="Execute_JsonType_CreateIObject" fullname="IntegrationUnitTest.Strategy.StringToIObjectStepTest.Execute_JsonType_CreateIObject" methodname="Execute_JsonType_CreateIObject" classname="IntegrationUnitTest.Strategy.StringToIObjectStepTest" runstate="Runnable" seed="1718355826" result="Passed" start-time="2018-01-16 08:09:34Z" end-time="2018-01-16 08:09:34Z" duration="0.000480" asserts="1" />
+      <test-suite type="TestSuite" id="0-1014" name="Settings" fullname="SiburTests.Settings" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2018-01-17 17:16:18Z" end-time="2018-01-17 17:16:19Z" duration="0.433028" total="1" passed="0" failed="1" warnings="0" inconclusive="0" skipped="0" asserts="0">
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestFixture" id="0-1001" name="SettingsTest" fullname="SiburTests.Settings.SettingsTest" classname="SiburTests.Settings.SettingsTest" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2018-01-17 17:16:19Z" end-time="2018-01-17 17:16:19Z" duration="0.010355" total="1" passed="0" failed="1" warnings="0" inconclusive="0" skipped="0" asserts="0">
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-case id="0-1002" name="SysSetting_TsiLaborCostRelationMapping_Exist" fullname="SiburTests.Settings.SettingsTest.SysSetting_TsiLaborCostRelationMapping_Exist" methodname="SysSetting_TsiLaborCostRelationMapping_Exist" classname="SiburTests.Settings.SettingsTest" runstate="Runnable" seed="1708983169" result="Failed" label="Error" start-time="2018-01-17 17:16:19Z" end-time="2018-01-17 17:16:19Z" duration="0.010195" asserts="0">
+            <failure>
+              <message><![CDATA[System.NullReferenceException : Object reference not set to an instance of an object.]]></message>
+              <stack-trace><![CDATA[   at Terrasoft.Core.UserConnection.get_CurrentUserForGetSysSettingsFromDB()
+   at Terrasoft.Core.UserConnection.GetAllCacheableSettingsValuesFromDB()
+   at Terrasoft.Core.UserConnection.TryGetSettingsValueFromCache(String settingsCode, Object& value)
+   at Terrasoft.Core.UserConnection.TryGetSettingsValue(String settingsCode, Object& value)
+   at Terrasoft.Core.UserConnection.GetSettingsValue[T](String settingsCode, T defaultValue)
+   at SiburTests.Settings.SettingsTest.SysSetting_TsiLaborCostRelationMapping_Exist() in C:\Dev\Sibur_D\Sibur_D\SiburTests\Settings\SettingsTest.cs:line 20]]></stack-trace>
+            </failure>
+          </test-case>
         </test-suite>
       </test-suite>
     </test-suite>

@@ -65,7 +65,6 @@ C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\obj\Release\ProjectUtilsClassLibrary.csproj.CoreCompileInputs.cache
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\obj\Release\ProjectUtilsClassLibrary.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\obj\Release\ProjectUtilsClassLibrary.pdb
-C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\obj\Release\ProjectUtilsClassLibrary.csprojResolveAssemblyReference.cache
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\bin\Release\System.Console.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\bin\Release\System.Diagnostics.FileVersionInfo.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\bin\Release\System.Diagnostics.StackTrace.dll
@@ -82,3 +81,4 @@ C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtils
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\bin\Release\System.Xml.XPath.XDocument.dll
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\bin\Release\System.Collections.Immutable.xml
 C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\bin\Release\System.Reflection.Metadata.xml
+C:\Dev\R&D\DynamicIntegration\Integration-Console\Terra-integration\ProjectUtilsClassLibrary\obj\Release\ProjectUtilsClassLibrary.csprojResolveAssemblyReference.cache

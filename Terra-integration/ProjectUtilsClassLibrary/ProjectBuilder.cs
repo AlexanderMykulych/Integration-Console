@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,6 +41,7 @@ namespace ProjectUtils
 		public static Dictionary<string, List<NodeProjectInfo>> NamespaceText = new Dictionary<string, List<NodeProjectInfo>>();
 		public static Dictionary<string, List<string>> Usings = new Dictionary<string, List<string>>();
 		private bool _metaProgramingEnabled;
+		private string _globalNameSpace;
 
 		private void DirSearch(string sDir)
 		{
@@ -132,6 +134,10 @@ namespace ProjectUtils
 				{
 					Usings[nameSpace].Add(usingStr);
 				}
+			}
+			if (!string.IsNullOrEmpty(_globalNameSpace))
+			{
+				nameSpace = _globalNameSpace;
 			}
 			if (NamespaceText.ContainsKey(nameSpace))
 			{
@@ -239,9 +245,20 @@ namespace ProjectUtils
 
 		private string GetUsingsByNamespace(string nameSpace)
 		{
+			var strBuilder = new StringBuilder();
+			if (!string.IsNullOrEmpty(_globalNameSpace))
+			{
+				var usings = Usings.SelectMany(keyValue => keyValue.Value).Distinct().ToList();
+				var fixtUsings = Usings.Select(keyValue => keyValue.Key).Distinct().ToList();
+				foreach (var Using in usings.Where(x => !fixtUsings.Any(y => x.Contains(y))).ToList())
+				{
+					strBuilder.AppendFormat("{0}", Using);
+				}
+				return strBuilder.ToString();
+			}
 			if (Usings.ContainsKey(nameSpace))
 			{
-				var strBuilder = new StringBuilder();
+				
 				foreach (var Using in Usings[nameSpace].OrderBy(x => x))
 				{
 					strBuilder.AppendFormat("{0}", Using);
@@ -249,6 +266,11 @@ namespace ProjectUtils
 				return strBuilder.ToString();
 			}
 			return "";
+		}
+
+		public void WithOneNameSpace(string nameSpace)
+		{
+			_globalNameSpace = nameSpace;
 		}
 	}
 }
